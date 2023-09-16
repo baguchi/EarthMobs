@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "bonemeal",
+  "ingredients": [
+    {
+      "item": "earthmobsmod:tropical_slime_block"
+    }
+  ],
+  "result": {
+    "item": "earthmobsmod:tropical_ball",
+    "count": 9
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "earthmobsmod:block/carved_melon_shoot",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "earthmobsmod:block/carved_melon_shoot"
+    },
+    "facing=south": {
+      "model": "earthmobsmod:block/carved_melon_shoot",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "earthmobsmod:block/carved_melon_shoot",
+      "y": 270
+    }
+  }
+}

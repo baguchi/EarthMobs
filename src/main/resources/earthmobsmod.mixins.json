@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "baguchan.earthmobsmod.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "refmap": "earthmobsmod.refmap.json",
+  "mixins": [
+    "BeeMixin",
+    "EntityMixin",
+    "PigMixin",
+    "LivingEntityMixin"
+  ],
+  "client": [
+    "client.PigModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

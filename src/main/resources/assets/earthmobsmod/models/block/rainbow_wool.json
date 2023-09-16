@@ -1,0 +1,85 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "block/block",
+  "texture_size": [
+    48,
+    16
+  ],
+  "textures": {
+    "0": "earthmobsmod:block/rainbow_wool",
+    "particle": "earthmobsmod:block/rainbow_wool"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5.333,
+            0,
+            10.666,
+            15.999
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            5.333,
+            15.999
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            5.333,
+            0,
+            10.66567,
+            15.998
+          ],
+          "rotation": 180,
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            10.66667,
+            0,
+            15.99967,
+            15.999
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            5.333,
+            0,
+            10.666,
+            15.999
+          ],
+          "rotation": 180,
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            5.333,
+            0,
+            10.666,
+            15.999
+          ],
+          "rotation": 180,
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

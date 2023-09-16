@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "earthmobsmod:block/ruby_block"
+  }
+}
