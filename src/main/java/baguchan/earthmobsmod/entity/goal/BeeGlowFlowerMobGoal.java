@@ -52,9 +52,9 @@ public class BeeGlowFlowerMobGoal extends Goal {
                     int z = optional.get().getBlockZ() + this.bee.getRandom().nextInt(6) - this.bee.getRandom().nextInt(3);
                     BlockPos blockPos = new BlockPos(x, y, z);
                     if (optional.get() instanceof IPlantMob flowerCow) {
-                        if (flowerCow.getPlant().canSurvive(flowerCow.getPlant().defaultBlockState(), this.bee.level(), blockPos)) {
-                            if (this.bee.level().getBlockState(blockPos).isAir()) {
-                                this.bee.level().setBlock(blockPos, flowerCow.getPlant().defaultBlockState(), 3);
+                        if (flowerCow.getPlant().canSurvive(flowerCow.getPlant().defaultBlockState(), this.bee.level, blockPos)) {
+                            if (this.bee.level.getBlockState(blockPos).isAir()) {
+                                this.bee.level.setBlock(blockPos, flowerCow.getPlant().defaultBlockState(), 3);
                             }
                         }
                     }
@@ -71,7 +71,7 @@ public class BeeGlowFlowerMobGoal extends Goal {
     private Optional<Animal> findNearestFlowerMob(Predicate<LivingEntity> p_28076_, double p_28077_) {
         TargetingConditions targetConditions = TargetingConditions.forNonCombat().range(p_28077_).selector(p_28076_);
 
-        Animal livingEntity = this.bee.level().getNearestEntity(this.bee.level().getEntitiesOfClass(Animal.class, this.bee.getBoundingBox().expandTowards(0, -p_28077_, 0), (p_148152_) -> {
+        Animal livingEntity = this.bee.level.getNearestEntity(this.bee.level.getEntitiesOfClass(Animal.class, this.bee.getBoundingBox().expandTowards(0, -p_28077_, 0), (p_148152_) -> {
             return true;
         }), targetConditions, this.bee, this.bee.getX(), this.bee.getEyeY(), this.bee.getZ());
 

@@ -21,7 +21,7 @@ public class SitEvenFlying extends Goal {
 	public boolean canUse() {
 		if (this.mob.isInWaterOrBubble()) {
 			return false;
-		} else if (!this.mob.onGround()) {
+		} else if (!this.mob.isOnGround()) {
 			return false;
 		} else {
 			LivingEntity livingentity = this.mob.getOwner();

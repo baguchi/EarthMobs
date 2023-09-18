@@ -44,7 +44,7 @@ public class BeePollinateFlowerMobGoal extends Goal {
 			return false;
 		} else if (this.bee.hasNectar()) {
 			return false;
-		} else if (this.bee.level().isRaining()) {
+		} else if (this.bee.level.isRaining()) {
 			return false;
 		} else {
 			Optional<LivingEntity> optional = this.findNearbyFlowerMob();
@@ -63,7 +63,7 @@ public class BeePollinateFlowerMobGoal extends Goal {
 	public boolean canBeeContinueToUse() {
 		if (!this.pollinating) {
 			return false;
-		} else if (this.bee.level().isRaining()) {
+		} else if (this.bee.level.isRaining()) {
 			return false;
 		} else if (this.hasPollinatedLongEnough()) {
 			return this.bee.getRandom().nextFloat() < 0.2F;
@@ -150,7 +150,7 @@ public class BeePollinateFlowerMobGoal extends Goal {
 	private Optional<LivingEntity> findNearestFlowerMob(Predicate<LivingEntity> p_28076_, double p_28077_) {
 		TargetingConditions targetConditions = TargetingConditions.forNonCombat().range(p_28077_).selector(p_28076_);
 
-		LivingEntity livingEntity = this.bee.level().getNearestEntity(this.bee.level().getEntitiesOfClass(LivingEntity.class, this.bee.getBoundingBox().inflate(p_28077_), (p_148152_) -> {
+		LivingEntity livingEntity = this.bee.level.getNearestEntity(this.bee.level.getEntitiesOfClass(LivingEntity.class, this.bee.getBoundingBox().inflate(p_28077_), (p_148152_) -> {
 			return true;
 		}), targetConditions, this.bee, this.bee.getX(), this.bee.getEyeY(), this.bee.getZ());
 

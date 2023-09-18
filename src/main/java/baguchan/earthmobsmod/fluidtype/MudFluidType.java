@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.fluidtype;
 import baguchan.earthmobsmod.EarthMobsMod;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -14,7 +15,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidType;
-import org.joml.Matrix4f;
 
 import java.util.function.Consumer;
 
@@ -81,8 +81,8 @@ public class MudFluidType extends FluidType {
 				RenderSystem.setShader(GameRenderer::getPositionTexShader);
 				RenderSystem.setShaderTexture(0, texture);
 				BufferBuilder buffer = Tesselator.getInstance().getBuilder();
-				BlockPos playerEyePos = BlockPos.containing(mc.player.getX(), mc.player.getEyeY(), mc.player.getZ());
-				float brightness = LightTexture.getBrightness(mc.player.level().dimensionType(), mc.player.level().getMaxLocalRawBrightness(playerEyePos));
+                BlockPos playerEyePos = new BlockPos(mc.player.getX(), mc.player.getEyeY(), mc.player.getZ());
+                float brightness = LightTexture.getBrightness(mc.player.level.dimensionType(), mc.player.level.getMaxLocalRawBrightness(playerEyePos));
 				RenderSystem.enableBlend();
 				RenderSystem.defaultBlendFunc();
 				RenderSystem.setShaderColor(brightness, brightness, brightness, 0.65F);

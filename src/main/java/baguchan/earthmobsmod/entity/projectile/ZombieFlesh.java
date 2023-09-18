@@ -11,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -53,7 +54,7 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 			ParticleOptions particleoptions = this.getParticle();
 
 			for (int i = 0; i < 8; ++i) {
-				this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+				this.level.addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 
@@ -89,10 +90,10 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 
 		int damage = Mth.ceil((3 * projectileMovement.length()));
 		if (damage > 0) {
-			if (entity.hurt(this.damageSources().thrown(this, this.getOwner()), damage)) {
+			if (entity.hurt(DamageSource.thrown(this, this.getOwner()), damage)) {
 
-				if (!this.level().isClientSide) {
-					this.level().broadcastEntityEvent(this, (byte) 3);
+				if (!this.level.isClientSide) {
+					this.level.broadcastEntityEvent(this, (byte) 3);
 					this.playSound(SoundEvents.SLIME_BLOCK_BREAK, 0.4F, 1.0F);
 					this.discard();
 				}
@@ -122,8 +123,8 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 			this.setDeltaMovement(projectileMovement.multiply(new Vec3(direction.getX(), direction.getY(), direction.getZ())).multiply(0.75, 0.65, 0.75));
 			this.playSound(SoundEvents.SLIME_BLOCK_BREAK, 0.4F, 1.0F);
 		} else {
-			if (!this.level().isClientSide) {
-				this.level().broadcastEntityEvent(this, (byte) 3);
+			if (!this.level.isClientSide) {
+				this.level.broadcastEntityEvent(this, (byte) 3);
 				this.playSound(SoundEvents.SLIME_BLOCK_BREAK, 0.4F, 1.0F);
 				this.discard();
 			}

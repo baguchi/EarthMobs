@@ -2,7 +2,7 @@ package baguchan.earthmobsmod.client.render.layer;
 
 import baguchan.earthmobsmod.entity.IFlowerCow;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -36,16 +36,16 @@ public class CowPlantLayer<T extends Cow & IFlowerCow> extends RenderLayer<T, Co
 				BakedModel bakedmodel = blockrenderdispatcher.getBlockModel(blockstate);
 				p_117256_.pushPose();
 				p_117256_.translate((double) 0.2F, (double) -0.35F, 0.5D);
-				p_117256_.mulPose(Axis.YP.rotationDegrees(-48.0F));
+                p_117256_.mulPose(Vector3f.YP.rotationDegrees(-48.0F));
 				p_117256_.scale(-1.0F, -1.0F, 1.0F);
 				p_117256_.translate(-0.5D, -0.5D, -0.5D);
 				this.renderMushroomBlock(p_117256_, p_117257_, p_117258_, flag, blockrenderdispatcher, blockstate, i, bakedmodel);
 				p_117256_.popPose();
 				p_117256_.pushPose();
 				p_117256_.translate((double) 0.2F, (double) -0.35F, 0.5D);
-				p_117256_.mulPose(Axis.YP.rotationDegrees(42.0F));
+                p_117256_.mulPose(Vector3f.YP.rotationDegrees(42.0F));
 				p_117256_.translate((double) 0.1F, 0.0D, (double) -0.6F);
-				p_117256_.mulPose(Axis.YP.rotationDegrees(-48.0F));
+                p_117256_.mulPose(Vector3f.YP.rotationDegrees(-48.0F));
 				p_117256_.scale(-1.0F, -1.0F, 1.0F);
 				p_117256_.translate(-0.5D, -0.5D, -0.5D);
 				this.renderMushroomBlock(p_117256_, p_117257_, p_117258_, flag, blockrenderdispatcher, blockstate, i, bakedmodel);
@@ -53,7 +53,7 @@ public class CowPlantLayer<T extends Cow & IFlowerCow> extends RenderLayer<T, Co
 				p_117256_.pushPose();
 				this.getParentModel().getHead().translateAndRotate(p_117256_);
 				p_117256_.translate(0.0D, (double) -0.7F, (double) -0.2F);
-				p_117256_.mulPose(Axis.YP.rotationDegrees(-78.0F));
+                p_117256_.mulPose(Vector3f.YP.rotationDegrees(-78.0F));
 				p_117256_.scale(-1.0F, -1.0F, 1.0F);
 				p_117256_.translate(-0.5D, -0.5D, -0.5D);
 				this.renderMushroomBlock(p_117256_, p_117257_, p_117258_, flag, blockrenderdispatcher, blockstate, i, bakedmodel);

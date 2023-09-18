@@ -4,6 +4,8 @@ import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.client.ClientRegistrar;
 import baguchan.earthmobsmod.message.SyncFishMessage;
 import baguchan.earthmobsmod.registry.*;
+import baguchan.earthmobsmod.world.features.ModEarthFeatures;
+import baguchan.earthmobsmod.world.features.ModEarthPlacements;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -75,7 +77,8 @@ public class EarthMobsMod {
 	private void setup(final FMLCommonSetupEvent event) {
 		ModEffects.init();
 		ModInteractionInformations.init();
-
+		ModEarthFeatures.init();
+		ModEarthPlacements.init();
 	}
 
 	private void setupMessages() {

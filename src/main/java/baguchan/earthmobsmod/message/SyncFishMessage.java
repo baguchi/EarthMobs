@@ -41,7 +41,7 @@ public class SyncFishMessage {
         NetworkEvent.Context context = contextSupplier.get();
         if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
             context.enqueueWork(() -> {
-                Level level = Minecraft.getInstance().player.level();
+                Level level = Minecraft.getInstance().player.level;
                 if (level == null) {
                     return;
                 }

@@ -12,7 +12,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -70,7 +69,7 @@ public abstract class MudFluid extends WaterFluid {
 	}
 
 	@Override
-	protected boolean canConvertToSource(Level p_256670_) {
+	protected boolean canConvertToSource() {
 		return false;
 	}
 

@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.registry.ModEffects;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
@@ -52,7 +53,7 @@ public class ShadowCapability implements ICapabilityProvider, INBTSerializable<C
 	private float percentBoost;
 
 	public void tick(LivingEntity livingEntity) {
-		if (!livingEntity.level().isClientSide) {
+		if (!livingEntity.level.isClientSide) {
 			removeBoost(livingEntity);
 		}
 
@@ -85,14 +86,14 @@ public class ShadowCapability implements ICapabilityProvider, INBTSerializable<C
 	}
 
 	protected void pushEntities(LivingEntity entity) {
-		if (!entity.level().isClientSide()) {
-			List<LivingEntity> list = entity.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), entity.getBoundingBox().expandTowards(0.05F, 0.0F, 0.05F), EntitySelector.pushableBy(entity));
+		if (!entity.level.isClientSide()) {
+			List<LivingEntity> list = entity.level.getEntities(EntityTypeTest.forClass(LivingEntity.class), entity.getBoundingBox().expandTowards(0.05F, 0.0F, 0.05F), EntitySelector.pushableBy(entity));
 			if (!list.isEmpty()) {
 				for (int l = 0; l < list.size(); ++l) {
 					LivingEntity entity2 = list.get(l);
 					if (entity != entity2 && !entity.isAlliedTo(entity2)) {
 						entity2.knockback(2.0D * percentBoost, entity2.getX() - entity.getX(), entity2.getZ() - entity.getZ());
-						entity2.hurt(entity.damageSources().mobAttack(entity), Mth.floor(8.0F * percentBoost));
+						entity2.hurt(DamageSource.mobAttack(entity).setMagic(), Mth.floor(8.0F * percentBoost));
 					}
 				}
 			}
@@ -125,7 +126,7 @@ public class ShadowCapability implements ICapabilityProvider, INBTSerializable<C
 			}
 		}
 		if (percentBoost > 0) {
-			if (!entity.level().isClientSide) {
+			if (!entity.level.isClientSide) {
 				AttributeInstance attributeinstance = entity.getAttribute(Attributes.MOVEMENT_SPEED);
 				if (attributeinstance == null) {
 					return;

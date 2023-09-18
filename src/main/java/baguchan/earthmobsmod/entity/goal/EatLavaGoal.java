@@ -17,7 +17,7 @@ public class EatLavaGoal extends Goal {
 
     public EatLavaGoal(Mob p_25207_) {
         this.mob = p_25207_;
-        this.level = p_25207_.level();
+        this.level = p_25207_.level;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
     }
 

@@ -5,7 +5,7 @@ import baguchan.earthmobsmod.entity.HyperRabbit;
 import baguchan.earthmobsmod.registry.ModEffects;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -96,7 +96,7 @@ public class ClientEvents {
                 posestack.translate(deltaX, deltaY, deltaZ);
 
                 if (!entity.hasPose(Pose.SLEEPING)) {
-                    posestack.mulPose(Axis.YP.rotationDegrees(180.0F - f));
+                    posestack.mulPose(Vector3f.YP.rotationDegrees(180.0F - f));
                 }
 
                 //renderer.setupRotations(entity, posestack, f7, f, partialtick);
@@ -109,8 +109,8 @@ public class ClientEvents {
                 float f8 = 0.0F;
                 float f5 = 0.0F;
                 if (!shouldSit && entity.isAlive()) {
-                    f8 = entity.walkAnimation.speed(partialtick);
-                    f5 = entity.walkAnimation.position(partialtick);
+                    f8 = Mth.lerp(partialtick, entity.animationSpeedOld, entity.animationSpeed);
+                    f5 = entity.animationPosition - entity.animationSpeed * (1.0F - partialtick);
                     if (entity.isBaby()) {
                         f5 *= 3.0F;
                     }
@@ -158,7 +158,7 @@ public class ClientEvents {
                 posestack.translate(deltaX2, deltaY2, deltaZ2);
 
                 if (!entity.hasPose(Pose.SLEEPING)) {
-                    posestack.mulPose(Axis.YP.rotationDegrees(180.0F - f));
+                    posestack.mulPose(Vector3f.YP.rotationDegrees(180.0F - f));
                 }
 
                 //renderer.setupRotations(entity, posestack, f7, f, partialtick);

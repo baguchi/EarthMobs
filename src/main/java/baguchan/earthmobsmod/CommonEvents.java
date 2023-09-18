@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,7 +33,7 @@ import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -49,7 +48,7 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
-	public void onEntityJoinWorld(MobSpawnEvent.FinalizeSpawn event) {
+	public void onEntityJoinWorld(LivingSpawnEvent.SpecialSpawn event) {
 		if (event.getEntity() instanceof final AbstractVillager villager) {
 			villager.targetSelector.addGoal(1, new AvoidEntityGoal<>(villager, BoulderingDrowned.class, 8.0F, 0.8D, 0.6D));
 			villager.targetSelector.addGoal(1, new AvoidEntityGoal<>(villager, BoulderingZombie.class, 8.0F, 0.8D, 0.6D));
@@ -76,8 +75,8 @@ public class CommonEvents {
 		ItemStack itemStack = event.getEntity().getItemInHand(hand);
 		BlockPos pos = event.getPos();
 
-		Level level = event.getEntity().level();
-		if (itemStack.getItem() instanceof ShearsItem && event.getEntity().level().getBlockState(pos).getBlock() == Blocks.MELON) {
+		Level level = event.getEntity().level;
+		if (itemStack.getItem() instanceof ShearsItem && event.getEntity().level.getBlockState(pos).getBlock() == Blocks.MELON) {
 			Direction direction = event.getHitVec().getDirection();
 			if (direction != Direction.DOWN && direction != Direction.UP) {
 				itemStack.hurtAndBreak(1, event.getEntity(), (p_29910_) -> {
@@ -143,7 +142,7 @@ public class CommonEvents {
 	public static void onLightning(EntityStruckByLightningEvent event) {
 		if (event.getEntity() instanceof Pig pig) {
 			if (event.getEntity().getType() != ModEntities.ZOMBIFIED_PIG.get()) {
-				ZombifiedPig zombifiedpig = ModEntities.ZOMBIFIED_PIG.get().create(event.getEntity().level());
+				ZombifiedPig zombifiedpig = ModEntities.ZOMBIFIED_PIG.get().create(event.getEntity().level);
 				zombifiedpig.moveTo(pig.getX(), pig.getY(), pig.getZ(), pig.getYRot(), pig.getXRot());
 				zombifiedpig.setNoAi(pig.isNoAi());
 				zombifiedpig.setBaby(pig.isBaby());
@@ -154,7 +153,7 @@ public class CommonEvents {
 
 				zombifiedpig.setPersistenceRequired();
 				net.minecraftforge.event.ForgeEventFactory.onLivingConvert(pig, zombifiedpig);
-				event.getEntity().level().addFreshEntity(zombifiedpig);
+				event.getEntity().level.addFreshEntity(zombifiedpig);
 				pig.discard();
 				event.setCanceled(true);
 			} else {
@@ -166,7 +165,7 @@ public class CommonEvents {
 	@SubscribeEvent
 	public static void onHurt(LivingHurtEvent event) {
 		event.getEntity().getCapability(EarthMobsMod.SHADOW_CAP).ifPresent(shadowCapability -> {
-			if (shadowCapability.getPercentBoost() >= 0.5F && !event.getSource().is(DamageTypeTags.BYPASSES_ARMOR) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE)) {
+			if (shadowCapability.getPercentBoost() >= 0.5F && !event.getSource().isBypassArmor() && !event.getSource().isExplosion() && !event.getSource().isFire()) {
 				event.setAmount(event.getAmount() * (1.0F - shadowCapability.getPercentBoost()));
 				if (shadowCapability.getPercentBoost() > 0.9F) {
 					event.setCanceled(true);

@@ -2,7 +2,7 @@ package baguchan.earthmobsmod.client.render.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -45,7 +45,7 @@ public class SpinAttackEffectLayer<T extends LivingEntity, M extends EntityModel
             for (int i = 0; i < 3; ++i) {
                 p_117526_.pushPose();
                 float f = p_117533_ * (float) (-(45 + i * 5));
-                p_117526_.mulPose(Axis.YP.rotationDegrees(f));
+                p_117526_.mulPose(Vector3f.YP.rotationDegrees(f));
                 float f1 = 0.75F * (float) i;
                 p_117526_.scale(f1, f1, f1);
                 p_117526_.translate(0.0F, -0.2F + 0.6F * (float) i, 0.0F);

@@ -5,6 +5,8 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.8.0
 
 import baguchan.earthmobsmod.client.animation.FancyChickenAnimations;
 import baguchan.earthmobsmod.entity.FancyChicken;
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -84,6 +86,10 @@ public class FancyChickenModel<T extends FancyChicken> extends HierarchicalModel
 		if (this.young) {
 			this.applyStatic(FancyChickenAnimations.BABY);
 		}
+	}
+
+	protected void applyStatic(AnimationDefinition p_288996_) {
+		KeyframeAnimations.animate(this, p_288996_, 0L, 1.0F, ANIMATION_VECTOR_CACHE);
 	}
 
 	@Override

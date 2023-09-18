@@ -89,15 +89,15 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 
 	public void aiStep() {
 		super.aiStep();
-		if (!this.level().isClientSide) {
+		if (!this.level.isClientSide) {
 			int i = Mth.floor(this.getX());
 			int j = Mth.floor(this.getY());
 			int k = Mth.floor(this.getZ());
-			if (this.level().getBiome(new BlockPos(i, 0, k)).value().getBaseTemperature() > 1.0F) {
-				this.hurt(this.damageSources().onFire(), 1.0F);
+			if (this.level.getBiome(new BlockPos(i, 0, k)).value().getBaseTemperature() > 1.0F) {
+				this.hurt(DamageSource.ON_FIRE, 1.0F);
 			}
 
-			if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level(), this)) {
+			if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
 				return;
 			}
 
@@ -108,8 +108,8 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 				j = Mth.floor(this.getY());
 				k = Mth.floor(this.getZ() + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
 				BlockPos blockpos = new BlockPos(i, j, k);
-				if (this.level().isEmptyBlock(blockpos) && this.level().getBiome(blockpos).value().getBaseTemperature() < 0.8F && blockstate.canSurvive(this.level(), blockpos)) {
-					this.level().setBlockAndUpdate(blockpos, blockstate);
+				if (this.level.isEmptyBlock(blockpos) && this.level.getBiome(blockpos).value().getBaseTemperature() < 0.8F && blockstate.canSurvive(this.level, blockpos)) {
+					this.level.setBlockAndUpdate(blockpos, blockstate);
 				}
 			}
 		}
@@ -117,7 +117,7 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 	}
 
 	public void performRangedAttack(LivingEntity target, float p_29913_) {
-		MelonSeed melonSeed = new MelonSeed(this.level(), this);
+		MelonSeed melonSeed = new MelonSeed(this.level, this);
 		double d0 = target.getEyeY() - (double) 1.1F;
 		double d1 = target.getX() - this.getX();
 		double d2 = d0 - melonSeed.getY();
@@ -125,7 +125,7 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 		double d4 = Math.sqrt(d1 * d1 + d3 * d3) * (double) 0.2F;
 		melonSeed.shoot(d1, d2 + d4, d3, 1.6F, 12.0F);
 		this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-		this.level().addFreshEntity(melonSeed);
+		this.level.addFreshEntity(melonSeed);
 	}
 
 	protected float getStandingEyeHeight(Pose p_29917_, EntityDimensions p_29918_) {
@@ -137,21 +137,21 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 		if (false && itemstack.getItem() == Items.SHEARS && this.readyForShearing()) { //Forge: Moved to onSheared
 			this.shear(SoundSource.PLAYERS);
 			this.gameEvent(GameEvent.SHEAR, p_29920_);
-			if (!this.level().isClientSide) {
+			if (!this.level.isClientSide) {
 				itemstack.hurtAndBreak(1, p_29920_, (p_29910_) -> {
 					p_29910_.broadcastBreakEvent(p_29921_);
 				});
 			}
 
-			return InteractionResult.sidedSuccess(this.level().isClientSide);
+			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else {
 			return InteractionResult.PASS;
 		}
 	}
 
 	public void shear(SoundSource p_29907_) {
-		this.level().playSound((Player) null, this, SoundEvents.SNOW_GOLEM_SHEAR, p_29907_, 1.0F, 1.0F);
-		if (!this.level().isClientSide()) {
+		this.level.playSound((Player) null, this, SoundEvents.SNOW_GOLEM_SHEAR, p_29907_, 1.0F, 1.0F);
+		if (!this.level.isClientSide()) {
 			this.setMelon(false);
 			this.spawnAtLocation(new ItemStack(ModBlocks.CARVED_MELON.get()), 1.7F);
 		}

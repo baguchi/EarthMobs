@@ -40,7 +40,7 @@ public class Moobloom extends Cow implements net.minecraftforge.common.IForgeShe
 			p_28941_.setItemInHand(p_28942_, itemstack2);
 			SoundEvent soundevent = SoundEvents.BONE_MEAL_USE;
 			this.playSound(soundevent, 1.0F, 1.0F);
-			return InteractionResult.sidedSuccess(this.level().isClientSide);
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else if (itemstack.is(Items.BOWL) && !this.isBaby()) {
 			Pair<MobEffect, Integer> pair = this.getEffectForCow();
 			ItemStack itemstack1 = new ItemStack(Items.SUSPICIOUS_STEW);
@@ -50,7 +50,7 @@ public class Moobloom extends Cow implements net.minecraftforge.common.IForgeShe
 			p_28941_.setItemInHand(p_28942_, itemstack2);
 			SoundEvent soundevent = SoundEvents.MOOSHROOM_MILK_SUSPICIOUSLY;
 			this.playSound(soundevent, 1.0F, 1.0F);
-			return InteractionResult.sidedSuccess(this.level().isClientSide);
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else {
 			return super.mobInteract(p_28941_, p_28942_);
 		}
@@ -73,11 +73,11 @@ public class Moobloom extends Cow implements net.minecraftforge.common.IForgeShe
 	}
 
 	private java.util.List<ItemStack> shearInternal(SoundSource p_28924_) {
-		this.level().playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, p_28924_, 1.0F, 1.0F);
-		if (!this.level().isClientSide()) {
-			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        this.level.playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, p_28924_, 1.0F, 1.0F);
+        if (!this.level.isClientSide()) {
+            ((ServerLevel) this.level).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();
-			Cow cow = EntityType.COW.create(this.level());
+            Cow cow = EntityType.COW.create(this.level);
 			cow.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
 			cow.setHealth(this.getHealth());
 			cow.yBodyRot = this.yBodyRot;
@@ -91,7 +91,7 @@ public class Moobloom extends Cow implements net.minecraftforge.common.IForgeShe
 			}
 
 			cow.setInvulnerable(this.isInvulnerable());
-			this.level().addFreshEntity(cow);
+            this.level.addFreshEntity(cow);
 
 			java.util.List<ItemStack> items = new java.util.ArrayList<>();
 			for (int i = 0; i < 4; ++i) {

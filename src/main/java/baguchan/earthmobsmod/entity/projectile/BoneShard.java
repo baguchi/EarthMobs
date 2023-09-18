@@ -6,7 +6,6 @@ import com.google.common.collect.Sets;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -14,6 +13,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -28,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
@@ -74,7 +75,7 @@ public class BoneShard extends ThrowableItemProjectile {
 			double d2 = (double) (i >> 0 & 255) / 255.0D;
 
 			for (int j = 0; j < p_36877_; ++j) {
-				this.level().addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
+                this.level.addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
 			}
 
 		}
@@ -85,7 +86,7 @@ public class BoneShard extends ThrowableItemProjectile {
 			ParticleOptions particleoptions = this.getParticle();
 
 			for (int i = 0; i < 8; ++i) {
-				this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                this.level.addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 
@@ -112,8 +113,8 @@ public class BoneShard extends ThrowableItemProjectile {
 
 	public void tick() {
 		super.tick();
-		if (this.level().isClientSide) {
-			if (this.onGround()) {
+        if (this.level.isClientSide) {
+            if (this.onGround) {
 			} else {
 				this.makeParticle(2);
 			}
@@ -127,7 +128,7 @@ public class BoneShard extends ThrowableItemProjectile {
 	public void addAdditionalSaveData(CompoundTag p_36881_) {
 		super.addAdditionalSaveData(p_36881_);
 		if (this.potion != Potions.EMPTY) {
-			p_36881_.putString("Potion", BuiltInRegistries.POTION.getKey(this.potion).toString());
+            p_36881_.putString("Potion", ForgeRegistries.POTIONS.getKey(this.potion).toString());
 		}
 
 		if (!this.effects.isEmpty()) {
@@ -175,7 +176,7 @@ public class BoneShard extends ThrowableItemProjectile {
 
         int damage = Mth.ceil((3 * projectileMovement.length()));
         if (damage > 0) {
-            if (entity.hurt(this.damageSources().thrown(this, this.getOwner()), damage)) {
+            if (entity.hurt(DamageSource.thrown(this, this.getOwner()), damage)) {
 
                 if (entity instanceof LivingEntity) {
                     for (MobEffectInstance mobeffectinstance : this.potion.getEffects()) {
@@ -194,8 +195,8 @@ public class BoneShard extends ThrowableItemProjectile {
 
 	protected void onHit(HitResult p_37488_) {
 		super.onHit(p_37488_);
-		if (!this.level().isClientSide) {
-			this.level().broadcastEntityEvent(this, (byte) 3);
+        if (!this.level.isClientSide) {
+            this.level.broadcastEntityEvent(this, (byte) 3);
 			this.playSound(SoundEvents.TURTLE_EGG_BREAK, 0.4F, 1.25F);
 			this.discard();
 		}

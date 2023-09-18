@@ -3,18 +3,18 @@ package baguchan.earthmobsmod.client.render.layer;
 import baguchan.earthmobsmod.entity.MelonGolem;
 import baguchan.earthmobsmod.registry.ModBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.SnowGolemModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,7 +38,7 @@ public class MelonGolemHeadLayer extends RenderLayer<MelonGolem, SnowGolemModel<
 				this.getParentModel().getHead().translateAndRotate(p_117494_);
 				float f = 0.625F;
 				p_117494_.translate(0.0D, -0.34375D, 0.0D);
-				p_117494_.mulPose(Axis.YP.rotationDegrees(180.0F));
+				p_117494_.mulPose(Vector3f.YP.rotationDegrees(180.0F));
 				p_117494_.scale(0.625F, -0.625F, -0.625F);
 				ItemStack itemstack = new ItemStack(block);
 				if (flag) {
@@ -49,7 +49,7 @@ public class MelonGolemHeadLayer extends RenderLayer<MelonGolem, SnowGolemModel<
 					p_117494_.translate(-0.5D, -0.5D, -0.5D);
 					blockrenderdispatcher.getModelRenderer().renderModel(p_117494_.last(), p_117495_.getBuffer(RenderType.outline(TextureAtlas.LOCATION_BLOCKS)), blockstate, bakedmodel, 0.0F, 0.0F, 0.0F, p_117496_, i);
 				} else {
-					minecraft.getItemRenderer().renderStatic(p_117497_, itemstack, ItemDisplayContext.HEAD, false, p_117494_, p_117495_, p_117497_.level(), p_117496_, LivingEntityRenderer.getOverlayCoords(p_117497_, 0.0F), p_117497_.getId());
+					minecraft.getItemRenderer().renderStatic(p_117497_, itemstack, ItemTransforms.TransformType.HEAD, false, p_117494_, p_117495_, p_117497_.level, p_117496_, LivingEntityRenderer.getOverlayCoords(p_117497_, 0.0F), p_117497_.getId());
 				}
 
 				p_117494_.popPose();

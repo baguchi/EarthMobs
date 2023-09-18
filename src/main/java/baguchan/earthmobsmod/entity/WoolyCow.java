@@ -84,7 +84,7 @@ public class WoolyCow extends Cow implements Shearable, net.minecraftforge.commo
 	}
 
 	public void aiStep() {
-		if (this.level().isClientSide) {
+        if (this.level.isClientSide) {
 			this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
 		}
 
@@ -137,7 +137,7 @@ public class WoolyCow extends Cow implements Shearable, net.minecraftforge.commo
 
 	@Override
 	public void shear(SoundSource p_29819_) {
-		this.level().playSound((Player) null, this, SoundEvents.SHEEP_SHEAR, p_29819_, 1.0F, 1.0F);
+        this.level.playSound((Player) null, this, SoundEvents.SHEEP_SHEAR, p_29819_, 1.0F, 1.0F);
 		this.setSheared(true);
 		int i = 1 + this.random.nextInt(3);
 

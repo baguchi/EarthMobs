@@ -2,7 +2,6 @@ package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -11,6 +10,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -53,16 +53,6 @@ public class HyperRabbit extends Rabbit {
 	}
 
 	@Override
-	public void setVariant(Rabbit.Variant p_29734_) {
-		if (p_29734_ == Rabbit.Variant.EVIL) {
-			if (!this.hasCustomName()) {
-				this.setCustomName(Component.literal("HR_X"));
-			}
-		}
-		super.setVariant(p_29734_);
-	}
-
-	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(DATA_SPARK, false);
@@ -93,13 +83,13 @@ public class HyperRabbit extends Rabbit {
 
 	protected void dealDamage(LivingEntity livingentity) {
 		if (this.isAlive() && isSpark() && !this.isAlliedTo(livingentity)) {
-			boolean flag = livingentity.isDamageSourceBlocked(this.damageSources().indirectMagic(this, this));
+            boolean flag = livingentity.isDamageSourceBlocked(DamageSource.indirectMagic(this, this));
 			float f1 = (float) Mth.clamp(livingentity.getDeltaMovement().horizontalDistanceSqr() * 1.15F, 0.2F, 3.0F);
 			float f2 = flag ? 0.25F : 1.0F;
-			float i = getVariant() == Variant.EVIL ? 1.5F : 1F;
+            float i = getRabbitType() == 99 ? 1.5F : 1F;
 			double d1 = this.getX() - livingentity.getX();
 			double d2 = this.getZ() - livingentity.getZ();
-			if (livingentity.hurt(this.damageSources().indirectMagic(this, this), 2.0F * i)) {
+            if (livingentity.hurt(DamageSource.indirectMagic(this, this), 2.0F * i)) {
 				this.playSound(SoundEvents.PLAYER_ATTACK_KNOCKBACK, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 				this.doEnchantDamageEffects(this, livingentity);
 				livingentity.knockback(f2 * f1, d1, d2);
@@ -130,7 +120,7 @@ public class HyperRabbit extends Rabbit {
 		@Override
 		public void stop() {
 			super.stop();
-			if (this.rabbit.getVariant() != Variant.EVIL) {
+            if (this.rabbit.getRabbitType() != 99) {
 				this.rabbit.setSpark(false);
 			}
 		}
@@ -150,7 +140,7 @@ public class HyperRabbit extends Rabbit {
 		}
 
 		public boolean canUse() {
-			return this.rabbit.getVariant() != Variant.EVIL && super.canUse();
+            return this.rabbit.getRabbitType() != 99 && super.canUse();
 		}
 
 		@Override

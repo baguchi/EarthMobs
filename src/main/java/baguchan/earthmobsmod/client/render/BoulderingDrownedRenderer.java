@@ -7,13 +7,11 @@ import baguchan.earthmobsmod.client.render.layer.SpinAttackEffectLayer;
 import baguchan.earthmobsmod.client.render.layer.ZombieOuterLayer;
 import baguchan.earthmobsmod.entity.BoulderingDrowned;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AbstractZombieRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,9 +32,6 @@ public class BoulderingDrownedRenderer extends AbstractZombieRenderer<Bouldering
 		super.setupRotations(p_114109_, p_114110_, p_114111_, p_114112_, p_114113_);
 		float f = p_114109_.getSwimAmount(p_114113_);
 		if (f > 0.0F) {
-			float f1 = -10.0F - p_114109_.getXRot();
-			float f2 = Mth.lerp(f, 0.0F, f1);
-			p_114110_.rotateAround(Axis.XP.rotationDegrees(f2), 0.0F, p_114109_.getBbHeight() / 2.0F, 0.0F);
 		}
 
 	}

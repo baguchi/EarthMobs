@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -59,7 +60,7 @@ public class BoulderingDrowned extends Drowned {
 
 	public void tick() {
 		super.tick();
-		if (!this.level().isClientSide) {
+        if (!this.level.isClientSide) {
 			this.setClimbing(this.horizontalCollision);
 		}
 	}
@@ -74,7 +75,7 @@ public class BoulderingDrowned extends Drowned {
 	}
 
 	public void updateSwimming() {
-		if (!this.level().isClientSide) {
+        if (!this.level.isClientSide) {
 			if (this.isEffectiveAi() && this.isInWater() && this.wantsToSwim()) {
 				this.navigation = this.waterNavigation;
 				this.setSwimming(true);
@@ -156,7 +157,7 @@ public class BoulderingDrowned extends Drowned {
 				f3 *= f5 / f4;
 				this.push((double) f1, (double) f2, (double) f3);
 				this.startAutoSpinAttack(30);
-				if (this.onGround()) {
+                if (this.onGround) {
 					float f6 = 1.1999999F;
 					this.move(MoverType.SELF, new Vec3(0.0D, (double) 1.1999999F, 0.0D));
 				}
@@ -192,12 +193,12 @@ public class BoulderingDrowned extends Drowned {
 
 	public void startAutoSpinAttack(int p_204080_) {
 		this.autoSpinAttackTicks = p_204080_;
-		if (!this.level().isClientSide) {
+        if (!this.level.isClientSide) {
 			this.setLivingEntityFlag(4, true);
 		}
 	}
 
 	protected void doAutoAttackOnTouch(LivingEntity p_36355_) {
-		p_36355_.hurt(this.damageSources().mobAttack(this), 9);
+        p_36355_.hurt(DamageSource.mobAttack(this), 9);
 	}
 }

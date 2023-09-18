@@ -2,7 +2,7 @@ package baguchan.earthmobsmod.data;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModBlocks;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -12,7 +12,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockstateGenerator extends BlockStateProvider {
-    public BlockstateGenerator(PackOutput gen, ExistingFileHelper exFileHelper) {
+    public BlockstateGenerator(DataGenerator gen, ExistingFileHelper exFileHelper) {
         super(gen, EarthMobsMod.MODID, exFileHelper);
     }
 
@@ -55,5 +55,10 @@ public class BlockstateGenerator extends BlockStateProvider {
 
     private ResourceLocation extend(ResourceLocation rl, String suffix) {
         return new ResourceLocation(rl.getNamespace(), rl.getPath() + suffix);
+    }
+
+    @Override
+    public String getName() {
+        return "EarthMobs block models";
     }
 }

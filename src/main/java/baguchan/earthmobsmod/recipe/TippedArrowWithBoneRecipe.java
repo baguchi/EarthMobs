@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.recipe;
 import baguchan.earthmobsmod.registry.ModItems;
 import baguchan.earthmobsmod.registry.ModRecipes;
 import com.google.common.collect.Lists;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
@@ -11,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -20,8 +18,8 @@ import net.minecraftforge.common.Tags;
 import java.util.List;
 
 public class TippedArrowWithBoneRecipe extends CustomRecipe {
-	public TippedArrowWithBoneRecipe(ResourceLocation p_44503_, CraftingBookCategory p_251985_) {
-		super(p_44503_, p_251985_);
+    public TippedArrowWithBoneRecipe(ResourceLocation p_44503_) {
+        super(p_44503_);
 	}
 
 	public boolean matches(CraftingContainer p_44515_, Level p_44516_) {
@@ -70,7 +68,7 @@ public class TippedArrowWithBoneRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer p_44001_, RegistryAccess p_267165_) {
+    public ItemStack assemble(CraftingContainer p_44001_) {
 		for (int i = 0; i < p_44001_.getContainerSize(); ++i) {
 			ItemStack itemstack = p_44001_.getItem(i);
 			if (itemstack.is(ModItems.BONE_SHARD.get())) {

@@ -84,15 +84,15 @@ public class CluckShroom extends Chicken implements Shearable, net.minecraftforg
 	}
 
 	public void shear(SoundSource p_28924_) {
-		shearInternal(p_28924_).forEach(s -> this.level().addFreshEntity(new ItemEntity(this.level(), this.getX(), this.getY(1.0D), this.getZ(), s)));
+        shearInternal(p_28924_).forEach(s -> this.level.addFreshEntity(new ItemEntity(this.level, this.getX(), this.getY(1.0D), this.getZ(), s)));
 	}
 
 	private java.util.List<ItemStack> shearInternal(SoundSource p_28924_) {
-		this.level().playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, p_28924_, 1.0F, 1.0F);
-		if (!this.level().isClientSide()) {
-			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        this.level.playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, p_28924_, 1.0F, 1.0F);
+        if (!this.level.isClientSide()) {
+            ((ServerLevel) this.level).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();
-			Chicken chickin = EntityType.CHICKEN.create(this.level());
+            Chicken chickin = EntityType.CHICKEN.create(this.level);
 			chickin.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
 			chickin.setHealth(this.getHealth());
 			chickin.yBodyRot = this.yBodyRot;
@@ -106,7 +106,7 @@ public class CluckShroom extends Chicken implements Shearable, net.minecraftforg
 			}
 
 			chickin.setInvulnerable(this.isInvulnerable());
-			this.level().addFreshEntity(chickin);
+            this.level.addFreshEntity(chickin);
 
 			java.util.List<ItemStack> items = new java.util.ArrayList<>();
 			for (int i = 0; i < 5; ++i) {
@@ -139,7 +139,7 @@ public class CluckShroom extends Chicken implements Shearable, net.minecraftforg
 			Block block = ((BlockItem) item).getBlock();
 			if (block instanceof FlowerBlock) {
 				FlowerBlock flowerblock = (FlowerBlock) block;
-				return Optional.of(Pair.of(flowerblock.getSuspiciousEffect(), flowerblock.getEffectDuration()));
+                return Optional.of(Pair.of(flowerblock.getSuspiciousStewEffect(), flowerblock.getEffectDuration()));
 			}
 		}
 

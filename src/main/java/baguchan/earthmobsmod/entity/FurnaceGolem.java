@@ -1,6 +1,5 @@
 package baguchan.earthmobsmod.entity;
 
-import baguchan.earthmobsmod.registry.ModDamageSource;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -50,7 +49,7 @@ public class FurnaceGolem extends AbstractGolem {
 
     public FurnaceGolem(EntityType<? extends AbstractGolem> p_27508_, Level p_27509_) {
         super(p_27508_, p_27509_);
-        this.setMaxUpStep(1.0F);
+        this.maxUpStep = 1.0F;
     }
 
     @Override
@@ -104,7 +103,7 @@ public class FurnaceGolem extends AbstractGolem {
             ++this.activeTime;
             this.checkFurnaceAttack(this.getBoundingBox(), this.getBoundingBox().inflate(2.0F));
 
-            if (this.activeTime >= 400 && this.onGround()) {
+            if (this.activeTime >= 400 && this.onGround) {
                 this.playSound(SoundEvents.FIRE_EXTINGUISH, 2.0f, 1.0f);
                 this.setFurnaceActive(false);
                 this.activeTime = 0;
@@ -116,9 +115,9 @@ public class FurnaceGolem extends AbstractGolem {
             int j = Mth.floor(this.getY() - (double) 0.2F);
             int k = Mth.floor(this.getZ());
             BlockPos pos = new BlockPos(i, j, k);
-            BlockState blockstate = this.level().getBlockState(pos);
+            BlockState blockstate = this.level.getBlockState(pos);
             if (!blockstate.isAir()) {
-                this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate).setPos(pos), this.getX() + ((double) this.random.nextFloat() - 0.5D) * (double) this.getBbWidth(), this.getY() + 0.1D, this.getZ() + ((double) this.random.nextFloat() - 0.5D) * (double) this.getBbWidth(), 4.0D * ((double) this.random.nextFloat() - 0.5D), 0.5D, ((double) this.random.nextFloat() - 0.5D) * 4.0D);
+                this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate).setPos(pos), this.getX() + ((double) this.random.nextFloat() - 0.5D) * (double) this.getBbWidth(), this.getY() + 0.1D, this.getZ() + ((double) this.random.nextFloat() - 0.5D) * (double) this.getBbWidth(), 4.0D * ((double) this.random.nextFloat() - 0.5D), 0.5D, ((double) this.random.nextFloat() - 0.5D) * 4.0D);
             }
         }
 
@@ -126,7 +125,7 @@ public class FurnaceGolem extends AbstractGolem {
 
     protected void checkFurnaceAttack(AABB p_21072_, AABB p_21073_) {
         AABB aabb = p_21072_.minmax(p_21073_);
-        List<Entity> list = this.level().getEntities(this, aabb);
+        List<Entity> list = this.level.getEntities(this, aabb);
         if (!list.isEmpty()) {
             for (Entity entity : list) {
                 if (entity != this) {
@@ -139,7 +138,7 @@ public class FurnaceGolem extends AbstractGolem {
     public void furnaceAttack(Entity p_36347_) {
         if (p_36347_ instanceof Enemy && !(p_36347_ instanceof Creeper)) {
             if (p_36347_.isAttackable() && !this.isAlliedTo(p_36347_)) {
-                p_36347_.hurt(this.damageSources().source(ModDamageSource.BURNING, this), 6.0F);
+                p_36347_.hurt(DamageSource.mobAttack(this).setIsFire(), 6.0F);
                 p_36347_.setSecondsOnFire(5);
             }
         }
@@ -176,10 +175,10 @@ public class FurnaceGolem extends AbstractGolem {
 
     public boolean doHurtTarget(Entity p_28837_) {
         this.attackAnimationTick = 10;
-        this.level().broadcastEntityEvent(this, (byte) 4);
+        this.level.broadcastEntityEvent(this, (byte) 4);
         float f = this.getAttackDamage();
         float f1 = (int) f > 0 ? f / 2.0F + (float) this.random.nextInt((int) f) : f;
-        boolean flag = p_28837_.hurt(this.damageSources().mobAttack(this), f1);
+        boolean flag = p_28837_.hurt(DamageSource.mobAttack(this), f1);
         if (flag) {
             double d2;
             if (p_28837_ instanceof LivingEntity) {
@@ -251,7 +250,7 @@ public class FurnaceGolem extends AbstractGolem {
                     itemstack.shrink(1);
                 }
 
-                return InteractionResult.sidedSuccess(this.level().isClientSide);
+                return InteractionResult.sidedSuccess(this.level.isClientSide);
             }
         }
     }

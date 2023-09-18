@@ -3,7 +3,7 @@ package baguchan.earthmobsmod.data;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModBlocks;
 import baguchan.earthmobsmod.registry.ModItems;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import static baguchan.earthmobsmod.EarthMobsMod.prefix;
 
 public class ItemModelGenerator extends ItemModelProvider {
-    public ItemModelGenerator(PackOutput generator, ExistingFileHelper existingFileHelper) {
+    public ItemModelGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, EarthMobsMod.MODID, existingFileHelper);
     }
 
@@ -101,5 +101,10 @@ public class ItemModelGenerator extends ItemModelProvider {
 
     public ItemModelBuilder spawnEgg(Item item) {
         return withExistingParent(ForgeRegistries.ITEMS.getKey(item).getPath(), mcLoc("item/template_spawn_egg"));
+    }
+
+    @Override
+    public String getName() {
+        return "EarthMobs item and itemblock models";
     }
 }

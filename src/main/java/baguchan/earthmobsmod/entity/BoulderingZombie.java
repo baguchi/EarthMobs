@@ -33,7 +33,7 @@ public class BoulderingZombie extends Zombie {
 
 	public void tick() {
 		super.tick();
-		if (!this.level().isClientSide) {
+        if (!this.level.isClientSide) {
 			this.setClimbing(this.horizontalCollision);
 		}
 	}
@@ -42,7 +42,7 @@ public class BoulderingZombie extends Zombie {
 	protected void doUnderWaterConversion() {
 		this.convertToZombieType(ModEntities.BOULDERING_DROWNED.get());
 		if (!this.isSilent()) {
-			this.level().levelEvent((Player) null, 1040, this.blockPosition(), 0);
+            this.level.levelEvent((Player) null, 1040, this.blockPosition(), 0);
 		}
 	}
 

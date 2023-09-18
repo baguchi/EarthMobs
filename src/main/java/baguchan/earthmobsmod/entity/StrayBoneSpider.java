@@ -18,7 +18,7 @@ public class StrayBoneSpider extends BoneSpider {
 	}
 
 	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
-		StrayBoneShard bone = new StrayBoneShard(this.level(), this);
+        StrayBoneShard bone = new StrayBoneShard(this.level, this);
 		double d1 = p_29912_.getX() - this.getX();
 		double d2 = p_29912_.getEyeY() - this.getEyeY();
 		double d3 = p_29912_.getZ() - this.getZ();
@@ -30,7 +30,7 @@ public class StrayBoneSpider extends BoneSpider {
 				bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration() / 4, 0));
 			}
 		}
-		this.level().addFreshEntity(bone);
+        this.level.addFreshEntity(bone);
 	}
 
 	@Override

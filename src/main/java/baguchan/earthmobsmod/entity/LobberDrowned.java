@@ -62,16 +62,16 @@ public class LobberDrowned extends Drowned implements RangedAttackMob {
 	@Override
 	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
 		if (this.getMainHandItem().is(Items.TRIDENT)) {
-			ThrownTrident throwntrident = new ThrownTrident(this.level(), this, new ItemStack(Items.TRIDENT));
+            ThrownTrident throwntrident = new ThrownTrident(this.level, this, new ItemStack(Items.TRIDENT));
 			double d0 = p_29912_.getX() - this.getX();
 			double d1 = p_29912_.getY(0.3333333333333333D) - throwntrident.getY();
 			double d2 = p_29912_.getZ() - this.getZ();
 			double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-			throwntrident.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level().getDifficulty().getId() * 4));
+            throwntrident.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level.getDifficulty().getId() * 4));
 			this.playSound(SoundEvents.DROWNED_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-			this.level().addFreshEntity(throwntrident);
+            this.level.addFreshEntity(throwntrident);
 		} else {
-			ZombieFlesh zombieFlesh = new ZombieFlesh(this.level(), this);
+            ZombieFlesh zombieFlesh = new ZombieFlesh(this.level, this);
 			double d0 = p_29912_.getEyeY() - this.getEyeY();
 			double d1 = p_29912_.getX() - this.getX();
 			double d3 = p_29912_.getZ() - this.getZ();
@@ -79,7 +79,7 @@ public class LobberDrowned extends Drowned implements RangedAttackMob {
 			zombieFlesh.shoot(d1, d0 + d4, d3, 0.9F, this.isUnderWater() ? 0.85F : 0.1F);
 			zombieFlesh.setDrowned(true);
 			this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-			this.level().addFreshEntity(zombieFlesh);
+            this.level.addFreshEntity(zombieFlesh);
 			this.swing(InteractionHand.MAIN_HAND);
 		}
 	}

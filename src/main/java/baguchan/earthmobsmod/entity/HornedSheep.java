@@ -4,7 +4,7 @@ import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -120,10 +120,10 @@ public class HornedSheep extends Sheep {
             double d0 = (double) Mth.randomBetween(this.random, -0.2F, 0.2F);
             double d1 = (double) Mth.randomBetween(this.random, 0.3F, 0.7F);
             double d2 = (double) Mth.randomBetween(this.random, -0.2F, 0.2F);
-            ItemEntity itementity = new ItemEntity(this.level(), vec3.x(), vec3.y(), vec3.z(), itemstack, d0, d1, d2);
-            this.level().addFreshEntity(itementity);
-            ItemEntity itementity2 = new ItemEntity(this.level(), vec3.x(), vec3.y(), vec3.z(), itemstack, d0, d1, d2);
-            this.level().addFreshEntity(itementity2);
+            ItemEntity itementity = new ItemEntity(this.level, vec3.x(), vec3.y(), vec3.z(), itemstack, d0, d1, d2);
+            this.level.addFreshEntity(itementity);
+            ItemEntity itementity2 = new ItemEntity(this.level, vec3.x(), vec3.y(), vec3.z(), itemstack, d0, d1, d2);
+            this.level.addFreshEntity(itementity2);
             return true;
         }
     }
@@ -131,7 +131,7 @@ public class HornedSheep extends Sheep {
     public ItemStack createHorn() {
         RandomSource randomsource = RandomSource.create((long) this.getUUID().hashCode());
         TagKey<Instrument> tagkey = InstrumentTags.REGULAR_GOAT_HORNS;
-        HolderSet<Instrument> holderset = BuiltInRegistries.INSTRUMENT.getOrCreateTag(tagkey);
+        HolderSet<Instrument> holderset = Registry.INSTRUMENT.getOrCreateTag(tagkey);
         return InstrumentItem.create(ModItems.HORN_FLUTE.get(), holderset.getRandomElement(randomsource).get());
     }
 
@@ -153,7 +153,7 @@ public class HornedSheep extends Sheep {
         this.updateSwingTime();
         super.aiStep();
 
-        if (this.level().isClientSide) {
+        if (this.level.isClientSide) {
 
             this.aggressiveScaleOld = this.aggressiveScale;
             if (this.isAggressive()) {
@@ -241,7 +241,7 @@ public class HornedSheep extends Sheep {
 
 
             if (livingentity != null) {
-                double d0 = this.hornedSheep.getPerceivedTargetDistanceSquareForMeleeAttack(livingentity);
+                double d0 = this.hornedSheep.distanceToSqr(livingentity.getX(), livingentity.getY(), livingentity.getZ());
                 this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
                 if (this.rushing) {
 
@@ -257,15 +257,15 @@ public class HornedSheep extends Sheep {
                             this.hornedSheep.getMoveControl().setWantedPosition(this.targetPos.getX(), this.targetPos.getY(), this.targetPos.getZ(), 2.5F);
                         }
 
-                        if (this.hasRammedHornBreakingBlock(this.hornedSheep.level(), this.hornedSheep)) {
+                        if (this.hasRammedHornBreakingBlock(this.hornedSheep.level, this.hornedSheep)) {
                             boolean flag = this.hornedSheep.dropHorn();
                             if (flag) {
-                                this.hornedSheep.level().playSound((Player) null, this.hornedSheep, SoundEvents.GOAT_HORN_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                                this.hornedSheep.level.playSound((Player) null, this.hornedSheep, SoundEvents.GOAT_HORN_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F);
                             }
                             this.rushCooldowmTick = 200 + this.hornedSheep.random.nextInt(200);
                             this.rushing = false;
                         }
-                        if (this.hornedSheep.position().closerThan(this.targetPos.getCenter(), 0.25F)) {
+                        if (this.hornedSheep.blockPosition().closerThan(this.targetPos, 0.25F)) {
                             this.rushCooldowmTick = 200 + this.hornedSheep.random.nextInt(200);
                             this.rushing = false;
                         }
@@ -307,10 +307,10 @@ public class HornedSheep extends Sheep {
                     int j = this.hornedSheep.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) ? this.hornedSheep.getEffect(MobEffects.MOVEMENT_SLOWDOWN).getAmplifier() + 1 : 0;
                     float f = 0.25F * (float) (i - j);
                     float f1 = Mth.clamp(this.hornedSheep.getSpeed() * 1.65F, 0.2F, 3.0F) + f;
-                    float f2 = p_25557_.isDamageSourceBlocked(this.hornedSheep.damageSources().mobAttack(this.hornedSheep)) ? 0.5F : 1.0F;
+                    float f2 = p_25557_.isDamageSourceBlocked(DamageSource.mobAttack(this.hornedSheep)) ? 0.5F : 1.0F;
 
                     p_25557_.knockback((double) (f2 * f1) * (this.hornedSheep.isBaby() ? 0.2F : 1.5F), this.hornedSheep.getX() - p_25557_.getX(), this.hornedSheep.getZ() - p_25557_.getZ());
-                    p_25557_.hurt(this.hornedSheep.damageSources().mobAttack(this.hornedSheep), (float) this.hornedSheep.getAttributeValue(Attributes.ATTACK_DAMAGE) + 2.0F);
+                    p_25557_.hurt(DamageSource.mobAttack(this.hornedSheep), (float) this.hornedSheep.getAttributeValue(Attributes.ATTACK_DAMAGE) + 2.0F);
                 }
                 this.ticksUntilNextAttack = 30;
             }
@@ -328,7 +328,7 @@ public class HornedSheep extends Sheep {
 
         private boolean hasRammedHornBreakingBlock(Level p_217363_, HornedSheep p_217364_) {
             Vec3 vec3 = p_217364_.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize();
-            BlockPos blockpos = BlockPos.containing(p_217364_.position().add(vec3));
+            BlockPos blockpos = new BlockPos(p_217364_.position().add(vec3));
             return p_217363_.getBlockState(blockpos).is(BlockTags.SNAPS_GOAT_HORN) || p_217363_.getBlockState(blockpos.above()).is(BlockTags.SNAPS_GOAT_HORN);
         }
     }

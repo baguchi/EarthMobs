@@ -5,6 +5,8 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.7.4
 
 import baguchan.earthmobsmod.client.animation.JollyLlamaAnimation;
 import baguchan.earthmobsmod.entity.JollyLlama;
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -75,6 +77,17 @@ public class JollyLlamaModel<T extends JollyLlama> extends HierarchicalModel<T> 
         }
         this.animateWalk(JollyLlamaAnimation.WALK, limbSwing, limbSwingAmount, 1.0F, 1.0F);
     }
+
+    protected void applyStatic(AnimationDefinition p_288996_) {
+        KeyframeAnimations.animate(this, p_288996_, 0L, 1.0F, ANIMATION_VECTOR_CACHE);
+    }
+
+    protected void animateWalk(AnimationDefinition p_268159_, float p_268057_, float p_268347_, float p_268138_, float p_268165_) {
+        long i = (long) (p_268057_ * 50.0F * p_268138_);
+        float f = Math.min(p_268347_ * p_268165_, 1.0F);
+        KeyframeAnimations.animate(this, p_268159_, i, f, ANIMATION_VECTOR_CACHE);
+    }
+
 
     @Override
     public ModelPart root() {

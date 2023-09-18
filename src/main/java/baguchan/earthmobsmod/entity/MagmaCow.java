@@ -69,7 +69,7 @@ public class MagmaCow extends Cow {
             p_28941_.setItemInHand(p_28942_, itemstack2);
             SoundEvent soundevent = SoundEvents.BUCKET_FILL_LAVA;
             this.playSound(soundevent, 1.0F, 1.0F);
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
         } else {
             return super.mobInteract(p_28941_, p_28942_);
         }
@@ -102,7 +102,7 @@ public class MagmaCow extends Cow {
 
     public void aiStep() {
         this.updateSwingTime();
-        if (this.level().isClientSide) {
+        if (this.level.isClientSide) {
             this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
         }
 
@@ -117,7 +117,7 @@ public class MagmaCow extends Cow {
                 double d0 = this.random.nextGaussian() * 0.02D;
                 double d1 = this.random.nextGaussian() * 0.02D;
                 double d2 = this.random.nextGaussian() * 0.02D;
-                this.level().addParticle(ParticleTypes.LAVA, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+                this.level.addParticle(ParticleTypes.LAVA, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
             }
         } else {
             super.handleEntityEvent(p_29814_);
@@ -162,6 +162,6 @@ public class MagmaCow extends Cow {
             this.ageUp(60);
         }
         this.playSound(SoundEvents.FIRE_EXTINGUISH);
-        this.level().broadcastEntityEvent(this, (byte) 11);
+        this.level.broadcastEntityEvent(this, (byte) 11);
     }
 }

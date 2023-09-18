@@ -7,9 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +22,6 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Collection;
 import java.util.EnumSet;
@@ -73,7 +70,7 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 	}
 
 	public void tick() {
-		if (!this.level().isClientSide && this.isAlive() && !this.isNoAi()) {
+        if (!this.level.isClientSide && this.isAlive() && !this.isNoAi()) {
 			if (this.isFreezeConverting()) {
 				--this.conversionTime;
 				if (this.conversionTime < 0) {
@@ -113,7 +110,7 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 	protected void doFreezeConversion() {
 		this.convertTo(ModEntities.STRAY_BONE_SPIDER.get(), true);
 		if (!this.isSilent()) {
-			this.level().levelEvent((Player) null, 1048, this.blockPosition(), 0);
+            this.level.levelEvent((Player) null, 1048, this.blockPosition(), 0);
 		}
 
 	}
@@ -164,7 +161,7 @@ public class BoneSpider extends Spider implements RangedAttackMob {
     }
 
 	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
-		BoneShard bone = new BoneShard(this.level(), this);
+        BoneShard bone = new BoneShard(this.level, this);
 		double d1 = p_29912_.getX() - this.getX();
 		double d2 = p_29912_.getEyeY() - this.getEyeY();
 		double d3 = p_29912_.getZ() - this.getZ();
@@ -175,7 +172,7 @@ public class BoneSpider extends Spider implements RangedAttackMob {
                 bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration() / 4, 0));
             }
         }
-		this.level().addFreshEntity(bone);
+        this.level.addFreshEntity(bone);
     }
 
     @Override

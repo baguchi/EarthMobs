@@ -81,7 +81,7 @@ public class BabyGhast extends PathfinderMob {
 			}
 		}
 
-		this.calculateEntityAnimation(false);
+		this.calculateEntityAnimation(this, false);
 	}
 
 	protected PathNavigation createNavigation(Level p_218342_) {
@@ -112,7 +112,7 @@ public class BabyGhast extends PathfinderMob {
 
 	@Override
 	public void tick() {
-		if (this.level().isClientSide()) {
+		if (this.level.isClientSide()) {
 			if (!this.isInSittingPose()) {
 				this.idleAnimationState.startIfStopped(this.tickCount);
 			}
@@ -174,7 +174,7 @@ public class BabyGhast extends PathfinderMob {
 	public LivingEntity getOwner() {
 		try {
 			UUID uuid = this.getOwnerUUID();
-			return uuid == null ? null : this.level().getPlayerByUUID(uuid);
+			return uuid == null ? null : this.level.getPlayerByUUID(uuid);
 		} catch (IllegalArgumentException illegalargumentexception) {
 			return null;
 		}
@@ -190,7 +190,7 @@ public class BabyGhast extends PathfinderMob {
 			double d0 = this.random.nextGaussian() * 0.02D;
 			double d1 = this.random.nextGaussian() * 0.02D;
 			double d2 = this.random.nextGaussian() * 0.02D;
-			this.level().addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+			this.level.addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
 		}
 
 	}
@@ -209,7 +209,7 @@ public class BabyGhast extends PathfinderMob {
 	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
 		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
 		Item item = itemstack.getItem();
-		if (this.level().isClientSide) {
+		if (this.level.isClientSide) {
 			boolean flag = this.getOwner() != null || (itemstack.is(Items.CRIMSON_NYLIUM) || itemstack.is(Items.CRIMSON_FUNGUS));
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
 		} else {
@@ -246,9 +246,9 @@ public class BabyGhast extends PathfinderMob {
 					this.navigation.stop();
 					this.setTarget((LivingEntity) null);
 					this.setInSittingPose(true);
-					this.level().broadcastEntityEvent(this, (byte) 7);
+					this.level.broadcastEntityEvent(this, (byte) 7);
 				} else {
-					this.level().broadcastEntityEvent(this, (byte) 6);
+					this.level.broadcastEntityEvent(this, (byte) 6);
 				}
 
 				return InteractionResult.SUCCESS;
@@ -340,7 +340,7 @@ public class BabyGhast extends PathfinderMob {
 			if (livingentity != null) {
 				double d0 = 64.0D;
 				if (livingentity.distanceToSqr(this.ghast) < 128.0D && this.ghast.hasLineOfSight(livingentity)) {
-					Level level = this.ghast.level();
+					Level level = this.ghast.level;
 					++this.chargeTime;
 					if (this.chargeTime == 10 && !this.ghast.isSilent()) {
 						this.ghast.playSound(SoundEvents.GHAST_SCREAM, 0.6F, 1.25F);

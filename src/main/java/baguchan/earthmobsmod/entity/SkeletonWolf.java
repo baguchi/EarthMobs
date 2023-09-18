@@ -3,12 +3,10 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -25,7 +23,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.Tags;
 
@@ -78,7 +75,7 @@ public class SkeletonWolf extends Wolf {
 	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
 		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
 		Item item = itemstack.getItem();
-		if (this.level().isClientSide) {
+        if (this.level.isClientSide) {
 			boolean flag = this.isOwnedBy(p_30412_) || this.isTame() || itemstack.is(Tags.Items.BONES) && !this.isTame() && !this.isAngry();
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
 		} else {
@@ -107,9 +104,9 @@ public class SkeletonWolf extends Wolf {
 					this.navigation.stop();
 					this.setTarget((LivingEntity) null);
 					this.setOrderedToSit(true);
-					this.level().broadcastEntityEvent(this, (byte) 7);
+                    this.level.broadcastEntityEvent(this, (byte) 7);
 				} else {
-					this.level().broadcastEntityEvent(this, (byte) 6);
+                    this.level.broadcastEntityEvent(this, (byte) 6);
 				}
 
 				return InteractionResult.SUCCESS;

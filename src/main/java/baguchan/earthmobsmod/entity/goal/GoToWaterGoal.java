@@ -22,7 +22,7 @@ public class GoToWaterGoal extends Goal {
 	public GoToWaterGoal(PathfinderMob p_32425_, double p_32426_) {
 		this.mob = p_32425_;
 		this.speedModifier = p_32426_;
-		this.level = p_32425_.level();
+		this.level = p_32425_.level;
 		this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 	}
 
