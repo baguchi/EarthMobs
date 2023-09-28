@@ -5,6 +5,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -28,6 +30,32 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Rabbit.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0D);
+    }
+
+    @Override
+    public void aiStep() {
+        if (this.isAlive()) {
+            boolean flag = this.isSunBurnTick();
+            if (flag) {
+                ItemStack itemstack = this.getItemBySlot(EquipmentSlot.HEAD);
+                if (!itemstack.isEmpty()) {
+                    if (itemstack.isDamageableItem()) {
+                        itemstack.setDamageValue(itemstack.getDamageValue() + this.random.nextInt(2));
+                        if (itemstack.getDamageValue() >= itemstack.getMaxDamage()) {
+                            this.broadcastBreakEvent(EquipmentSlot.HEAD);
+                            this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                        }
+                    }
+
+                    flag = false;
+                }
+
+                if (flag) {
+                    this.setSecondsOnFire(8);
+                }
+            }
+        }
+        super.aiStep();
     }
 
     @Override
