@@ -6,6 +6,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -23,6 +24,10 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     public ZombifiedRabbit(EntityType<? extends Rabbit> p_29656_, Level p_29657_) {
         super(p_29656_, p_29657_);
         this.xpReward = 3;
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return Rabbit.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0D);
     }
 
     @Override
