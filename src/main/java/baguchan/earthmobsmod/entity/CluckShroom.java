@@ -12,13 +12,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -27,11 +24,11 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.SuspiciousEffectHolder;
 import net.minecraft.world.level.block.state.BlockState;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -133,17 +130,9 @@ public class CluckShroom extends Chicken implements Shearable, net.minecraftforg
 
 	}
 
-	private Optional<Pair<MobEffect, Integer>> getEffectFromItemStack(ItemStack p_28957_) {
-		Item item = p_28957_.getItem();
-		if (item instanceof BlockItem) {
-			Block block = ((BlockItem) item).getBlock();
-			if (block instanceof FlowerBlock) {
-				FlowerBlock flowerblock = (FlowerBlock) block;
-				return Optional.of(Pair.of(flowerblock.getSuspiciousEffect(), flowerblock.getEffectDuration()));
-			}
-		}
-
-		return Optional.empty();
+	private Optional<List<SuspiciousEffectHolder.EffectEntry>> getEffectsFromItemStack(ItemStack p_298141_) {
+		SuspiciousEffectHolder suspiciouseffectholder = SuspiciousEffectHolder.tryGet(p_298141_.getItem());
+		return suspiciouseffectholder != null ? Optional.of(suspiciouseffectholder.getSuspiciousEffects()) : Optional.empty();
 	}
 
 	public void setCluckShroomType(CluckShroom.CluckShroomType p_28929_) {

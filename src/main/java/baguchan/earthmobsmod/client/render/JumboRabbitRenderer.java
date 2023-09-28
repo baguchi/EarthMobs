@@ -21,7 +21,7 @@ public class JumboRabbitRenderer<T extends JumboRabbit> extends MobRenderer<T, J
 
 
 	public JumboRabbitRenderer(EntityRendererProvider.Context p_173952_) {
-		super(p_173952_, new JumboRabbitModel<>(p_173952_.bakeLayer(ModModelLayers.JUMBO_RABBIT)), 0.3F);
+        super(p_173952_, new JumboRabbitModel<>(p_173952_.bakeLayer(ModModelLayers.JUMBO_RABBIT)), 0.45F);
 	}
 
 	@Override

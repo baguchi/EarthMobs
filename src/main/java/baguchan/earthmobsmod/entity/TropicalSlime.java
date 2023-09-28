@@ -1,7 +1,5 @@
 package baguchan.earthmobsmod.entity;
 
-import baguchan.earthmobsmod.EarthMobsMod;
-import baguchan.earthmobsmod.message.SyncFishMessage;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -40,7 +38,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -179,10 +176,7 @@ public class TropicalSlime extends Slime implements Bucketable {
         compoundnbt1.putDouble(TAG_FISH_POSZ, z);
         listnbt.add(compoundnbt1);
         fishTag.put(TAG_FISH_LIST, listnbt);
-        if (!this.level().isClientSide()) {
-            this.setFishData(fishTag);
-            EarthMobsMod.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), new SyncFishMessage(this, this.getFishData()));
-        }
+        this.setFishData(fishTag);
     }
 
     protected boolean releaseFish(ItemStack stack) {
@@ -197,9 +191,6 @@ public class TropicalSlime extends Slime implements Bucketable {
             stack.getOrCreateTag().putInt("BucketVariantTag", ((CompoundTag) listnbt.get(size)).getInt(TAG_FISH_VARIANT));
             listnbt.remove(size);
             this.setFishData(fishTag);
-            if (!this.level().isClientSide()) {
-                EarthMobsMod.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> this), new SyncFishMessage(this, this.getFishData()));
-            }
             return true;
         }
         return false;

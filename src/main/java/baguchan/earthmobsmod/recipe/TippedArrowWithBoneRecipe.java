@@ -4,7 +4,6 @@ import baguchan.earthmobsmod.registry.ModItems;
 import baguchan.earthmobsmod.registry.ModRecipes;
 import com.google.common.collect.Lists;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,8 +19,8 @@ import net.minecraftforge.common.Tags;
 import java.util.List;
 
 public class TippedArrowWithBoneRecipe extends CustomRecipe {
-	public TippedArrowWithBoneRecipe(ResourceLocation p_44503_, CraftingBookCategory p_251985_) {
-		super(p_44503_, p_251985_);
+	public TippedArrowWithBoneRecipe(CraftingBookCategory p_251985_) {
+		super(p_251985_);
 	}
 
 	public boolean matches(CraftingContainer p_44515_, Level p_44516_) {

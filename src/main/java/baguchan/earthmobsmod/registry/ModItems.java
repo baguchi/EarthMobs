@@ -67,6 +67,8 @@ public class ModItems {
 	public static final RegistryObject<Item> SKELETON_WOLF_SPAWNEGG = ITEMS.register("skeleton_wolf_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.SKELETON_WOLF, 12698049, 4802889, (new Item.Properties())));
 	public static final RegistryObject<Item> WITHER_SKELETON_WOLF_SPAWNEGG = ITEMS.register("wither_skeleton_wolf_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.WITHER_SKELETON_WOLF, 1315860, 4672845, (new Item.Properties())));
 	public static final RegistryObject<Item> BABY_GHAST_SPAWNEGG = ITEMS.register("baby_ghast_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BABY_GHAST, 0xFFFFFF, 0xFF9393, (new Item.Properties())));
+    public static final RegistryObject<Item> ZOMBIFIED_RABBIT_SPAWNEGG = ITEMS.register("zombified_rabbit_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.ZOMBIFIED_RABBIT, 0x79AD69, 0x2A5131, (new Item.Properties())));
+
 	public static final RegistryObject<Item> MAGMA_COW_SPAWNEGG = ITEMS.register("magma_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MAGMA_COW, 0x2C2C33, 0xFBAA59, (new Item.Properties())));
 	public static final RegistryObject<Item> MELON_GOLEM_SPAWNEGG = ITEMS.register("melon_golem_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MELON_GOLEM, 14283506, 0x34791E, (new Item.Properties())));
 	public static final RegistryObject<Item> FURNACE_GOLEM_SPAWNEGG = ITEMS.register("furnace_golem_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.FURNACE_GOLEM, 14405058, 0x8F5846, (new Item.Properties())));
@@ -93,6 +95,7 @@ public class ModItems {
 			event.accept(BONE_SPIDER_SPAWNEGG);
 			event.accept(STRAY_BONE_SPIDER_SPAWNEGG);
 			event.accept(BABY_GHAST_SPAWNEGG);
+            event.accept(ZOMBIFIED_RABBIT_SPAWNEGG);
 			event.accept(BOULDERING_ZOMBIE_SPAWNEGG);
 			event.accept(BOULDERING_DROWNED_SPAWNEGG);
 			event.accept(LOBBER_ZOMBIE_SPAWNEGG);

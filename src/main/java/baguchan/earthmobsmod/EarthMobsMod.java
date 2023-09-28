@@ -2,7 +2,6 @@ package baguchan.earthmobsmod;
 
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.client.ClientRegistrar;
-import baguchan.earthmobsmod.message.SyncFishMessage;
 import baguchan.earthmobsmod.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,8 +18,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,13 +33,6 @@ public class EarthMobsMod {
 	public static Capability<ShadowCapability> SHADOW_CAP = CapabilityManager.get(new CapabilityToken<>() {
 	});
 
-	public static final String PROTOCOL_VERSION = "1";
-	public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-			EarthMobsMod.prefix("channel"),
-			() -> PROTOCOL_VERSION,
-			PROTOCOL_VERSION::equals,
-			PROTOCOL_VERSION::equals
-	);
 
 	public EarthMobsMod() {
 		// Register the setup method for modloading
@@ -53,8 +43,6 @@ public class EarthMobsMod {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 
 		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-		this.setupMessages();
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 		ModBlocks.BLOCKS.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
@@ -76,11 +64,6 @@ public class EarthMobsMod {
 		ModEffects.init();
 		ModInteractionInformations.init();
 
-	}
-
-	private void setupMessages() {
-		CHANNEL.registerMessage(0, SyncFishMessage.class,
-				SyncFishMessage::serialize, SyncFishMessage::deserialize, SyncFishMessage::handle);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event) {

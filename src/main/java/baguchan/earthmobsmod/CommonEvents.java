@@ -8,7 +8,9 @@ import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -16,9 +18,13 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
@@ -31,10 +37,7 @@ import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -50,11 +53,11 @@ public class CommonEvents {
 
 	@SubscribeEvent
 	public void onEntityJoinWorld(MobSpawnEvent.FinalizeSpawn event) {
-		if (event.getEntity() instanceof final AbstractVillager villager) {
-			villager.targetSelector.addGoal(1, new AvoidEntityGoal<>(villager, BoulderingDrowned.class, 8.0F, 0.8D, 0.6D));
-			villager.targetSelector.addGoal(1, new AvoidEntityGoal<>(villager, BoulderingZombie.class, 8.0F, 0.8D, 0.6D));
-			villager.targetSelector.addGoal(1, new AvoidEntityGoal<>(villager, LobberDrowned.class, 8.0F, 0.8D, 0.6D));
-			villager.targetSelector.addGoal(1, new AvoidEntityGoal<>(villager, LobberZombie.class, 8.0F, 0.8D, 0.6D));
+        if (event.getEntity() instanceof Rabbit rabbit && !(event.getEntity() instanceof ZombifiedRabbit)) {
+            rabbit.targetSelector.addGoal(1, new AvoidEntityGoal<>(rabbit, BoulderingDrowned.class, 8.0F, 0.8D, 0.6D));
+            rabbit.targetSelector.addGoal(1, new AvoidEntityGoal<>(rabbit, BoulderingZombie.class, 8.0F, 0.8D, 0.6D));
+            rabbit.targetSelector.addGoal(1, new AvoidEntityGoal<>(rabbit, LobberDrowned.class, 8.0F, 0.8D, 0.6D));
+            rabbit.targetSelector.addGoal(1, new AvoidEntityGoal<>(rabbit, LobberZombie.class, 8.0F, 0.8D, 0.6D));
 		}
 	}
 
@@ -164,6 +167,27 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
+    public static void onKill(LivingDeathEvent event) {
+        LivingEntity living = event.getEntity();
+        Level level = event.getEntity().level();
+        if (event.getSource().getDirectEntity() instanceof Zombie || event.getSource().getDirectEntity() instanceof ZombifiedRabbit) {
+            if (living instanceof Rabbit rabbit && !(living instanceof Monster)) {
+                if (level instanceof ServerLevel serverLevel) {
+                    ZombifiedRabbit zombierabbit = rabbit.convertTo(ModEntities.ZOMBIFIED_RABBIT.get(), false);
+                    if (zombierabbit != null) {
+                        zombierabbit.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(zombierabbit.blockPosition()), MobSpawnType.CONVERSION, null, (CompoundTag) null);
+                        zombierabbit.setVariant(rabbit.getVariant());
+                        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(rabbit, zombierabbit);
+                        if (!rabbit.isSilent()) {
+                            level.levelEvent((Player) null, 1026, rabbit.blockPosition(), 0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
 	public static void onHurt(LivingHurtEvent event) {
 		event.getEntity().getCapability(EarthMobsMod.SHADOW_CAP).ifPresent(shadowCapability -> {
 			if (shadowCapability.getPercentBoost() >= 0.5F && !event.getSource().is(DamageTypeTags.BYPASSES_ARMOR) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE)) {

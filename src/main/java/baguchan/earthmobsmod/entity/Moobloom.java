@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cow;
@@ -21,11 +20,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SuspiciousStewItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import org.apache.commons.lang3.tuple.Pair;
+import net.minecraft.world.level.block.SuspiciousEffectHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Moobloom extends Cow implements net.minecraftforge.common.IForgeShearable, IFlowerCow, IHasFlower {
 	public Moobloom(EntityType<? extends Cow> p_28285_, Level p_28286_) {
@@ -42,10 +42,11 @@ public class Moobloom extends Cow implements net.minecraftforge.common.IForgeShe
 			this.playSound(soundevent, 1.0F, 1.0F);
 			return InteractionResult.sidedSuccess(this.level().isClientSide);
 		} else if (itemstack.is(Items.BOWL) && !this.isBaby()) {
-			Pair<MobEffect, Integer> pair = this.getEffectForCow();
+			Optional<List<SuspiciousEffectHolder.EffectEntry>> pair = this.getEffectsFromItemStack(this.getFlower().asItem().getDefaultInstance());
 			ItemStack itemstack1 = new ItemStack(Items.SUSPICIOUS_STEW);
-			SuspiciousStewItem.saveMobEffect(itemstack1, pair.getLeft(), pair.getRight());
-
+			if (pair.isPresent()) {
+				SuspiciousStewItem.saveMobEffects(itemstack1, pair.get());
+			}
 			ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, p_28941_, itemstack1, false);
 			p_28941_.setItemInHand(p_28942_, itemstack2);
 			SoundEvent soundevent = SoundEvents.MOOSHROOM_MILK_SUSPICIOUSLY;

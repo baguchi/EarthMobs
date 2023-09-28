@@ -26,8 +26,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Supplier;
 
 public class MobPotItem extends MobBucketItem {
+    private final Supplier<? extends Fluid> content;
     public MobPotItem(Supplier<? extends EntityType<?>> entitySupplier, Supplier<? extends Fluid> fluidSupplier, Supplier<? extends SoundEvent> soundSupplier, Properties properties) {
         super(entitySupplier, fluidSupplier, soundSupplier, properties);
+        this.content = fluidSupplier;
+
     }
 
     public InteractionResultHolder<ItemStack> use(Level p_40703_, Player p_40704_, InteractionHand p_40705_) {
@@ -76,7 +79,7 @@ public class MobPotItem extends MobBucketItem {
         return !p_40701_.getAbilities().instabuild ? new ItemStack(Items.FLOWER_POT) : p_40700_;
     }
 
-    public boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
-        return blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer) blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, this.getFluid());
+    protected boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
+        return blockstate.getBlock() instanceof LiquidBlockContainer liquid && liquid.canPlaceLiquid(null, worldIn, posIn, blockstate, this.content.get());
     }
 }

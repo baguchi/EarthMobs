@@ -35,15 +35,15 @@ public class HyperRabbitRenderer<T extends HyperRabbit> extends MobRenderer<T, H
 		String s = ChatFormatting.stripFormatting(p_115803_.getName().getString());
 
 		switch (p_115803_.getVariant()) {
-			case BROWN:
-			default:
-				return RABBIT_BROWN_LOCATION;
 			case WHITE, SALT:
 				return RABBIT_WHITE_LOCATION;
 			case GOLD:
 				return RABBIT_GOLD_LOCATION;
 			case EVIL:
 				return RABBIT_SA_X_LOCATION;
+            case BROWN:
+            default:
+                return RABBIT_BROWN_LOCATION;
 		}
 	}
 

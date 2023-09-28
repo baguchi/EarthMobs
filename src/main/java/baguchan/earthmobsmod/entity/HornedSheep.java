@@ -38,6 +38,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
@@ -188,6 +189,11 @@ public class HornedSheep extends Sheep {
         return super.hurt(damagesource, p_27568_);
     }
 
+    @Override
+    protected AABB getAttackBoundingBox() {
+        return super.getAttackBoundingBox().deflate(0.05F);
+    }
+
     public static class HornedSheepAttackGoal extends Goal {
         private final HornedSheep hornedSheep;
         private boolean rushing = true;
@@ -241,7 +247,6 @@ public class HornedSheep extends Sheep {
 
 
             if (livingentity != null) {
-                double d0 = this.hornedSheep.getPerceivedTargetDistanceSquareForMeleeAttack(livingentity);
                 this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
                 if (this.rushing) {
 
@@ -289,15 +294,15 @@ public class HornedSheep extends Sheep {
                 }
 
                 if (this.rushing && this.rushTick <= 140 || !this.rushing && this.ticksUntilNextAttack <= 0) {
-                    this.checkAndPerformAttack(livingentity, d0);
+                    this.checkAndPerformAttack(livingentity);
                 }
 
             }
         }
 
-        protected void checkAndPerformAttack(LivingEntity p_25557_, double p_25558_) {
+        protected void checkAndPerformAttack(LivingEntity p_25557_) {
             double d0 = this.getAttackReachSqr(p_25557_);
-            if (p_25558_ <= d0 && (!this.attack || !this.rushing)) {
+            if (this.hornedSheep.isWithinMeleeAttackRange(p_25557_) && (!this.attack || !this.rushing)) {
                 this.hornedSheep.swing(InteractionHand.MAIN_HAND);
                 if (!this.rushing) {
                     this.hornedSheep.doHurtTarget(p_25557_);

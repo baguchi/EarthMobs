@@ -33,6 +33,7 @@ public class EarthMobsConfig {
 
 		public final ForgeConfigSpec.IntValue boulderingZombieSpawnRate;
 		public final ForgeConfigSpec.IntValue lobberZombieSpawnRate;
+        public final ForgeConfigSpec.IntValue zombifiedRabbitSpawnRate;
 
 		public final ForgeConfigSpec.IntValue tropicalSlimeSpawnRate;
 
@@ -101,6 +102,9 @@ public class EarthMobsConfig {
 			lobberZombieSpawnRate = builder
 					.comment("Changed LobberZombie SpawnRate. [0 ~ 1000]")
 					.defineInRange("LobberZombie SpawnRate", 20, 0, 1000);
+            zombifiedRabbitSpawnRate = builder
+                    .comment("Changed LobberZombie SpawnRate. [0 ~ 1000]")
+                    .defineInRange("LobberZombie SpawnRate", 12, 0, 1000);
 			tropicalSlimeSpawnRate = builder
 					.comment("Changed TropicalSlime SpawnRate. [0 ~ 1000]")
 					.defineInRange("TropicalSlime SpawnRate", 3, 0, 1000);
