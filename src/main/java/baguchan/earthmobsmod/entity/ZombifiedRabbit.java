@@ -219,6 +219,11 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
         return false;
     }
 
+    @Override
+    public MobType getMobType() {
+        return MobType.UNDEAD;
+    }
+
     static class RabbitAttackGoal extends MeleeAttackGoal {
         public RabbitAttackGoal(Rabbit p_29738_) {
             super(p_29738_, 1.4D, true);

@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.registry.ModDamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 
 public class ZombifiedEffect extends MobEffect {
     public ZombifiedEffect(MobEffectCategory beneficial, int i) {
@@ -12,8 +13,9 @@ public class ZombifiedEffect extends MobEffect {
 
     public void applyEffectTick(LivingEntity p_301282_, int p_300945_) {
         super.applyEffectTick(p_301282_, p_300945_);
-        p_301282_.hurt(p_301282_.damageSources().source(ModDamageSource.ZOMBIFIED), 2);
-
+        if (p_301282_.getMobType() != MobType.UNDEAD) {
+            p_301282_.hurt(p_301282_.damageSources().source(ModDamageSource.ZOMBIFIED), 2);
+        }
 
     }
 
