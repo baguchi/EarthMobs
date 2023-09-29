@@ -2,13 +2,17 @@ package baguchan.earthmobsmod;
 
 import baguchan.earthmobsmod.block.CarvedMelonBlock;
 import baguchan.earthmobsmod.capability.ShadowCapability;
-import baguchan.earthmobsmod.entity.*;
+import baguchan.earthmobsmod.entity.FurnaceGolem;
+import baguchan.earthmobsmod.entity.ZombifiedPig;
+import baguchan.earthmobsmod.entity.ZombifiedRabbit;
 import baguchan.earthmobsmod.registry.ModBlocks;
+import baguchan.earthmobsmod.registry.ModDamageSource;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,14 +20,15 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
@@ -36,8 +41,12 @@ import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -51,13 +60,18 @@ public class CommonEvents {
 		event.register(ShadowCapability.class);
 	}
 
-	@SubscribeEvent
-	public void onEntityJoinWorld(MobSpawnEvent.FinalizeSpawn event) {
-        if (event.getEntity() instanceof Rabbit rabbit && !(event.getEntity() instanceof ZombifiedRabbit)) {
-            rabbit.targetSelector.addGoal(1, new AvoidEntityGoal<>(rabbit, BoulderingDrowned.class, 8.0F, 0.8D, 0.6D));
-            rabbit.targetSelector.addGoal(1, new AvoidEntityGoal<>(rabbit, BoulderingZombie.class, 8.0F, 0.8D, 0.6D));
-            rabbit.targetSelector.addGoal(1, new AvoidEntityGoal<>(rabbit, LobberDrowned.class, 8.0F, 0.8D, 0.6D));
-            rabbit.targetSelector.addGoal(1, new AvoidEntityGoal<>(rabbit, LobberZombie.class, 8.0F, 0.8D, 0.6D));
+	@SubscribeEvent()
+	public static void addSpawn(EntityJoinLevelEvent event) {
+		if (event.getEntity() instanceof Villager) {
+			Villager abstractVillager = (Villager) event.getEntity();
+
+			abstractVillager.goalSelector.addGoal(1, new AvoidEntityGoal((PathfinderMob) abstractVillager, ZombifiedRabbit.class, 10.0F, 0.65F, 0.7F));
+		}
+
+		if (event.getEntity() instanceof WanderingTrader) {
+			WanderingTrader wanderingTraderEntity = (WanderingTrader) event.getEntity();
+
+			wanderingTraderEntity.goalSelector.addGoal(1, new AvoidEntityGoal((PathfinderMob) wanderingTraderEntity, ZombifiedRabbit.class, 10.0F, 0.65F, 0.7F));
 		}
 	}
 
@@ -171,7 +185,7 @@ public class CommonEvents {
         LivingEntity living = event.getEntity();
         Level level = event.getEntity().level();
         if (event.getSource().getDirectEntity() instanceof Zombie || event.getSource().getDirectEntity() instanceof ZombifiedRabbit) {
-            if (living instanceof Rabbit rabbit && !(living instanceof Monster)) {
+			if (living instanceof Rabbit rabbit && !(living instanceof Enemy)) {
                 if (level instanceof ServerLevel serverLevel) {
                     ZombifiedRabbit zombierabbit = rabbit.convertTo(ModEntities.ZOMBIFIED_RABBIT.get(), false);
                     if (zombierabbit != null) {
@@ -185,6 +199,32 @@ public class CommonEvents {
                 }
             }
         }
+
+		if (event.getSource().is(ModDamageSource.ZOMBIFIED)) {
+			if (living instanceof Rabbit rabbit && !(living instanceof Enemy)) {
+				ZombifiedRabbit zombifiedRabbit = rabbit.convertTo(ModEntities.ZOMBIFIED_RABBIT.get(), false);
+				if (zombifiedRabbit != null) {
+					zombifiedRabbit.setVariant(rabbit.getVariant());
+					if (!rabbit.isSilent()) {
+						level.levelEvent((Player) null, 1026, rabbit.blockPosition(), 0);
+					}
+				}
+			}
+
+			if (living instanceof Villager villager && !(living instanceof Enemy)) {
+				ZombieVillager zombieVillager = villager.convertTo(EntityType.ZOMBIE_VILLAGER, false);
+				if (zombieVillager != null) {
+					zombieVillager.setVariant(villager.getVariant());
+					zombieVillager.setVillagerData(villager.getVillagerData());
+					zombieVillager.setVillagerXp(villager.getVillagerXp());
+					zombieVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+					zombieVillager.setTradeOffers(villager.getOffers().createTag());
+					if (!villager.isSilent()) {
+						level.levelEvent((Player) null, 1026, villager.blockPosition(), 0);
+					}
+				}
+			}
+		}
     }
 
     @SubscribeEvent

@@ -37,6 +37,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         this.basicItem(ModItems.HORN.get());
         this.basicItem(ModItems.HORN_FLUTE.get());
         this.basicItem(ModItems.HYPER_RABBIT_FOOT.get());
+        this.basicItem(ModItems.ZOMBIFIED_RABBIT_FOOT.get());
         this.basicItem(ModItems.MUD_BUCKET.get());
         this.basicItem(ModItems.TROPICAL_SLIME_BUCKET.get());
         this.basicItem(ModItems.TEACUP_PIG_POT.get());

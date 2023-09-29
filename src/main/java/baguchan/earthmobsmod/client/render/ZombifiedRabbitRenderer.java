@@ -31,4 +31,9 @@ public class ZombifiedRabbitRenderer<T extends ZombifiedRabbit> extends MobRende
                 return TEXTURE;
         }
     }
+
+    @Override
+    protected boolean isShaking(T p_115304_) {
+        return super.isShaking(p_115304_) || p_115304_.isConverting();
+    }
 }

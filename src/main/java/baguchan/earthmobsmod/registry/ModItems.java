@@ -33,6 +33,7 @@ public class ModItems {
 	public static final RegistryObject<Item> HORN_FLUTE = ITEMS.register("horn_flute", () -> new FixedInstrumentItem((new Item.Properties().stacksTo(1)), InstrumentTags.GOAT_HORNS));
 
 	public static final RegistryObject<Item> HYPER_RABBIT_FOOT = ITEMS.register("hyper_rabbit_foot", () -> new Item((new Item.Properties())));
+	public static final RegistryObject<Item> ZOMBIFIED_RABBIT_FOOT = ITEMS.register("zombified_rabbit_foot", () -> new Item((new Item.Properties())));
 	public static final RegistryObject<Item> MUD_BUCKET = ITEMS.register("mud_bucket", () -> new BucketItem(ModFluids.MUD, (new Item.Properties()).stacksTo(1).craftRemainder(Items.BUCKET)));
 	public static final RegistryObject<Item> TROPICAL_SLIME_BUCKET = ITEMS.register("tropical_slime_bucket", () -> new MobBucketItem(ModEntities.TROPICAL_SLIME, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties()).stacksTo(1).craftRemainder(Items.BUCKET)));
 	public static final RegistryObject<Item> TEACUP_PIG_POT = ITEMS.register("teacup_pig_pot", () -> new MobPotItem(ModEntities.TEACUP_PIG, () -> Fluids.EMPTY, () -> SoundEvents.ARMOR_EQUIP_GENERIC, (new Item.Properties()).stacksTo(1).craftRemainder(Items.FLOWER_POT)));
@@ -119,7 +120,7 @@ public class ModItems {
 			event.accept(BONE_SPIDER_EYE);
 			event.accept(HORN);
 			event.accept(HYPER_RABBIT_FOOT);
-
+			event.accept(ZOMBIFIED_RABBIT_FOOT);
 		}
         if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(ModBlocks.TROPICAL_SLIME_BLOCK);

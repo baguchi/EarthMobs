@@ -20,6 +20,7 @@
   "item.earthmobsmod.horn": "ヒツジの角",
   "item.earthmobsmod.horn_flute": "ヒツジの角笛",
   "item.earthmobsmod.hyper_rabbit_foot": "ハイパーラビットの足",
+  "item.earthmobsmod.zombified_rabbit_foot": "ゾンビ化したウサギの足",
   "item.earthmobsmod.bone_shard": "骨の破片",
   "item.earthmobsmod.fancy_feather": "派手な羽",
   "item.earthmobsmod.bone_spider_eye": "骨グモの目",
@@ -113,6 +114,15 @@
   "item.minecraft.splash_potion.effect.long_undead_body": "アンデット化のスプラッシュポーション",
   "item.minecraft.lingering_potion.effect.long_undead_body": "アンデット化の残留ポーション",
   "item.minecraft.tipped_arrow.effect.long_undead_body": "アンデット化の矢",
+  "effect.earthmobsmod.zombified": "ゾンビ化",
+  "item.minecraft.potion.effect.zombified": "ゾンビ化のポーション",
+  "item.minecraft.splash_potion.effect.zombified": "ゾンビ化のスプラッシュポーション",
+  "item.minecraft.lingering_potion.effect.zombified": "ゾンビ化の残留ポーション",
+  "item.minecraft.tipped_arrow.effect.zombified": "ゾンビ化の矢",
+  "item.minecraft.potion.effect.long_zombified": "ゾンビ化のポーション",
+  "item.minecraft.splash_potion.effect.long_zombified": "ゾンビ化のスプラッシュポーション",
+  "item.minecraft.lingering_potion.effect.long_zombified": "ゾンビ化の残留ポーション",
+  "item.minecraft.tipped_arrow.effect.long_zombified": "ゾンビ化の矢",
   "subtitles.entity.earthmobsmod.bone_spider.walk": "骨グモが歩く",
   "subtitles.entity.earthmobsmod.bone_spider.say": "骨グモが鳴く",
   "subtitles.entity.earthmobsmod.bone_spider.hurt": "骨グモがダメージを受ける",
@@ -133,5 +143,6 @@
   "entity.earthmobsmod.baby_ghast.sit": "%1$sは待機中だ",
   "entity.earthmobsmod.baby_ghast.standing": "%1$sはついてくるようだ",
   "death.attack.earthmobsmod.buring_attack": "%1$sは、燃えてしまった",
-  "death.attack.earthmobsmod.buring_attack.player": "%1$sは、%2$sによって、燃えてしまった"
+  "death.attack.earthmobsmod.buring_attack.player": "%1$sは、%2$sによって、燃えてしまった",
+  "death.attack.earthmobsmod.zombified": "%1$sはゾンビの病気にかかった"
 }

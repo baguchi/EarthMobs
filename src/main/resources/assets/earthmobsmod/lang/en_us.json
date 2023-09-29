@@ -20,6 +20,7 @@
   "item.earthmobsmod.horn": "Sheep Horn",
   "item.earthmobsmod.horn_flute": "Sheep Horn Flute",
   "item.earthmobsmod.hyper_rabbit_foot": "Hyper Rabbit Foot",
+  "item.earthmobsmod.zombified_rabbit_foot": "Zombified Rabbit Foot",
   "item.earthmobsmod.bone_shard": "BoneShard",
   "item.earthmobsmod.fancy_feather": "Fancy Feather",
   "item.earthmobsmod.bone_spider_eye": "Bone Spider Eye",
@@ -117,6 +118,15 @@
   "item.minecraft.splash_potion.effect.long_undead_body": "Splash Potion of Undead Body",
   "item.minecraft.lingering_potion.effect.long_undead_body": "Lingering Potion of Undead Body",
   "item.minecraft.tipped_arrow.effect.long_undead_body": "Arrow of Undead Body",
+  "effect.earthmobsmod.zombified": "Zombified",
+  "item.minecraft.potion.effect.zombified": "Potion of Zombified",
+  "item.minecraft.splash_potion.effect.zombified": "Splash Potion of Zombified",
+  "item.minecraft.lingering_potion.effect.zombified": "Lingering Potion of Zombified",
+  "item.minecraft.tipped_arrow.effect.zombified": "Arrow of Zombified",
+  "item.minecraft.potion.effect.long_zombified": "Potion of Zombified",
+  "item.minecraft.splash_potion.effect.long_zombified": "Splash Potion of Zombified",
+  "item.minecraft.lingering_potion.effect.long_zombified": "Lingering Potion of Zombified",
+  "item.minecraft.tipped_arrow.effect.long_zombified": "Arrow of Zombified",
   "subtitles.entity.earthmobsmod.bone_spider.walk": "Bone Spider Walk",
   "subtitles.entity.earthmobsmod.bone_spider.say": "Bone Spider hisses",
   "subtitles.entity.earthmobsmod.bone_spider.hurt": "Bone Spider Hurt",
@@ -136,6 +146,6 @@
   "subtitles.entity.earthmobsmod.skeleton_wolf.whine": "Skeleton Wolf Whine",
   "entity.earthmobsmod.baby_ghast.sit": "%1$s is now sitting",
   "entity.earthmobsmod.baby_ghast.standing": "%1$s is now standing",
-  "death.attack.earthmobsmod.buring_attack": "%1$s was Burning",
-  "death.attack.earthmobsmod.buring_attack.player": "%1$s was burning by %2$s"
+  "death.attack.earthmobsmod.burning_attack": "%1$s was Burning by %2$s",
+  "death.attack.earthmobsmod.zombified": "%1$s was affect Zombified"
 }

@@ -23,7 +23,7 @@ public class EntityTagGenerator extends EntityTypeTagsProvider {
         this.tag(EntityTypeTags.FROG_FOOD).add(ModEntities.TROPICAL_SLIME.get());
 		this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(ModEntities.BONE_SHARD.get(), ModEntities.MELON_SEED.get());
 		this.tag(EntityTypeTags.RAIDERS).add(ModEntities.VILER_WITCH.get());
-        this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(ModEntities.HYPER_RABBIT.get());
+        this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(ModEntities.HYPER_RABBIT.get(), ModEntities.ZOMBIFIED_RABBIT.get());
 		this.tag(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(ModEntities.CLUCK_SHROOM.get(), ModEntities.FANCY_CHICKEN.get(), ModEntities.DUCK.get(), ModEntities.FURNACE_GOLEM.get(), ModEntities.MELON_GOLEM.get());
 	}
 }
