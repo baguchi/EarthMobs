@@ -6,10 +6,7 @@ import baguchan.earthmobsmod.block.TropicalSlimeBlock;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FlowerBlock;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -32,8 +29,11 @@ public class ModBlocks {
 	public static final RegistryObject<Block> CARVED_MELON_SHOOT = register("carved_melon_shoot", () -> new CarvedMelonBlock(BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> TROPICAL_SLIME_BLOCK = register("tropical_slime_block", () -> new TropicalSlimeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).friction(0.8F).noOcclusion().sound(SoundType.SLIME_BLOCK)));
 
-	public static final RegistryObject<FlowerBlock> BUTTERCUP = register("buttercup", () -> new FlowerBlock(MobEffects.ABSORPTION, 30, BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.GRASS)));
-	public static final RegistryObject<FlowerBlock> PINK_DAISY = register("pink_daisy", () -> new FlowerBlock(MobEffects.REGENERATION, 10, BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.GRASS)));
+	public static final RegistryObject<FlowerBlock> BUTTERCUP = register("buttercup", () -> new FlowerBlock(MobEffects.ABSORPTION, 30, BlockBehaviour.Properties.of().noCollission().pushReaction(PushReaction.DESTROY).offsetType(BlockBehaviour.OffsetType.XZ).instabreak().sound(SoundType.GRASS)));
+	public static final RegistryObject<FlowerBlock> PINK_DAISY = register("pink_daisy", () -> new FlowerBlock(MobEffects.REGENERATION, 10, BlockBehaviour.Properties.of().noCollission().pushReaction(PushReaction.DESTROY).offsetType(BlockBehaviour.OffsetType.XZ).instabreak().sound(SoundType.GRASS)));
+
+	public static final RegistryObject<Block> POTTED_BUTTERCUP = BLOCKS.register("potted_buttercup", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, BUTTERCUP, BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY)));
+	public static final RegistryObject<Block> POTTED_PINK_DAISY = BLOCKS.register("potted_pink_daisy", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, PINK_DAISY, BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY)));
 
 
 	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
@@ -55,5 +55,11 @@ public class ModBlocks {
 		return () -> {
 			return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties());
 		};
+	}
+
+	public static void initFire() {
+		FireBlock fireblock = (FireBlock) Blocks.FIRE;
+		fireblock.setFlammable(ModBlocks.BUTTERCUP.get(), 60, 100);
+		fireblock.setFlammable(ModBlocks.PINK_DAISY.get(), 60, 100);
 	}
 }

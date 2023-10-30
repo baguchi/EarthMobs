@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.item.*;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.InstrumentTags;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -141,5 +142,12 @@ public class ModItems {
 		if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
 			event.accept(ModBlocks.RUBY);
 		}
+	}
+
+	public static void composterInit() {
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.BUTTERCUP.get(), 0.1F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.PINK_DAISY.get(), 0.1F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.CARVED_MELON.get(), 0.65F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.CARVED_MELON_SHOOT.get(), 0.65F);
 	}
 }
