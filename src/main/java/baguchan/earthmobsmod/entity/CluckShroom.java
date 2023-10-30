@@ -24,12 +24,9 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SuspiciousEffectHolder;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public class CluckShroom extends Chicken implements Shearable, net.minecraftforge.common.IForgeShearable, IPlantMob {
@@ -128,11 +125,6 @@ public class CluckShroom extends Chicken implements Shearable, net.minecraftforg
 		super.readAdditionalSaveData(p_28936_);
 		this.setCluckShroomType(CluckShroom.CluckShroomType.byType(p_28936_.getString("Type")));
 
-	}
-
-	private Optional<List<SuspiciousEffectHolder.EffectEntry>> getEffectsFromItemStack(ItemStack p_298141_) {
-		SuspiciousEffectHolder suspiciouseffectholder = SuspiciousEffectHolder.tryGet(p_298141_.getItem());
-		return suspiciouseffectholder != null ? Optional.of(suspiciouseffectholder.getSuspiciousEffects()) : Optional.empty();
 	}
 
 	public void setCluckShroomType(CluckShroom.CluckShroomType p_28929_) {

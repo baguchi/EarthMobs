@@ -1,17 +1,18 @@
 package baguchan.earthmobsmod.entity;
 
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SuspiciousEffectHolder;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface IFlowerCow extends IPlantMob {
 
-	default Optional<List<SuspiciousEffectHolder.EffectEntry>> getEffectsFromItemStack(ItemStack p_298141_) {
-		SuspiciousEffectHolder suspiciouseffectholder = SuspiciousEffectHolder.tryGet(p_298141_.getItem());
-		return suspiciouseffectholder != null ? Optional.of(suspiciouseffectholder.getSuspiciousEffects()) : Optional.empty();
+	default Optional<Pair<MobEffect, Integer>> getEffectFromItemStack(ItemStack p_28957_) {
+		SuspiciousEffectHolder suspiciouseffectholder = SuspiciousEffectHolder.tryGet(p_28957_.getItem());
+		return suspiciouseffectholder != null ? Optional.of(Pair.of(suspiciouseffectholder.getSuspiciousEffect(), suspiciouseffectholder.getEffectDuration())) : Optional.empty();
 	}
 
 	Block getFlower();

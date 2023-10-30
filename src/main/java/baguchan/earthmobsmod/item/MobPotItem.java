@@ -80,6 +80,6 @@ public class MobPotItem extends MobBucketItem {
     }
 
     protected boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
-        return blockstate.getBlock() instanceof LiquidBlockContainer liquid && liquid.canPlaceLiquid(null, worldIn, posIn, blockstate, this.content.get());
+        return blockstate.getBlock() instanceof LiquidBlockContainer liquid && liquid.canPlaceLiquid(worldIn, posIn, blockstate, this.content.get());
     }
 }
