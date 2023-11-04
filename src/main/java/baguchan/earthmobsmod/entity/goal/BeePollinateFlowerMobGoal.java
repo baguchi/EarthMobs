@@ -1,6 +1,7 @@
 package baguchan.earthmobsmod.entity.goal;
 
 import baguchan.earthmobsmod.entity.IHasFlower;
+import baguchan.earthmobsmod.mixin.BeeAccessor;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -107,7 +108,9 @@ public class BeePollinateFlowerMobGoal extends Goal {
 
 	public void stop() {
 		if (this.hasPollinatedLongEnough()) {
-			this.bee.setHasNectar(true);
+			if (this.bee instanceof BeeAccessor beeAccessor) {
+				beeAccessor.setHasNectar(true);
+			}
 		}
 
 		this.pollinating = false;

@@ -37,7 +37,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidType;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -158,7 +158,7 @@ public class TropicalSlime extends Slime implements Bucketable {
     }
 
     protected void addFishData(int variant) {
-        CompoundTag fishTag = this.getFishData();
+        CompoundTag fishTag = this.getFishData().isEmpty() ? new CompoundTag() : this.getFishData();
         ListTag listnbt = new ListTag();
 
         if (fishTag.contains(TAG_FISH_LIST)) {
@@ -208,15 +208,16 @@ public class TropicalSlime extends Slime implements Bucketable {
 
                 float f = (float) i / 4.0F;
                 for (int l = 0; l < listTag.size(); ++l) {
-                    float f1 = ((float) (l % 2) - 0.5F) * f;
-                    float f2 = ((float) (l / 2) - 0.5F) * f;
+                    double f1 = ((CompoundTag) listTag.get(l)).getDouble(TAG_FISH_POSX);
+                    double f2 = ((CompoundTag) listTag.get(l)).getDouble(TAG_FISH_POSZ);
+                    double f3 = ((CompoundTag) listTag.get(l)).getDouble(TAG_FISH_POSY);
                     TropicalFish fish = EntityType.TROPICAL_FISH.create(this.level());
                     if (this.isPersistenceRequired()) {
                         fish.setPersistenceRequired();
                     }
                     fish.setPackedVariant(((CompoundTag) listTag.get(l)).getInt(TAG_FISH_VARIANT));
                     fish.setInvulnerable(this.isInvulnerable());
-                    fish.moveTo(this.getX() + (double) f1, this.getY() + 0.5D, this.getZ() + (double) f2, this.random.nextFloat() * 360.0F, 0.0F);
+                    fish.moveTo(this.getX() + (double) f1, this.getY() + f3, this.getZ() + (double) f2, this.random.nextFloat() * 360.0F, 0.0F);
                     this.level().addFreshEntity(fish);
                 }
             }

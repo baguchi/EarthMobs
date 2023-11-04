@@ -5,12 +5,9 @@ import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(PigModel.class)
-@OnlyIn(Dist.CLIENT)
 public class PigModelMixin<T extends Entity> extends QuadrupedModel<T> {
 
 

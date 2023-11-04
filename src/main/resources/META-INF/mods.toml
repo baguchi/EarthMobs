@@ -27,6 +27,8 @@ displayURL="https://www.curseforge.com/minecraft/mc-mods/earth-mobs" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 #logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
+credits = "${mod_credits}" #optional
+# A text field displayed in the mod UI
 authors = "${mod_authors}" #optional
 # Display Test controls the display for your mod in the server connection screen
 # MATCH_VERSION means that your mod will cause a red X if the versions on client and server differ. This is the default behaviour and should be what you choose if you have server and client elements to your mod.
@@ -38,10 +40,12 @@ authors = "${mod_authors}" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
 description = '''${mod_description}'''
+[[mixins]]
+config = "${mod_id}.mixins.json"
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.${ mod_id }]] #optional
 # the modid of the dependency
-modId = "forge" #mandatory
+modId = "neoforge" #mandatory
 # Does this dependency have to exist - if not, ordering below must be specified
 mandatory = true #mandatory
 # The version range of the dependency
@@ -64,7 +68,7 @@ side = "BOTH"
 modId = "bagus_lib"
 mandatory = true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange = "${bagus_lib_version_range}"
+versionRange = "[1.20.2-6.1.0,)"
 ordering = "NONE"
 side = "BOTH"
 

@@ -29,16 +29,19 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.IShearable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Map;
 
 @Mixin(Pig.class)
-public abstract class PigMixin extends Animal implements IMuddy, net.minecraftforge.common.IForgeShearable, ISheared, IHasFlower {
+public abstract class PigMixin extends Animal implements IMuddy, IShearable, ISheared, IHasFlower {
 	private static final EntityDataAccessor<Boolean> DATA_MUDDY_ID = SynchedEntityData.defineId(Pig.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Byte> DATA_DYE_ID = SynchedEntityData.defineId(Pig.class, EntityDataSerializers.BYTE);
 	private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_29841_) -> {
@@ -215,10 +218,10 @@ public abstract class PigMixin extends Animal implements IMuddy, net.minecraftfo
 
 	@javax.annotation.Nonnull
 	@Override
-	public java.util.List<ItemStack> onSheared(@Nullable Player player, @javax.annotation.Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
-		world.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
+    public List<ItemStack> onSheared(@Nullable Player player, @NotNull ItemStack item, Level level, BlockPos pos, int fortune) {
+        level.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
 		this.gameEvent(GameEvent.SHEAR, player);
-		if (!world.isClientSide) {
+        if (!level.isClientSide) {
 			this.setSheared(true);
 			int i = 1 + this.random.nextInt(3);
 

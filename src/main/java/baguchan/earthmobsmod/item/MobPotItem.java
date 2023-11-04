@@ -21,6 +21,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
@@ -36,7 +37,7 @@ public class MobPotItem extends MobBucketItem {
     public InteractionResultHolder<ItemStack> use(Level p_40703_, Player p_40704_, InteractionHand p_40705_) {
         ItemStack itemstack = p_40704_.getItemInHand(p_40705_);
         BlockHitResult blockhitresult = getPlayerPOVHitResult(p_40703_, p_40704_, this.getFluid() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
-        InteractionResultHolder<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(p_40704_, p_40703_, itemstack, blockhitresult);
+        InteractionResultHolder<ItemStack> ret = EventHooks.onBucketUse(p_40704_, p_40703_, itemstack, blockhitresult);
         if (ret != null) return ret;
         if (blockhitresult.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(itemstack);
@@ -49,7 +50,7 @@ public class MobPotItem extends MobBucketItem {
             if (p_40703_.mayInteract(p_40704_, blockpos) && p_40704_.mayUseItemAt(blockpos1, direction, itemstack)) {
 
                 BlockState blockstate = p_40703_.getBlockState(blockpos);
-                BlockPos blockpos2 = canBlockContainFluid(p_40703_, blockpos, blockstate) ? blockpos : blockpos1;
+                BlockPos blockpos2 = canBlockContainFluid(p_40704_, p_40703_, blockpos, blockstate) ? blockpos : blockpos1;
                 if (this.emptyContents(p_40704_, p_40703_, blockpos2, blockhitresult)) {
                     this.checkExtraContent(p_40704_, p_40703_, itemstack, blockpos2);
                     if (p_40704_ instanceof ServerPlayer) {
@@ -79,7 +80,9 @@ public class MobPotItem extends MobBucketItem {
         return !p_40701_.getAbilities().instabuild ? new ItemStack(Items.FLOWER_POT) : p_40700_;
     }
 
-    protected boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
-        return blockstate.getBlock() instanceof LiquidBlockContainer liquid && liquid.canPlaceLiquid(worldIn, posIn, blockstate, this.content.get());
+    @Override
+    protected boolean canBlockContainFluid(@javax.annotation.Nullable Player player, Level worldIn, BlockPos posIn, BlockState blockstate) {
+        return blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer) blockstate.getBlock()).canPlaceLiquid(player, worldIn, posIn, blockstate, this.content.get());
     }
+
 }

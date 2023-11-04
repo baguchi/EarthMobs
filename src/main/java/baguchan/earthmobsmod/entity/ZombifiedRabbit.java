@@ -37,6 +37,7 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -91,7 +92,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     public void tick() {
         if (!this.level().isClientSide && this.isAlive() && this.isConverting()) {
             this.conversionTime -= 1;
-            if (this.conversionTime <= 0 && net.minecraftforge.event.ForgeEventFactory.canLivingConvert(this, EntityType.VILLAGER, (timer) -> this.conversionTime = timer)) {
+            if (this.conversionTime <= 0 && EventHooks.canLivingConvert(this, EntityType.VILLAGER, (timer) -> this.conversionTime = timer)) {
                 this.finishConversion((ServerLevel) this.level());
             }
         }
@@ -148,7 +149,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
         if (!this.isSilent()) {
             p_34399_.levelEvent((Player) null, 1027, this.blockPosition(), 0);
         }
-        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(this, rabbit);
+        EventHooks.onLivingConvert(this, rabbit);
     }
 
     @Override

@@ -33,11 +33,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.IShearable;
+import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
-public class MelonGolem extends AbstractGolem implements Shearable, RangedAttackMob, net.minecraftforge.common.IForgeShearable {
+public class MelonGolem extends AbstractGolem implements Shearable, RangedAttackMob, IShearable {
 	private static final EntityDataAccessor<Byte> DATA_MELON_ID = SynchedEntityData.defineId(MelonGolem.class, EntityDataSerializers.BYTE);
 	private static final byte MELON_FLAG = 16;
 	private static final float EYE_HEIGHT = 1.7F;
@@ -97,7 +99,7 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 				this.hurt(this.damageSources().onFire(), 1.0F);
 			}
 
-			if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level(), this)) {
+			if (!EventHooks.getMobGriefingEvent(this.level(), this)) {
 				return;
 			}
 

@@ -1,53 +1,53 @@
 package baguchan.earthmobsmod;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class EarthMobsConfig {
 	public static final Common COMMON;
-	public static final ForgeConfigSpec COMMON_SPEC;
+    public static final ModConfigSpec COMMON_SPEC;
 
 	static {
-		Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+        Pair<Common, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Common::new);
 		COMMON_SPEC = specPair.getRight();
 		COMMON = specPair.getLeft();
 	}
 
 	public static class Common {
-        public final ForgeConfigSpec.IntValue woolyCowSpawnRate;
-        public final ForgeConfigSpec.IntValue umbraCowSpawnRate;
-        public final ForgeConfigSpec.IntValue albinoCowSpawnRate;
-        public final ForgeConfigSpec.IntValue creamCowSpawnRate;
-        public final ForgeConfigSpec.IntValue teacupPigSpawnRate;
-        public final ForgeConfigSpec.IntValue cluckshroomSpawnRate;
-        public final ForgeConfigSpec.IntValue fancyChickenSpawnRate;
-        public final ForgeConfigSpec.IntValue duckSpawnRate;
-        public final ForgeConfigSpec.IntValue jollyLLamaSpawnRate;
-        public final ForgeConfigSpec.IntValue hornedSheepSpawnRate;
-        public final ForgeConfigSpec.IntValue boneSpiderSpawnRate;
-        public final ForgeConfigSpec.IntValue strayBoneSpiderSpawnRate;
-        public final ForgeConfigSpec.IntValue hyperRabbitSpawnRate;
-        public final ForgeConfigSpec.IntValue moobloomSpawnRate;
-        public final ForgeConfigSpec.IntValue moolipSpawnRate;
-        public final ForgeConfigSpec.IntValue jumboRabbitSpawnRate;
+        public final ModConfigSpec.IntValue woolyCowSpawnRate;
+        public final ModConfigSpec.IntValue umbraCowSpawnRate;
+        public final ModConfigSpec.IntValue albinoCowSpawnRate;
+        public final ModConfigSpec.IntValue creamCowSpawnRate;
+        public final ModConfigSpec.IntValue teacupPigSpawnRate;
+        public final ModConfigSpec.IntValue cluckshroomSpawnRate;
+        public final ModConfigSpec.IntValue fancyChickenSpawnRate;
+        public final ModConfigSpec.IntValue duckSpawnRate;
+        public final ModConfigSpec.IntValue jollyLLamaSpawnRate;
+        public final ModConfigSpec.IntValue hornedSheepSpawnRate;
+        public final ModConfigSpec.IntValue boneSpiderSpawnRate;
+        public final ModConfigSpec.IntValue strayBoneSpiderSpawnRate;
+        public final ModConfigSpec.IntValue hyperRabbitSpawnRate;
+        public final ModConfigSpec.IntValue moobloomSpawnRate;
+        public final ModConfigSpec.IntValue moolipSpawnRate;
+        public final ModConfigSpec.IntValue jumboRabbitSpawnRate;
 
-		public final ForgeConfigSpec.IntValue boulderingZombieSpawnRate;
-		public final ForgeConfigSpec.IntValue lobberZombieSpawnRate;
-        public final ForgeConfigSpec.IntValue zombifiedRabbitSpawnRate;
+        public final ModConfigSpec.IntValue boulderingZombieSpawnRate;
+        public final ModConfigSpec.IntValue lobberZombieSpawnRate;
+        public final ModConfigSpec.IntValue zombifiedRabbitSpawnRate;
 
-		public final ForgeConfigSpec.IntValue tropicalSlimeSpawnRate;
+        public final ModConfigSpec.IntValue tropicalSlimeSpawnRate;
 
-		public final ForgeConfigSpec.IntValue skeletonWolfOverWorldSpawnRate;
-		public final ForgeConfigSpec.IntValue skeletonWolfNetherSpawnRate;
-		public final ForgeConfigSpec.IntValue witherSkeletonWolfNetherSpawnRate;
+        public final ModConfigSpec.IntValue skeletonWolfOverWorldSpawnRate;
+        public final ModConfigSpec.IntValue skeletonWolfNetherSpawnRate;
+        public final ModConfigSpec.IntValue witherSkeletonWolfNetherSpawnRate;
 
-		public final ForgeConfigSpec.IntValue babyGhastSpawnRate;
-		public final ForgeConfigSpec.IntValue magmaCowSpawnRate;
+        public final ModConfigSpec.IntValue babyGhastSpawnRate;
+        public final ModConfigSpec.IntValue magmaCowSpawnRate;
 
 
-		public final ForgeConfigSpec.BooleanValue mudSpawnInOverworld;
+        public final ModConfigSpec.BooleanValue mudSpawnInOverworld;
 
-		public Common(ForgeConfigSpec.Builder builder) {
+        public Common(ModConfigSpec.Builder builder) {
 			woolyCowSpawnRate = builder
 					.comment("Changed WoolyCow SpawnRate. [0 ~ 100]")
 					.defineInRange("Wooly cow SpawnRate", 10, 0, 100);

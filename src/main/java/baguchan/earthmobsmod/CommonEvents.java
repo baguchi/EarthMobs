@@ -39,19 +39,20 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.Event;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 @Mod.EventBusSubscriber(modid = EarthMobsMod.MODID)
 public class CommonEvents {
@@ -170,7 +171,7 @@ public class CommonEvents {
 				}
 
 				zombifiedpig.setPersistenceRequired();
-				net.minecraftforge.event.ForgeEventFactory.onLivingConvert(pig, zombifiedpig);
+                EventHooks.onLivingConvert(pig, zombifiedpig);
 				event.getEntity().level().addFreshEntity(zombifiedpig);
 				pig.discard();
 				event.setCanceled(true);
@@ -191,7 +192,7 @@ public class CommonEvents {
                     if (zombierabbit != null) {
                         zombierabbit.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(zombierabbit.blockPosition()), MobSpawnType.CONVERSION, null, (CompoundTag) null);
                         zombierabbit.setVariant(rabbit.getVariant());
-                        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(rabbit, zombierabbit);
+                        EventHooks.onLivingConvert(rabbit, zombierabbit);
                         if (!rabbit.isSilent()) {
                             level.levelEvent((Player) null, 1026, rabbit.blockPosition(), 0);
                         }

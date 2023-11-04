@@ -25,11 +25,12 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.IShearable;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class CluckShroom extends Chicken implements Shearable, net.minecraftforge.common.IForgeShearable, IPlantMob {
+public class CluckShroom extends Chicken implements Shearable, IShearable, IPlantMob {
 	private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(CluckShroom.class, EntityDataSerializers.STRING);
 
 	private UUID lastLightningBoltUUID;

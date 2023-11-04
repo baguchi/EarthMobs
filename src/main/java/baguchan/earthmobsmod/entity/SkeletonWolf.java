@@ -3,12 +3,10 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -25,9 +23,9 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.EventHooks;
 
 public class SkeletonWolf extends Wolf {
 	public SkeletonWolf(EntityType<? extends SkeletonWolf> p_30369_, Level p_30370_) {
@@ -102,7 +100,7 @@ public class SkeletonWolf extends Wolf {
 					itemstack.shrink(1);
 				}
 
-				if (this.random.nextInt(4) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, p_30412_)) {
+                if (this.random.nextInt(4) == 0 && !EventHooks.onAnimalTame(this, p_30412_)) {
 					this.tame(p_30412_);
 					this.navigation.stop();
 					this.setTarget((LivingEntity) null);

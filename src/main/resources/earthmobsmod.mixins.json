@@ -5,10 +5,11 @@
   "minVersion": "0.8",
   "refmap": "earthmobsmod.refmap.json",
   "mixins": [
+    "BeeAccessor",
     "BeeMixin",
     "EntityMixin",
-    "PigMixin",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "PigMixin"
   ],
   "client": [
     "client.PigModelMixin"

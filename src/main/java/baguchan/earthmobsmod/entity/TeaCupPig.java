@@ -25,12 +25,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.IShearable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class TeaCupPig extends Pig implements net.minecraftforge.common.IForgeShearable, Bucketable {
+public class TeaCupPig extends Pig implements IShearable, Bucketable {
     public TeaCupPig(EntityType<? extends Pig> p_29462_, Level p_29463_) {
         super(p_29462_, p_29463_);
     }

@@ -24,10 +24,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.IShearable;
 
 import javax.annotation.Nullable;
 
-public class WoolyCow extends Cow implements Shearable, net.minecraftforge.common.IForgeShearable {
+public class WoolyCow extends Cow implements Shearable, IShearable {
 	private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(WoolyCow.class, EntityDataSerializers.BOOLEAN);
 	private int eatAnimationTick;
 	private EatBlockGoal eatBlockGoal;
