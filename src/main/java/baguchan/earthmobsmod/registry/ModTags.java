@@ -19,6 +19,7 @@ public class ModTags {
 
 	public static class Entities {
 		public static final TagKey<EntityType<?>> CAN_MUDDY = create("can_muddy");
+        public static final TagKey<EntityType<?>> CAN_MOSS = create("can_moss");
 
 		private static TagKey<EntityType<?>> create(String p_203849_) {
 			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(EarthMobsMod.MODID, p_203849_));

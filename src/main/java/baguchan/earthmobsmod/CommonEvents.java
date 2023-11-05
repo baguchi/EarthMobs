@@ -1,5 +1,7 @@
 package baguchan.earthmobsmod;
 
+import baguchan.earthmobsmod.api.IMoss;
+import baguchan.earthmobsmod.api.IMuddy;
 import baguchan.earthmobsmod.block.CarvedMelonBlock;
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.entity.FurnaceGolem;
@@ -33,6 +35,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
@@ -42,17 +45,14 @@ import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
-import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
 
 @Mod.EventBusSubscriber(modid = EarthMobsMod.MODID)
 public class CommonEvents {
@@ -61,7 +61,7 @@ public class CommonEvents {
 		event.register(ShadowCapability.class);
 	}
 
-	@SubscribeEvent()
+	@SubscribeEvent
 	public static void addSpawn(EntityJoinLevelEvent event) {
 		if (event.getEntity() instanceof Villager) {
 			Villager abstractVillager = (Villager) event.getEntity();
@@ -77,15 +77,26 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
-	public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-		if (event.getObject() instanceof LivingEntity) {
-			event.addCapability(new ResourceLocation(EarthMobsMod.MODID, "shadow"), new ShadowCapability());
+	public static void initSpawn(MobSpawnEvent.FinalizeSpawn event) {
+		Mob entity = event.getEntity();
+		ServerLevelAccessor serverLevelAccessor = event.getLevel();
+		if (entity instanceof IMoss moss) {
+			if (serverLevelAccessor.getBiome(BlockPos.containing(event.getX(), event.getY(), event.getZ())).is(Tags.Biomes.IS_SWAMP)) {
+				moss.setMoss(true);
+			}
+		}
+		if (entity instanceof IMuddy muddy) {
+			if (serverLevelAccessor.getBiome(BlockPos.containing(event.getX(), event.getY(), event.getZ())).is(Tags.Biomes.IS_SWAMP)) {
+				muddy.setMuddy(true);
+			}
 		}
 	}
 
 	@SubscribeEvent
-	public static void onRightClickBlock(BlockEvent.EntityPlaceEvent event) {
-
+	public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
+		if (event.getObject() instanceof LivingEntity) {
+			event.addCapability(new ResourceLocation(EarthMobsMod.MODID, "shadow"), new ShadowCapability());
+		}
 	}
 
 	@SubscribeEvent

@@ -28,5 +28,6 @@ public class EntityTagGenerator extends EntityTypeTagsProvider {
         this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(ModEntities.HYPER_RABBIT.get(), ModEntities.ZOMBIFIED_RABBIT.get());
 		this.tag(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(ModEntities.CLUCK_SHROOM.get(), ModEntities.FANCY_CHICKEN.get(), ModEntities.DUCK.get(), ModEntities.FURNACE_GOLEM.get(), ModEntities.MELON_GOLEM.get());
 		this.tag(ModTags.Entities.CAN_MUDDY).add(EntityType.PIG).add(ModEntities.TEACUP_PIG.get());
+        this.tag(ModTags.Entities.CAN_MOSS).add(EntityType.SHEEP).add(ModEntities.HORNED_SHEEP.get());
 	}
 }
