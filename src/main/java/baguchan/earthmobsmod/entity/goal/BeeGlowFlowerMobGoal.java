@@ -1,7 +1,7 @@
 package baguchan.earthmobsmod.entity.goal;
 
-import baguchan.earthmobsmod.entity.IHasFlower;
-import baguchan.earthmobsmod.entity.IPlantMob;
+import baguchan.earthmobsmod.api.IHasFlower;
+import baguchan.earthmobsmod.api.IPlantMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;

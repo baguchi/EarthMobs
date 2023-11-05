@@ -1,5 +1,7 @@
 package baguchan.earthmobsmod.entity;
 
+import baguchan.earthmobsmod.api.IFlowerCow;
+import baguchan.earthmobsmod.api.IHasFlower;
 import baguchan.earthmobsmod.registry.ModBlocks;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;

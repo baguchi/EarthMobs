@@ -1,4 +1,4 @@
-package baguchan.earthmobsmod.entity;
+package baguchan.earthmobsmod.api;
 
 import net.minecraft.world.level.block.Block;
 

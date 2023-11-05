@@ -1,6 +1,6 @@
 package baguchan.earthmobsmod.entity.goal;
 
-import baguchan.earthmobsmod.entity.IHasFlower;
+import baguchan.earthmobsmod.api.IHasFlower;
 import baguchan.earthmobsmod.mixin.BeeAccessor;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;

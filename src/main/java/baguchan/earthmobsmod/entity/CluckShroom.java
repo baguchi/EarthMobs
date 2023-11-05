@@ -1,5 +1,6 @@
 package baguchan.earthmobsmod.entity;
 
+import baguchan.earthmobsmod.api.IPlantMob;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.core.BlockPos;
