@@ -41,11 +41,6 @@ public class ZombifiedPig extends Pig implements IMuddy {
 	}
 
 	@Override
-	public boolean canMuddy() {
-		return false;
-	}
-
-	@Override
 	public ZombifiedPig getBreedOffspring(ServerLevel p_149001_, AgeableMob p_149002_) {
 		return ModEntities.ZOMBIFIED_PIG.get().create(p_149001_);
 	}

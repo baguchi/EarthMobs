@@ -1,10 +1,10 @@
 package baguchan.earthmobsmod.mixin;
 
 
+import baguchan.earthmobsmod.api.IHasFlower;
 import baguchan.earthmobsmod.api.IMuddy;
 import baguchan.earthmobsmod.api.IOnMud;
 import baguchan.earthmobsmod.api.ISheared;
-import baguchan.earthmobsmod.entity.IHasFlower;
 import baguchan.earthmobsmod.util.DyeUtil;
 import com.google.common.collect.Maps;
 import net.minecraft.Util;
@@ -129,7 +129,7 @@ public abstract class PigMixin extends Animal implements IMuddy, IShearable, ISh
 
 	public void tick() {
 		super.tick();
-		if (this.isAlive() && this instanceof IOnMud && this.canMuddy()) {
+		if (this.isAlive() && this instanceof IOnMud && this.canMuddy(this)) {
 			if (((IOnMud) this).isOnMud() && (!this.isMuddy() || this.isSheared()) && !this.isShaking) {
 				this.isShaking = true;
 				this.inMud = true;

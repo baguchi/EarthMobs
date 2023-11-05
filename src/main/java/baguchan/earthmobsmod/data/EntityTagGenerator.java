@@ -2,10 +2,12 @@ package baguchan.earthmobsmod.data;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModEntities;
+import baguchan.earthmobsmod.registry.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,5 +27,6 @@ public class EntityTagGenerator extends EntityTypeTagsProvider {
 		this.tag(EntityTypeTags.RAIDERS).add(ModEntities.VILER_WITCH.get());
         this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(ModEntities.HYPER_RABBIT.get(), ModEntities.ZOMBIFIED_RABBIT.get());
 		this.tag(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(ModEntities.CLUCK_SHROOM.get(), ModEntities.FANCY_CHICKEN.get(), ModEntities.DUCK.get(), ModEntities.FURNACE_GOLEM.get(), ModEntities.MELON_GOLEM.get());
+		this.tag(ModTags.Entities.CAN_MUDDY).add(EntityType.PIG).add(ModEntities.TEACUP_PIG.get());
 	}
 }
