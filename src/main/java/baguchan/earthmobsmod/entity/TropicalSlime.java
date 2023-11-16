@@ -158,7 +158,7 @@ public class TropicalSlime extends Slime implements Bucketable {
     }
 
     protected void addFishData(int variant) {
-        CompoundTag fishTag = this.getFishData();
+        CompoundTag fishTag = this.getFishData().copy();
         ListTag listnbt = new ListTag();
 
         if (fishTag.contains(TAG_FISH_LIST)) {
