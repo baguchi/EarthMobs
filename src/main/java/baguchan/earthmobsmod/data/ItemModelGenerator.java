@@ -31,6 +31,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         this.basicItem(ModItems.BONE_SHARD.get());
         this.basicItem(ModItems.BONE_SPIDER_EYE.get());
         this.basicItem(ModItems.FANCY_FEATHER.get());
+        this.basicItem(ModItems.HARDER_FLESH.get());
         this.basicItem(ModItems.SMELLY_EGG.get());
         this.basicItem(ModItems.DUCK_EGG.get());
         this.basicItem(ModItems.FANCY_EGG.get());
