@@ -104,16 +104,14 @@ public class EarthBiomeModifier implements BiomeModifier {
 						}
 					}
 
-					if (EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get() > 0) {
-						if (biome.is(Tags.Biomes.IS_MOUNTAIN)) {
-							builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_ZOMBIE.get(), EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), 4, 4));
-						}
-					}
-
 					if (EarthMobsConfig.COMMON.lobberZombieSpawnRate.get() > 0) {
 						if (biome.is(BiomeTags.IS_FOREST)) {
 							builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.LOBBER_ZOMBIE.get(), EarthMobsConfig.COMMON.lobberZombieSpawnRate.get(), 3, 4));
 						}
+					}
+
+					if (EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get() > 0) {
+						builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_ZOMBIE.get(), EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), 4, 4));
 					}
 
 					if (EarthMobsConfig.COMMON.zombifiedRabbitSpawnRate.get() > 0) {
