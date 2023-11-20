@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.data;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModBlocks;
 import baguchan.earthmobsmod.registry.ModItems;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -10,7 +11,6 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 
 import static baguchan.earthmobsmod.EarthMobsMod.prefix;
 
@@ -88,7 +88,7 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void toBlock(Block b) {
-        toBlockModel(b, ForgeRegistries.BLOCKS.getKey(b).getPath());
+        toBlockModel(b, BuiltInRegistries.BLOCK.getKey(b).getPath());
     }
 
     private void toBlockModel(Block b, String model) {
@@ -96,14 +96,14 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void toBlockModel(Block b, ResourceLocation model) {
-        withExistingParent(ForgeRegistries.BLOCKS.getKey(b).getPath(), model);
+        withExistingParent(BuiltInRegistries.BLOCK.getKey(b).getPath(), model);
     }
 
     public String blockName(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block).getPath();
+        return BuiltInRegistries.BLOCK.getKey(block).getPath();
     }
 
     public ItemModelBuilder spawnEgg(Item item) {
-        return withExistingParent(ForgeRegistries.ITEMS.getKey(item).getPath(), mcLoc("item/template_spawn_egg"));
+        return withExistingParent(BuiltInRegistries.ITEM.getKey(item).getPath(), mcLoc("item/template_spawn_egg"));
     }
 }

@@ -2,6 +2,7 @@ package baguchan.earthmobsmod.data;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModBlocks;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -9,8 +10,6 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.ForgeRegistries;
-
 public class BlockstateGenerator extends BlockStateProvider {
     public BlockstateGenerator(PackOutput gen, ExistingFileHelper exFileHelper) {
         super(gen, EarthMobsMod.MODID, exFileHelper);
@@ -50,7 +49,7 @@ public class BlockstateGenerator extends BlockStateProvider {
     }
 
     protected String name(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block).getPath();
+        return BuiltInRegistries.BLOCK.getKey(block).getPath();
     }
 
     private ResourceLocation extend(ResourceLocation rl, String suffix) {

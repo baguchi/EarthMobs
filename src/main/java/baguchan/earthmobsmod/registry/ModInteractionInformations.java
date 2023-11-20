@@ -8,11 +8,11 @@ import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 
 public class ModInteractionInformations {
 	public static void init() {
-        FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+		FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
 				ModFluidTypes.MUD.get(),
 				fluidState -> Blocks.DIRT.defaultBlockState()
 		));
-        FluidInteractionRegistry.addInteraction(NeoForgeMod.WATER_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+		FluidInteractionRegistry.addInteraction(NeoForgeMod.WATER_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
 				(level, currentPos, relativePos, currentState) -> level.getFluidState(relativePos).getFluidType() == ModFluidTypes.MUD.get(), (level, currentPos, relativePos, currentState) ->
 		{
             level.setBlockAndUpdate(currentPos, EventHooks.fireFluidPlaceBlockEvent(level, currentPos, currentPos, Blocks.MUD.defaultBlockState()));
