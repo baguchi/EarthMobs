@@ -1,5 +1,8 @@
 package baguchan.earthmobsmod.entity;
 
+import bagu_chan.bagus_lib.client.camera.CameraEvent;
+import bagu_chan.bagus_lib.client.camera.CameraHolder;
+import bagu_chan.bagus_lib.util.GlobalVec3;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.core.BlockPos;
@@ -217,14 +220,14 @@ public class HornedSheep extends Sheep {
 
         @Override
         public boolean canContinueToUse() {
-            return this.hornedSheep.getTarget() != null && this.hornedSheep.getTarget().isAlive();
+            return this.hornedSheep.getTarget() != null && this.hornedSheep.getTarget().isAlive() && !this.hornedSheep.hasHorn();
         }
 
         @Override
         public void start() {
             super.start();
             this.targetPos = null;
-            this.rushTick = 200;
+            this.rushTick = 100;
             this.hornedSheep.setAggressive(true);
             this.rushing = true;
         }
@@ -261,11 +264,12 @@ public class HornedSheep extends Sheep {
                             if (flag) {
                                 this.hornedSheep.level().playSound((Player) null, this.hornedSheep, SoundEvents.GOAT_HORN_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F);
                             }
-                            this.rushCooldowmTick = 200 + this.hornedSheep.random.nextInt(200);
+                            this.rushCooldowmTick = 100 + this.hornedSheep.random.nextInt(100);
                             this.rushing = false;
+                            CameraEvent.addCameraHolderList(this.hornedSheep.level(), new CameraHolder(12, 30, 0.1F, GlobalVec3.of(this.hornedSheep.level().dimension(), this.hornedSheep.position())));
                         }
                         if (this.hornedSheep.position().closerThan(this.targetPos.getCenter(), 0.25F)) {
-                            this.rushCooldowmTick = 200 + this.hornedSheep.random.nextInt(200);
+                            this.rushCooldowmTick = 100 + this.hornedSheep.random.nextInt(100);
                             this.rushing = false;
                         }
                     }
@@ -273,7 +277,7 @@ public class HornedSheep extends Sheep {
                         --this.rushTick;
                     }
                     if (this.rushing && this.rushTick <= 0 || this.attack && this.rushTick > 0) {
-                        this.rushCooldowmTick = 200 + this.hornedSheep.random.nextInt(200);
+                        this.rushCooldowmTick = 100 + this.hornedSheep.random.nextInt(100);
                         this.rushing = false;
                     }
                 } else {
@@ -282,7 +286,7 @@ public class HornedSheep extends Sheep {
                     }
                     if (this.rushCooldowmTick <= 0) {
                         this.rushing = true;
-                        this.rushTick = 200;
+                        this.rushTick = 100;
                     }
                     this.hornedSheep.getNavigation().moveTo(livingentity, 1.1F);
                 }

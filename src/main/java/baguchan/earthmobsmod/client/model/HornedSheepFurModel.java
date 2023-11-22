@@ -35,12 +35,13 @@ public class HornedSheepFurModel<T extends HornedSheep> extends QuadrupedModel<T
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		this.head.xRot = this.headXRot;
+		float f = ageInTicks - (float) entity.tickCount;
+
+		this.head.xRot = this.headXRot + (entity.getAggressiveAnimationScale(f) * 25F) * ((float) Math.PI / 180F);
 	}
 
 	public void prepareMobModel(T p_103687_, float p_103688_, float p_103689_, float p_103690_) {
 		super.prepareMobModel(p_103687_, p_103688_, p_103689_, p_103690_);
-		this.head.y = 6.0F + p_103687_.getHeadEatPositionScale(p_103690_) * 9.0F;
 		this.headXRot = p_103687_.getHeadEatAngleScale(p_103690_);
 
 		if (this.attackTime > 0) {
