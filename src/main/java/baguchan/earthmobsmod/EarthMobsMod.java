@@ -48,6 +48,8 @@ public class EarthMobsMod {
 		ModEffects.MOB_EFFECTS.register(modBus);
 		ModEffects.POTION.register(modBus);
 		ModItems.ITEMS.register(modBus);
+		ModSounds.SOUND_EVENTS.register(modBus);
+		ModInstruments.INSTRUMENTS.register(modBus);
 		ModRecipes.RECIPE_SERIALIZERS.register(modBus);
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EarthMobsConfig.COMMON_SPEC);

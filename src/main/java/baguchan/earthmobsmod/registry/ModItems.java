@@ -1,10 +1,13 @@
 package baguchan.earthmobsmod.registry;
 
 import baguchan.earthmobsmod.EarthMobsMod;
+import baguchan.earthmobsmod.data.CustomTagGenerator;
 import baguchan.earthmobsmod.item.*;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.InstrumentTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.material.Fluids;
@@ -33,7 +36,7 @@ public class ModItems {
 
 	public static final Supplier<Item> BONE_SPIDER_EYE = ITEMS.register("bone_spider_eye", () -> new Item((new Item.Properties())));
 	public static final Supplier<Item> HORN = ITEMS.register("horn", () -> new Item((new Item.Properties().stacksTo(1))));
-	public static final Supplier<Item> HORN_FLUTE = ITEMS.register("horn_flute", () -> new FixedInstrumentItem((new Item.Properties().stacksTo(1)), InstrumentTags.GOAT_HORNS));
+	public static final Supplier<Item> HORN_FLUTE = ITEMS.register("horn_flute", () -> new FixedInstrumentItem((new Item.Properties().stacksTo(1)), CustomTagGenerator.InstrumentTagGenerator.HORNED_SHEEP));
 
 	public static final Supplier<Item> HYPER_RABBIT_FOOT = ITEMS.register("hyper_rabbit_foot", () -> new Item((new Item.Properties())));
 	public static final Supplier<Item> ZOMBIFIED_RABBIT_FOOT = ITEMS.register("zombified_rabbit_foot", () -> new Item((new Item.Properties())));
@@ -76,6 +79,21 @@ public class ModItems {
 	public static final Supplier<Item> MAGMA_COW_SPAWNEGG = ITEMS.register("magma_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.MAGMA_COW, 0x2C2C33, 0xFBAA59, (new Item.Properties())));
 	public static final Supplier<Item> MELON_GOLEM_SPAWNEGG = ITEMS.register("melon_golem_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.MELON_GOLEM, 14283506, 0x34791E, (new Item.Properties())));
 	public static final Supplier<Item> FURNACE_GOLEM_SPAWNEGG = ITEMS.register("furnace_golem_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.FURNACE_GOLEM, 14405058, 0x8F5846, (new Item.Properties())));
+
+	private static void generateInstrumentTypes(
+			CreativeModeTab.Output p_270699_,
+			HolderLookup<Instrument> p_270948_,
+			Item p_270421_,
+			TagKey<Instrument> p_270798_,
+			CreativeModeTab.TabVisibility p_270817_
+	) {
+		p_270948_.get(p_270798_)
+				.ifPresent(
+						p_270021_ -> p_270021_.stream()
+								.map(p_269995_ -> InstrumentItem.create(p_270421_, p_269995_))
+								.forEach(p_270011_ -> p_270699_.accept(p_270011_, p_270817_))
+				);
+	}
 
 	@SubscribeEvent
 	public static void registerCreativeTabsItem(BuildCreativeModeTabContentsEvent event) {
@@ -123,6 +141,13 @@ public class ModItems {
 			event.accept(HARDER_FLESH.get());
 			event.accept(BONE_SPIDER_EYE.get());
 			event.accept(HORN.get());
+			event.getParameters().holders()
+					.lookup(Registries.INSTRUMENT)
+					.ifPresent(
+							p_270036_ -> generateInstrumentTypes(
+									event, p_270036_, ModItems.HORN_FLUTE.get(), CustomTagGenerator.InstrumentTagGenerator.HORNED_SHEEP, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS
+							)
+					);
 			event.accept(HYPER_RABBIT_FOOT.get());
 			event.accept(ZOMBIFIED_RABBIT_FOOT.get());
 		}

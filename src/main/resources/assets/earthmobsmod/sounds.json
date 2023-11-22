@@ -1,0 +1,14 @@
+{
+  "item.horn_flute.wooden": {
+    "sounds": [
+      "earthmobsmod:item/horn/wooden_horn"
+    ],
+    "subtitle": "subtitles.item.horn"
+  },
+  "item.horn_flute.battle_horn": {
+    "sounds": [
+      "earthmobsmod:item/horn/battle_horn"
+    ],
+    "subtitle": "subtitles.item.horn"
+  }
+}

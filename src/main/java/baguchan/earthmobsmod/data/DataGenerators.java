@@ -28,5 +28,6 @@ public class DataGenerators {
         event.getGenerator().addProvider(event.includeServer(), new EntityTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         event.getGenerator().addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
         event.getGenerator().addProvider(event.includeServer(), new WorldGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
+        event.getGenerator().addProvider(event.includeServer(), new CustomTagGenerator.InstrumentTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), existingFileHelper));
     }
 }
