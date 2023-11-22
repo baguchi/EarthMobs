@@ -5,18 +5,18 @@ package baguchan.earthmobsmod.client.model;
 
 
 import baguchan.earthmobsmod.entity.HornedSheep;
-import net.minecraft.client.model.QuadrupedModel;
+import net.minecraft.client.model.SheepFurModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class HornedSheepFurModel<T extends HornedSheep> extends QuadrupedModel<T> {
+public class HornedSheepFurModel<T extends HornedSheep> extends SheepFurModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	private float headXRot;
 
 	public HornedSheepFurModel(ModelPart root) {
-		super(root, false, 8.0F, 4.0F, 2.0F, 2.0F, 24);
+		super(root);
 	}
 
 	public static LayerDefinition createFurLayer() {

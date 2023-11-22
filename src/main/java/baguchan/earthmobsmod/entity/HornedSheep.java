@@ -268,9 +268,12 @@ public class HornedSheep extends Sheep {
                             this.rushing = false;
                             CameraEvent.addCameraHolderList(this.hornedSheep.level(), new CameraHolder(12, 30, 0.1F, GlobalVec3.of(this.hornedSheep.level().dimension(), this.hornedSheep.position())));
                         }
-                        if (this.hornedSheep.position().closerThan(this.targetPos.getCenter(), 0.25F)) {
-                            this.rushCooldowmTick = 100 + this.hornedSheep.random.nextInt(100);
-                            this.rushing = false;
+                        if (this.targetPos != null) {
+
+                            if (this.hornedSheep.position().closerThan(this.targetPos.getCenter(), 0.25F) || this.hornedSheep.horizontalCollision) {
+                                this.rushCooldowmTick = 100 + this.hornedSheep.random.nextInt(100);
+                                this.rushing = false;
+                            }
                         }
                     }
                     if (this.rushTick > 0) {
