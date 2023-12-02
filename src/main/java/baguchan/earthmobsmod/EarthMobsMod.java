@@ -37,7 +37,6 @@ public class EarthMobsMod {
 
 
 	public EarthMobsMod() {
-		ModPackets.setupMessages();
 		// Register the setup method for modloading
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -62,6 +61,7 @@ public class EarthMobsMod {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
+		ModPackets.setupMessages();
 		ModEffects.init();
 		ModInteractionInformations.init();
 		ModItems.composterInit();
