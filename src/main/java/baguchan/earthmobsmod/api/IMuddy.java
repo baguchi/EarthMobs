@@ -10,4 +10,8 @@ public interface IMuddy {
 	default boolean canMuddy() {
 		return true;
 	}
+
+	void setColorData(byte colorData);
+
+	byte getColorData();
 }

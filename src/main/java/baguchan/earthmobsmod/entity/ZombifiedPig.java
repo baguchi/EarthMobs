@@ -46,6 +46,16 @@ public class ZombifiedPig extends Pig implements IMuddy {
 	}
 
 	@Override
+	public void setColorData(byte colorData) {
+
+	}
+
+	@Override
+	public byte getColorData() {
+		return 0;
+	}
+
+	@Override
 	public ZombifiedPig getBreedOffspring(ServerLevel p_149001_, AgeableMob p_149002_) {
 		return ModEntities.ZOMBIFIED_PIG.get().create(p_149001_);
 	}

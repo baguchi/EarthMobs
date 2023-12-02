@@ -2,6 +2,7 @@ package baguchan.earthmobsmod;
 
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.client.ClientRegistrar;
+import baguchan.earthmobsmod.message.ModPackets;
 import baguchan.earthmobsmod.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -63,6 +64,7 @@ public class EarthMobsMod {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
+		ModPackets.setupMessages();
 		ModEffects.init();
 		ModInteractionInformations.init();
 		ModItems.composterInit();
