@@ -1,11 +1,12 @@
 package baguchan.earthmobsmod.mixin;
 
+import bagu_chan.bagus_lib.api.IBaguPacket;
 import baguchan.earthmobsmod.api.IMoss;
+import baguchan.earthmobsmod.message.ModPackets;
+import baguchan.earthmobsmod.message.MossMessage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Sheep;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,26 +26,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 @Mixin(Sheep.class)
-public abstract class SheepMixin extends Animal implements IMoss {
-    private static final EntityDataAccessor<Boolean> DATA_MOSS = SynchedEntityData.defineId(Sheep.class, EntityDataSerializers.BOOLEAN);
+public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
+    private boolean moss;
 
     protected SheepMixin(EntityType<? extends Animal> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
     }
-
-    @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    protected void defineSynchedData(CallbackInfo callbackInfo) {
-        this.entityData.define(DATA_MOSS, false);
-    }
-
     @Override
     public boolean isMoss() {
-        return this.entityData.get(DATA_MOSS);
+        return this.moss;
     }
 
     @Override
     public void setMoss(boolean moss) {
-        this.entityData.set(DATA_MOSS, moss);
+        this.moss = moss;
+        this.resync(this, this.getId());
+    }
+
+    @Override
+    public void resync(Entity entity, int i) {
+        if (!this.level().isClientSide) {
+            ModPackets.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new MossMessage(this.getId(), this.moss));
+        }
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))

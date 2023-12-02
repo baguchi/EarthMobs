@@ -1,7 +1,7 @@
 package baguchan.earthmobsmod.client.render;
 
 import baguchan.earthmobsmod.EarthMobsMod;
-import baguchan.earthmobsmod.api.IMuddy;
+import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.TeaCupPigModel;
 import baguchan.earthmobsmod.entity.TeaCupPig;
@@ -31,7 +31,7 @@ public class TeaCupPigRenderer<T extends TeaCupPig> extends MobRenderer<T, TeaCu
 
     @Override
     public ResourceLocation getTextureLocation(T p_114482_) {
-        if (p_114482_ instanceof IMuddy muddy) {
+        if (p_114482_ instanceof IMuddyPig muddy) {
             if (muddy.isMuddy()) {
                 return MUD_TEXTURE;
             }

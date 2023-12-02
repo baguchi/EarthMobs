@@ -1,6 +1,6 @@
 package baguchan.earthmobsmod.entity;
 
-import baguchan.earthmobsmod.api.IMuddy;
+import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -90,7 +90,7 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
         Bucketable.saveDefaultDataToBucketTag(this, p_149187_);
         CompoundTag compoundtag = p_149187_.getOrCreateTag();
         compoundtag.putInt("Age", this.getAge());
-        if (this instanceof IMuddy muddy) {
+        if (this instanceof IMuddyPig muddy) {
             compoundtag.putBoolean("Muddy", muddy.isMuddy());
         }
     }
@@ -100,7 +100,7 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
         if (p_149163_.contains("Age")) {
             this.setAge(p_149163_.getInt("Age"));
         }
-        if (this instanceof IMuddy muddy) {
+        if (this instanceof IMuddyPig muddy) {
             if (p_149163_.contains("Muddy")) {
                 muddy.setMuddy(p_149163_.getBoolean("Muddy"));
             }

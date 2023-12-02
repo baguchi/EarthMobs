@@ -1,6 +1,6 @@
 package baguchan.earthmobsmod.mixin.client;
 
-import baguchan.earthmobsmod.api.IMuddy;
+import baguchan.earthmobsmod.api.IMuddyPig;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -18,8 +18,8 @@ public class PigModelMixin<T extends Entity> extends QuadrupedModel<T> {
 	@Override
 	public void prepareMobModel(T p_104132_, float p_104133_, float p_104134_, float p_104135_) {
 		super.prepareMobModel(p_104132_, p_104133_, p_104134_, p_104135_);
-		if (p_104132_ instanceof IMuddy) {
-			this.body.zRot = ((IMuddy) p_104132_).getBodyRollAngle(p_104135_, -0.16F);
+		if (p_104132_ instanceof IMuddyPig) {
+			this.body.zRot = ((IMuddyPig) p_104132_).getBodyRollAngle(p_104135_, -0.16F);
 		}
 	}
 }

@@ -2,6 +2,7 @@ package baguchan.earthmobsmod;
 
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.client.ClientRegistrar;
+import baguchan.earthmobsmod.message.ModPackets;
 import baguchan.earthmobsmod.registry.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +37,7 @@ public class EarthMobsMod {
 
 
 	public EarthMobsMod() {
+		ModPackets.setupMessages();
 		// Register the setup method for modloading
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();

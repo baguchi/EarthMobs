@@ -1,7 +1,7 @@
 package baguchan.earthmobsmod.entity;
 
-import bagu_chan.bagus_lib.client.camera.CameraEvent;
-import bagu_chan.bagus_lib.client.camera.CameraHolder;
+import bagu_chan.bagus_lib.client.camera.CameraCore;
+import bagu_chan.bagus_lib.client.camera.holder.CameraHolder;
 import bagu_chan.bagus_lib.util.GlobalVec3;
 import baguchan.earthmobsmod.data.CustomTagGenerator;
 import baguchan.earthmobsmod.registry.ModEntities;
@@ -264,7 +264,7 @@ public class HornedSheep extends Sheep {
                             if (flag) {
                                 this.hornedSheep.level().playSound((Player) null, this.hornedSheep, SoundEvents.GOAT_HORN_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F);
                             }
-                            CameraEvent.addCameraHolderList(this.hornedSheep.level(), new CameraHolder(12, 30, 0.1F, GlobalVec3.of(this.hornedSheep.level().dimension(), this.hornedSheep.position())));
+                            CameraCore.addCameraHolderList(this.hornedSheep.level(), new CameraHolder(12, 30, 0.1F, GlobalVec3.of(this.hornedSheep.level().dimension(), this.hornedSheep.position())));
                             this.rushCooldowmTick = 200 + this.hornedSheep.random.nextInt(200);
                             this.rushing = false;
                         }

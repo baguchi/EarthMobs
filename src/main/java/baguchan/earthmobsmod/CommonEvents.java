@@ -1,7 +1,7 @@
 package baguchan.earthmobsmod;
 
 import baguchan.earthmobsmod.api.IMoss;
-import baguchan.earthmobsmod.api.IMuddy;
+import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.block.CarvedMelonBlock;
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.entity.FurnaceGolem;
@@ -10,6 +10,7 @@ import baguchan.earthmobsmod.entity.ZombifiedRabbit;
 import baguchan.earthmobsmod.registry.ModBlocks;
 import baguchan.earthmobsmod.registry.ModDamageSource;
 import baguchan.earthmobsmod.registry.ModEntities;
+import baguchan.earthmobsmod.util.DyeUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -85,9 +86,11 @@ public class CommonEvents {
 				moss.setMoss(true);
 			}
 		}
-		if (entity instanceof IMuddy muddy) {
+        if (entity instanceof IMuddyPig muddy) {
 			if (serverLevelAccessor.getBiome(BlockPos.containing(event.getX(), event.getY(), event.getZ())).is(Tags.Biomes.IS_SWAMP)) {
 				muddy.setMuddy(true);
+                byte b0 = muddy.getColorData();
+                muddy.setColorData((byte) (b0 & 240 | DyeUtil.getRandomColor(serverLevelAccessor.getRandom()).getId() & 15));
 			}
 		}
 	}

@@ -1,22 +1,23 @@
 package baguchan.earthmobsmod.mixin;
 
 
+import bagu_chan.bagus_lib.api.IBaguPacket;
 import baguchan.earthmobsmod.api.IHasFlower;
-import baguchan.earthmobsmod.api.IMuddy;
+import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.api.IOnMud;
 import baguchan.earthmobsmod.api.ISheared;
+import baguchan.earthmobsmod.message.ModPackets;
+import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.util.DyeUtil;
 import com.google.common.collect.Maps;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.EatBlockGoal;
 import net.minecraft.world.entity.animal.Animal;
@@ -30,6 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.IShearable;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,9 +43,9 @@ import java.util.List;
 import java.util.Map;
 
 @Mixin(Pig.class)
-public abstract class PigMixin extends Animal implements IMuddy, IShearable, ISheared, IHasFlower {
-	private static final EntityDataAccessor<Boolean> DATA_MUDDY_ID = SynchedEntityData.defineId(Pig.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Byte> DATA_DYE_ID = SynchedEntityData.defineId(Pig.class, EntityDataSerializers.BYTE);
+public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, ISheared, IHasFlower, IBaguPacket {
+	private boolean muddy;
+	private byte colorData;
 	private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_29841_) -> {
 		p_29841_.put(DyeColor.WHITE, Items.WHITE_DYE);
 		p_29841_.put(DyeColor.ORANGE, Items.ORANGE_DYE);
@@ -76,20 +78,23 @@ public abstract class PigMixin extends Animal implements IMuddy, IShearable, ISh
 		super(p_27557_, p_27558_);
 	}
 
-	@Inject(method = "defineSynchedData", at = @At("TAIL"))
-	protected void defineSynchedData(CallbackInfo callbackInfo) {
-		this.entityData.define(DATA_MUDDY_ID, false);
-		this.entityData.define(DATA_DYE_ID, (byte) 0);
-	}
-
 	@Override
 	public boolean isMuddy() {
-		return this.entityData.get(DATA_MUDDY_ID);
+		return this.muddy;
 	}
 
 	@Override
 	public void setMuddy(boolean playing) {
-		this.entityData.set(DATA_MUDDY_ID, playing);
+		this.muddy = playing;
+
+		this.resync(this, this.getId());
+	}
+
+	@Override
+	public void resync(Entity entity, int i) {
+		if (!this.level().isClientSide) {
+			ModPackets.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new MudMessage(this.getId(), this.muddy, this.colorData));
+		}
 	}
 
 	@Override
@@ -105,26 +110,39 @@ public abstract class PigMixin extends Animal implements IMuddy, IShearable, ISh
 	}
 
 	public boolean isSheared() {
-		return (this.entityData.get(DATA_DYE_ID) & 16) != 0;
+		return (this.colorData & 16) != 0;
 	}
 
 	public void setSheared(boolean p_29879_) {
-		byte b0 = this.entityData.get(DATA_DYE_ID);
+		byte b0 = this.colorData;
 		if (p_29879_) {
-			this.entityData.set(DATA_DYE_ID, (byte) (b0 | 16));
+			this.colorData = (byte) (b0 | 16);
 		} else {
-			this.entityData.set(DATA_DYE_ID, (byte) (b0 & -17));
+			this.colorData = (byte) (b0 & -17);
 		}
-
+		if (!this.level().isClientSide) {
+			ModPackets.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> this), new MudMessage(this.getId(), this.muddy, this.colorData));
+		}
 	}
 
 	public DyeColor getColor() {
-		return DyeColor.byId(this.entityData.get(DATA_DYE_ID) & 15);
+		return DyeColor.byId(this.colorData & 15);
 	}
 
 	public void setColor(DyeColor p_29856_) {
-		byte b0 = this.entityData.get(DATA_DYE_ID);
-		this.entityData.set(DATA_DYE_ID, (byte) (b0 & 240 | p_29856_.getId() & 15));
+		byte b0 = this.colorData;
+		this.colorData = (byte) (b0 & 240 | p_29856_.getId() & 15);
+	}
+
+	public void setColorData(byte colorData) {
+		this.colorData = colorData;
+		if (!this.level().isClientSide) {
+			ModPackets.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> this), new MudMessage(this.getId(), this.muddy, this.colorData));
+		}
+	}
+
+	public byte getColorData() {
+		return colorData;
 	}
 
 	public void tick() {
