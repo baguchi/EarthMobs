@@ -8,6 +8,7 @@ import baguchan.earthmobsmod.entity.FurnaceGolem;
 import baguchan.earthmobsmod.entity.ZombifiedPig;
 import baguchan.earthmobsmod.entity.ZombifiedRabbit;
 import baguchan.earthmobsmod.registry.ModBlocks;
+import baguchan.earthmobsmod.registry.ModCapability;
 import baguchan.earthmobsmod.registry.ModDamageSource;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.util.DyeUtil;
@@ -16,7 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -47,8 +47,6 @@ import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
@@ -57,10 +55,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @Mod.EventBusSubscriber(modid = EarthMobsMod.MODID)
 public class CommonEvents {
-	@SubscribeEvent
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.register(ShadowCapability.class);
-	}
 
 	@SubscribeEvent
 	public static void addSpawn(EntityJoinLevelEvent event) {
@@ -92,13 +86,6 @@ public class CommonEvents {
                 byte b0 = muddy.getColorData();
                 muddy.setColorData((byte) (b0 & 240 | DyeUtil.getRandomColor(serverLevelAccessor.getRandom()).getId() & 15));
 			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-		if (event.getObject() instanceof LivingEntity) {
-			event.addCapability(new ResourceLocation(EarthMobsMod.MODID, "shadow"), new ShadowCapability());
 		}
 	}
 
@@ -166,9 +153,10 @@ public class CommonEvents {
 
 	@SubscribeEvent
 	public static void onUpdate(LivingEvent.LivingTickEvent event) {
-		event.getEntity().getCapability(EarthMobsMod.SHADOW_CAP).ifPresent(shadowCapability -> {
+		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
+		if (shadowCapability != null) {
 			shadowCapability.tick(event.getEntity());
-		});
+		}
 	}
 
 	@SubscribeEvent
@@ -244,23 +232,27 @@ public class CommonEvents {
 
     @SubscribeEvent
 	public static void onHurt(LivingHurtEvent event) {
-		event.getEntity().getCapability(EarthMobsMod.SHADOW_CAP).ifPresent(shadowCapability -> {
+		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
+		if (shadowCapability != null) {
 			if (shadowCapability.getPercentBoost() >= 0.5F && !event.getSource().is(DamageTypeTags.BYPASSES_ARMOR) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE)) {
 				event.setAmount(event.getAmount() * (1.0F - shadowCapability.getPercentBoost()));
 				if (shadowCapability.getPercentBoost() > 0.9F) {
 					event.setCanceled(true);
 				}
 			}
-		});
+		}
 	}
+
 
 	@SubscribeEvent
 	public static void onLivingKnockback(LivingKnockBackEvent event) {
-		event.getEntity().getCapability(EarthMobsMod.SHADOW_CAP).ifPresent(shadowCapability -> {
+		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
+		if (shadowCapability != null) {
+
 			if (shadowCapability.getPercentBoost() >= 0.5F) {
 				event.setCanceled(true);
 			}
-		});
+		}
 	}
 
 	private static void spawnGolemInWorld(Level p_249110_, BlockPattern.BlockPatternMatch p_251293_, Entity p_251251_, BlockPos p_251189_) {

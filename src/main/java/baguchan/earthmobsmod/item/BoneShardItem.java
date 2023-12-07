@@ -16,6 +16,6 @@ public class BoneShardItem extends Item {
 	}
 
 	public void appendHoverText(ItemStack p_42988_, @Nullable Level p_42989_, List<Component> p_42990_, TooltipFlag p_42991_) {
-		PotionUtils.addPotionTooltip(p_42988_, p_42990_, 1.0F);
+        PotionUtils.addPotionTooltip(p_42988_, p_42990_, 1.0F, p_42989_ == null ? 20.0F : p_42989_.tickRateManager().tickrate());
 	}
 }

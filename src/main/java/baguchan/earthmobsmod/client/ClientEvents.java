@@ -1,7 +1,9 @@
 package baguchan.earthmobsmod.client;
 
 import baguchan.earthmobsmod.EarthMobsMod;
+import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.entity.HyperRabbit;
+import baguchan.earthmobsmod.registry.ModCapability;
 import baguchan.earthmobsmod.registry.ModEffects;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -34,8 +36,8 @@ public class ClientEvents {
 		int light = event.getPackedLight();
 		float partialtick = event.getPartialTick();
 
-
-		entity.getCapability(EarthMobsMod.SHADOW_CAP).ifPresent(illusion -> {
+		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
+		if (shadowCapability != null) {
 			if (entity instanceof HyperRabbit && ((HyperRabbit) entity).isSpark() || entity.hasEffect(ModEffects.HYPER_SPARK.get())) {
 				posestack.pushPose();
 				boolean shouldSit = entity.isPassenger() && (entity.getVehicle() != null && entity.getVehicle().shouldRiderSit());
@@ -44,7 +46,7 @@ public class ClientEvents {
 				float f2 = f1 - f;
 				if (shouldSit && entity.getVehicle() instanceof LivingEntity) {
 					LivingEntity livingentity = (LivingEntity) entity.getVehicle();
-					f = Mth.rotLerp(partialtick, illusion.yBodyRot, livingentity.yBodyRot);
+					f = Mth.rotLerp(partialtick, shadowCapability.yBodyRot, livingentity.yBodyRot);
 					f2 = f1 - f;
 					float f3 = Mth.wrapDegrees(f2);
 					if (f3 < -85.0F) {
@@ -75,12 +77,12 @@ public class ClientEvents {
 
 				float f7 = getBob(entity, partialtick);
 
-				double shadowX = (illusion.prevShadowX + (illusion.shadowX - illusion.prevShadowX) * partialtick);
-				double shadowY = (illusion.prevShadowY + (illusion.shadowY - illusion.prevShadowY) * partialtick);
-				double shadowZ = (illusion.prevShadowZ + (illusion.shadowZ - illusion.prevShadowZ) * partialtick);
-				double shadowX2 = (illusion.prevShadowX2 + (illusion.shadowX2 - illusion.prevShadowX2) * partialtick);
-				double shadowY2 = (illusion.prevShadowY2 + (illusion.shadowY2 - illusion.prevShadowY2) * partialtick);
-				double shadowZ2 = (illusion.prevShadowZ2 + (illusion.shadowZ2 - illusion.prevShadowZ2) * partialtick);
+				double shadowX = (shadowCapability.prevShadowX + (shadowCapability.shadowX - shadowCapability.prevShadowX) * partialtick);
+				double shadowY = (shadowCapability.prevShadowY + (shadowCapability.shadowY - shadowCapability.prevShadowY) * partialtick);
+				double shadowZ = (shadowCapability.prevShadowZ + (shadowCapability.shadowZ - shadowCapability.prevShadowZ) * partialtick);
+				double shadowX2 = (shadowCapability.prevShadowX2 + (shadowCapability.shadowX2 - shadowCapability.prevShadowX2) * partialtick);
+				double shadowY2 = (shadowCapability.prevShadowY2 + (shadowCapability.shadowY2 - shadowCapability.prevShadowY2) * partialtick);
+				double shadowZ2 = (shadowCapability.prevShadowZ2 + (shadowCapability.shadowZ2 - shadowCapability.prevShadowZ2) * partialtick);
 				double ownerInX = entity.xo + (entity.getX() - entity.xo) * partialtick;
 				double ownerInY = entity.yo + (entity.getY() - entity.yo) * partialtick;
 				double ownerInZ = entity.zo + (entity.getZ() - entity.zo) * partialtick;
@@ -89,36 +91,36 @@ public class ClientEvents {
 				double deltaZ = shadowZ - ownerInZ;
 				double deltaX2 = shadowX2 - shadowX;
 				double deltaY2 = shadowY2 - shadowY;
-                double deltaZ2 = shadowZ2 - shadowZ;
+				double deltaZ2 = shadowZ2 - shadowZ;
 
-                Pose pose = entity.getPose();
+				Pose pose = entity.getPose();
 
-                posestack.translate(deltaX, deltaY, deltaZ);
+				posestack.translate(deltaX, deltaY, deltaZ);
 
-                if (!entity.hasPose(Pose.SLEEPING)) {
-                    posestack.mulPose(Axis.YP.rotationDegrees(180.0F - f));
-                }
+				if (!entity.hasPose(Pose.SLEEPING)) {
+					posestack.mulPose(Axis.YP.rotationDegrees(180.0F - f));
+				}
 
-                //renderer.setupRotations(entity, posestack, f7, f, partialtick);
+				//renderer.setupRotations(entity, posestack, f7, f, partialtick);
 
 				posestack.scale(-1.0F, -1.0F, 1.0F);
 				//renderer.scale(entity, posestack, partialtick);
 				posestack.translate(0.0F, (double) -1.501F, 0.0F);
 
 
-                float f8 = 0.0F;
-                float f5 = 0.0F;
-                if (!shouldSit && entity.isAlive()) {
-                    f8 = entity.walkAnimation.speed(partialtick);
-                    f5 = entity.walkAnimation.position(partialtick);
-                    if (entity.isBaby()) {
-                        f5 *= 3.0F;
-                    }
+				float f8 = 0.0F;
+				float f5 = 0.0F;
+				if (!shouldSit && entity.isAlive()) {
+					f8 = entity.walkAnimation.speed(partialtick);
+					f5 = entity.walkAnimation.position(partialtick);
+					if (entity.isBaby()) {
+						f5 *= 3.0F;
+					}
 
-                    if (f8 > 1.0F) {
-                        f8 = 1.0F;
-                    }
-                }
+					if (f8 > 1.0F) {
+						f8 = 1.0F;
+					}
+				}
 
 				renderer.getModel().prepareMobModel(entity, f5, f8, partialtick);
 				renderer.getModel().setupAnim(entity, f5, f8, f7, f2, f6);
@@ -128,7 +130,7 @@ public class ClientEvents {
 				posestack.popPose();
 				posestack.pushPose();
 				if (shouldSit && entity.getVehicle() instanceof LivingEntity) {
-					f = Mth.rotLerp(partialtick, illusion.yBodyRot2, illusion.yBodyRot);
+					f = Mth.rotLerp(partialtick, shadowCapability.yBodyRot2, shadowCapability.yBodyRot);
 					f2 = f1 - f;
 					float f3 = Mth.wrapDegrees(f2);
 					if (f3 < -85.0F) {
@@ -151,30 +153,30 @@ public class ClientEvents {
 					Direction direction = entity.getBedOrientation();
 					if (direction != null) {
 						float f4 = entity.getEyeHeight(Pose.STANDING) - 0.1F;
-                        posestack.translate((double) ((float) (-direction.getStepX()) * f4), 0.0D, (double) ((float) (-direction.getStepZ()) * f4));
-                    }
-                }
+						posestack.translate((double) ((float) (-direction.getStepX()) * f4), 0.0D, (double) ((float) (-direction.getStepZ()) * f4));
+					}
+				}
 
-                posestack.translate(deltaX2, deltaY2, deltaZ2);
+				posestack.translate(deltaX2, deltaY2, deltaZ2);
 
-                if (!entity.hasPose(Pose.SLEEPING)) {
-                    posestack.mulPose(Axis.YP.rotationDegrees(180.0F - f));
-                }
+				if (!entity.hasPose(Pose.SLEEPING)) {
+					posestack.mulPose(Axis.YP.rotationDegrees(180.0F - f));
+				}
 
-                //renderer.setupRotations(entity, posestack, f7, f, partialtick);
+				//renderer.setupRotations(entity, posestack, f7, f, partialtick);
 
-                posestack.scale(-1.0F, -1.0F, 1.0F);
-                //renderer.scale(entity, posestack, partialtick);
-                posestack.translate(0.0F, (double) -1.501F, 0.0F);
+				posestack.scale(-1.0F, -1.0F, 1.0F);
+				//renderer.scale(entity, posestack, partialtick);
+				posestack.translate(0.0F, (double) -1.501F, 0.0F);
 
 
-                renderer.getModel().prepareMobModel(entity, f5, f8, partialtick);
-                renderer.getModel().setupAnim(entity, f5, f8, f7, f2, f6);
-                renderer.getModel().renderToBuffer(posestack, vertexconsumer, light, i, 1.0F, 1.0F, 1.0F, 0.15F);
+				renderer.getModel().prepareMobModel(entity, f5, f8, partialtick);
+				renderer.getModel().setupAnim(entity, f5, f8, f7, f2, f6);
+				renderer.getModel().renderToBuffer(posestack, vertexconsumer, light, i, 1.0F, 1.0F, 1.0F, 0.15F);
 
 				posestack.popPose();
 			}
-		});
+		}
 	}
 
 	protected static float getBob(LivingEntity p_115305_, float p_115306_) {

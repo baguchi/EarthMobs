@@ -1,8 +1,6 @@
 package baguchan.earthmobsmod.capability;
 
-import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModEffects;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntitySelector;
@@ -12,17 +10,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.entity.EntityTypeTest;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
-import net.neoforged.neoforge.common.util.INBTSerializable;
-import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.attachment.IAttachmentSerializer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class ShadowCapability implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class ShadowCapability implements IAttachmentSerializer<CompoundTag, ShadowCapability> {
 	private static final UUID SPEED_MODIFIER_BOOST_UUID = UUID.fromString("a4be9598-fd19-8c8b-7e3d-142defd78b7c");
 	public float prevShadowX;
 	public float prevShadowY;
@@ -136,27 +129,17 @@ public class ShadowCapability implements ICapabilityProvider, INBTSerializable<C
 			}
 		}
 	}
-
-	public CompoundTag serializeNBT() {
-		CompoundTag nbt = new CompoundTag();
-
-		nbt.putFloat("PercentBoost", percentBoost);
-
-
-		return nbt;
-	}
-
-	public void deserializeNBT(CompoundTag nbt) {
-		percentBoost = nbt.getFloat("PercentBoost");
-	}
-
 	public float getPercentBoost() {
 		return percentBoost;
 	}
 
 	@Override
-	@Nonnull
-	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-		return capability == EarthMobsMod.SHADOW_CAP ? LazyOptional.of(() -> this).cast() : LazyOptional.empty();
+	public ShadowCapability read(CompoundTag tag) {
+		return null;
+	}
+
+	@Override
+	public CompoundTag write(ShadowCapability attachment) {
+		return null;
 	}
 }
