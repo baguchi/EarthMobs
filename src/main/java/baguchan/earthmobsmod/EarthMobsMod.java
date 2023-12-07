@@ -1,12 +1,10 @@
 package baguchan.earthmobsmod;
 
-import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.client.ClientRegistrar;
 import baguchan.earthmobsmod.message.ModPackets;
 import baguchan.earthmobsmod.registry.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.api.distmarker.Dist;
@@ -17,7 +15,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +45,6 @@ public class EarthMobsMod {
 		ModCapability.ATTACHMENT_TYPES.register(modBus);
 		ModInstruments.INSTRUMENTS.register(modBus);
 		ModRecipes.RECIPE_SERIALIZERS.register(modBus);
-		modBus.addListener(this::registerCapabilities);
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EarthMobsConfig.COMMON_SPEC);
 
@@ -72,12 +68,4 @@ public class EarthMobsMod {
 		return new ResourceLocation(EarthMobsMod.MODID, name.toLowerCase(Locale.ROOT));
 	}
 
-	public void registerCapabilities(RegisterCapabilitiesEvent event) {
-		for (EntityType entityType : BuiltInRegistries.ENTITY_TYPE) {
-			event.registerEntity(ModCapability.SHADOW,
-					entityType, (entityTypes, voids) -> {
-						return new ShadowCapability();
-					});
-		}
-	}
 }
