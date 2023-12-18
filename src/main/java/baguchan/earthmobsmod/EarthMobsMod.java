@@ -13,7 +13,6 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
@@ -28,10 +27,8 @@ public class EarthMobsMod {
 	// Directly reference a log4j logger.
 	private static final Logger LOGGER = LogManager.getLogger(MODID);
 
-	public EarthMobsMod() {
+	public EarthMobsMod(IEventBus modBus) {
 		// Register the setup method for modloading
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 		IEventBus forgeBus = NeoForge.EVENT_BUS;
 		ModBlocks.BLOCKS.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
@@ -49,7 +46,7 @@ public class EarthMobsMod {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EarthMobsConfig.COMMON_SPEC);
 
 		if (FMLEnvironment.dist == Dist.CLIENT) {
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistrar::setup);
+			modBus.addListener(ClientRegistrar::setup);
 		}
 	}
 
