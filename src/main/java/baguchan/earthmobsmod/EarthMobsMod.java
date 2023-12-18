@@ -29,6 +29,7 @@ public class EarthMobsMod {
 
 	public EarthMobsMod(IEventBus modBus) {
 		// Register the setup method for modloading
+		modBus.addListener(this::setup);
 		IEventBus forgeBus = NeoForge.EVENT_BUS;
 		ModBlocks.BLOCKS.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
