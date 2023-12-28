@@ -140,7 +140,7 @@ public abstract class PigMixin extends Animal implements IMuddy, net.minecraftfo
 
 	public void tick() {
 		super.tick();
-		if (this.isAlive() && this instanceof IOnMud && this.canMuddy()) {
+		if (this.isAlive() && this instanceof IOnMud && this.canMuddy(this)) {
 			if (((IOnMud) this).isOnMud() && (!this.isMuddy() || this.isSheared()) && !this.isShaking) {
 				this.isShaking = true;
 				this.inMud = true;

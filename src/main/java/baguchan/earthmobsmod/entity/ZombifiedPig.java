@@ -3,10 +3,7 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.api.IMuddy;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Pig;
@@ -41,7 +38,7 @@ public class ZombifiedPig extends Pig implements IMuddy {
 	}
 
 	@Override
-	public boolean canMuddy() {
+    public boolean canMuddy(LivingEntity living) {
 		return false;
 	}
 

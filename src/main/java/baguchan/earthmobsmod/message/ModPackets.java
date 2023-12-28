@@ -14,5 +14,6 @@ public class ModPackets {
 
     public static void setupMessages() {
         CHANNEL.messageBuilder(MudMessage.class, 0).decoder(MudMessage::readFromPacket).encoder(MudMessage::writeToPacket).consumerMainThread(MudMessage::handle).add();
+        CHANNEL.messageBuilder(MossMessage.class, 1).decoder(MossMessage::readFromPacket).encoder(MossMessage::writeToPacket).consumerMainThread(MossMessage::handle).add();
     }
 }

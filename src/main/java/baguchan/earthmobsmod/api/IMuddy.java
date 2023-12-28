@@ -1,5 +1,8 @@
 package baguchan.earthmobsmod.api;
 
+import baguchan.earthmobsmod.registry.ModTags;
+import net.minecraft.world.entity.LivingEntity;
+
 public interface IMuddy {
 	boolean isMuddy();
 
@@ -7,8 +10,8 @@ public interface IMuddy {
 
 	float getBodyRollAngle(float p_30433_, float p_30434_);
 
-	default boolean canMuddy() {
-		return true;
+    default boolean canMuddy(LivingEntity livingEntity) {
+        return livingEntity.getType().is(ModTags.Entities.CAN_MOSS);
 	}
 
 	void setColorData(byte colorData);
