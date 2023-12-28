@@ -105,9 +105,7 @@ public class EarthBiomeModifier implements BiomeModifier {
 					}
 
 					if (EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get() > 0) {
-						if (biome.is(Tags.Biomes.IS_MOUNTAIN)) {
 							builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_ZOMBIE.get(), EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), 4, 4));
-						}
 					}
 
 					if (EarthMobsConfig.COMMON.lobberZombieSpawnRate.get() > 0) {
