@@ -28,6 +28,7 @@ public class ModItems {
 
 	public static final RegistryObject<Item> BONE_SHARD = ITEMS.register("bone_shard", () -> new BoneShardItem((new Item.Properties())));
 	public static final RegistryObject<Item> FANCY_FEATHER = ITEMS.register("fancy_feather", () -> new Item((new Item.Properties())));
+	public static final RegistryObject<Item> HARDER_FLESH = ITEMS.register("harder_flesh", () -> new Item((new Item.Properties().food(ModFoods.HARDER_FLESH))));
 
 	public static final RegistryObject<Item> BONE_SPIDER_EYE = ITEMS.register("bone_spider_eye", () -> new Item((new Item.Properties())));
 	public static final RegistryObject<Item> HORN = ITEMS.register("horn", () -> new Item((new Item.Properties().stacksTo(1))));

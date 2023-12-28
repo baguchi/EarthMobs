@@ -1,5 +1,7 @@
 package baguchan.earthmobsmod;
 
+import baguchan.earthmobsmod.api.IMoss;
+import baguchan.earthmobsmod.api.IMuddy;
 import baguchan.earthmobsmod.block.CarvedMelonBlock;
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.entity.FurnaceGolem;
@@ -33,20 +35,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -246,6 +247,22 @@ public class CommonEvents {
 				event.setCanceled(true);
 			}
 		});
+	}
+
+	@SubscribeEvent
+	public static void initSpawn(MobSpawnEvent.FinalizeSpawn event) {
+		Mob entity = event.getEntity();
+		ServerLevelAccessor serverLevelAccessor = event.getLevel();
+		if (entity instanceof IMoss moss) {
+			if (serverLevelAccessor.getBiome(BlockPos.containing(event.getX(), event.getY(), event.getZ())).is(Tags.Biomes.IS_SWAMP)) {
+				moss.setMoss(true);
+			}
+		}
+		if (entity instanceof IMuddy muddy) {
+			if (serverLevelAccessor.getBiome(BlockPos.containing(event.getX(), event.getY(), event.getZ())).is(Tags.Biomes.IS_SWAMP)) {
+				muddy.setMuddy(true);
+			}
+		}
 	}
 
 	private static void spawnGolemInWorld(Level p_249110_, BlockPattern.BlockPatternMatch p_251293_, Entity p_251251_, BlockPos p_251189_) {

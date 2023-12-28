@@ -11,7 +11,7 @@ public interface IMuddy {
 	float getBodyRollAngle(float p_30433_, float p_30434_);
 
     default boolean canMuddy(LivingEntity livingEntity) {
-        return livingEntity.getType().is(ModTags.Entities.CAN_MOSS);
+		return livingEntity.getType().is(ModTags.Entities.CAN_MUDDY);
 	}
 
 	void setColorData(byte colorData);
