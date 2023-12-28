@@ -6,10 +6,7 @@ import baguchan.earthmobsmod.block.TropicalSlimeBlock;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FlowerBlock;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -56,4 +53,10 @@ public class ModBlocks {
 			return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties());
 		};
 	}
+
+    public static void initFire() {
+        FireBlock fireblock = (FireBlock) Blocks.FIRE;
+        fireblock.setFlammable(ModBlocks.BUTTERCUP.get(), 60, 100);
+        fireblock.setFlammable(ModBlocks.PINK_DAISY.get(), 60, 100);
+    }
 }

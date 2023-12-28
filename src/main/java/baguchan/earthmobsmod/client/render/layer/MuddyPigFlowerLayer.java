@@ -1,7 +1,7 @@
 package baguchan.earthmobsmod.client.render.layer;
 
 import baguchan.earthmobsmod.EarthMobsMod;
-import baguchan.earthmobsmod.api.IMuddy;
+import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.api.ISheared;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.MuddyPigModel;
@@ -34,8 +34,8 @@ public class MuddyPigFlowerLayer extends RenderLayer<Pig, PigModel<Pig>> {
 	}
 
 	public void render(PoseStack p_117421_, MultiBufferSource p_117422_, int p_117423_, Pig pig, float p_117425_, float p_117426_, float p_117427_, float p_117428_, float p_117429_, float p_117430_) {
-		if (pig instanceof IMuddy && pig instanceof ISheared) {
-			if (((IMuddy) pig).isMuddy() && !((ISheared) pig).isSheared()) {
+        if (pig instanceof IMuddyPig && pig instanceof ISheared) {
+            if (((IMuddyPig) pig).isMuddy() && !((ISheared) pig).isSheared()) {
 				if (pig.isInvisible()) {
 					Minecraft minecraft = Minecraft.getInstance();
 					boolean flag = minecraft.shouldEntityAppearGlowing(pig);

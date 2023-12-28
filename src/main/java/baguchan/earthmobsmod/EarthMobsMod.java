@@ -2,7 +2,8 @@ package baguchan.earthmobsmod;
 
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.client.ClientRegistrar;
-import baguchan.earthmobsmod.message.SyncFishMessage;
+import baguchan.earthmobsmod.message.MossMessage;
+import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.registry.*;
 import baguchan.earthmobsmod.world.features.ModEarthFeatures;
 import baguchan.earthmobsmod.world.features.ModEarthPlacements;
@@ -75,6 +76,8 @@ public class EarthMobsMod {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
+		ModItems.composterInit();
+		ModBlocks.initFire();
 		ModEffects.init();
 		ModInteractionInformations.init();
 		ModEarthFeatures.init();
@@ -82,8 +85,10 @@ public class EarthMobsMod {
 	}
 
 	private void setupMessages() {
-		CHANNEL.registerMessage(0, SyncFishMessage.class,
-				SyncFishMessage::serialize, SyncFishMessage::deserialize, SyncFishMessage::handle);
+		CHANNEL.registerMessage(0, MudMessage.class,
+				MudMessage::writeToPacket, MudMessage::readFromPacket, MudMessage::handle);
+		CHANNEL.registerMessage(1, MossMessage.class,
+				MossMessage::writeToPacket, MossMessage::readFromPacket, MossMessage::handle);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event) {

@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.HornedSheepModel;
 import baguchan.earthmobsmod.client.render.layer.HornedSheepFurLayer;
+import baguchan.earthmobsmod.client.render.layer.MossSheepLayer;
 import baguchan.earthmobsmod.entity.HornedSheep;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -21,6 +22,7 @@ public class HornedSheepRenderer extends MobRenderer<HornedSheep, HornedSheepMod
 	public HornedSheepRenderer(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new HornedSheepModel<>(p_173952_.bakeLayer(ModModelLayers.HORNED_SHEEP)), 0.5F);
 		this.addLayer(new HornedSheepFurLayer(this, p_173952_.getModelSet()));
+		this.addLayer(new MossSheepLayer(this, p_173952_.getModelSet()));
 	}
 
 

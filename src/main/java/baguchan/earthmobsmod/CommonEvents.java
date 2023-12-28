@@ -1,10 +1,13 @@
 package baguchan.earthmobsmod;
 
+import baguchan.earthmobsmod.api.IMoss;
+import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.block.CarvedMelonBlock;
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.entity.*;
 import baguchan.earthmobsmod.registry.ModBlocks;
 import baguchan.earthmobsmod.registry.ModEntities;
+import baguchan.earthmobsmod.util.DyeUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,18 +18,21 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
@@ -47,6 +53,24 @@ public class CommonEvents {
 		event.register(ShadowCapability.class);
 	}
 
+
+	@SubscribeEvent
+	public static void initSpawn(LivingSpawnEvent.SpecialSpawn event) {
+		Mob entity = event.getEntity();
+		LevelAccessor serverLevelAccessor = event.getLevel();
+		if (entity instanceof IMoss moss) {
+			if (serverLevelAccessor.getBiome(new BlockPos(event.getX(), event.getY(), event.getZ())).is(Tags.Biomes.IS_SWAMP)) {
+				moss.setMoss(true);
+			}
+		}
+		if (entity instanceof IMuddyPig muddy) {
+			if (serverLevelAccessor.getBiome(new BlockPos(event.getX(), event.getY(), event.getZ())).is(Tags.Biomes.IS_SWAMP)) {
+				muddy.setMuddy(true);
+				byte b0 = muddy.getColorData();
+				muddy.setColorData((byte) (b0 & 240 | DyeUtil.getRandomColor(serverLevelAccessor.getRandom()).getId() & 15));
+			}
+		}
+	}
 	@SubscribeEvent
 	public void onEntityJoinWorld(LivingSpawnEvent.SpecialSpawn event) {
 		if (event.getEntity() instanceof final AbstractVillager villager) {

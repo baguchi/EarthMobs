@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.item.*;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.InstrumentTags;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +26,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> BONE_SHARD = ITEMS.register("bone_shard", () -> new BoneShardItem((new Item.Properties().tab(CreativeModeTab.TAB_MISC))));
     public static final RegistryObject<Item> FANCY_FEATHER = ITEMS.register("fancy_feather", () -> new Item((new Item.Properties().tab(CreativeModeTab.TAB_MISC))));
+
+    public static final RegistryObject<Item> HARDER_FLESH = ITEMS.register("harder_flesh", () -> new Item((new Item.Properties().food(ModFoods.HARDER_FLESH))));
 
     public static final RegistryObject<Item> BONE_SPIDER_EYE = ITEMS.register("bone_spider_eye", () -> new Item((new Item.Properties().tab(CreativeModeTab.TAB_MISC))));
     public static final RegistryObject<Item> HORN = ITEMS.register("horn", () -> new Item((new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MISC))));
@@ -68,4 +71,11 @@ public class ModItems {
     public static final RegistryObject<Item> MAGMA_COW_SPAWNEGG = ITEMS.register("magma_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MAGMA_COW, 0x2C2C33, 0xFBAA59, (new Item.Properties().tab(CreativeModeTab.TAB_MISC))));
     public static final RegistryObject<Item> MELON_GOLEM_SPAWNEGG = ITEMS.register("melon_golem_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MELON_GOLEM, 14283506, 0x34791E, (new Item.Properties().tab(CreativeModeTab.TAB_MISC))));
     public static final RegistryObject<Item> FURNACE_GOLEM_SPAWNEGG = ITEMS.register("furnace_golem_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.FURNACE_GOLEM, 14405058, 0x8F5846, (new Item.Properties().tab(CreativeModeTab.TAB_MISC))));
+
+    public static void composterInit() {
+        ComposterBlock.COMPOSTABLES.put(ModBlocks.BUTTERCUP.get(), 0.1F);
+        ComposterBlock.COMPOSTABLES.put(ModBlocks.PINK_DAISY.get(), 0.1F);
+        ComposterBlock.COMPOSTABLES.put(ModBlocks.CARVED_MELON.get(), 0.65F);
+        ComposterBlock.COMPOSTABLES.put(ModBlocks.CARVED_MELON_SHOOT.get(), 0.65F);
+    }
 }

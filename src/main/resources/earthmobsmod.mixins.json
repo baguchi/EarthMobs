@@ -7,8 +7,9 @@
   "mixins": [
     "BeeMixin",
     "EntityMixin",
+    "LivingEntityMixin",
     "PigMixin",
-    "LivingEntityMixin"
+    "SheepMixin"
   ],
   "client": [
     "client.PigModelMixin"

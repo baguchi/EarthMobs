@@ -3,7 +3,7 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.6.4
 // Paste this class into your mod and generate all required imports
 
 
-import baguchan.earthmobsmod.api.IMuddy;
+import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.entity.TeaCupPig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -57,8 +57,8 @@ public class TeaCupPigModel<T extends TeaCupPig> extends EntityModel<T> {
     @Override
     public void prepareMobModel(T p_104132_, float p_104133_, float p_104134_, float p_104135_) {
         super.prepareMobModel(p_104132_, p_104133_, p_104134_, p_104135_);
-        if (p_104132_ instanceof IMuddy) {
-            this.body.zRot = ((IMuddy) p_104132_).getBodyRollAngle(p_104135_, -0.16F);
+        if (p_104132_ instanceof IMuddyPig) {
+            this.body.zRot = ((IMuddyPig) p_104132_).getBodyRollAngle(p_104135_, -0.16F);
         }
     }
 

@@ -1,6 +1,6 @@
 package baguchan.earthmobsmod.api;
 
-public interface IMuddy {
+public interface IMuddyPig {
 	boolean isMuddy();
 
 	void setMuddy(boolean playing);
@@ -10,4 +10,8 @@ public interface IMuddy {
 	default boolean canMuddy() {
 		return true;
 	}
+
+	void setColorData(byte colorData);
+
+	byte getColorData();
 }
