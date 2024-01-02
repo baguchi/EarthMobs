@@ -10,7 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
 public class MudMessage implements CustomPacketPayload {
-    public static final ResourceLocation ID = EarthMobsMod.prefix("moss");
+    public static final ResourceLocation ID = EarthMobsMod.prefix("mud");
     private final int entityId;
     private final boolean muddy;
     private final byte colorData;
