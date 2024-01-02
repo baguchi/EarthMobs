@@ -2,7 +2,6 @@ package baguchan.earthmobsmod.mixin;
 
 import bagu_chan.bagus_lib.api.IBaguPacket;
 import baguchan.earthmobsmod.api.IMoss;
-import baguchan.earthmobsmod.message.ModPackets;
 import baguchan.earthmobsmod.message.MossMessage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -46,7 +45,7 @@ public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
     @Override
     public void resync(Entity entity, int i) {
         if (!this.level().isClientSide) {
-            ModPackets.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new MossMessage(this.getId(), this.moss));
+            PacketDistributor.TRACKING_ENTITY_AND_SELF.with(entity).send(new MossMessage(this.getId(), this.moss));
         }
     }
 

@@ -6,7 +6,6 @@ import baguchan.earthmobsmod.api.IHasFlower;
 import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.api.IOnMud;
 import baguchan.earthmobsmod.api.ISheared;
-import baguchan.earthmobsmod.message.ModPackets;
 import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.util.DyeUtil;
 import com.google.common.collect.Maps;
@@ -93,7 +92,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	@Override
 	public void resync(Entity entity, int i) {
 		if (!this.level().isClientSide) {
-			ModPackets.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new MudMessage(this.getId(), this.muddy, this.colorData));
+            PacketDistributor.TRACKING_ENTITY_AND_SELF.with(entity).send(new MudMessage(this.getId(), this.muddy, this.colorData));
 		}
 	}
 

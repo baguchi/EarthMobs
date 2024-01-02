@@ -1,13 +1,17 @@
 package baguchan.earthmobsmod.message;
 
+import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.api.IMoss;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.fml.LogicalSide;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-public class MossMessage {
+public class MossMessage implements CustomPacketPayload {
+    public static final ResourceLocation ID = EarthMobsMod.prefix("moss");
+
     private final int entityId;
     private final boolean moss;
 
@@ -16,24 +20,26 @@ public class MossMessage {
         this.moss = moss;
     }
 
-    public static void writeToPacket(MossMessage packet, FriendlyByteBuf buf) {
-        buf.writeInt(packet.entityId);
-        buf.writeBoolean(packet.moss);
+    @Override
+    public ResourceLocation id() {
+        return ID;
     }
 
-    public static MossMessage readFromPacket(FriendlyByteBuf buf) {
-        return new MossMessage(buf.readInt(), buf.readBoolean());
+    public void write(FriendlyByteBuf buf) {
+        buf.writeInt(this.entityId);
+        buf.writeBoolean(this.moss);
     }
 
-    public void handle(NetworkEvent.Context context) {
-        if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
-            context.enqueueWork(() -> {
-                Entity entity = Minecraft.getInstance().player.level().getEntity(this.entityId);
+    public MossMessage(FriendlyByteBuf buf) {
+        this(buf.readInt(), buf.readBoolean());
+    }
+
+    public static void handle(MossMessage message, PlayPayloadContext context) {
+        context.workHandler().execute(() -> {
+            Entity entity = Minecraft.getInstance().player.level().getEntity(message.entityId);
                 if (entity instanceof IMoss imoss) {
-                    imoss.setMoss(moss);
+                    imoss.setMoss(message.moss);
                 }
             });
-        }
-        context.setPacketHandled(true);
     }
 }

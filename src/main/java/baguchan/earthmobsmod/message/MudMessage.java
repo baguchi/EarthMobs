@@ -1,13 +1,16 @@
 package baguchan.earthmobsmod.message;
 
+import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.api.IMuddyPig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.fml.LogicalSide;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-public class MudMessage {
+public class MudMessage implements CustomPacketPayload {
+    public static final ResourceLocation ID = EarthMobsMod.prefix("moss");
     private final int entityId;
     private final boolean muddy;
     private final byte colorData;
@@ -18,26 +21,29 @@ public class MudMessage {
         this.colorData = colorData;
     }
 
-    public static void writeToPacket(MudMessage packet, FriendlyByteBuf buf) {
-        buf.writeInt(packet.entityId);
-        buf.writeBoolean(packet.muddy);
-        buf.writeByte(packet.colorData);
+    @Override
+    public ResourceLocation id() {
+        return ID;
     }
 
-    public static MudMessage readFromPacket(FriendlyByteBuf buf) {
-        return new MudMessage(buf.readInt(), buf.readBoolean(), buf.readByte());
+    public void write(FriendlyByteBuf buf) {
+        buf.writeInt(this.entityId);
+        buf.writeBoolean(this.muddy);
+        buf.writeByte(this.colorData);
     }
 
-    public void handle(NetworkEvent.Context context) {
-        if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
-            context.enqueueWork(() -> {
-                Entity entity = Minecraft.getInstance().level.getEntity(this.entityId);
+    public MudMessage(FriendlyByteBuf buf) {
+        this(buf.readInt(), buf.readBoolean(), buf.readByte());
+    }
+
+    public static void handle(MudMessage message, PlayPayloadContext context) {
+        context.workHandler().execute(() -> {
+            Entity entity = Minecraft.getInstance().level.getEntity(message.entityId);
                 if (entity instanceof IMuddyPig imoss) {
-                    imoss.setMuddy(muddy);
-                    imoss.setColorData(colorData);
+                    imoss.setMuddy(message.muddy);
+                    imoss.setColorData(message.colorData);
                 }
             });
-        }
-        context.setPacketHandled(true);
+
     }
 }

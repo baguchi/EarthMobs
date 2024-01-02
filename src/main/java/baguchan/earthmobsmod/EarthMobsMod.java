@@ -1,7 +1,8 @@
 package baguchan.earthmobsmod;
 
 import baguchan.earthmobsmod.client.ClientRegistrar;
-import baguchan.earthmobsmod.message.ModPackets;
+import baguchan.earthmobsmod.message.MossMessage;
+import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.registry.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +16,8 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +33,7 @@ public class EarthMobsMod {
 	public EarthMobsMod(IEventBus modBus) {
 		// Register the setup method for modloading
 		modBus.addListener(this::setup);
+		modBus.addListener(this::setupPackets);
 		IEventBus forgeBus = NeoForge.EVENT_BUS;
 		ModBlocks.BLOCKS.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
@@ -51,8 +55,13 @@ public class EarthMobsMod {
 		}
 	}
 
+	public void setupPackets(RegisterPayloadHandlerEvent event) {
+		IPayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
+		registrar.play(MossMessage.ID, MossMessage::new, payload -> payload.client(MossMessage::handle));
+		registrar.play(MudMessage.ID, MudMessage::new, payload -> payload.client(MudMessage::handle));
+	}
+
 	private void setup(final FMLCommonSetupEvent event) {
-		ModPackets.setupMessages();
 		ModEffects.init();
 		ModInteractionInformations.init();
 		ModItems.composterInit();
