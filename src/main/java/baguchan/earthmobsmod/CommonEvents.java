@@ -19,8 +19,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
@@ -34,7 +32,6 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -43,15 +40,16 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.ToolActions;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 @Mod.EventBusSubscriber(modid = EarthMobsMod.MODID)
 public class CommonEvents {
@@ -90,25 +88,25 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
+	public static void onToolUsing(BlockEvent.BlockToolModificationEvent event) {
+		if (!event.isSimulated()) {
+			if (event.getToolAction() == ToolActions.SHEARS_CARVE && event.getState().getBlock() == Blocks.MELON) {
+				Direction direction = event.getContext().getClickedFace();
+				if (direction != Direction.DOWN && direction != Direction.UP) {
+					event.setFinalState(ModBlocks.CARVED_MELON.get().defaultBlockState().setValue(CarvedMelonBlock.FACING, direction));
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
 	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		InteractionHand hand = event.getHand();
 		ItemStack itemStack = event.getEntity().getItemInHand(hand);
 		BlockPos pos = event.getPos();
 
 		Level level = event.getEntity().level();
-		if (itemStack.getItem() instanceof ShearsItem && event.getEntity().level().getBlockState(pos).getBlock() == Blocks.MELON) {
-			Direction direction = event.getHitVec().getDirection();
-			if (direction != Direction.DOWN && direction != Direction.UP) {
-				itemStack.hurtAndBreak(1, event.getEntity(), (p_29910_) -> {
-					p_29910_.broadcastBreakEvent(hand);
-				});
-				level.playSound(null, pos, SoundEvents.PUMPKIN_CARVE, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-				level.setBlock(pos, ModBlocks.CARVED_MELON.get().defaultBlockState().setValue(CarvedMelonBlock.FACING, direction), 2);
-
-				event.setUseItem(Event.Result.ALLOW);
-			}
-		}
 		if (itemStack.is(Blocks.CARVED_PUMPKIN.asItem())) {
 			BlockPattern.BlockPatternMatch blockpattern$blockpatternmatch1 = getOrCreateFurnaceGolemBase().find(level, pos.relative(event.getFace()));
 			if (blockpattern$blockpatternmatch1 != null) {
@@ -148,7 +146,7 @@ public class CommonEvents {
 	}
 
 	private static BlockPattern getOrCreateFurnaceGolemBase() {
-		return BlockPatternBuilder.start().aisle("   ", "SFS", " # ").where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.IRON_BLOCK))).where('F', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.BLAST_FURNACE))).where('S', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.SMOOTH_STONE))).build();
+		return BlockPatternBuilder.start().aisle("   ", "#F#", " # ").where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.IRON_BLOCK))).where('F', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.BLAST_FURNACE))).build();
 	}
 
 	@SubscribeEvent
