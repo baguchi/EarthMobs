@@ -1,16 +1,19 @@
 package baguchan.earthmobsmod.client;
 
 import baguchan.earthmobsmod.EarthMobsMod;
+import baguchan.earthmobsmod.client.blockentity.MobChestBlockRender;
 import baguchan.earthmobsmod.client.model.*;
 import baguchan.earthmobsmod.client.render.*;
 import baguchan.earthmobsmod.client.render.layer.MossSheepLayer;
 import baguchan.earthmobsmod.client.render.layer.MuddyPigFlowerLayer;
 import baguchan.earthmobsmod.client.render.layer.MuddyPigMudLayer;
+import baguchan.earthmobsmod.registry.ModBlockEntitys;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -21,15 +24,21 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistrar {
+    public static void setup(FMLClientSetupEvent event) {
+        BlockEntityRenderers.register(ModBlockEntitys.MOB_CHEST.get(), MobChestBlockRender::new);
+
+    }
+
 	@SubscribeEvent
 	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
+
         event.registerEntityRenderer(ModEntities.CLUCK_SHROOM.get(), CluckShroomRender::new);
         event.registerEntityRenderer(ModEntities.FANCY_CHICKEN.get(), FancyChickenRenderer::new);
         event.registerEntityRenderer(ModEntities.WOOLY_COW.get(), WoolyCowRenderer::new);
@@ -106,6 +115,8 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.LOBBER_DROWNED, () -> layerDefinition4);
 		event.registerLayerDefinition(ModModelLayers.BOULDERING_DROWNED_OUTER, () -> BoulderingDrownedModel.createBodyLayer(new CubeDeformation(0.25F)));
 		event.registerLayerDefinition(ModModelLayers.LOBBER_DROWNED_OUTER, () -> LobberDrownedModel.createBodyLayer(new CubeDeformation(0.25F)));
+
+        event.registerLayerDefinition(ModModelLayers.MOB_CHEST, MobChestModel::createBodyLayer);
 	}
 
 	@SubscribeEvent
@@ -126,8 +137,5 @@ public class ClientRegistrar {
 		event.register((p_92693_, p_92694_) -> {
 			return PotionUtils.getPotion(p_92693_) != Potions.EMPTY ? PotionUtils.getColor(p_92693_) : 0xFFFFFF;
 		}, ModItems.BONE_SHARD.get());
-	}
-
-	public static void setup(FMLCommonSetupEvent event) {
 	}
 }

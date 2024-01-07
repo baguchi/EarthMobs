@@ -170,6 +170,11 @@ public class ModItems {
 		if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
 			event.accept(ModBlocks.RUBY.get());
 		}
+		if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+			event.accept(ModBlocks.COMMON_MOB_CHEST.get());
+			event.accept(ModBlocks.UNCOMMON_MOB_CHEST.get());
+			event.accept(ModBlocks.RARE_MOB_CHEST.get());
+		}
 	}
 
 	public static void composterInit() {

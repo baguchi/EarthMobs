@@ -34,6 +34,8 @@ public class ModModelLayers {
 	public static ModelLayerLocation LOBBER_DROWNED_OUTER = new ModelLayerLocation(new ResourceLocation(EarthMobsMod.MODID, "lobber_drowned_outer"), "lobber_drowned_outer");
     public static ModelLayerLocation MAGMA_COW = new ModelLayerLocation(new ResourceLocation(EarthMobsMod.MODID, "magma_cow"), "magma_cow");
     public static ModelLayerLocation FURNACE_GOLEM = new ModelLayerLocation(new ResourceLocation(EarthMobsMod.MODID, "furnace_golem"), "furnace_golem");
+    public static ModelLayerLocation MOB_CHEST = new ModelLayerLocation(new ResourceLocation(EarthMobsMod.MODID, "mob_chest"), "mob_chest");
+
 
 
 }
