@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.client.blockentity;
 import baguchan.earthmobsmod.block.MobChestBlock;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.MobChestModel;
-import baguchan.earthmobsmod.registry.ModBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -15,7 +14,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChestBlock;
@@ -38,7 +36,7 @@ public class MobChestBlockRender<T extends BlockEntity & LidBlockEntity> impleme
     public void render(T p_112363_, float p_112364_, PoseStack p_112365_, MultiBufferSource p_112366_, int p_112367_, int p_112368_) {
         Level level = p_112363_.getLevel();
         boolean flag = level != null;
-        BlockState blockstate = flag ? p_112363_.getBlockState() : ModBlocks.COMMON_MOB_CHEST.get().defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
+        BlockState blockstate = p_112363_.getBlockState();
         ChestType chesttype = ChestType.SINGLE;
         Block block = blockstate.getBlock();
         if (block instanceof MobChestBlock chestBlock) {

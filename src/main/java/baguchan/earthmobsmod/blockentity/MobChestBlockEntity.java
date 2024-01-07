@@ -1,7 +1,6 @@
 package baguchan.earthmobsmod.blockentity;
 
 import baguchan.earthmobsmod.registry.ModBlockEntitys;
-import baguchan.earthmobsmod.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -57,7 +56,7 @@ public class MobChestBlockEntity extends RandomizableContainerBlockEntity implem
 
         @Override
         protected void openerCountChanged(Level p_155535_, BlockPos p_155536_, BlockState p_155537_, int p_155538_, int p_155539_) {
-            p_155535_.blockEvent(MobChestBlockEntity.this.worldPosition, ModBlocks.COMMON_MOB_CHEST.get(), 1, p_155539_);
+            p_155535_.blockEvent(MobChestBlockEntity.this.worldPosition, p_155537_.getBlock(), 1, p_155539_);
         }
 
         @Override

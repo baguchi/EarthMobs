@@ -180,7 +180,7 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "name": "minecraft:fancy_egg",
+          "name": "earthmobsmod:fancy_egg",
           "functions": [
             {
               "add": false,
@@ -196,7 +196,7 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "name": "minecraft:duck_egg",
+          "name": "earthmobsmod:duck_egg",
           "functions": [
             {
               "add": false,
