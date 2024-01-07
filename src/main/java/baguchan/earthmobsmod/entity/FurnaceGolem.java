@@ -47,7 +47,7 @@ public class FurnaceGolem extends AbstractGolem {
 
     private int attackAnimationTick;
     private int activeTime;
-
+    private int cooldownTime;
     public FurnaceGolem(EntityType<? extends AbstractGolem> p_27508_, Level p_27509_) {
         super(p_27508_, p_27509_);
         this.setMaxUpStep(1.0F);
@@ -57,6 +57,22 @@ public class FurnaceGolem extends AbstractGolem {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(FURNACE_ACTIVE, false);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag p_28867_) {
+        super.addAdditionalSaveData(p_28867_);
+        p_28867_.putBoolean("FurnaceActive", this.isFurnaceActive());
+        p_28867_.putInt("ActiveTick", this.activeTime);
+        p_28867_.putInt("CooldownTick", this.cooldownTime);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag p_28857_) {
+        super.readAdditionalSaveData(p_28857_);
+        this.setFurnaceActive(p_28857_.getBoolean("FurnaceActive"));
+        this.activeTime = p_28857_.getInt("ActiveTick");
+        this.cooldownTime = p_28857_.getInt("CooldownTick");
     }
 
     protected void registerGoals() {
@@ -81,7 +97,7 @@ public class FurnaceGolem extends AbstractGolem {
     }
 
     protected void doPush(Entity p_28839_) {
-        if (p_28839_ instanceof Enemy && !(p_28839_ instanceof Creeper)) {
+        if (p_28839_ instanceof Enemy && !(p_28839_ instanceof Creeper) && this.cooldownTime <= 0) {
             if (this.getRandom().nextInt(20) == 0) {
                 this.setTarget((LivingEntity) p_28839_);
             }
@@ -99,15 +115,19 @@ public class FurnaceGolem extends AbstractGolem {
         if (this.attackAnimationTick > 0) {
             --this.attackAnimationTick;
         }
+        if (this.cooldownTime > 0) {
+            --this.cooldownTime;
+        }
 
         if (this.isAlive() && this.isFurnaceActive()) {
             ++this.activeTime;
             this.checkFurnaceAttack(this.getBoundingBox(), this.getBoundingBox().inflate(2.0F));
 
-            if (this.activeTime >= 400 && this.onGround()) {
+            if (this.activeTime >= 200 && this.onGround()) {
                 this.playSound(SoundEvents.FIRE_EXTINGUISH, 2.0f, 1.0f);
                 this.setFurnaceActive(false);
                 this.activeTime = 0;
+                this.cooldownTime = 100;
             }
         }
 
@@ -152,15 +172,6 @@ public class FurnaceGolem extends AbstractGolem {
             return p_28851_ == EntityType.CREEPER ? false : super.canAttackType(p_28851_);
         }
     }
-
-    public void addAdditionalSaveData(CompoundTag p_28867_) {
-        super.addAdditionalSaveData(p_28867_);
-    }
-
-    public void readAdditionalSaveData(CompoundTag p_28857_) {
-        super.readAdditionalSaveData(p_28857_);
-    }
-
     public void setFurnaceActive(boolean active) {
         this.entityData.set(FURNACE_ACTIVE, active);
     }
