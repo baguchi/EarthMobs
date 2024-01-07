@@ -1,0 +1,10 @@
+{
+  "type": "bagus_lib:one_in_loot",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/jungle_temple"
+    }
+  ],
+  "loot_table": "earthmobsmod:injects/chest_in_ruby"
+}

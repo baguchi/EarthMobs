@@ -10,7 +10,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 10,
+          "weight": 15,
           "name": "minecraft:emerald",
           "functions": [
             {
@@ -122,7 +122,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
+          "weight": 20,
           "name": "minecraft:lapis_lazuli",
           "functions": [
             {
