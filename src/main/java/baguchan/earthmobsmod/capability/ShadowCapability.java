@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import net.neoforged.neoforge.attachment.IAttachmentSerializer;
 
 import java.util.List;
@@ -134,7 +135,7 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 	}
 
 	@Override
-	public ShadowCapability read(CompoundTag tag) {
+	public ShadowCapability read(IAttachmentHolder holder, CompoundTag tag) {
 		return null;
 	}
 
