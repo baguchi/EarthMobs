@@ -3,26 +3,20 @@ package baguchan.earthmobsmod.mixin;
 import bagu_chan.bagus_lib.api.IBaguPacket;
 import baguchan.earthmobsmod.api.IMoss;
 import baguchan.earthmobsmod.message.MossMessage;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Sheep;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.List;
 
 @Mixin(Sheep.class)
 public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
@@ -59,12 +53,11 @@ public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
         this.setMoss(p_27576_.getBoolean("Moss"));
     }
 
-    @Inject(method = "onSheared", at = @At("RETURN"), cancellable = true)
-    public void onSheared(@Nullable Player player, @NotNull ItemStack item, Level level, BlockPos pos, int fortune, CallbackInfoReturnable<List<ItemStack>> callbackInfoReturnable) {
-        List<ItemStack> stacks = callbackInfoReturnable.getReturnValue();
-        if (this.isMoss()) {
-            stacks.add(Items.MOSS_BLOCK.getDefaultInstance());
+    @Inject(method = "shear", at = @At("RETURN"), cancellable = true)
+    public void onSheared(SoundSource p_29819_, CallbackInfo ci) {
+        ItemEntity itementity = this.spawnAtLocation(Items.MOSS_BLOCK.getDefaultInstance(), 1);
+        if (itementity != null) {
+            itementity.setDeltaMovement(itementity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, this.random.nextFloat() * 0.05F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F));
         }
-        callbackInfoReturnable.setReturnValue(stacks);
     }
 }
