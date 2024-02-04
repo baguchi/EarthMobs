@@ -21,18 +21,19 @@ public class TropicalBallItem extends Item {
         super(p_41126_);
     }
 
-    public ItemStack finishUsingItem(ItemStack p_41348_, Level p_41349_, LivingEntity p_41350_) {
-        super.finishUsingItem(p_41348_, p_41349_, p_41350_);
-        if (p_41350_ instanceof ServerPlayer serverplayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, p_41348_);
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
+        super.finishUsingItem(stack, level, livingEntity);
+        if (livingEntity instanceof ServerPlayer serverplayer) {
+            CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, stack);
             serverplayer.awardStat(Stats.ITEM_USED.get(this));
         }
 
-        p_41348_.shrink(1);
+        stack.shrink(1);
 
-        p_41350_.setAirSupply(Mth.clamp(p_41350_.getAirSupply() + 200, 0, p_41350_.getMaxAirSupply()));
+        livingEntity.setAirSupply(Mth.clamp(livingEntity.getAirSupply() + 200, 0, livingEntity.getMaxAirSupply()));
 
-        return p_41348_;
+        return stack;
     }
 
     public int getUseDuration(ItemStack p_41360_) {
@@ -51,6 +52,7 @@ public class TropicalBallItem extends Item {
         return SoundEvents.HONEY_DRINK;
     }
 
+    @Override
     public InteractionResultHolder<ItemStack> use(Level p_41352_, Player p_41353_, InteractionHand p_41354_) {
         return ItemUtils.startUsingInstantly(p_41352_, p_41353_, p_41354_);
     }

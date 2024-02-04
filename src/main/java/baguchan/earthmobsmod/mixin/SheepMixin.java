@@ -33,11 +33,11 @@ public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
     @Override
     public void setMoss(boolean moss) {
         this.moss = moss;
-        this.resync(this, this.getId());
+        this.resync(this);
     }
 
     @Override
-    public void resync(Entity entity, int i) {
+    public void resync(Entity entity) {
         if (!this.level().isClientSide) {
             PacketDistributor.TRACKING_ENTITY_AND_SELF.with(this).send(new MossMessage(this.getId(), this.moss));
         }
@@ -53,7 +53,7 @@ public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
         this.setMoss(p_27576_.getBoolean("Moss"));
     }
 
-    @Inject(method = "shear", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "shear", at = @At("RETURN"))
     public void onSheared(SoundSource p_29819_, CallbackInfo ci) {
         ItemEntity itementity = this.spawnAtLocation(Items.MOSS_BLOCK.getDefaultInstance(), 1);
         if (itementity != null) {

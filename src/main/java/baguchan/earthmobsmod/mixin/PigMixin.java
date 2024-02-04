@@ -86,11 +86,11 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	public void setMuddy(boolean playing) {
 		this.muddy = playing;
 
-		this.resync(this, this.getId());
+		this.resync(this);
 	}
 
 	@Override
-	public void resync(Entity entity, int i) {
+	public void resync(Entity entity) {
 		if (!this.level().isClientSide) {
 			PacketDistributor.TRACKING_ENTITY_AND_SELF.with(this).send(new MudMessage(this.getId(), this.muddy, this.colorData));
 		}
@@ -119,7 +119,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 		} else {
 			this.colorData = (byte) (b0 & -17);
 		}
-		this.resync(this, this.getId());
+		this.resync(this);
 	}
 
 	public DyeColor getColor() {
@@ -129,12 +129,12 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	public void setColor(DyeColor p_29856_) {
 		byte b0 = this.colorData;
 		this.colorData = (byte) (b0 & 240 | p_29856_.getId() & 15);
-		this.resync(this, this.getId());
+		this.resync(this);
 	}
 
 	public void setColorData(byte colorData) {
 		this.colorData = colorData;
-		this.resync(this, this.getId());
+		this.resync(this);
 	}
 
 	public byte getColorData() {

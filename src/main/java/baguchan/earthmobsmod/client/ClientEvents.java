@@ -179,7 +179,7 @@ public class ClientEvents {
 		}
 	}
 
-	protected static float getBob(LivingEntity p_115305_, float p_115306_) {
-		return (float) p_115305_.tickCount + p_115306_;
+    protected static float getBob(LivingEntity livingEntity, float partialTick) {
+        return (float) livingEntity.tickCount + partialTick;
 	}
 }

@@ -15,7 +15,6 @@ import baguchan.earthmobsmod.util.DyeUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,7 +31,6 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.WanderingTrader;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
@@ -60,16 +58,14 @@ public class CommonEvents {
 
 	@SubscribeEvent
 	public static void addSpawn(EntityJoinLevelEvent event) {
-		if (event.getEntity() instanceof Villager) {
-			Villager abstractVillager = (Villager) event.getEntity();
+        if (event.getEntity() instanceof Villager abstractVillager) {
 
-			abstractVillager.goalSelector.addGoal(1, new AvoidEntityGoal((PathfinderMob) abstractVillager, ZombifiedRabbit.class, 10.0F, 0.65F, 0.7F));
+            abstractVillager.goalSelector.addGoal(1, new AvoidEntityGoal(abstractVillager, ZombifiedRabbit.class, 10.0F, 0.65F, 0.7F));
 		}
 
-		if (event.getEntity() instanceof WanderingTrader) {
-			WanderingTrader wanderingTraderEntity = (WanderingTrader) event.getEntity();
+        if (event.getEntity() instanceof WanderingTrader wanderingTraderEntity) {
 
-			wanderingTraderEntity.goalSelector.addGoal(1, new AvoidEntityGoal((PathfinderMob) wanderingTraderEntity, ZombifiedRabbit.class, 10.0F, 0.65F, 0.7F));
+            wanderingTraderEntity.goalSelector.addGoal(1, new AvoidEntityGoal(wanderingTraderEntity, ZombifiedRabbit.class, 10.0F, 0.65F, 0.7F));
 		}
 	}
 
@@ -207,11 +203,11 @@ public class CommonEvents {
                 if (level instanceof ServerLevel serverLevel) {
                     ZombifiedRabbit zombierabbit = rabbit.convertTo(ModEntities.ZOMBIFIED_RABBIT.get(), false);
                     if (zombierabbit != null) {
-                        zombierabbit.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(zombierabbit.blockPosition()), MobSpawnType.CONVERSION, null, (CompoundTag) null);
+                        zombierabbit.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(zombierabbit.blockPosition()), MobSpawnType.CONVERSION, null, null);
                         zombierabbit.setVariant(rabbit.getVariant());
                         EventHooks.onLivingConvert(rabbit, zombierabbit);
                         if (!rabbit.isSilent()) {
-                            level.levelEvent((Player) null, 1026, rabbit.blockPosition(), 0);
+                            level.levelEvent(null, 1026, rabbit.blockPosition(), 0);
                         }
                     }
                 }
@@ -224,7 +220,7 @@ public class CommonEvents {
 				if (zombifiedRabbit != null) {
 					zombifiedRabbit.setVariant(rabbit.getVariant());
 					if (!rabbit.isSilent()) {
-						level.levelEvent((Player) null, 1026, rabbit.blockPosition(), 0);
+                        level.levelEvent(null, 1026, rabbit.blockPosition(), 0);
 					}
 				}
 			}
@@ -238,7 +234,7 @@ public class CommonEvents {
 					zombieVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
 					zombieVillager.setTradeOffers(villager.getOffers().createTag());
 					if (!villager.isSilent()) {
-						level.levelEvent((Player) null, 1026, villager.blockPosition(), 0);
+                        level.levelEvent(null, 1026, villager.blockPosition(), 0);
 					}
 				}
 			}
@@ -270,16 +266,16 @@ public class CommonEvents {
 		}
 	}
 
-	private static void spawnGolemInWorld(Level p_249110_, BlockPattern.BlockPatternMatch p_251293_, Entity p_251251_, BlockPos p_251189_) {
-		clearPatternBlocks(p_249110_, p_251293_);
-		p_251251_.moveTo((double) p_251189_.getX() + 0.5D, (double) p_251189_.getY() + 0.05D, (double) p_251189_.getZ() + 0.5D, 0.0F, 0.0F);
-		p_249110_.addFreshEntity(p_251251_);
+    private static void spawnGolemInWorld(Level level, BlockPattern.BlockPatternMatch blockPatternMatch, Entity summoner, BlockPos pos) {
+        clearPatternBlocks(level, blockPatternMatch);
+        summoner.moveTo((double) pos.getX() + 0.5D, (double) pos.getY() + 0.05D, (double) pos.getZ() + 0.5D, 0.0F, 0.0F);
+        level.addFreshEntity(summoner);
 
-		for (ServerPlayer serverplayer : p_249110_.getEntitiesOfClass(ServerPlayer.class, p_251251_.getBoundingBox().inflate(5.0D))) {
-			CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayer, p_251251_);
+        for (ServerPlayer serverplayer : level.getEntitiesOfClass(ServerPlayer.class, summoner.getBoundingBox().inflate(5.0D))) {
+            CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayer, summoner);
 		}
 
-		updatePatternBlocks(p_249110_, p_251293_);
+        updatePatternBlocks(level, blockPatternMatch);
 	}
 
 
