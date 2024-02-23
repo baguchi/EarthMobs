@@ -22,7 +22,7 @@ public class EarthBiomeModifier implements BiomeModifier {
 	@Override
 	public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
 		if (phase == Phase.ADD) {
-			if (biome.containsTag(BiomeTags.IS_OVERWORLD) && !biome.is(ModTags.Biomes.NO_DEFAULT_MONSTERS)) {
+			if (biome.containsTag(BiomeTags.IS_OVERWORLD) && !biome.is(ModTags.Biomes.NO_DEFAULT_MONSTERS) && !biome.is(Biomes.DEEP_DARK) && !biome.is(Tags.Biomes.IS_VOID)) {
 
 				if (EarthMobsConfig.COMMON.cluckshroomSpawnRate.get() > 0) {
 					if (biome.is(Biomes.MUSHROOM_FIELDS)) {
