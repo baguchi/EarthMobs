@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.world.biome;
 import baguchan.earthmobsmod.EarthMobsConfig;
 import baguchan.earthmobsmod.registry.ModBiomeModifiers;
 import baguchan.earthmobsmod.registry.ModEntities;
+import baguchan.earthmobsmod.registry.ModTags;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
@@ -21,7 +22,7 @@ public class EarthBiomeModifier implements BiomeModifier {
 	@Override
 	public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
 		if (phase == Phase.ADD) {
-			if (biome.containsTag(BiomeTags.IS_OVERWORLD) && !biome.is(Biomes.DEEP_DARK) && !biome.is(Tags.Biomes.IS_VOID)) {
+			if (biome.containsTag(BiomeTags.IS_OVERWORLD) && !biome.is(ModTags.Biomes.NO_DEFAULT_MONSTERS)) {
 
 				if (EarthMobsConfig.COMMON.cluckshroomSpawnRate.get() > 0) {
 					if (biome.is(Biomes.MUSHROOM_FIELDS)) {
