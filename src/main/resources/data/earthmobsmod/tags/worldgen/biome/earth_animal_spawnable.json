@@ -1,6 +1,6 @@
 {
   "values": [
     "#minecraft:is_forest",
-    "#neoforge:is_plains"
+    "#c:is_plains"
   ]
 }

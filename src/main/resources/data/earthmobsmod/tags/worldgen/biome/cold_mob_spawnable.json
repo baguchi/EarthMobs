@@ -1,6 +1,6 @@
 {
   "values": [
-    "#neoforge:is_mountain",
-    "#neoforge:is_cold/overworld"
+    "#c:is_mountain",
+    "#c:is_cold/overworld"
   ]
 }
