@@ -1,13 +1,14 @@
 package baguchan.earthmobsmod.item;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.alchemy.PotionContents;
 
-import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoneShardItem extends Item {
@@ -15,7 +16,16 @@ public class BoneShardItem extends Item {
 		super(p_41126_);
 	}
 
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-		PotionUtils.addPotionTooltip(stack, components, 1.0F, level == null ? 20.0F : level.tickRateManager().tickrate());
+	@Override
+	public void appendHoverText(ItemStack p_41421_, TooltipContext p_339594_, List<Component> p_41423_, TooltipFlag p_41424_) {
+		super.appendHoverText(p_41421_, p_339594_, p_41423_, p_41424_);
+		List<MobEffectInstance> list = new ArrayList<>();
+		PotionContents suspicioussteweffects = p_41421_.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+
+		for (MobEffectInstance suspicioussteweffects$entry : suspicioussteweffects.getAllEffects()) {
+			list.add(suspicioussteweffects$entry);
+		}
+
+		PotionContents.addPotionTooltip(list, p_41423_::add, 1.0F, p_339594_.tickRate());
 	}
 }

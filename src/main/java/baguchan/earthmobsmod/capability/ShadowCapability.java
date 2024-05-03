@@ -1,6 +1,7 @@
 package baguchan.earthmobsmod.capability;
 
 import baguchan.earthmobsmod.registry.ModEffects;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntitySelector;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import net.neoforged.neoforge.attachment.IAttachmentSerializer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
@@ -70,7 +72,7 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 			this.shadowY2 = (float) (this.shadowY2 + (this.shadowY - this.shadowY2) * elasticity * 0.375D);
 			this.shadowZ2 = (float) (this.shadowZ2 + (this.shadowZ - this.shadowZ2) * elasticity * 0.375D);
 
-		if (livingEntity.hasEffect(ModEffects.HYPER_SPARK.get())) {
+		if (livingEntity.hasEffect(ModEffects.HYPER_SPARK)) {
 			if (percentBoost >= 0.65F) {
 				pushEntities(livingEntity);
 			}
@@ -126,7 +128,7 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 				}
 
 				float f = 0.15F * percentBoost;
-				attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_BOOST_UUID, "Spark Boost", (double) f, AttributeModifier.Operation.ADDITION));
+				attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_BOOST_UUID, "Spark Boost", (double) f, AttributeModifier.Operation.ADD_VALUE));
 			}
 		}
 	}
@@ -135,12 +137,12 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 	}
 
 	@Override
-	public ShadowCapability read(IAttachmentHolder holder, CompoundTag tag) {
+	public ShadowCapability read(IAttachmentHolder iAttachmentHolder, CompoundTag compoundTag, HolderLookup.Provider provider) {
 		return null;
 	}
 
 	@Override
-	public CompoundTag write(ShadowCapability attachment) {
+	public @Nullable CompoundTag write(ShadowCapability shadowCapability, HolderLookup.Provider provider) {
 		return null;
 	}
 }

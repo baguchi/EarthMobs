@@ -50,13 +50,12 @@ public class FurnaceGolem extends AbstractGolem {
     private int cooldownTime;
     public FurnaceGolem(EntityType<? extends AbstractGolem> p_27508_, Level p_27509_) {
         super(p_27508_, p_27509_);
-        this.setMaxUpStep(1.0F);
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(FURNACE_ACTIVE, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(FURNACE_ACTIVE, false);
     }
 
     @Override
@@ -89,7 +88,7 @@ public class FurnaceGolem extends AbstractGolem {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.KNOCKBACK_RESISTANCE, 1.0D).add(Attributes.ATTACK_DAMAGE, 10.0D);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.KNOCKBACK_RESISTANCE, 1.0D).add(Attributes.STEP_HEIGHT, 1.0D).add(Attributes.ATTACK_DAMAGE, 10.0D);
     }
 
     protected int decreaseAirSupply(int p_28882_) {
@@ -160,7 +159,7 @@ public class FurnaceGolem extends AbstractGolem {
         if (p_36347_ instanceof Enemy && !(p_36347_ instanceof Creeper)) {
             if (p_36347_.isAttackable() && !this.isAlliedTo(p_36347_)) {
                 p_36347_.hurt(this.damageSources().source(ModDamageSource.BURNING, this), 6.0F);
-                p_36347_.setSecondsOnFire(5);
+                p_36347_.igniteForSeconds(5);
             }
         }
     }

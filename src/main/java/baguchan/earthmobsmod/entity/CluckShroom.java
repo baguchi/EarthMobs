@@ -69,9 +69,10 @@ public class CluckShroom extends Chicken implements Shearable, IShearable, IPlan
 
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_TYPE, CluckShroom.CluckShroomType.RED.type);
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_TYPE, CluckShroom.CluckShroomType.RED.type);
 	}
 
 	@Override

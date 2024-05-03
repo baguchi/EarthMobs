@@ -30,15 +30,15 @@ public class BoulderingDrownedRenderer extends AbstractZombieRenderer<Bouldering
 		;
 	}
 
-	protected void setupRotations(BoulderingDrowned p_114109_, PoseStack p_114110_, float p_114111_, float p_114112_, float p_114113_) {
-		super.setupRotations(p_114109_, p_114110_, p_114111_, p_114112_, p_114113_);
-		float f = p_114109_.getSwimAmount(p_114113_);
+	@Override
+	protected void setupRotations(BoulderingDrowned p_115317_, PoseStack p_114110_, float p_114111_, float p_114112_, float p_114113_, float p_319953_) {
+		super.setupRotations(p_115317_, p_114110_, p_114111_, p_114112_, p_114113_, p_319953_);
+		float f = p_115317_.getSwimAmount(p_114113_);
 		if (f > 0.0F) {
-			float f1 = -10.0F - p_114109_.getXRot();
+			float f1 = -10.0F - p_115317_.getXRot();
 			float f2 = Mth.lerp(f, 0.0F, f1);
-			p_114110_.rotateAround(Axis.XP.rotationDegrees(f2), 0.0F, p_114109_.getBbHeight() / 2.0F, 0.0F);
+			p_114110_.rotateAround(Axis.XP.rotationDegrees(f2), 0.0F, p_115317_.getBbHeight() / 2.0F / p_319953_, 0.0F);
 		}
-
 	}
 
 	public ResourceLocation getTextureLocation(Zombie p_114115_) {

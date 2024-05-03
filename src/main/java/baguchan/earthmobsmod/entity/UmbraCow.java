@@ -3,6 +3,8 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -15,18 +17,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 import javax.annotation.Nullable;
 
 public class UmbraCow extends WoolyCow {
-	public static final ResourceLocation UMBRA_COW_SHEARD_LOOT_TABLE = new ResourceLocation(EarthMobsMod.MODID, "entities/umbra_cow_sheared");
+	public static final ResourceKey<LootTable> UMBRA_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation(EarthMobsMod.MODID, "entities/umbra_cow_sheared"));
 
 	public UmbraCow(EntityType<? extends Cow> p_28285_, Level p_28286_) {
 		super(p_28285_, p_28286_);
 	}
 
 
-	public ResourceLocation getDefaultLootTable() {
+	public ResourceKey<LootTable> getDefaultLootTable() {
 		if (this.isSheared()) {
 			return UMBRA_COW_SHEARD_LOOT_TABLE;
 		} else {

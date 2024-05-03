@@ -59,9 +59,9 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_DROWNED, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_DROWNED, false);
 	}
 
 	public void setDrowned(boolean flag) {
@@ -137,10 +137,5 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 		if (this.isInWater() && this.isDrowned()) {
 			this.setDeltaMovement(this.getDeltaMovement().scale(1.125F));
 		}
-	}
-
-	@Override
-	protected float getGravity() {
-		return this.isInWater() && this.isDrowned() ? 0.01F : super.getGravity();
 	}
 }

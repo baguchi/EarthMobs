@@ -43,17 +43,21 @@ import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.ToolActions;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
-import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
-@Mod.EventBusSubscriber(modid = EarthMobsMod.MODID)
+@EventBusSubscriber(modid = EarthMobsMod.MODID)
 public class CommonEvents {
 
 	@SubscribeEvent
@@ -110,9 +114,7 @@ public class CommonEvents {
 		if (itemStack.getItem() instanceof ShearsItem && event.getEntity().level().getBlockState(pos).getBlock() == Blocks.MELON) {
 			Direction direction = event.getHitVec().getDirection();
 			if (direction != Direction.DOWN && direction != Direction.UP) {
-				itemStack.hurtAndBreak(1, event.getEntity(), (p_29910_) -> {
-					p_29910_.broadcastBreakEvent(hand);
-				});
+				itemStack.hurtAndBreak(1, event.getEntity(), LivingEntity.getSlotForHand(hand));
 				level.playSound(null, pos, SoundEvents.PUMPKIN_CARVE, SoundSource.BLOCKS, 1.0F, 1.0F);
 
 				level.setBlock(pos, ModBlocks.CARVED_MELON.get().defaultBlockState().setValue(CarvedMelonBlock.FACING, direction), 2);
@@ -163,10 +165,10 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
-	public static void onUpdate(LivingEvent.LivingTickEvent event) {
+	public static void onUpdate(EntityTickEvent.Pre event) {
 		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
-		if (shadowCapability != null) {
-			shadowCapability.tick(event.getEntity());
+		if (shadowCapability != null && event.getEntity() instanceof LivingEntity livingEntity) {
+			shadowCapability.tick(livingEntity);
 		}
 	}
 
@@ -203,7 +205,7 @@ public class CommonEvents {
                 if (level instanceof ServerLevel serverLevel) {
                     ZombifiedRabbit zombierabbit = rabbit.convertTo(ModEntities.ZOMBIFIED_RABBIT.get(), false);
                     if (zombierabbit != null) {
-                        zombierabbit.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(zombierabbit.blockPosition()), MobSpawnType.CONVERSION, null, null);
+						zombierabbit.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(zombierabbit.blockPosition()), MobSpawnType.CONVERSION, null);
                         zombierabbit.setVariant(rabbit.getVariant());
                         EventHooks.onLivingConvert(rabbit, zombierabbit);
                         if (!rabbit.isSilent()) {
@@ -232,7 +234,7 @@ public class CommonEvents {
 					zombieVillager.setVillagerData(villager.getVillagerData());
 					zombieVillager.setVillagerXp(villager.getVillagerXp());
 					zombieVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
-					zombieVillager.setTradeOffers(villager.getOffers().createTag());
+					zombieVillager.setTradeOffers(villager.getOffers().copy());
 					if (!villager.isSilent()) {
                         level.levelEvent(null, 1026, villager.blockPosition(), 0);
 					}

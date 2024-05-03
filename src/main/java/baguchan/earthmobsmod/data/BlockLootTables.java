@@ -39,9 +39,6 @@ public class BlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.TROPICAL_SLIME_BLOCK.get());
         this.dropPottedContents(ModBlocks.POTTED_BUTTERCUP.get());
         this.dropPottedContents(ModBlocks.POTTED_PINK_DAISY.get());
-        this.dropSelf(ModBlocks.COMMON_MOB_CHEST.get());
-        this.dropSelf(ModBlocks.UNCOMMON_MOB_CHEST.get());
-        this.dropSelf(ModBlocks.RARE_MOB_CHEST.get());
     }
 
     private void registerEmpty(Block b) {

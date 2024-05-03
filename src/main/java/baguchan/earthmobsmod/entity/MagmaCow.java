@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -33,7 +34,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 public class MagmaCow extends Cow {
     private int eatAnimationTick;
@@ -41,9 +42,9 @@ public class MagmaCow extends Cow {
 
     public MagmaCow(EntityType<? extends MagmaCow> p_28285_, Level p_28286_) {
         super(p_28285_, p_28286_);
-        this.setPathfindingMalus(BlockPathTypes.LAVA, 8.0F);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
-        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
+        this.setPathfindingMalus(PathType.LAVA, 8.0F);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+        this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
     }
 
     protected void registerGoals() {
@@ -79,8 +80,8 @@ public class MagmaCow extends Cow {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.2F).add(Attributes.ARMOR, 10F).add(Attributes.ATTACK_DAMAGE, 4F).add(Attributes.KNOCKBACK_RESISTANCE, 0.6F);
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
     }
 
     public Cow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {

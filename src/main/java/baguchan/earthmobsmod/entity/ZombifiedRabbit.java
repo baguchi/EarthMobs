@@ -61,9 +61,9 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
         });
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_CONVERTING_ID, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_CONVERTING_ID, false);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -137,7 +137,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     private void finishConversion(ServerLevel p_34399_) {
         Rabbit rabbit = this.convertTo(EntityType.RABBIT, false);
         rabbit.setVariant(this.getVariant());
-        rabbit.finalizeSpawn(p_34399_, p_34399_.getCurrentDifficultyAt(rabbit.blockPosition()), MobSpawnType.CONVERSION, (SpawnGroupData) null, (CompoundTag) null);
+        rabbit.finalizeSpawn(p_34399_, p_34399_.getCurrentDifficultyAt(rabbit.blockPosition()), MobSpawnType.CONVERSION, (SpawnGroupData) null);
         if (this.conversionStarter != null) {
             Player player = p_34399_.getPlayerByUUID(this.conversionStarter);
             if (player instanceof ServerPlayer) {
@@ -171,7 +171,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
                 }
 
                 if (flag) {
-                    this.setSecondsOnFire(8);
+                    this.igniteForSeconds(8);
                 }
             }
         }
@@ -218,11 +218,6 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     @Override
     protected boolean shouldDespawnInPeaceful() {
         return false;
-    }
-
-    @Override
-    public MobType getMobType() {
-        return MobType.UNDEAD;
     }
 
     static class RabbitAttackGoal extends MeleeAttackGoal {

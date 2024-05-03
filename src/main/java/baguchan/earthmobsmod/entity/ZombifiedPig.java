@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Pig;
@@ -15,10 +14,6 @@ import net.minecraft.world.level.Level;
 public class ZombifiedPig extends Pig implements IMuddyPig {
 	public ZombifiedPig(EntityType<? extends Pig> p_29462_, Level p_29463_) {
 		super(p_29462_, p_29463_);
-	}
-	@Override
-	public MobType getMobType() {
-		return MobType.UNDEAD;
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

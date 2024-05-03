@@ -34,9 +34,9 @@ public class BoulderingZombie extends Zombie {
 		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 35.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.22F).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 4.0D).add(Attributes.ARMOR_TOUGHNESS, 2.0D).add(Attributes.KNOCKBACK_RESISTANCE, 0.5D).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_FLAGS_ID, (byte) 0);
 	}
 
 	public void tick() {

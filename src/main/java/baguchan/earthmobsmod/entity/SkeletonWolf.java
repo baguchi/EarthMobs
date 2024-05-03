@@ -7,7 +7,10 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -60,19 +63,6 @@ public class SkeletonWolf extends Wolf {
 		return this.getLightLevelDependentMagicValue() < 0.4F;
 	}
 
-	@Override
-	public void setTame(boolean p_30443_) {
-		super.setTame(p_30443_);
-		if (p_30443_) {
-			this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(24.0D);
-			this.setHealth(24.0F);
-		} else {
-			this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(12.0D);
-		}
-
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(5.0D);
-	}
-
 	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
 		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
 		Item item = itemstack.getItem();
@@ -123,7 +113,7 @@ public class SkeletonWolf extends Wolf {
 
 		if (this.isTame()) {
 			skeletonWolf.setOwnerUUID(this.getOwnerUUID());
-			skeletonWolf.setTame(true);
+			skeletonWolf.setTame(true, true);
 		}
 		return skeletonWolf;
 	}
@@ -136,11 +126,6 @@ public class SkeletonWolf extends Wolf {
 	@Override
 	public boolean removeWhenFarAway(double p_27598_) {
 		return !isTame();
-	}
-
-	@Override
-	public MobType getMobType() {
-		return MobType.UNDEAD;
 	}
 
 	public static boolean isDarkEnoughToSpawn(ServerLevelAccessor p_33009_, BlockPos p_33010_, RandomSource p_33011_) {

@@ -18,12 +18,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLivingEvent;
 
 import static net.minecraft.client.renderer.entity.LivingEntityRenderer.getOverlayCoords;
 
-@Mod.EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
 
@@ -38,7 +38,7 @@ public class ClientEvents {
 
 		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
 		if (shadowCapability != null) {
-			if (entity instanceof HyperRabbit && ((HyperRabbit) entity).isSpark() || entity.hasEffect(ModEffects.HYPER_SPARK.get())) {
+			if (entity instanceof HyperRabbit && ((HyperRabbit) entity).isSpark() || entity.hasEffect(ModEffects.HYPER_SPARK)) {
 				posestack.pushPose();
 				boolean shouldSit = entity.isPassenger() && (entity.getVehicle() != null && entity.getVehicle().shouldRiderSit());
 				float f = Mth.rotLerp(partialtick, entity.yBodyRotO, entity.yBodyRot);

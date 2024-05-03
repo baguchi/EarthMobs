@@ -4,13 +4,19 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.api.IMuddyPig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadHandler;
 
-public class MudMessage implements CustomPacketPayload {
-    public static final ResourceLocation ID = EarthMobsMod.prefix("mud");
+public class MudMessage implements CustomPacketPayload, IPayloadHandler<MudMessage> {
+
+    public static final StreamCodec<FriendlyByteBuf, MudMessage> STREAM_CODEC = CustomPacketPayload.codec(
+            MudMessage::write, MudMessage::new
+    );
+    public static final CustomPacketPayload.Type<MudMessage> TYPE = CustomPacketPayload.createType(EarthMobsMod.prefix("mud").toString());
+
     private final int entityId;
     private final boolean muddy;
     private final byte colorData;
@@ -22,8 +28,8 @@ public class MudMessage implements CustomPacketPayload {
     }
 
     @Override
-    public ResourceLocation id() {
-        return ID;
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
     public void write(FriendlyByteBuf buf) {
@@ -36,8 +42,8 @@ public class MudMessage implements CustomPacketPayload {
         this(buf.readInt(), buf.readBoolean(), buf.readByte());
     }
 
-    public static void handle(MudMessage message, PlayPayloadContext context) {
-        context.workHandler().execute(() -> {
+    public void handle(MudMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
             Entity entity = Minecraft.getInstance().level.getEntity(message.entityId);
                 if (entity instanceof IMuddyPig imoss) {
                     imoss.setMuddy(message.muddy);

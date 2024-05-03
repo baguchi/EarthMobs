@@ -92,7 +92,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	@Override
 	public void resync(Entity entity) {
 		if (!this.level().isClientSide) {
-			PacketDistributor.TRACKING_ENTITY_AND_SELF.with(this).send(new MudMessage(this.getId(), this.muddy, this.colorData));
+			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new MudMessage(this.getId(), this.muddy, this.colorData));
 		}
 	}
 

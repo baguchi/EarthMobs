@@ -63,9 +63,9 @@ public class HyperRabbit extends Rabbit {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_SPARK, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_SPARK, false);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

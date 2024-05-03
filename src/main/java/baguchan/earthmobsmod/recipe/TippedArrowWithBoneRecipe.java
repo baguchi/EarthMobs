@@ -3,13 +3,13 @@ package baguchan.earthmobsmod.recipe;
 import baguchan.earthmobsmod.registry.ModItems;
 import baguchan.earthmobsmod.registry.ModRecipes;
 import com.google.common.collect.Lists;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -69,15 +69,13 @@ public class TippedArrowWithBoneRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer p_44001_, RegistryAccess p_267165_) {
+	public ItemStack assemble(CraftingContainer p_44001_, HolderLookup.Provider p_267165_) {
 		for (int i = 0; i < p_44001_.getContainerSize(); ++i) {
 			ItemStack itemstack = p_44001_.getItem(i);
 			if (itemstack.is(ModItems.BONE_SHARD.get())) {
-				if (PotionUtils.getPotion(itemstack) != Potions.EMPTY) {
-					ItemStack itemstack1 = new ItemStack(Items.TIPPED_ARROW, 2);
-					PotionUtils.setPotion(itemstack1, PotionUtils.getPotion(itemstack));
-					PotionUtils.setCustomEffects(itemstack1, PotionUtils.getCustomEffects(itemstack));
-					return itemstack1;
+				PotionContents optional = itemstack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+				if (optional.potion().isPresent()) {
+					return PotionContents.createItemStack(Items.TIPPED_ARROW, optional.potion().get()).copyWithCount(2);
 				} else {
 					ItemStack itemstack1 = new ItemStack(Items.ARROW, 2);
 					return itemstack1;

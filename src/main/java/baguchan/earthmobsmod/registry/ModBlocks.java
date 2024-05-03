@@ -1,9 +1,8 @@
 package baguchan.earthmobsmod.registry;
 
 import baguchan.earthmobsmod.EarthMobsMod;
-import baguchan.earthmobsmod.block.*;
-import baguchan.earthmobsmod.client.render.item.MobChestBWLR;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import baguchan.earthmobsmod.block.CarvedMelonBlock;
+import baguchan.earthmobsmod.block.TropicalSlimeBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
@@ -12,18 +11,16 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, EarthMobsMod.MODID);
 
-    public static final Supplier<LiquidBlock> MUD = noItemRegister("mud", () -> new LiquidBlock(ModFluids.MUD, BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().strength(100.0F).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY)));
+    public static final Supplier<LiquidBlock> MUD = noItemRegister("mud", () -> new LiquidBlock(ModFluids.MUD.value(), BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().strength(100.0F).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY)));
 
     public static final Supplier<Block> RUBY = register("ruby_block", () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
 
@@ -36,11 +33,6 @@ public class ModBlocks {
 
     public static final Supplier<Block> POTTED_BUTTERCUP = BLOCKS.register("potted_buttercup", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, BUTTERCUP, BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY)));
     public static final Supplier<Block> POTTED_PINK_DAISY = BLOCKS.register("potted_pink_daisy", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, PINK_DAISY, BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY)));
-
-    public static final Supplier<Block> COMMON_MOB_CHEST = register("common_mob_chest", () -> new CommonMobChestBlock(BlockBehaviour.Properties.of().strength(2.5F).noOcclusion().sound(SoundType.NETHERITE_BLOCK)));
-    public static final Supplier<Block> UNCOMMON_MOB_CHEST = register("uncommon_mob_chest", () -> new UnCommonMobChestBlock(BlockBehaviour.Properties.of().strength(3F).noOcclusion().sound(SoundType.NETHERITE_BLOCK)));
-    public static final Supplier<Block> RARE_MOB_CHEST = register("rare_mob_chest", () -> new RareMobChestBlock(BlockBehaviour.Properties.of().strength(5.0F, 6.0F).noOcclusion().sound(SoundType.NETHERITE_BLOCK)));
-
 
     private static <T extends Block> Supplier<T> baseRegister(String name, Supplier<? extends T> block, Function<Supplier<T>, Supplier<? extends Item>> item) {
         Supplier<T> register = BLOCKS.register(name, block);
@@ -59,20 +51,6 @@ public class ModBlocks {
 
     private static <T extends Block> Supplier<BlockItem> registerBlockItem(final Supplier<T> block) {
 		return () -> {
-            if (Objects.requireNonNull(block.get()) instanceof MobChestBlock) {
-                return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties()) {
-                    @Override
-                    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-                        super.initializeClient(consumer);
-                        consumer.accept(new IClientItemExtensions() {
-                            @Override
-                            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                                return new MobChestBWLR();
-                            }
-                        });
-                    }
-                };
-            }
 			return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties());
 		};
 	}

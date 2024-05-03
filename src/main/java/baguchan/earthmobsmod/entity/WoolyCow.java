@@ -3,10 +3,12 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.common.IShearable;
 
 import javax.annotation.Nullable;
@@ -33,7 +36,7 @@ public class WoolyCow extends Cow implements Shearable, IShearable {
 	private int eatAnimationTick;
 	private EatBlockGoal eatBlockGoal;
 
-	public static final ResourceLocation WOOLY_COW_SHEARD_LOOT_TABLE = new ResourceLocation(EarthMobsMod.MODID, "entities/wooly_cow_sheared");
+	public static final ResourceKey<LootTable> WOOLY_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation(EarthMobsMod.MODID, "entities/wooly_cow_sheared"));
 
 	public WoolyCow(EntityType<? extends Cow> p_28285_, Level p_28286_) {
 		super(p_28285_, p_28286_);
@@ -52,12 +55,12 @@ public class WoolyCow extends Cow implements Shearable, IShearable {
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(SHEARED, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(SHEARED, false);
 	}
 
-	public ResourceLocation getDefaultLootTable() {
+	public ResourceKey<LootTable> getDefaultLootTable() {
 		if (this.isSheared()) {
 			return WOOLY_COW_SHEARD_LOOT_TABLE;
 		} else {

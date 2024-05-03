@@ -12,14 +12,14 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = EarthMobsMod.MODID)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = EarthMobsMod.MODID)
 public class ModItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, EarthMobsMod.MODID);
 
@@ -40,9 +40,9 @@ public class ModItems {
 
 	public static final Supplier<Item> HYPER_RABBIT_FOOT = ITEMS.register("hyper_rabbit_foot", () -> new Item((new Item.Properties())));
 	public static final Supplier<Item> ZOMBIFIED_RABBIT_FOOT = ITEMS.register("zombified_rabbit_foot", () -> new Item((new Item.Properties())));
-	public static final Supplier<Item> MUD_BUCKET = ITEMS.register("mud_bucket", () -> new BucketItem(ModFluids.MUD, (new Item.Properties()).stacksTo(1).craftRemainder(Items.BUCKET)));
-	public static final Supplier<Item> TROPICAL_SLIME_BUCKET = ITEMS.register("tropical_slime_bucket", () -> new MobBucketItem(ModEntities.TROPICAL_SLIME, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties()).stacksTo(1).craftRemainder(Items.BUCKET)));
-	public static final Supplier<Item> TEACUP_PIG_POT = ITEMS.register("teacup_pig_pot", () -> new MobPotItem(ModEntities.TEACUP_PIG, () -> Fluids.EMPTY, () -> SoundEvents.ARMOR_EQUIP_GENERIC, (new Item.Properties()).stacksTo(1).craftRemainder(Items.FLOWER_POT)));
+	public static final Supplier<Item> MUD_BUCKET = ITEMS.register("mud_bucket", () -> new BucketItem(ModFluids.MUD.value(), (new Item.Properties()).stacksTo(1).craftRemainder(Items.BUCKET)));
+	public static final Supplier<Item> TROPICAL_SLIME_BUCKET = ITEMS.register("tropical_slime_bucket", () -> new MobBucketItem(ModEntities.TROPICAL_SLIME.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties()).stacksTo(1).craftRemainder(Items.BUCKET)));
+	public static final Supplier<Item> TEACUP_PIG_POT = ITEMS.register("teacup_pig_pot", () -> new MobPotItem(ModEntities.TEACUP_PIG.get(), Fluids.EMPTY, SoundEvents.ARMOR_EQUIP_GENERIC.value(), (new Item.Properties()).stacksTo(1).craftRemainder(Items.FLOWER_POT)));
 
 	public static final Supplier<Item> CLUCK_SHROOM_SPAWNEGG = ITEMS.register("cluck_shroom_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.CLUCK_SHROOM, 0xB52C17, 0xDC883B, (new Item.Properties())));
 	public static final Supplier<Item> FANCY_CHICKEN_SPAWNEGG = ITEMS.register("fancy_chicken_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.FANCY_CHICKEN, 0xF4A213, 0x202F22, (new Item.Properties())));
@@ -169,11 +169,6 @@ public class ModItems {
 
 		if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
 			event.accept(ModBlocks.RUBY.get());
-		}
-		if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-			event.accept(ModBlocks.COMMON_MOB_CHEST.get());
-			event.accept(ModBlocks.UNCOMMON_MOB_CHEST.get());
-			event.accept(ModBlocks.RARE_MOB_CHEST.get());
 		}
 	}
 

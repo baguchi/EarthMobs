@@ -5,14 +5,14 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber(modid = EarthMobsMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = EarthMobsMod.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
@@ -26,7 +26,7 @@ public class DataGenerators {
         event.getGenerator().addProvider(event.includeServer(), blocktags);
         event.getGenerator().addProvider(event.includeServer(), new ItemTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), blocktags.contentsGetter(), event.getExistingFileHelper()));
         event.getGenerator().addProvider(event.includeServer(), new EntityTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
-        event.getGenerator().addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
+        event.getGenerator().addProvider(event.includeServer(), ModLootTableProvider.create(packOutput, event.getLookupProvider()));
         event.getGenerator().addProvider(event.includeServer(), new WorldGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
         event.getGenerator().addProvider(event.includeServer(), new CustomTagGenerator.InstrumentTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), existingFileHelper));
     }

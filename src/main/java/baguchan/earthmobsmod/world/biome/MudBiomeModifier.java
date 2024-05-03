@@ -1,7 +1,7 @@
 package baguchan.earthmobsmod.world.biome;
 
 import baguchan.earthmobsmod.EarthMobsConfig;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
@@ -29,12 +29,12 @@ public class MudBiomeModifier implements BiomeModifier {
 	}
 
 	@Override
-	public Codec<? extends BiomeModifier> codec() {
+	public MapCodec<? extends BiomeModifier> codec() {
 		return MudBiomeModifier.makeCodec();
 	}
 
-	public static Codec<MudBiomeModifier> makeCodec() {
-		return RecordCodecBuilder.create((config) -> {
+	public static MapCodec<MudBiomeModifier> makeCodec() {
+		return RecordCodecBuilder.mapCodec((config) -> {
 			return config.group(PlacedFeature.CODEC.fieldOf("feature").forGetter((otherConfig) -> {
 				return otherConfig.features;
 			})).apply(config, MudBiomeModifier::new);

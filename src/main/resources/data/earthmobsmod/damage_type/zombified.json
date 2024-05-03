@@ -1,5 +1,4 @@
 {
-  "effects": "zombified",
   "exhaustion": 0.1,
   "message_id": "zombified",
   "scaling": "never"

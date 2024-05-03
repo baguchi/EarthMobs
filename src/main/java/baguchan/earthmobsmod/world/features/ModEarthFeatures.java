@@ -3,7 +3,7 @@ package baguchan.earthmobsmod.world.features;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModBlocks;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Blocks;
@@ -19,7 +19,7 @@ public class ModEarthFeatures {
 		return ResourceKey.create(Registries.CONFIGURED_FEATURE, EarthMobsMod.prefix(name));
 	}
 
-	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		FeatureUtils.register(context, MUD_LAKE, Feature.LAKE, new LakeFeature.Configuration(BlockStateProvider.simple(ModBlocks.MUD.get().defaultBlockState()), BlockStateProvider.simple(Blocks.MUD.defaultBlockState())));
 	}
 

@@ -1,6 +1,5 @@
 package baguchan.earthmobsmod.entity;
 
-import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -22,7 +21,6 @@ import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -31,8 +29,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.Map;
 
 public class BoulderingDrowned extends Drowned {
 	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(BoulderingDrowned.class, EntityDataSerializers.BYTE);
@@ -52,9 +48,9 @@ public class BoulderingDrowned extends Drowned {
 		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 35.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.22F).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 3.0D).add(Attributes.KNOCKBACK_RESISTANCE, 0.5D).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_FLAGS_ID, (byte) 0);
 	}
 
 	public void tick() {
@@ -112,9 +108,7 @@ public class BoulderingDrowned extends Drowned {
 			int i = p_218953_.nextInt(16);
 			if (i < 10) {
 				ItemStack stack = new ItemStack(Items.TRIDENT);
-				Map<Enchantment, Integer> map = Maps.newHashMap();
-				map.put(Enchantments.RIPTIDE, 1);
-				EnchantmentHelper.setEnchantments(map, stack);
+				stack.enchant(Enchantments.RIPTIDE, 1);
 				this.setItemSlot(EquipmentSlot.MAINHAND, stack);
 			} else {
 				this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.FISHING_ROD));

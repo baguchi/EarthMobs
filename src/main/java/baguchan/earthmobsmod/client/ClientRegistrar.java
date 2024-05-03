@@ -1,38 +1,34 @@
 package baguchan.earthmobsmod.client;
 
 import baguchan.earthmobsmod.EarthMobsMod;
-import baguchan.earthmobsmod.client.blockentity.MobChestBlockRender;
 import baguchan.earthmobsmod.client.model.*;
 import baguchan.earthmobsmod.client.render.*;
 import baguchan.earthmobsmod.client.render.layer.MossSheepLayer;
 import baguchan.earthmobsmod.client.render.layer.MuddyPigFlowerLayer;
 import baguchan.earthmobsmod.client.render.layer.MuddyPigMudLayer;
-import baguchan.earthmobsmod.registry.ModBlockEntitys;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class ClientRegistrar {
     public static void setup(FMLClientSetupEvent event) {
-        BlockEntityRenderers.register(ModBlockEntitys.MOB_CHEST.get(), MobChestBlockRender::new);
 
     }
 
@@ -135,7 +131,7 @@ public class ClientRegistrar {
 	@SubscribeEvent
 	public static void registerItemColorRenders(RegisterColorHandlersEvent.Item event) {
 		event.register((p_92693_, p_92694_) -> {
-			return PotionUtils.getPotion(p_92693_) != Potions.EMPTY ? PotionUtils.getColor(p_92693_) : 0xFFFFFF;
+			return p_92693_.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor();
 		}, ModItems.BONE_SHARD.get());
 	}
 }

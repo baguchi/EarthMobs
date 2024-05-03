@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.api.IHasFlower;
 import baguchan.earthmobsmod.registry.ModBlocks;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -19,10 +20,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SuspiciousStewItem;
+import net.minecraft.world.item.component.SuspiciousStewEffects;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SuspiciousEffectHolder;
 import net.neoforged.neoforge.common.IShearable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -44,10 +44,10 @@ public class Moobloom extends Cow implements IShearable, IFlowerCow, IHasFlower 
 			this.playSound(soundevent, 1.0F, 1.0F);
 			return InteractionResult.sidedSuccess(this.level().isClientSide);
 		} else if (itemstack.is(Items.BOWL) && !this.isBaby()) {
-            List<SuspiciousEffectHolder.EffectEntry> pair = this.getEffectFromItemStack(this.getFlower().asItem().getDefaultInstance());
+			SuspiciousStewEffects pair = this.getEffectFromItemStack(this.getFlower().asItem().getDefaultInstance());
 			ItemStack itemstack1 = new ItemStack(Items.SUSPICIOUS_STEW);
             if (pair != null) {
-                SuspiciousStewItem.saveMobEffects(itemstack1, pair);
+				itemstack1.set(DataComponents.SUSPICIOUS_STEW_EFFECTS, pair);
 			}
 			ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, p_28941_, itemstack1, false);
 			p_28941_.setItemInHand(p_28942_, itemstack2);

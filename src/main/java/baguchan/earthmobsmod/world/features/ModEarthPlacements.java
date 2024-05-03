@@ -3,7 +3,7 @@ package baguchan.earthmobsmod.world.features;
 import baguchan.earthmobsmod.EarthMobsMod;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -19,7 +19,7 @@ public class ModEarthPlacements {
 		return ResourceKey.create(Registries.PLACED_FEATURE, EarthMobsMod.prefix(name));
 	}
 
-	public static void bootstrap(BootstapContext<PlacedFeature> context) {
+	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> configuredFeatureHolder = context.lookup(Registries.CONFIGURED_FEATURE);
 		PlacementUtils.register(context, LAKE_MUD_SURFACE, configuredFeatureHolder.getOrThrow(ModEarthFeatures.MUD_LAKE), RarityFilter.onAverageOnceEvery(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 	}

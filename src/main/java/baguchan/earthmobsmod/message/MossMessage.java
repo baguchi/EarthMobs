@@ -4,13 +4,18 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.api.IMoss;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadHandler;
 
-public class MossMessage implements CustomPacketPayload {
-    public static final ResourceLocation ID = EarthMobsMod.prefix("moss");
+public class MossMessage implements CustomPacketPayload, IPayloadHandler<MossMessage> {
+
+    public static final StreamCodec<FriendlyByteBuf, MossMessage> STREAM_CODEC = CustomPacketPayload.codec(
+            MossMessage::write, MossMessage::new
+    );
+    public static final CustomPacketPayload.Type<MossMessage> TYPE = CustomPacketPayload.createType(EarthMobsMod.prefix("moss").toString());
 
     private final int entityId;
     private final boolean moss;
@@ -21,8 +26,8 @@ public class MossMessage implements CustomPacketPayload {
     }
 
     @Override
-    public ResourceLocation id() {
-        return ID;
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
     public void write(FriendlyByteBuf buf) {
@@ -34,8 +39,8 @@ public class MossMessage implements CustomPacketPayload {
         this(buf.readInt(), buf.readBoolean());
     }
 
-    public static void handle(MossMessage message, PlayPayloadContext context) {
-        context.workHandler().execute(() -> {
+    public void handle(MossMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
             Entity entity = Minecraft.getInstance().player.level().getEntity(message.entityId);
                 if (entity instanceof IMoss imoss) {
                     imoss.setMoss(message.moss);

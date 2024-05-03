@@ -52,7 +52,7 @@ public class BeeGlowFlowerMobGoal extends Goal {
                     int z = optional.get().getBlockZ() + this.bee.getRandom().nextInt(6) - this.bee.getRandom().nextInt(3);
                     BlockPos blockPos = new BlockPos(x, y, z);
                     if (optional.get() instanceof IPlantMob flowerCow) {
-                        if (flowerCow.getPlant().canSurvive(flowerCow.getPlant().defaultBlockState(), this.bee.level(), blockPos)) {
+                        if (flowerCow.getPlant().defaultBlockState().canSurvive(this.bee.level(), blockPos)) {
                             if (this.bee.level().getBlockState(blockPos).isAir()) {
                                 this.bee.level().setBlock(blockPos, flowerCow.getPlant().defaultBlockState(), 3);
                             }

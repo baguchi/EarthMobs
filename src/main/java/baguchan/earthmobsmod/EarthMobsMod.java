@@ -10,33 +10,32 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Locale;
 
-// The value here should match an entry in the META-INF/mods.toml file
+// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(EarthMobsMod.MODID)
 public class EarthMobsMod {
 	public static final String MODID = "earthmobsmod";
 	// Directly reference a log4j logger.
 	private static final Logger LOGGER = LogManager.getLogger(MODID);
 
-	public EarthMobsMod(IEventBus modBus) {
+	public EarthMobsMod(ModContainer container, IEventBus modBus) {
 		// Register the setup method for modloading
 		modBus.addListener(this::setup);
 		modBus.addListener(this::setupPackets);
 		IEventBus forgeBus = NeoForge.EVENT_BUS;
 		ModBlocks.BLOCKS.register(modBus);
-        ModBlockEntitys.BLOCK_ENTITIES.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
 		ModFluidTypes.FLUID_TYPES.register(modBus);
 		ModFluids.FLUIDS.register(modBus);
@@ -49,21 +48,20 @@ public class EarthMobsMod {
 		ModInstruments.INSTRUMENTS.register(modBus);
 		ModRecipes.RECIPE_SERIALIZERS.register(modBus);
 
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EarthMobsConfig.COMMON_SPEC);
+		container.registerConfig(ModConfig.Type.COMMON, EarthMobsConfig.COMMON_SPEC);
 
 		if (FMLEnvironment.dist == Dist.CLIENT) {
 			modBus.addListener(ClientRegistrar::setup);
 		}
 	}
 
-	public void setupPackets(RegisterPayloadHandlerEvent event) {
-		IPayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
-		registrar.play(MossMessage.ID, MossMessage::new, payload -> payload.client(MossMessage::handle));
-		registrar.play(MudMessage.ID, MudMessage::new, payload -> payload.client(MudMessage::handle));
+	public void setupPackets(RegisterPayloadHandlersEvent event) {
+		PayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
+		registrar.playBidirectional(MossMessage.TYPE, MossMessage.STREAM_CODEC, (handler, payload) -> handler.handle(handler, payload));
+		registrar.playBidirectional(MudMessage.TYPE, MudMessage.STREAM_CODEC, (handler, payload) -> handler.handle(handler, payload));
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-		ModEffects.init();
 		ModInteractionInformations.init();
 		ModItems.composterInit();
 		ModBlocks.initFire();

@@ -35,7 +35,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -55,8 +55,8 @@ public class BabyGhast extends PathfinderMob {
 		super(p_21803_, p_21804_);
 		this.xpReward = 0;
 		this.moveControl = new FlyingMoveControl(this, 20, true);
-		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
-		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -103,11 +103,11 @@ public class BabyGhast extends PathfinderMob {
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
-		this.entityData.define(DATA_SITTING, false);
-		this.entityData.define(DATA_IS_CHARGING, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_OWNERUUID_ID, Optional.empty());
+		builder.define(DATA_SITTING, false);
+		builder.define(DATA_IS_CHARGING, false);
 	}
 
 	@Override

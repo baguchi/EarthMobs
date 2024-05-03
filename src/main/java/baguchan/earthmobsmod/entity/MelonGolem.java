@@ -62,9 +62,9 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.2F);
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_MELON_ID, (byte) 16);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_MELON_ID, (byte) 16);
 	}
 
 	public void addAdditionalSaveData(CompoundTag p_29923_) {
@@ -140,9 +140,7 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 			this.shear(SoundSource.PLAYERS);
 			this.gameEvent(GameEvent.SHEAR, p_29920_);
 			if (!this.level().isClientSide) {
-				itemstack.hurtAndBreak(1, p_29920_, (p_29910_) -> {
-					p_29910_.broadcastBreakEvent(p_29921_);
-				});
+				itemstack.hurtAndBreak(1, p_29920_, LivingEntity.getSlotForHand(p_29921_));
 			}
 
 			return InteractionResult.sidedSuccess(this.level().isClientSide);

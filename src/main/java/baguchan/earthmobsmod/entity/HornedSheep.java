@@ -55,9 +55,10 @@ public class HornedSheep extends Sheep {
         super(p_29806_, p_29807_);
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_HAS_HORN, true);
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_HAS_HORN, true);
     }
 
     @Override

@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,6 +25,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.IShearable;
 import org.jetbrains.annotations.NotNull;
@@ -88,11 +90,12 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
 
     public void saveToBucketTag(ItemStack p_149187_) {
         Bucketable.saveDefaultDataToBucketTag(this, p_149187_);
-        CompoundTag compoundtag = p_149187_.getOrCreateTag();
-        compoundtag.putInt("Age", this.getAge());
-        if (this instanceof IMuddyPig muddy) {
-            compoundtag.putBoolean("Muddy", muddy.isMuddy());
-        }
+        CustomData.update(DataComponents.BUCKET_ENTITY_DATA, p_149187_, compoundtag -> {
+            compoundtag.putInt("Age", this.getAge());
+            if (this instanceof IMuddyPig muddy) {
+                compoundtag.putBoolean("Muddy", muddy.isMuddy());
+            }
+        });
     }
 
     public void loadFromBucketTag(CompoundTag p_149163_) {
@@ -114,7 +117,7 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
 
     @Override
     public SoundEvent getPickupSound() {
-        return SoundEvents.ARMOR_EQUIP_GENERIC;
+        return SoundEvents.ARMOR_EQUIP_GENERIC.value();
     }
 
     @Override

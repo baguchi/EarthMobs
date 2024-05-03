@@ -3,7 +3,7 @@ package baguchan.earthmobsmod.world.biome;
 import baguchan.earthmobsmod.EarthMobsConfig;
 import baguchan.earthmobsmod.registry.ModBiomeModifiers;
 import baguchan.earthmobsmod.registry.ModEntities;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.MobCategory;
@@ -186,7 +186,7 @@ public class EarthBiomeModifier implements BiomeModifier {
 	}
 
 	@Override
-	public Codec<? extends BiomeModifier> codec() {
+	public MapCodec<? extends BiomeModifier> codec() {
 		return ModBiomeModifiers.EARTH_ENTITY_MODIFIER_TYPE.get();
 	}
 }

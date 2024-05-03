@@ -10,9 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 
@@ -39,13 +36,7 @@ public class StrayBoneShard extends BoneShard {
     }
 
     public void handleEntityEvent(byte p_37402_) {
-        if (p_37402_ == 3) {
-            ParticleOptions particleoptions = this.getParticle();
-
-            for (int i = 0; i < 8; ++i) {
-                this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
-            }
-        }
+        super.handleEntityEvent(p_37402_);
         if (p_37402_ == 4) {
             this.level().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
         }
@@ -58,23 +49,11 @@ public class StrayBoneShard extends BoneShard {
         }
     }
 
-    protected ItemStack getPickupItem() {
-        if (this.effects.isEmpty() && this.potion == Potions.EMPTY) {
-            return new ItemStack(ModItems.BONE_SHARD.get());
-        } else {
-            ItemStack itemstack = new ItemStack(ModItems.BONE_SHARD.get());
-            PotionUtils.setPotion(itemstack, this.potion);
-            PotionUtils.setCustomEffects(itemstack, this.effects);
-
-            return itemstack;
-        }
-    }
-
     protected void onHitEntity(EntityHitResult p_37404_) {
         Entity entity = p_37404_.getEntity();
         if (entity.hurt(this.damageSources().thrown(this, this.getOwner()), 2)) {
             if (entity instanceof LivingEntity) {
-                for (MobEffectInstance mobeffectinstance : this.potion.getEffects()) {
+                for (MobEffectInstance mobeffectinstance : this.getPotionContents().getAllEffects()) {
                     ((LivingEntity) entity).addEffect(new MobEffectInstance(mobeffectinstance.getEffect(), Math.max(mobeffectinstance.getDuration() / 8, 1), mobeffectinstance.getAmplifier(), mobeffectinstance.isAmbient(), mobeffectinstance.isVisible()), entity);
                 }
 

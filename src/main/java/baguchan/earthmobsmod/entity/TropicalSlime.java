@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -61,10 +63,10 @@ public class TropicalSlime extends Slime implements Bucketable {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_FISHS, new CompoundTag());
-        this.entityData.define(FROM_BUCKET, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_FISHS, new CompoundTag());
+        builder.define(FROM_BUCKET, false);
     }
 
     protected void registerGoals() {
@@ -99,21 +101,20 @@ public class TropicalSlime extends Slime implements Bucketable {
         this.entityData.set(DATA_FISHS, p_36363_);
     }
 
-    public CompoundTag writeFromBucketTag(CompoundTag p_149163_) {
+    public CompoundTag writeFromBucketTag(ItemStack p_149163_) {
         CompoundTag newTag = new CompoundTag();
 
-        if (p_149163_ != null && p_149163_.contains("BucketVariantTag")) {
-            int i = p_149163_.getInt("BucketVariantTag");
-
-            newTag.putInt(TAG_FISH_VARIANT, i);
+        if (p_149163_.get(DataComponents.BUCKET_ENTITY_DATA) != null) {
+            newTag = p_149163_.get(DataComponents.BUCKET_ENTITY_DATA).copyTag();
         }
+
         return newTag;
     }
 
     public InteractionResult mobInteract(Player p_28941_, InteractionHand p_28942_) {
         ItemStack itemstack = p_28941_.getItemInHand(p_28942_);
         if (itemstack.is(Items.TROPICAL_FISH_BUCKET)) {
-            CompoundTag tag = writeFromBucketTag(itemstack.getTag());
+            CompoundTag tag = writeFromBucketTag(itemstack);
             if (getFishList() == null || !getFishList().isEmpty() && getFishList().size() < 4) {
                 if (!tag.isEmpty()) {
                     addFishData(tag.getInt(TAG_FISH_VARIANT));
@@ -168,32 +169,15 @@ public class TropicalSlime extends Slime implements Bucketable {
         CompoundTag compoundnbt1 = new CompoundTag();
         compoundnbt1.putInt(TAG_FISH_VARIANT, variant);
         EntityDimensions dimensions = this.getDimensions(this.getPose());
-        double x = (dimensions.width * this.random.nextDouble() - dimensions.width * this.random.nextDouble()) * 0.5F;
-        double y = (dimensions.height * this.random.nextDouble()) * 0.8F + dimensions.height * 0.1F;
-        double z = (dimensions.width * this.random.nextDouble() - dimensions.width * this.random.nextDouble()) * 0.5F;
+        double x = (dimensions.width() * this.random.nextDouble() - dimensions.width() * this.random.nextDouble()) * 0.5F;
+        double y = (dimensions.height() * this.random.nextDouble()) * 0.8F + dimensions.height() * 0.1F;
+        double z = (dimensions.width() * this.random.nextDouble() - dimensions.width() * this.random.nextDouble()) * 0.5F;
         compoundnbt1.putDouble(TAG_FISH_POSX, x);
         compoundnbt1.putDouble(TAG_FISH_POSY, y);
         compoundnbt1.putDouble(TAG_FISH_POSZ, z);
         listnbt.add(compoundnbt1);
         fishTag.put(TAG_FISH_LIST, listnbt);
         this.setFishData(fishTag);
-    }
-
-    protected boolean releaseFish(ItemStack stack) {
-        CompoundTag fishTag = this.getFishData();
-        ListTag listnbt = new ListTag();
-
-        if (fishTag.contains(TAG_FISH_LIST)) {
-            listnbt = fishTag.getList(TAG_FISH_LIST, 10);
-        }
-        if (!listnbt.isEmpty()) {
-            int size = listnbt.size() - 1;
-            stack.getOrCreateTag().putInt("BucketVariantTag", ((CompoundTag) listnbt.get(size)).getInt(TAG_FISH_VARIANT));
-            listnbt.remove(size);
-            this.setFishData(fishTag);
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -241,8 +225,8 @@ public class TropicalSlime extends Slime implements Bucketable {
     }
 
     @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_30023_, DifficultyInstance p_30024_, MobSpawnType p_30025_, @Nullable SpawnGroupData p_30026_, @Nullable CompoundTag p_30027_) {
-        p_30026_ = super.finalizeSpawn(p_30023_, p_30024_, p_30025_, p_30026_, p_30027_);
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_30023_, DifficultyInstance p_30024_, MobSpawnType p_30025_, @Nullable SpawnGroupData p_30026_) {
+        p_30026_ = super.finalizeSpawn(p_30023_, p_30024_, p_30025_, p_30026_);
 
         int size = Mth.clamp(this.getSize(), 1, 5);
         for (int i = 0; i < size; i++) {
@@ -288,10 +272,13 @@ public class TropicalSlime extends Slime implements Bucketable {
     @Override
     public void saveToBucketTag(ItemStack p_149187_) {
         Bucketable.saveDefaultDataToBucketTag(this, p_149187_);
-        CompoundTag compoundtag = p_149187_.getOrCreateTag();
+        CustomData.update(DataComponents.BUCKET_ENTITY_DATA, p_149187_, compoundTag -> {
+
         if (this.getFishData() != null) {
-            compoundtag.put("FishData", this.getFishData());
+            compoundTag.put("FishData", this.getFishData());
         }
+        });
+
     }
 
     @Override
