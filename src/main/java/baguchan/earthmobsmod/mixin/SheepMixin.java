@@ -55,9 +55,11 @@ public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
 
     @Inject(method = "shear", at = @At("RETURN"))
     public void onSheared(SoundSource p_29819_, CallbackInfo ci) {
-        ItemEntity itementity = this.spawnAtLocation(Items.MOSS_BLOCK.getDefaultInstance(), 1);
-        if (itementity != null) {
-            itementity.setDeltaMovement(itementity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, this.random.nextFloat() * 0.05F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F));
+        if (this.moss) {
+            ItemEntity itementity = this.spawnAtLocation(Items.MOSS_BLOCK.getDefaultInstance(), 1);
+            if (itementity != null) {
+                itementity.setDeltaMovement(itementity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, this.random.nextFloat() * 0.05F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F));
+            }
         }
     }
 }
