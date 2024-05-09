@@ -49,10 +49,10 @@ import net.neoforged.neoforge.common.ToolActions;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -74,7 +74,7 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
-	public static void initSpawn(MobSpawnEvent.FinalizeSpawn event) {
+	public static void initSpawn(FinalizeSpawnEvent event) {
 		Mob entity = event.getEntity();
 		ServerLevelAccessor serverLevelAccessor = event.getLevel();
 		if (entity instanceof IMoss moss) {
