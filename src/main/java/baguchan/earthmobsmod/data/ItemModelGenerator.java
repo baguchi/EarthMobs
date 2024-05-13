@@ -49,8 +49,14 @@ public class ItemModelGenerator extends ItemModelProvider {
         this.spawnEgg(ModItems.FANCY_CHICKEN_SPAWNEGG.get());
         this.spawnEgg(ModItems.WOOLY_COW_SPAWNEGG.get());
         this.spawnEgg(ModItems.UMBRA_COW_SPAWNEGG.get());
+        this.spawnEgg(ModItems.ASHEN_COW_SPAWNEGG.get());
         this.spawnEgg(ModItems.ALBINO_COW_SPAWNEGG.get());
         this.spawnEgg(ModItems.CREAM_COW_SPAWNEGG.get());
+        this.spawnEgg(ModItems.COOKIE_COW_SPAWNEGG.get());
+        this.spawnEgg(ModItems.DAIRY_COW_SPAWNEGG.get());
+        this.spawnEgg(ModItems.PINTO_COW_SPAWNEGG.get());
+        this.spawnEgg(ModItems.SUNSET_COW_SPAWNEGG.get());
+
         this.spawnEgg(ModItems.TEACUP_PIG_SPAWNEGG.get());
         this.spawnEgg(ModItems.HORNED_SHEEP_SPAWNEGG.get());
         this.spawnEgg(ModItems.HYPER_RABBIT_SPAWNEGG.get());

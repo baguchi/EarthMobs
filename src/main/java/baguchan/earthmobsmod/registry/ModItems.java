@@ -45,7 +45,14 @@ public class ModItems {
 	public static final RegistryObject<Item> WOOLY_COW_SPAWNEGG = ITEMS.register("wooly_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.WOOLY_COW, 0xDB8948, 0xFFDBB6, (new Item.Properties())));
 	public static final RegistryObject<Item> UMBRA_COW_SPAWNEGG = ITEMS.register("umbra_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.UMBRA_COW, 0x403E57, 0x0A0B1D, (new Item.Properties())));
 	public static final RegistryObject<Item> ALBINO_COW_SPAWNEGG = ITEMS.register("albino_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.ALBINO_COW, 0xECE2E2, 0xE1CFCF, (new Item.Properties())));
+	public static final RegistryObject<Item> ASHEN_COW_SPAWNEGG = ITEMS.register("ashen_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.ASHEN_COW, 0x5D5A66, 0x898491, (new Item.Properties())));
 	public static final RegistryObject<Item> CREAM_COW_SPAWNEGG = ITEMS.register("cream_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.CREAM_COW, 0xE2AB5B, 0xE8DCBB, (new Item.Properties())));
+	public static final RegistryObject<Item> COOKIE_COW_SPAWNEGG = ITEMS.register("cookie_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.COOKIE_COW, 0x4C5662, 0xEBE0D5, (new Item.Properties())));
+	public static final RegistryObject<Item> DAIRY_COW_SPAWNEGG = ITEMS.register("dairy_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.DAIRY_COW, 0xF6F4F9, 0x2E2E2D, (new Item.Properties())));
+	public static final RegistryObject<Item> PINTO_COW_SPAWNEGG = ITEMS.register("pinto_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.PINTO_COW, 0xEAD8C7, 0xB55E1E, (new Item.Properties())));
+	public static final RegistryObject<Item> SUNSET_COW_SPAWNEGG = ITEMS.register("sunset_cow_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.SUNSET_COW, 0xE58D39, 0x171514, (new Item.Properties())));
+
+
 	public static final RegistryObject<Item> TEACUP_PIG_SPAWNEGG = ITEMS.register("teacup_pig_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.TEACUP_PIG, 0xEEC9C1, 0xDD5555, (new Item.Properties())));
 
 
@@ -84,7 +91,13 @@ public class ModItems {
 			event.accept(WOOLY_COW_SPAWNEGG);
 			event.accept(UMBRA_COW_SPAWNEGG);
 			event.accept(ALBINO_COW_SPAWNEGG);
+			event.accept(ASHEN_COW_SPAWNEGG);
 			event.accept(CREAM_COW_SPAWNEGG);
+			event.accept(COOKIE_COW_SPAWNEGG);
+			event.accept(DAIRY_COW_SPAWNEGG);
+			event.accept(PINTO_COW_SPAWNEGG);
+			event.accept(SUNSET_COW_SPAWNEGG);
+
 			event.accept(TEACUP_PIG_SPAWNEGG);
 			event.accept(HORNED_SHEEP_SPAWNEGG);
 			event.accept(HYPER_RABBIT_SPAWNEGG);

@@ -32,8 +32,14 @@ public class ModEntities {
 	public static final RegistryObject<EntityType<FancyChicken>> FANCY_CHICKEN = ENTITIES.register("fancy_chicken", () -> EntityType.Builder.of(FancyChicken::new, MobCategory.CREATURE).sized(0.4F, 0.85F).clientTrackingRange(10).build(prefix("fancy_chicken")));
 	public static final RegistryObject<EntityType<WoolyCow>> WOOLY_COW = ENTITIES.register("wooly_cow", () -> EntityType.Builder.of(WoolyCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("wooly_cow")));
 	public static final RegistryObject<EntityType<UmbraCow>> UMBRA_COW = ENTITIES.register("umbra_cow", () -> EntityType.Builder.of(UmbraCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("umbra_cow")));
+	public static final RegistryObject<EntityType<EarthCow>> ASHEN_COW = ENTITIES.register("ashen_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("ashen_cow")));
 	public static final RegistryObject<EntityType<AlbinoCow>> ALBINO_COW = ENTITIES.register("albino_cow", () -> EntityType.Builder.of(AlbinoCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("albino_cow")));
 	public static final RegistryObject<EntityType<CreamCow>> CREAM_COW = ENTITIES.register("cream_cow", () -> EntityType.Builder.of(CreamCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("cream_cow")));
+	public static final RegistryObject<EntityType<EarthCow>> COOKIE_COW = ENTITIES.register("cookie_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("cookie_cow")));
+	public static final RegistryObject<EntityType<EarthCow>> DAIRY_COW = ENTITIES.register("dairy_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("dairy_cow")));
+	public static final RegistryObject<EntityType<EarthCow>> PINTO_COW = ENTITIES.register("pinto_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("pinto_cow")));
+	public static final RegistryObject<EntityType<EarthCow>> SUNSET_COW = ENTITIES.register("sunset_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("sunset_cow")));
+
 	public static final RegistryObject<EntityType<TeaCupPig>> TEACUP_PIG = ENTITIES.register("teacup_pig", () -> EntityType.Builder.of(TeaCupPig::new, MobCategory.CREATURE).sized(0.4F, 0.4F).clientTrackingRange(10).build(prefix("teacup_pig")));
 	public static final RegistryObject<EntityType<MagmaCow>> MAGMA_COW = ENTITIES.register("magma_cow", () -> EntityType.Builder.of(MagmaCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).fireImmune().build(prefix("magma_cow")));
 
@@ -95,7 +101,13 @@ public class ModEntities {
         event.register(WOOLY_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
         event.register(UMBRA_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
         event.register(ALBINO_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-        event.register(CREAM_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(ASHEN_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(COOKIE_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(CREAM_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(DAIRY_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(PINTO_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(SUNSET_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
 		event.register(TEACUP_PIG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(MAGMA_COW.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MagmaCow::checkMagmaSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
@@ -135,8 +147,14 @@ public class ModEntities {
 		event.put(WOOLY_COW.get(), Cow.createAttributes().build());
 		event.put(UMBRA_COW.get(), Cow.createAttributes().build());
 		event.put(ALBINO_COW.get(), Cow.createAttributes().build());
+		event.put(ASHEN_COW.get(), Cow.createAttributes().build());
         event.put(CREAM_COW.get(), Cow.createAttributes().build());
-        event.put(TEACUP_PIG.get(), TeaCupPig.createAttributes().build());
+		event.put(COOKIE_COW.get(), Cow.createAttributes().build());
+		event.put(DAIRY_COW.get(), Cow.createAttributes().build());
+		event.put(PINTO_COW.get(), Cow.createAttributes().build());
+		event.put(SUNSET_COW.get(), Cow.createAttributes().build());
+
+		event.put(TEACUP_PIG.get(), TeaCupPig.createAttributes().build());
         event.put(MAGMA_COW.get(), MagmaCow.createAttributes().build());
 
 		event.put(HORNED_SHEEP.get(), HornedSheep.createAttributes().build());

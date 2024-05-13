@@ -36,7 +36,12 @@ public class ClientRegistrar {
         event.registerEntityRenderer(ModEntities.UMBRA_COW.get(), UmbraCowRenderer::new);
 
         event.registerEntityRenderer(ModEntities.ALBINO_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/albino_cow.png")));
-        event.registerEntityRenderer(ModEntities.CREAM_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/cream_cow.png")));
+		event.registerEntityRenderer(ModEntities.ASHEN_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/ashen_cow.png")));
+		event.registerEntityRenderer(ModEntities.COOKIE_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/cookie_cow.png")));
+		event.registerEntityRenderer(ModEntities.CREAM_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/cream_cow.png")));
+		event.registerEntityRenderer(ModEntities.DAIRY_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/dairy_cow.png")));
+		event.registerEntityRenderer(ModEntities.PINTO_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/pinto_cow.png")));
+		event.registerEntityRenderer(ModEntities.SUNSET_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/sunset_cow.png")));
 
         event.registerEntityRenderer(ModEntities.TEACUP_PIG.get(), TeaCupPigRenderer::new);
 
@@ -106,6 +111,7 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.LOBBER_DROWNED, () -> layerDefinition4);
 		event.registerLayerDefinition(ModModelLayers.BOULDERING_DROWNED_OUTER, () -> BoulderingDrownedModel.createBodyLayer(new CubeDeformation(0.25F)));
 		event.registerLayerDefinition(ModModelLayers.LOBBER_DROWNED_OUTER, () -> LobberDrownedModel.createBodyLayer(new CubeDeformation(0.25F)));
+		event.registerLayerDefinition(ModModelLayers.COW, RevampedCowModel::createBodyLayer);
 	}
 
 	@SubscribeEvent
