@@ -1,17 +1,17 @@
 package baguchan.earthmobsmod.client.render;
 
-import net.minecraft.client.model.CowModel;
-import net.minecraft.client.model.geom.ModelLayers;
+import baguchan.earthmobsmod.client.ModModelLayers;
+import baguchan.earthmobsmod.client.model.RevampedCowModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Cow;
 
-public class RevampedCowRenderer<T extends Cow> extends MobRenderer<T, CowModel<T>> {
+public class RevampedCowRenderer<T extends Cow> extends MobRenderer<T, RevampedCowModel<T>> {
     private final ResourceLocation TEXTURE;
 
     public RevampedCowRenderer(EntityRendererProvider.Context p_173952_, ResourceLocation resourceLocation) {
-        super(p_173952_, new CowModel<>(p_173952_.bakeLayer(ModelLayers.COW)), 0.5F);
+        super(p_173952_, new RevampedCowModel<>(p_173952_.bakeLayer(ModModelLayers.COW)), 0.5F);
         TEXTURE = resourceLocation;
     }
 

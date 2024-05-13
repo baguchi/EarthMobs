@@ -60,16 +60,16 @@ public class EarthBiomeModifier implements BiomeModifier {
 				}
 
 
-				if (EarthMobsConfig.COMMON.albinoCowSpawnRate.get() > 0) {
+				if (EarthMobsConfig.COMMON.commonCowSpawnRate.get() > 0) {
 					if (biome.is(Tags.Biomes.IS_PLAINS)) {
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.ALBINO_COW.get(), EarthMobsConfig.COMMON.albinoCowSpawnRate.get(), 3, 6));
-					}
-				}
+						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.ALBINO_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
+						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.ASHEN_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
+						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.CREAM_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
+						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.COOKIE_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
+						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.DAIRY_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
+						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.PINTO_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
+						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.SUNSET_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
 
-
-				if (EarthMobsConfig.COMMON.creamCowSpawnRate.get() > 0) {
-					if (biome.is(Tags.Biomes.IS_PLAINS)) {
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.CREAM_COW.get(), EarthMobsConfig.COMMON.creamCowSpawnRate.get(), 3, 6));
 					}
 				}
 

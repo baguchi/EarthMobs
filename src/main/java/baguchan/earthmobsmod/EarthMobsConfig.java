@@ -16,8 +16,7 @@ public class EarthMobsConfig {
 	public static class Common {
         public final ModConfigSpec.IntValue woolyCowSpawnRate;
         public final ModConfigSpec.IntValue umbraCowSpawnRate;
-        public final ModConfigSpec.IntValue albinoCowSpawnRate;
-        public final ModConfigSpec.IntValue creamCowSpawnRate;
+		public final ModConfigSpec.IntValue commonCowSpawnRate;
         public final ModConfigSpec.IntValue teacupPigSpawnRate;
         public final ModConfigSpec.IntValue cluckshroomSpawnRate;
         public final ModConfigSpec.IntValue fancyChickenSpawnRate;
@@ -54,12 +53,9 @@ public class EarthMobsConfig {
 			umbraCowSpawnRate = builder
 					.comment("Changed Umbra Cow SpawnRate. [0 ~ 100]")
                     .defineInRange("Umbra Cow SpawnRate", 10, 0, 100);
-            albinoCowSpawnRate = builder
-                    .comment("Changed Albino Cow SpawnRate. [0 ~ 100]")
-                    .defineInRange("Albino Cow SpawnRate", 6, 0, 100);
-            creamCowSpawnRate = builder
-                    .comment("Changed Cream Cow SpawnRate. [0 ~ 100]")
-                    .defineInRange("Cream Cow SpawnRate", 6, 0, 100);
+			commonCowSpawnRate = builder
+					.comment("Changed Common Cow SpawnRate. [0 ~ 100]")
+					.defineInRange("Common Cow SpawnRate", 2, 0, 100);
             teacupPigSpawnRate = builder
                     .comment("Changed Teacup Pig SpawnRate. [0 ~ 100]")
                     .defineInRange(" Teacup Pig SpawnRate", 5, 0, 100);

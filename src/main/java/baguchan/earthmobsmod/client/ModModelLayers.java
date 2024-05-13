@@ -34,7 +34,7 @@ public class ModModelLayers {
     public static ModelLayerLocation LOBBER_DROWNED_OUTER = register("lobber_drowned_outer");
     public static ModelLayerLocation MAGMA_COW = register("magma_cow");
     public static ModelLayerLocation FURNACE_GOLEM = register("furnace_golem");
-    public static ModelLayerLocation MOB_CHEST = register("mob_chest");
+    public static ModelLayerLocation COW = register("cow");
 
 
     private static ModelLayerLocation register(String p_171294_) {
