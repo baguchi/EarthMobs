@@ -55,7 +55,7 @@ public class EarthMobsConfig {
                     .defineInRange("Umbra Cow SpawnRate", 10, 0, 100);
 			commonCowSpawnRate = builder
 					.comment("Changed Common Cow SpawnRate. [0 ~ 100]")
-					.defineInRange("Common Cow SpawnRate", 3, 0, 100);
+					.defineInRange("Common Cow SpawnRate", 2, 0, 100);
 			teacupPigSpawnRate = builder
                     .comment("Changed Teacup Pig SpawnRate. [0 ~ 100]")
                     .defineInRange(" Teacup Pig SpawnRate", 5, 0, 100);
