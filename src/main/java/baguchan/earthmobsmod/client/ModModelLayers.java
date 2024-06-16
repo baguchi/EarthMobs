@@ -42,6 +42,6 @@ public class ModModelLayers {
     }
 
     private static ModelLayerLocation register(String p_171301_, String p_171302_) {
-        return new ModelLayerLocation(new ResourceLocation(EarthMobsMod.MODID, p_171301_), p_171302_);
+        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, p_171301_), p_171302_);
     }
 }
