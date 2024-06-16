@@ -71,7 +71,7 @@ public class EarthMobsMod {
 
 
 	public static ResourceLocation prefix(String name) {
-		return new ResourceLocation(EarthMobsMod.MODID, name.toLowerCase(Locale.ROOT));
+		return ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, name.toLowerCase(Locale.ROOT));
 	}
 
 }
