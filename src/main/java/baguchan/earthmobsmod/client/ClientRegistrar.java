@@ -40,13 +40,13 @@ public class ClientRegistrar {
         event.registerEntityRenderer(ModEntities.WOOLY_COW.get(), WoolyCowRenderer::new);
         event.registerEntityRenderer(ModEntities.UMBRA_COW.get(), UmbraCowRenderer::new);
 
-        event.registerEntityRenderer(ModEntities.ALBINO_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/albino_cow.png")));
-		event.registerEntityRenderer(ModEntities.ASHEN_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/ashen_cow.png")));
-		event.registerEntityRenderer(ModEntities.COOKIE_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/cookie_cow.png")));
-		event.registerEntityRenderer(ModEntities.CREAM_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/cream_cow.png")));
-		event.registerEntityRenderer(ModEntities.DAIRY_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/dairy_cow.png")));
-		event.registerEntityRenderer(ModEntities.PINTO_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/pinto_cow.png")));
-		event.registerEntityRenderer(ModEntities.SUNSET_COW.get(), (r) -> new RevampedCowRenderer<>(r, new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cow/sunset_cow.png")));
+        event.registerEntityRenderer(ModEntities.ALBINO_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/albino_cow.png")));
+		event.registerEntityRenderer(ModEntities.ASHEN_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/ashen_cow.png")));
+		event.registerEntityRenderer(ModEntities.COOKIE_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/cookie_cow.png")));
+		event.registerEntityRenderer(ModEntities.CREAM_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/cream_cow.png")));
+		event.registerEntityRenderer(ModEntities.DAIRY_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/dairy_cow.png")));
+		event.registerEntityRenderer(ModEntities.PINTO_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/pinto_cow.png")));
+		event.registerEntityRenderer(ModEntities.SUNSET_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/sunset_cow.png")));
 
         event.registerEntityRenderer(ModEntities.TEACUP_PIG.get(), TeaCupPigRenderer::new);
 
