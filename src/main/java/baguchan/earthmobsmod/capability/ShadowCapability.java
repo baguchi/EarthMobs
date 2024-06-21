@@ -18,7 +18,6 @@ import net.neoforged.neoforge.attachment.IAttachmentSerializer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.UUID;
 
 public class ShadowCapability implements IAttachmentSerializer<CompoundTag, ShadowCapability> {
 	private static final ResourceLocation SPEED_MODIFIER_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow_speed");
@@ -100,7 +99,7 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 	protected void removeBoost(LivingEntity entity) {
 		AttributeInstance attributeinstance = entity.getAttribute(Attributes.MOVEMENT_SPEED);
 		if (attributeinstance != null) {
-			if (attributeinstance.getModifier(SPEED_MODIFIER_BOOST_UUID) != null) {
+			if (attributeinstance.hasModifier(SPEED_MODIFIER_BOOST_UUID)) {
 				attributeinstance.removeModifier(SPEED_MODIFIER_BOOST_UUID);
 			}
 

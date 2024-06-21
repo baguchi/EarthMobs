@@ -6,7 +6,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Rabbit;
@@ -24,7 +27,7 @@ public class JumboRabbit extends Rabbit {
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
-		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.325F);
+		return Rabbit.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.325F).add(Attributes.ATTACK_DAMAGE, 5.0);
 	}
 
 	public static boolean checkJumboSpawnRules(EntityType<JumboRabbit> p_29699_, LevelAccessor p_29700_, MobSpawnType p_29701_, BlockPos p_29702_, RandomSource p_29703_) {

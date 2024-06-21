@@ -69,7 +69,7 @@ public class HyperRabbit extends Rabbit {
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
-		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.32F);
+		return Rabbit.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.32F).add(Attributes.ATTACK_DAMAGE, 3.0);
 	}
 
 	public static boolean checkHyperSpawnRules(EntityType<HyperRabbit> p_29699_, LevelAccessor p_29700_, MobSpawnType p_29701_, BlockPos p_29702_, RandomSource p_29703_) {
