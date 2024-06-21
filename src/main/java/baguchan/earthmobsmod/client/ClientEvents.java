@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.Direction;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
@@ -126,7 +127,7 @@ public class ClientEvents {
 				renderer.getModel().setupAnim(entity, f5, f8, f7, f2, f6);
 				VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(renderer.getTextureLocation(entity)));
 				int i = getOverlayCoords(entity, 0.0F);
-				renderer.getModel().renderToBuffer(posestack, vertexconsumer, light, i, 1.0F, 1.0F, 1.0F, (0.45F));
+				renderer.getModel().renderToBuffer(posestack, vertexconsumer, light, i, FastColor.ARGB32.color(255, 255, 255, (int) (0.45F * 255)));
 				posestack.popPose();
 				posestack.pushPose();
 				if (shouldSit && entity.getVehicle() instanceof LivingEntity) {
@@ -172,7 +173,7 @@ public class ClientEvents {
 
 				renderer.getModel().prepareMobModel(entity, f5, f8, partialtick);
 				renderer.getModel().setupAnim(entity, f5, f8, f7, f2, f6);
-				renderer.getModel().renderToBuffer(posestack, vertexconsumer, light, i, 1.0F, 1.0F, 1.0F, 0.15F);
+				renderer.getModel().renderToBuffer(posestack, vertexconsumer, light, i, FastColor.ARGB32.color(255, 255, 255, (int) (0.15F * 255)));
 
 				posestack.popPose();
 			}

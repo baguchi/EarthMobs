@@ -14,7 +14,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class StrayBoneSpiderRender<T extends StrayBoneSpider> extends MobRenderer<T, BoneSpiderModel<T>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/bone_spider/stray_bone_spider.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/bone_spider/stray_bone_spider.png");
 
 	public StrayBoneSpiderRender(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new BoneSpiderModel<>(p_173952_.bakeLayer(ModModelLayers.STRAY_BONE_SPIDER)), 0.65F);

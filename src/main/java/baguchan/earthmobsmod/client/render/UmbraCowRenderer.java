@@ -12,8 +12,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class UmbraCowRenderer<T extends UmbraCow> extends MobRenderer<T, WoolyCowModel<T>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/umbra_cow/umbra_cow.png");
-	private static final ResourceLocation SHEARED_TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/umbra_cow/umbra_cow_sheared.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/umbra_cow/umbra_cow.png");
+    private static final ResourceLocation SHEARED_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/umbra_cow/umbra_cow_sheared.png");
 
 
 	public UmbraCowRenderer(EntityRendererProvider.Context p_173952_) {

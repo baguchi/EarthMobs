@@ -13,8 +13,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class CluckShroomRender<T extends CluckShroom> extends MobRenderer<T, CluckShroomModel<T>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cluck_shroom/cluck_shroom.png");
-	private static final ResourceLocation TEXTURE_BROWN = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/cluck_shroom/brown_cluck_shroom.png");
+	private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cluck_shroom/cluck_shroom.png");
+	private static final ResourceLocation TEXTURE_BROWN = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cluck_shroom/brown_cluck_shroom.png");
 
 	public CluckShroomRender(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new CluckShroomModel<>(p_173952_.bakeLayer(ModModelLayers.CLUCK_SHROOM)), 0.3F);

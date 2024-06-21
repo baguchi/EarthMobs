@@ -15,7 +15,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class VilerWitchRenderer<T extends VilerWitch> extends MobRenderer<T, VilerWitchModel<T>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/viler_witch.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/viler_witch.png");
 
 	public VilerWitchRenderer(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new VilerWitchModel<>(p_173952_.bakeLayer(ModModelLayers.VILER_WITCH)), 0.5F);

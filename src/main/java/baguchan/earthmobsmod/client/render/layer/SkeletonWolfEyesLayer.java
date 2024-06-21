@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Wolf;
 
 public class SkeletonWolfEyesLayer<T extends Wolf, M extends WolfModel<T>> extends EyesLayer<T, M> {
-	private static final RenderType EYES = RenderType.eyes(new ResourceLocation(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf_eyes.png"));
+    private static final RenderType EYES = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf_eyes.png"));
 
 	public SkeletonWolfEyesLayer(RenderLayerParent<T, M> p_117507_) {
 		super(p_117507_);

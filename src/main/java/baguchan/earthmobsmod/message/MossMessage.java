@@ -15,7 +15,7 @@ public class MossMessage implements CustomPacketPayload, IPayloadHandler<MossMes
     public static final StreamCodec<FriendlyByteBuf, MossMessage> STREAM_CODEC = CustomPacketPayload.codec(
             MossMessage::write, MossMessage::new
     );
-    public static final CustomPacketPayload.Type<MossMessage> TYPE = CustomPacketPayload.createType(EarthMobsMod.prefix("moss").toString());
+    public static final CustomPacketPayload.Type<MossMessage> TYPE = new Type<>(EarthMobsMod.prefix("moss"));
 
     private final int entityId;
     private final boolean moss;

@@ -8,8 +8,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Wolf;
 
 public class SkeletonWolfRenderer extends WolfRenderer {
-	private static final ResourceLocation WOLF_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf.png");
-	private static final ResourceLocation WOLF_ANGRY_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf_angry.png");
+    private static final ResourceLocation WOLF_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf.png");
+    private static final ResourceLocation WOLF_ANGRY_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf_angry.png");
 
 
 	public SkeletonWolfRenderer(EntityRendererProvider.Context p_174452_) {

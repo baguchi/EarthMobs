@@ -19,8 +19,8 @@ public class BlockstateGenerator extends BlockStateProvider {
     protected void registerStatesAndModels() {
         this.crossBlock(ModBlocks.BUTTERCUP.get());
         this.crossBlock(ModBlocks.PINK_DAISY.get());
-        this.horizontalBlock(ModBlocks.CARVED_MELON.get(), new ResourceLocation("minecraft:block/melon_side"), new ResourceLocation(EarthMobsMod.MODID, "block/carved_melon"), new ResourceLocation("minecraft:block/melon_top"));
-        this.horizontalBlock(ModBlocks.CARVED_MELON_SHOOT.get(), new ResourceLocation("minecraft:block/melon_side"), new ResourceLocation(EarthMobsMod.MODID, "block/carved_melon_shoot"), new ResourceLocation("minecraft:block/melon_top"));
+        this.horizontalBlock(ModBlocks.CARVED_MELON.get(), ResourceLocation.parse("minecraft:block/melon_side"), ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "block/carved_melon"), ResourceLocation.parse("minecraft:block/melon_top"));
+        this.horizontalBlock(ModBlocks.CARVED_MELON_SHOOT.get(), ResourceLocation.parse("minecraft:block/melon_side"), ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "block/carved_melon_shoot"), ResourceLocation.parse("minecraft:block/melon_top"));
         this.simpleBlock(ModBlocks.RUBY.get());
     }
 
@@ -53,6 +53,6 @@ public class BlockstateGenerator extends BlockStateProvider {
     }
 
     private ResourceLocation extend(ResourceLocation rl, String suffix) {
-        return new ResourceLocation(rl.getNamespace(), rl.getPath() + suffix);
+        return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), rl.getPath() + suffix);
     }
 }

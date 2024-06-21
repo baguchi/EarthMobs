@@ -202,7 +202,7 @@ public class FurnaceGolem extends AbstractGolem {
             double d0 = d2;
             double d1 = Math.max(0.0D, 1.0D - d0);
             p_28837_.setDeltaMovement(p_28837_.getDeltaMovement().add(0.0D, (double) 0.4F * d1, 0.0D));
-            this.doEnchantDamageEffects(this, p_28837_);
+            //this.doEnchantDamageEffects(this, p_28837_);
         }
 
         this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);

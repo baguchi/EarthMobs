@@ -87,34 +87,34 @@ public class MagmaCowModel<T extends MagmaCow> extends HierarchicalModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int i) {
         if (this.young) {
 
             poseStack.pushPose();
             float f = 1.5F / 2.0F;
             poseStack.scale(f, f, f);
             poseStack.translate(0, 15.0F / 16.0F, 4.0F / 16F);
-            head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+            head.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
             poseStack.popPose();
             poseStack.pushPose();
 
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.translate(0, 24F / 16.0F, 0);
-            leg1.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leg2.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leg3.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leg4.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+            leg1.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+            leg2.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+            leg3.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+            leg4.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+            body.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
 
             poseStack.popPose();
         } else {
             poseStack.pushPose();
-            leg1.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leg2.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leg3.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leg4.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+            leg1.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+            leg2.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+            leg3.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+            leg4.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+            body.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+            head.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
             poseStack.popPose();
         }
     }

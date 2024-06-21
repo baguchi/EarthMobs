@@ -16,14 +16,15 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.animal.Pig;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class MuddyPigMudLayer extends RenderLayer<Pig, PigModel<Pig>> {
-	private static final ResourceLocation MUD_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/muddypig/muddy_pig.png");
-	private static final ResourceLocation DRY_MUD_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/muddypig/dry_muddy_pig.png");
+	private static final ResourceLocation MUD_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/muddypig/muddy_pig.png");
+	private static final ResourceLocation DRY_MUD_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/muddypig/dry_muddy_pig.png");
 
 	private final MuddyPigModel<Pig> model;
 
@@ -43,11 +44,11 @@ public class MuddyPigMudLayer extends RenderLayer<Pig, PigModel<Pig>> {
 						this.model.prepareMobModel(pig, p_117425_, p_117426_, p_117427_);
 						this.model.setupAnim(pig, p_117425_, p_117426_, p_117428_, p_117429_, p_117430_);
 						VertexConsumer vertexconsumer = p_117422_.getBuffer(RenderType.outline(MUD_LOCATION));
-						this.model.renderToBuffer(p_117421_, vertexconsumer, p_117423_, LivingEntityRenderer.getOverlayCoords(pig, 0.0F), 0.0F, 0.0F, 0.0F, 1.0F);
+						this.model.renderToBuffer(p_117421_, vertexconsumer, p_117423_, LivingEntityRenderer.getOverlayCoords(pig, 0.0F), FastColor.ARGB32.colorFromFloat(0.0F, 0.0F, 0.0F, 1.0F));
 					}
 
 				} else {
-					coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, MUD_LOCATION, p_117421_, p_117422_, p_117423_, pig, p_117425_, p_117426_, p_117428_, p_117429_, p_117430_, p_117427_, 1.0F, 1.0F, 1.0F);
+					coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, MUD_LOCATION, p_117421_, p_117422_, p_117423_, pig, p_117425_, p_117426_, p_117428_, p_117429_, p_117430_, p_117427_, FastColor.ARGB32.colorFromFloat(1, 1, 1, 1));
 				}
 			}/* else {
 				if (pig.isInvisible()) {

@@ -100,18 +100,19 @@ public class JumboRabbitModel<T extends JumboRabbit> extends EntityModel<T> {
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		rearFootRight.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		rearFootLeft.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		haunchRight.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		haunchLeft.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		frontLegRight.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		frontLegLeft.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		earLeft.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		earRight.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		tail.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		nose.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int i1, int i2) {
+		rearFootRight.render(poseStack, vertexConsumer, i, i1, i2);
+		rearFootLeft.render(poseStack, vertexConsumer, i, i1, i2);
+		haunchRight.render(poseStack, vertexConsumer, i, i1, i2);
+		haunchLeft.render(poseStack, vertexConsumer, i, i1, i2);
+		body.render(poseStack, vertexConsumer, i, i1, i2);
+		frontLegRight.render(poseStack, vertexConsumer, i, i1, i2);
+		frontLegLeft.render(poseStack, vertexConsumer, i, i1, i2);
+		head.render(poseStack, vertexConsumer, i, i1, i2);
+		earLeft.render(poseStack, vertexConsumer, i, i1, i2);
+		earRight.render(poseStack, vertexConsumer, i, i1, i2);
+		tail.render(poseStack, vertexConsumer, i, i1, i2);
+		nose.render(poseStack, vertexConsumer, i, i1, i2);
+
 	}
 }

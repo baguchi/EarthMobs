@@ -14,8 +14,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class TeaCupPigRenderer<T extends TeaCupPig> extends MobRenderer<T, TeaCupPigModel<T>> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig.png");
-    private static final ResourceLocation MUD_TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig_mud.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig.png");
+    private static final ResourceLocation MUD_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig_mud.png");
 
 
     public TeaCupPigRenderer(EntityRendererProvider.Context p_174304_) {

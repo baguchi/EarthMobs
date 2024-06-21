@@ -29,9 +29,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.IShearable;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 
-public class CluckShroom extends Chicken implements Shearable, IShearable, IPlantMob {
+public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 	private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(CluckShroom.class, EntityDataSerializers.STRING);
 
 	private UUID lastLightningBoltUUID;
@@ -75,17 +76,10 @@ public class CluckShroom extends Chicken implements Shearable, IShearable, IPlan
 		builder.define(DATA_TYPE, CluckShroom.CluckShroomType.RED.type);
 	}
 
+
 	@Override
-	public java.util.List<ItemStack> onSheared(@javax.annotation.Nullable Player player, @javax.annotation.Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
-		return shearInternal(player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS);
-	}
-
-	public void shear(SoundSource p_28924_) {
-		shearInternal(p_28924_).forEach(s -> this.level().addFreshEntity(new ItemEntity(this.level(), this.getX(), this.getY(1.0D), this.getZ(), s)));
-	}
-
-	private java.util.List<ItemStack> shearInternal(SoundSource p_28924_) {
-		this.level().playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, p_28924_, 1.0F, 1.0F);
+	public List<ItemStack> onSheared(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
+		this.level().playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
 		if (!this.level().isClientSide()) {
 			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();
@@ -158,7 +152,7 @@ public class CluckShroom extends Chicken implements Shearable, IShearable, IPlan
 	}
 
 	@Override
-	public boolean isShearable(@javax.annotation.Nonnull ItemStack item, Level world, BlockPos pos) {
+	public boolean isShearable(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		return readyForShearing();
 	}
 

@@ -5,12 +5,12 @@ import baguchan.earthmobsmod.registry.ModRecipes;
 import com.google.common.collect.Lists;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -23,16 +23,17 @@ public class TippedArrowWithBoneRecipe extends CustomRecipe {
         super(p_251985_);
 	}
 
-	public boolean matches(CraftingContainer p_44515_, Level p_44516_) {
+	@Override
+	public boolean matches(CraftingInput craftingInput, Level level) {
 		List<Item> list = Lists.newArrayList();
 		List<Item> list2 = Lists.newArrayList();
 		List<Item> list3 = Lists.newArrayList();
 
 		int slot = 0;
 
-		for (int i = 0; i < p_44515_.getWidth(); ++i) {
-			for (int j = 0; j < p_44515_.getHeight(); ++j) {
-				ItemStack itemstack = p_44515_.getItem(i + j * p_44515_.getWidth());
+		for (int i = 0; i < craftingInput.width(); ++i) {
+			for (int j = 0; j < craftingInput.height(); ++j) {
+				ItemStack itemstack = craftingInput.getItem(i + j * craftingInput.width());
 
 				if (j == 0) {
 					if (itemstack.is(ModItems.BONE_SHARD.get())) {
@@ -69,9 +70,9 @@ public class TippedArrowWithBoneRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer p_44001_, HolderLookup.Provider p_267165_) {
-		for (int i = 0; i < p_44001_.getContainerSize(); ++i) {
-			ItemStack itemstack = p_44001_.getItem(i);
+	public ItemStack assemble(CraftingInput craftingInput, HolderLookup.Provider provider) {
+		for (int i = 0; i < craftingInput.size(); ++i) {
+			ItemStack itemstack = craftingInput.getItem(i);
 			if (itemstack.is(ModItems.BONE_SHARD.get())) {
 				PotionContents optional = itemstack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 				if (optional.potion().isPresent()) {

@@ -122,10 +122,9 @@ public class HyperRabbitModel<T extends HyperRabbit> extends EntityModel<T> {
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack p_103555_, VertexConsumer p_103556_, int p_103557_, int p_103558_, float p_103559_, float p_103560_, float p_103561_, float p_103562_) {
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int i1, int i2) {
 		ImmutableList.of(this.body).forEach((p_103597_) -> {
-			p_103597_.render(p_103555_, p_103556_, p_103557_, p_103558_, p_103559_, p_103560_, p_103561_, p_103562_);
+			p_103597_.render(poseStack, vertexConsumer, i, i1, i2);
 		});
-
 	}
 }

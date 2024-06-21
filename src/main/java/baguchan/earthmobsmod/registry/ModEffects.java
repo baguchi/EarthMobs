@@ -6,6 +6,7 @@ import baguchan.earthmobsmod.effect.HyperSparkEffect;
 import baguchan.earthmobsmod.effect.UndeadBodyEffect;
 import baguchan.earthmobsmod.effect.ZombifiedEffect;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,7 +32,7 @@ public class ModEffects {
 
 	public static final DeferredHolder<MobEffect, MobEffect> UNDEAD_BODY = MOB_EFFECTS.register("undead_body", () -> new UndeadBodyEffect(MobEffectCategory.NEUTRAL, 0xFFFFFF));
 	public static final DeferredHolder<MobEffect, MobEffect> ZOMBIFIED = MOB_EFFECTS.register("zombified", () -> new ZombifiedEffect(MobEffectCategory.BENEFICIAL, 0x2A5131));
-	public static final DeferredHolder<MobEffect, MobEffect> HARD_BODY = MOB_EFFECTS.register("toughness", () -> new HardBodyEffect(MobEffectCategory.BENEFICIAL, 0x4D575A).addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, "b33143e1-cb4c-3198-4372-8065044a29f4", 0.25, AttributeModifier.Operation.ADD_VALUE).addAttributeModifier(Attributes.ARMOR_TOUGHNESS, "941e9fc5-6e51-8365-f95e-c99d7a798a66", 0.5F, AttributeModifier.Operation.ADD_VALUE));
+	public static final DeferredHolder<MobEffect, MobEffect> HARD_BODY = MOB_EFFECTS.register("toughness", () -> new HardBodyEffect(MobEffectCategory.BENEFICIAL, 0x4D575A).addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "tough"), 0.25, AttributeModifier.Operation.ADD_VALUE).addAttributeModifier(Attributes.ARMOR_TOUGHNESS, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "tough"), 0.5F, AttributeModifier.Operation.ADD_VALUE));
 
 	public static final DeferredHolder<Potion, Potion> HYPER_SPARK_POTION = POTION.register("hyper_spark", () -> new Potion(new MobEffectInstance(HYPER_SPARK, 3600)));
 	public static final DeferredHolder<Potion, Potion> LONG_HYPER_SPARK_POTION = POTION.register("long_hyper_spark", () -> new Potion(new MobEffectInstance(HYPER_SPARK, 9600)));

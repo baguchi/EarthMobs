@@ -20,8 +20,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class LobberDrownedRenderer extends AbstractZombieRenderer<LobberDrowned, ZombieModel<LobberDrowned>> {
-    private static final ResourceLocation LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_drowned.png");
-    private static final ResourceLocation OUTER_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_drowned_outer_layer.png");
+    private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_drowned.png");
+    private static final ResourceLocation OUTER_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_drowned_outer_layer.png");
 
 
     public LobberDrownedRenderer(EntityRendererProvider.Context p_173964_) {

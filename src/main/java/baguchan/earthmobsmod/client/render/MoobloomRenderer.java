@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class MoobloomRenderer<T extends Moobloom> extends MobRenderer<T, CowModel<T>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/moobloom/moobloom.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/moobloom/moobloom.png");
 
 	public MoobloomRenderer(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new CowModel<>(p_173952_.bakeLayer(ModelLayers.COW)), 0.5F);

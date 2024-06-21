@@ -38,6 +38,7 @@ import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
+import java.util.List;
 
 public class MelonGolem extends AbstractGolem implements Shearable, RangedAttackMob, IShearable {
 	private static final EntityDataAccessor<Byte> DATA_MELON_ID = SynchedEntityData.defineId(MelonGolem.class, EntityDataSerializers.BYTE);
@@ -99,7 +100,7 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 				this.hurt(this.damageSources().onFire(), 1.0F);
 			}
 
-			if (!EventHooks.getMobGriefingEvent(this.level(), this)) {
+			if (!EventHooks.canEntityGrief(this.level(), this)) {
 				return;
 			}
 
@@ -195,15 +196,14 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 	}
 
 	@Override
-	public boolean isShearable(@javax.annotation.Nonnull ItemStack item, Level world, BlockPos pos) {
+	public boolean isShearable(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		return readyForShearing();
 	}
 
-	@javax.annotation.Nonnull
 	@Override
-	public java.util.List<ItemStack> onSheared(@Nullable Player player, @javax.annotation.Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
-		world.playSound(null, this, SoundEvents.SNOW_GOLEM_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
-		if (!world.isClientSide()) {
+	public List<ItemStack> onSheared(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
+		level.playSound(null, this, SoundEvents.SNOW_GOLEM_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
+		if (!level.isClientSide()) {
 			setMelon(false);
 			return java.util.Collections.singletonList(new ItemStack(ModBlocks.CARVED_MELON.get()));
 		}

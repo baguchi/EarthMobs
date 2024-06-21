@@ -358,7 +358,7 @@ public class BabyGhast extends PathfinderMob {
 							this.ghast.playSound(SoundEvents.GHAST_SHOOT, 0.6F, 1.25F);
 						}
 
-						SmallFireball fireball = new SmallFireball(level, this.ghast, d2, d3, d4);
+						SmallFireball fireball = new SmallFireball(level, this.ghast, new Vec3(d2, d3, d4));
 						fireball.setPos(this.ghast.getX() + vec3.x * 0.65D, this.ghast.getEyeY(), fireball.getZ() + vec3.z * 0.65D);
 						level.addFreshEntity(fireball);
 						this.chargeTime = -80;

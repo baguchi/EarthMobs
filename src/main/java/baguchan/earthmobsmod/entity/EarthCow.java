@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class EarthCow extends Cow {
 
-    public static final ResourceKey<LootTable> COW_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation("minecraft", "entities/cow"));
+    public static final ResourceKey<LootTable> COW_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("minecraft", "entities/cow"));
 
     public EarthCow(EntityType<? extends EarthCow> p_28285_, Level p_28286_) {
         super(p_28285_, p_28286_);

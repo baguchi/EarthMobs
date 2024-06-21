@@ -15,7 +15,7 @@ public class ModSounds {
     public static final Supplier<SoundEvent> HORN_BATTLE = createEvent("item.horn_flute.battle_horn");
 
     private static Supplier<SoundEvent> createEvent(String sound) {
-        ResourceLocation name = new ResourceLocation(EarthMobsMod.MODID, sound);
+        ResourceLocation name = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, sound);
         return SOUND_EVENTS.register(sound, () -> SoundEvent.createVariableRangeEvent(name));
     }
 }

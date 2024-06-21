@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Pig;
 
 public class ZombifiedPigRenderer extends PigRenderer {
-	private static final ResourceLocation PIG_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/zombified_pig/zombified_pig.png");
+    private static final ResourceLocation PIG_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_pig/zombified_pig.png");
 
 	public ZombifiedPigRenderer(EntityRendererProvider.Context p_174340_) {
 		super(p_174340_);

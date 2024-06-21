@@ -14,8 +14,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class HornedSheepRenderer extends MobRenderer<HornedSheep, HornedSheepModel<HornedSheep>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/horned_sheep.png");
-    private static final ResourceLocation TEXTURE_HORNLESS = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/horned_sheep_hornless.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep.png");
+    private static final ResourceLocation TEXTURE_HORNLESS = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep_hornless.png");
 
 
 

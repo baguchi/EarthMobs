@@ -16,10 +16,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Shearable;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Cow;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -29,14 +27,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.common.IShearable;
 
-import javax.annotation.Nullable;
+import java.util.List;
 
-public class WoolyCow extends Cow implements Shearable, IShearable {
+public class WoolyCow extends Cow implements IShearable {
 	private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(WoolyCow.class, EntityDataSerializers.BOOLEAN);
 	private int eatAnimationTick;
 	private EatBlockGoal eatBlockGoal;
 
-	public static final ResourceKey<LootTable> WOOLY_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation(EarthMobsMod.MODID, "entities/wooly_cow_sheared"));
+	public static final ResourceKey<LootTable> WOOLY_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "entities/wooly_cow_sheared"));
 
 	public WoolyCow(EntityType<? extends Cow> p_28285_, Level p_28286_) {
 		super(p_28285_, p_28286_);
@@ -139,35 +137,20 @@ public class WoolyCow extends Cow implements Shearable, IShearable {
 
 	}
 
-	@Override
-	public void shear(SoundSource p_29819_) {
-		this.level().playSound((Player) null, this, SoundEvents.SHEEP_SHEAR, p_29819_, 1.0F, 1.0F);
-		this.setSheared(true);
-		int i = 1 + this.random.nextInt(3);
-
-		for (int j = 0; j < i; ++j) {
-			ItemEntity itementity = this.spawnAtLocation(Blocks.BROWN_WOOL, 1);
-			if (itementity != null) {
-				itementity.setDeltaMovement(itementity.getDeltaMovement().add((double) ((this.random.nextFloat() - this.random.nextFloat()) * 0.1F), (double) (this.random.nextFloat() * 0.05F), (double) ((this.random.nextFloat() - this.random.nextFloat()) * 0.1F)));
-			}
-		}
-
-	}
-
 	public boolean readyForShearing() {
 		return this.isAlive() && !this.isSheared() && !this.isBaby();
 	}
 
+
 	@Override
-	public boolean isShearable(@javax.annotation.Nonnull ItemStack item, Level world, BlockPos pos) {
+	public boolean isShearable(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		return readyForShearing();
 	}
 
-	@javax.annotation.Nonnull
 	@Override
-	public java.util.List<ItemStack> onSheared(@Nullable Player player, @javax.annotation.Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
-		world.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
-		if (!world.isClientSide) {
+	public List<ItemStack> onSheared(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
+		level.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
+		if (!level.isClientSide) {
 			this.setSheared(true);
 			int i = 1 + this.random.nextInt(3);
 

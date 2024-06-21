@@ -12,8 +12,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class JollyLlamaRenderer<T extends JollyLlama> extends MobRenderer<T, JollyLlamaModel<T>> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/jolly_llama/jolly_llama.png");
-    private static final ResourceLocation TAMED_TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/jolly_llama/jolly_llama_tamed.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jolly_llama/jolly_llama.png");
+    private static final ResourceLocation TAMED_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jolly_llama/jolly_llama_tamed.png");
 
 
     public JollyLlamaRenderer(EntityRendererProvider.Context p_174304_) {

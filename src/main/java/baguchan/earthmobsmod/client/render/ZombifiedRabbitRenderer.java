@@ -13,8 +13,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ZombifiedRabbitRenderer<T extends ZombifiedRabbit> extends MobRenderer<T, RabbitModel<T>> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit.png");
-    private static final ResourceLocation EVIL_TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit_evil.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit.png");
+    private static final ResourceLocation EVIL_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit_evil.png");
 
     public ZombifiedRabbitRenderer(EntityRendererProvider.Context p_173952_) {
         super(p_173952_, new RabbitModel<>(p_173952_.bakeLayer(ModelLayers.RABBIT)), 0.3F);

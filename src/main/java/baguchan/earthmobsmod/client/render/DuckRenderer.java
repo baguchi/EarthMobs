@@ -8,7 +8,7 @@ import net.minecraft.world.entity.animal.Chicken;
 
 public class DuckRenderer extends ChickenRenderer {
 
-	private static final ResourceLocation DUCK_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/duck.png");
+	private static final ResourceLocation DUCK_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/duck.png");
 
 	public DuckRenderer(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_);

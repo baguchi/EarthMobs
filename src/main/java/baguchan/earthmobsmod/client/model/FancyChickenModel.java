@@ -15,7 +15,7 @@ import net.minecraft.util.Mth;
 
 public class FancyChickenModel<T extends FancyChicken> extends HierarchicalModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("modid", "custom_model"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("modid", "custom_model"), "main");
 	private final ModelPart root;
 	private final ModelPart bone;
 	private final ModelPart head;

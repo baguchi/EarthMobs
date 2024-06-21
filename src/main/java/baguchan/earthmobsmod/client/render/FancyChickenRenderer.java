@@ -13,7 +13,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class FancyChickenRenderer<T extends FancyChicken> extends MobRenderer<T, FancyChickenModel<T>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/fancy_chicken.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/fancy_chicken.png");
 
 	public FancyChickenRenderer(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new FancyChickenModel<>(p_173952_.bakeLayer(ModModelLayers.FANCY_CHICKEN)), 0.3F);

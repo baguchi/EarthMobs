@@ -14,10 +14,10 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class JumboRabbitRenderer<T extends JumboRabbit> extends MobRenderer<T, JumboRabbitModel<T>> {
-	private static final ResourceLocation RABBIT_BROWN_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/brown.png");
-	private static final ResourceLocation RABBIT_WHITE_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/white.png");
-	private static final ResourceLocation RABBIT_BLACK_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/black.png");
-	private static final ResourceLocation RABBIT_EVIL_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/evil.png");
+    private static final ResourceLocation RABBIT_BROWN_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/brown.png");
+    private static final ResourceLocation RABBIT_WHITE_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/white.png");
+    private static final ResourceLocation RABBIT_BLACK_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/black.png");
+    private static final ResourceLocation RABBIT_EVIL_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/evil.png");
 
 
 	public JumboRabbitRenderer(EntityRendererProvider.Context p_173952_) {

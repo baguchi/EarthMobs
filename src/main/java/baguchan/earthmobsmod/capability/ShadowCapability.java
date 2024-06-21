@@ -1,8 +1,10 @@
 package baguchan.earthmobsmod.capability;
 
+import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModEffects;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class ShadowCapability implements IAttachmentSerializer<CompoundTag, ShadowCapability> {
-	private static final UUID SPEED_MODIFIER_BOOST_UUID = UUID.fromString("a4be9598-fd19-8c8b-7e3d-142defd78b7c");
+	private static final ResourceLocation SPEED_MODIFIER_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow_speed");
 	public float prevShadowX;
 	public float prevShadowY;
 	public float prevShadowZ;
@@ -128,7 +130,7 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 				}
 
 				float f = 0.15F * percentBoost;
-				attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_BOOST_UUID, "Spark Boost", (double) f, AttributeModifier.Operation.ADD_VALUE));
+				attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_BOOST_UUID, (double) f, AttributeModifier.Operation.ADD_VALUE));
 			}
 		}
 	}

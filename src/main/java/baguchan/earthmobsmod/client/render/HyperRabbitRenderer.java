@@ -14,10 +14,10 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class HyperRabbitRenderer<T extends HyperRabbit> extends MobRenderer<T, HyperRabbitModel<T>> {
-	private static final ResourceLocation RABBIT_BROWN_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/brown.png");
-	private static final ResourceLocation RABBIT_WHITE_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/white.png");
-	private static final ResourceLocation RABBIT_GOLD_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/gold.png");
-	private static final ResourceLocation RABBIT_SA_X_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/hr_x.png");
+    private static final ResourceLocation RABBIT_BROWN_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/brown.png");
+    private static final ResourceLocation RABBIT_WHITE_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/white.png");
+    private static final ResourceLocation RABBIT_GOLD_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/gold.png");
+    private static final ResourceLocation RABBIT_SA_X_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/hr_x.png");
 
 	public HyperRabbitRenderer(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new HyperRabbitModel<>(p_173952_.bakeLayer(ModModelLayers.HYPER_RABBIT)), 0.3F);

@@ -12,17 +12,16 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cow;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-import javax.annotation.Nullable;
+import java.util.List;
 
 public class UmbraCow extends WoolyCow {
-	public static final ResourceKey<LootTable> UMBRA_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation(EarthMobsMod.MODID, "entities/umbra_cow_sheared"));
+	public static final ResourceKey<LootTable> UMBRA_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "entities/umbra_cow_sheared"));
 
 	public UmbraCow(EntityType<? extends Cow> p_28285_, Level p_28286_) {
 		super(p_28285_, p_28286_);
@@ -41,26 +40,11 @@ public class UmbraCow extends WoolyCow {
 		return ModEntities.UMBRA_COW.get().create(p_148884_);
 	}
 
+
 	@Override
-	public void shear(SoundSource p_29819_) {
-		this.level().playSound((Player) null, this, SoundEvents.SHEEP_SHEAR, p_29819_, 1.0F, 1.0F);
-		this.setSheared(true);
-		int i = 1 + this.random.nextInt(3);
-
-		for (int j = 0; j < i; ++j) {
-			ItemEntity itementity = this.spawnAtLocation(Blocks.BLACK_WOOL, 1);
-			if (itementity != null) {
-				itementity.setDeltaMovement(itementity.getDeltaMovement().add((double) ((this.random.nextFloat() - this.random.nextFloat()) * 0.1F), (double) (this.random.nextFloat() * 0.05F), (double) ((this.random.nextFloat() - this.random.nextFloat()) * 0.1F)));
-			}
-		}
-
-	}
-
-	@javax.annotation.Nonnull
-	@Override
-	public java.util.List<ItemStack> onSheared(@Nullable Player player, @javax.annotation.Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
-		world.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
-		if (!world.isClientSide) {
+	public List<ItemStack> onSheared(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
+		level.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
+		if (!level.isClientSide) {
 			this.setSheared(true);
 			int i = 1 + this.random.nextInt(3);
 

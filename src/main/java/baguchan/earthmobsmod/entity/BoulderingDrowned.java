@@ -2,6 +2,8 @@ package baguchan.earthmobsmod.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -21,6 +23,7 @@ import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -107,8 +110,9 @@ public class BoulderingDrowned extends Drowned {
 		if ((double) p_218953_.nextFloat() > 0.9D) {
 			int i = p_218953_.nextInt(16);
 			if (i < 10) {
+				Registry<Enchantment> registry = this.registryAccess().registryOrThrow(Registries.ENCHANTMENT);
 				ItemStack stack = new ItemStack(Items.TRIDENT);
-				stack.enchant(Enchantments.RIPTIDE, 1);
+				stack.enchant(registry.getHolderOrThrow(Enchantments.RIPTIDE), 1);
 				this.setItemSlot(EquipmentSlot.MAINHAND, stack);
 			} else {
 				this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.FISHING_ROD));
@@ -136,9 +140,9 @@ public class BoulderingDrowned extends Drowned {
 
 	public void performRangedAttack(LivingEntity p_32356_, float p_32357_) {
 		if (this.distanceToSqr(p_32356_) < 42) {
-			int j = EnchantmentHelper.getRiptide(this.getMainHandItem());
-			int k = EnchantmentHelper.getRiptide(this.getOffhandItem());
-			if (j > 0 || k > 0) {
+			Registry<Enchantment> registry = this.registryAccess().registryOrThrow(Registries.ENCHANTMENT);
+			int j = EnchantmentHelper.getEnchantmentLevel(registry.getHolderOrThrow(Enchantments.RIPTIDE), this);
+			if (j > 0) {
 
 				double f1 = p_32356_.getX() - this.getX();
 				double f2 = p_32356_.getY() - this.getY();
@@ -155,14 +159,7 @@ public class BoulderingDrowned extends Drowned {
 					this.move(MoverType.SELF, new Vec3(0.0D, (double) 1.1999999F, 0.0D));
 				}
 
-				SoundEvent soundevent;
-				if (j >= 3 || k >= 3) {
-					soundevent = SoundEvents.TRIDENT_RIPTIDE_3;
-				} else if (j == 2 || k == 2) {
-					soundevent = SoundEvents.TRIDENT_RIPTIDE_2;
-				} else {
-					soundevent = SoundEvents.TRIDENT_RIPTIDE_1;
-				}
+				SoundEvent soundevent = SoundEvents.TRIDENT_RIPTIDE_1.value();
 
 				this.playSound(soundevent, 1.0F, 1.0F);
 			}

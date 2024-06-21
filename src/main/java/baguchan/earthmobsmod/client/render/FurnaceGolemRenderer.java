@@ -14,8 +14,8 @@ import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class FurnaceGolemRenderer<T extends FurnaceGolem> extends MobRenderer<T, FurnaceGolemModel<T>> {
-    private static final ResourceLocation GOLEM_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/furnace_golem/furnace_golem.png");
-    private static final ResourceLocation TEXTURE_GLOW = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/furnace_golem/furnace_golem_glow.png");
+    private static final ResourceLocation GOLEM_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/furnace_golem/furnace_golem.png");
+    private static final ResourceLocation TEXTURE_GLOW = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/furnace_golem/furnace_golem_glow.png");
 
     public FurnaceGolemRenderer(EntityRendererProvider.Context p_174304_) {
         super(p_174304_, new FurnaceGolemModel<>(p_174304_.bakeLayer(ModModelLayers.FURNACE_GOLEM)), 0.7F);

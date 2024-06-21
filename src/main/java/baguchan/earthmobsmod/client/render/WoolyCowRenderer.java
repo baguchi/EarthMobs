@@ -11,8 +11,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class WoolyCowRenderer<T extends WoolyCow> extends MobRenderer<T, WoolyCowModel<T>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow.png");
-	private static final ResourceLocation SHEARED_TEXTURE = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow_sheared.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow.png");
+    private static final ResourceLocation SHEARED_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow_sheared.png");
 
 
 	public WoolyCowRenderer(EntityRendererProvider.Context p_173952_) {

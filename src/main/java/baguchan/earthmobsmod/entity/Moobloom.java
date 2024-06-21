@@ -65,18 +65,13 @@ public class Moobloom extends Cow implements IShearable, IFlowerCow, IHasFlower 
 	}
 
 	@Override
-	public boolean isShearable(@NotNull ItemStack item, Level level, BlockPos pos) {
+	public boolean isShearable(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		return true;
 	}
 
-	@NotNull
 	@Override
-	public List<ItemStack> onSheared(@Nullable Player player, @NotNull ItemStack item, Level level, BlockPos pos, int fortune) {
-		return shearInternal(player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS);
-	}
-
-	private java.util.List<ItemStack> shearInternal(SoundSource p_28924_) {
-		this.level().playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, p_28924_, 1.0F, 1.0F);
+	public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
+		this.level().playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
 		if (!this.level().isClientSide()) {
 			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();

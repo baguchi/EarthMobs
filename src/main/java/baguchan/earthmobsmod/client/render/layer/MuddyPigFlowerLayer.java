@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
@@ -24,7 +25,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class MuddyPigFlowerLayer extends RenderLayer<Pig, PigModel<Pig>> {
-	private static final ResourceLocation LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/muddypig/pig_muddy_flower.png");
+	private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/muddypig/pig_muddy_flower.png");
 
 	private final MuddyPigModel<Pig> model;
 
@@ -36,41 +37,35 @@ public class MuddyPigFlowerLayer extends RenderLayer<Pig, PigModel<Pig>> {
 	public void render(PoseStack p_117421_, MultiBufferSource p_117422_, int p_117423_, Pig pig, float p_117425_, float p_117426_, float p_117427_, float p_117428_, float p_117429_, float p_117430_) {
         if (pig instanceof IMuddyPig && pig instanceof ISheared) {
             if (((IMuddyPig) pig).isMuddy() && !((ISheared) pig).isSheared()) {
+				boolean j;
 				if (pig.isInvisible()) {
 					Minecraft minecraft = Minecraft.getInstance();
-					boolean flag = minecraft.shouldEntityAppearGlowing(pig);
-					if (flag) {
+					j = minecraft.shouldEntityAppearGlowing(pig);
+					if (j) {
 						this.getParentModel().copyPropertiesTo(this.model);
 						this.model.prepareMobModel(pig, p_117425_, p_117426_, p_117427_);
 						this.model.setupAnim(pig, p_117425_, p_117426_, p_117428_, p_117429_, p_117430_);
 						VertexConsumer vertexconsumer = p_117422_.getBuffer(RenderType.outline(LOCATION));
-						this.model.renderToBuffer(p_117421_, vertexconsumer, p_117423_, LivingEntityRenderer.getOverlayCoords(pig, 0.0F), 0.0F, 0.0F, 0.0F, 1.0F);
+						this.model.renderToBuffer(p_117421_, vertexconsumer, p_117423_, LivingEntityRenderer.getOverlayCoords(pig, 0.0F), FastColor.ARGB32.colorFromFloat(0.0F, 0.0F, 0.0F, 1.0F));
 					}
 
 				} else {
-					float f;
-					float f1;
-					float f2;
-					if (pig.hasCustomName() && "jeb_".equals(pig.getName().getContents())) {
-						int i1 = 25;
-						int i = pig.tickCount / 25 + pig.getId();
-						int j = DyeColor.values().length;
-						int k = i % j;
-						int l = (i + 1) % j;
-						float f3 = ((float) (pig.tickCount % 25) + p_117427_) / 25.0F;
-						float[] afloat1 = Sheep.getColorArray(DyeColor.byId(k));
-						float[] afloat2 = Sheep.getColorArray(DyeColor.byId(l));
-						f = afloat1[0] * (1.0F - f3) + afloat2[0] * f3;
-						f1 = afloat1[1] * (1.0F - f3) + afloat2[1] * f3;
-						f2 = afloat1[2] * (1.0F - f3) + afloat2[2] * f3;
+					int i;
+					if (pig.hasCustomName() && "jeb_".equals(pig.getName().getString())) {
+						j = true;
+						int k = pig.tickCount / 25 + pig.getId();
+						int l = DyeColor.values().length;
+						int i1 = k % l;
+						int j1 = (k + 1) % l;
+						float f = ((float) (pig.tickCount % 25) + p_117427_) / 25.0F;
+						int k1 = Sheep.getColor(DyeColor.byId(i1));
+						int l1 = Sheep.getColor(DyeColor.byId(j1));
+						i = FastColor.ARGB32.lerp(f, k1, l1);
 					} else {
-						float[] afloat = Sheep.getColorArray(((ISheared) pig).getColor());
-						f = afloat[0];
-						f1 = afloat[1];
-						f2 = afloat[2];
+						i = Sheep.getColor(((ISheared) pig).getColor());
 					}
 
-					coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, LOCATION, p_117421_, p_117422_, p_117423_, pig, p_117425_, p_117426_, p_117428_, p_117429_, p_117430_, p_117427_, f, f1, f2);
+					coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, LOCATION, p_117421_, p_117422_, p_117423_, pig, p_117425_, p_117426_, p_117428_, p_117429_, p_117430_, p_117427_, i);
 				}
 			}
 		}

@@ -39,7 +39,7 @@ public class BabyGhastCoreLayer<T extends BabyGhast> extends RenderLayer<T, Baby
 			this.getParentModel().copyPropertiesTo(this.model);
 			this.model.prepareMobModel(p_117473_, p_117474_, p_117475_, p_117476_);
 			this.model.setupAnim(p_117473_, p_117474_, p_117475_, p_117477_, p_117478_, p_117479_);
-			this.model.renderToBuffer(p_117470_, vertexconsumer, 5728640, LivingEntityRenderer.getOverlayCoords(p_117473_, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+			this.model.renderToBuffer(p_117470_, vertexconsumer, 5728640, LivingEntityRenderer.getOverlayCoords(p_117473_, 0.0F));
 		}
 	}
 }

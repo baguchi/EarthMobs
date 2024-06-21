@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "EARTHMOBSMOD_VILERWITCH",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "baguchan/earthmobsmod/registry/RaiderEnumParams",
+        "field": "VILER_WITCH"
+      }
+    }
+  ]
+}

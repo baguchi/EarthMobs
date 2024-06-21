@@ -7,6 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 
 public interface ModDamageSource {
-    ResourceKey<DamageType> BURNING = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(EarthMobsMod.MODID, "burning_attack"));
-    ResourceKey<DamageType> ZOMBIFIED = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(EarthMobsMod.MODID, "zombified"));
+    ResourceKey<DamageType> BURNING = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "burning_attack"));
+    ResourceKey<DamageType> ZOMBIFIED = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "zombified"));
 }

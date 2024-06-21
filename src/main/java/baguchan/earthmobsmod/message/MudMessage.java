@@ -15,7 +15,7 @@ public class MudMessage implements CustomPacketPayload, IPayloadHandler<MudMessa
     public static final StreamCodec<FriendlyByteBuf, MudMessage> STREAM_CODEC = CustomPacketPayload.codec(
             MudMessage::write, MudMessage::new
     );
-    public static final CustomPacketPayload.Type<MudMessage> TYPE = CustomPacketPayload.createType(EarthMobsMod.prefix("mud").toString());
+    public static final CustomPacketPayload.Type<MudMessage> TYPE = new Type<>(EarthMobsMod.prefix("mud"));
 
     private final int entityId;
     private final boolean muddy;

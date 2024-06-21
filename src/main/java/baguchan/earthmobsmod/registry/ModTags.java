@@ -13,7 +13,7 @@ public class ModTags {
 		public static final TagKey<Fluid> MUD = tag("mud");
 
 		private static TagKey<Fluid> tag(String name) {
-			return FluidTags.create(new ResourceLocation(EarthMobsMod.MODID, name));
+            return FluidTags.create(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, name));
 		}
 	}
 
@@ -22,7 +22,7 @@ public class ModTags {
         public static final TagKey<EntityType<?>> CAN_MOSS = create("can_moss");
 
 		private static TagKey<EntityType<?>> create(String p_203849_) {
-			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(EarthMobsMod.MODID, p_203849_));
+            return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, p_203849_));
 		}
 	}
 }

@@ -28,11 +28,11 @@ import static baguchan.earthmobsmod.entity.TropicalSlime.TAG_FISH_VARIANT;
 
 @OnlyIn(Dist.CLIENT)
 public class TropicalSlimeRenderer extends MobRenderer<Slime, SlimeModel<Slime>> {
-	private static final ResourceLocation SLIME_LOCATION = new ResourceLocation(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime.png");
+	private static final ResourceLocation SLIME_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime.png");
 
-	private static final ResourceLocation[] BASE_TEXTURE_LOCATIONS = new ResourceLocation[]{new ResourceLocation("textures/entity/fish/tropical_a.png"), new ResourceLocation("textures/entity/fish/tropical_b.png")};
-	private static final ResourceLocation[] PATTERN_A_TEXTURE_LOCATIONS = new ResourceLocation[]{new ResourceLocation("textures/entity/fish/tropical_a_pattern_1.png"), new ResourceLocation("textures/entity/fish/tropical_a_pattern_2.png"), new ResourceLocation("textures/entity/fish/tropical_a_pattern_3.png"), new ResourceLocation("textures/entity/fish/tropical_a_pattern_4.png"), new ResourceLocation("textures/entity/fish/tropical_a_pattern_5.png"), new ResourceLocation("textures/entity/fish/tropical_a_pattern_6.png")};
-	private static final ResourceLocation[] PATTERN_B_TEXTURE_LOCATIONS = new ResourceLocation[]{new ResourceLocation("textures/entity/fish/tropical_b_pattern_1.png"), new ResourceLocation("textures/entity/fish/tropical_b_pattern_2.png"), new ResourceLocation("textures/entity/fish/tropical_b_pattern_3.png"), new ResourceLocation("textures/entity/fish/tropical_b_pattern_4.png"), new ResourceLocation("textures/entity/fish/tropical_b_pattern_5.png"), new ResourceLocation("textures/entity/fish/tropical_b_pattern_6.png")};
+	private static final ResourceLocation[] BASE_TEXTURE_LOCATIONS = new ResourceLocation[]{ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b.png")};
+	private static final ResourceLocation[] PATTERN_A_TEXTURE_LOCATIONS = new ResourceLocation[]{ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_1.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_2.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_3.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_4.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_5.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_6.png")};
+	private static final ResourceLocation[] PATTERN_B_TEXTURE_LOCATIONS = new ResourceLocation[]{ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_1.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_2.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_3.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_4.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_5.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_6.png")};
 
 
 	private final ColorableHierarchicalModel modelA;
@@ -69,16 +69,16 @@ public class TropicalSlimeRenderer extends MobRenderer<Slime, SlimeModel<Slime>>
 		return (p_30061_ & 16711680) >> 16;
 	}
 
-	public float[] getBaseColor(int variant) {
-		return DyeColor.byId(getBaseColorIdx(variant)).getTextureDiffuseColors();
+	public int getBaseColor(int variant) {
+		return DyeColor.byId(getBaseColorIdx(variant)).getTextureDiffuseColor();
 	}
 
 	private static int getPatternColorIdx(int p_30063_) {
 		return (p_30063_ & -16777216) >> 24;
 	}
 
-	public float[] getPatternColor(int variant) {
-		return DyeColor.byId(getPatternColorIdx(variant)).getTextureDiffuseColors();
+	public int getPatternColor(int variant) {
+		return DyeColor.byId(getPatternColorIdx(variant)).getTextureDiffuseColor();
 	}
 
 	public ResourceLocation getPatternTextureLocation(int variant) {
@@ -118,30 +118,30 @@ public class TropicalSlimeRenderer extends MobRenderer<Slime, SlimeModel<Slime>>
 				stack.pushPose();
 				VertexConsumer vertexConsumer = buffer.getBuffer(basemodel.renderType(this.getBaseTextureLocation(variant)));
 
-				float[] afloat = this.getBaseColor(variant);
-				basemodel.setColor(afloat[0], afloat[1], afloat[2]);
+				int afloat = this.getBaseColor(variant);
+				basemodel.setColor(afloat);
 
 				stack.translate(fishInX, fishInY, fishInZ);
 				stack.scale(-1.0F, -1.0F, 1.0F);
                 stack.translate(0.0F, -1.501F, 0.0F);
 				basemodel.setupAnim(parent, 0.0F, 0.0F, getBob(parent, partialTicks), 0.0F, 0.0F);
-				basemodel.renderToBuffer(stack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-				basemodel.setColor(1.0F, 1.0F, 1.0F);
+				basemodel.renderToBuffer(stack, vertexConsumer, light, OverlayTexture.NO_OVERLAY);
+				basemodel.setColor(0xFFFFFF);
 				stack.popPose();
 
 				stack.pushPose();
 				VertexConsumer vertexConsumer2 = buffer.getBuffer(basemodel.renderType(this.getPatternTextureLocation(variant)));
 
 
-				float[] afloat2 = this.getPatternColor(variant);
-				patternModel.setColor(afloat2[0], afloat2[1], afloat2[2]);
+				int afloat2 = this.getPatternColor(variant);
+				patternModel.setColor(afloat2);
 
 				stack.translate(fishInX, fishInY, fishInZ);
 				stack.scale(-1.0F, -1.0F, 1.0F);
                 stack.translate(0.0F, -1.501F, 0.0F);
 				patternModel.setupAnim(parent, 0.0F, 0.0F, getBob(parent, partialTicks), 0.0F, 0.0F);
-				patternModel.renderToBuffer(stack, vertexConsumer2, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-				patternModel.setColor(1.0F, 1.0F, 1.0F);
+				patternModel.renderToBuffer(stack, vertexConsumer2, light, OverlayTexture.NO_OVERLAY);
+				basemodel.setColor(0xFFFFFF);
 				stack.popPose();
 			}
 		}

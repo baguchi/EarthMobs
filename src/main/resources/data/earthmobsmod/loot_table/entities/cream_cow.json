@@ -17,11 +17,13 @@
               }
             },
             {
-              "function": "minecraft:looting_enchant",
               "count": {
-                "min": 0.0,
-                "max": 1.0
-              }
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
             }
           ],
           "name": "minecraft:leather"
@@ -58,24 +60,16 @@
               ]
             },
             {
-              "function": "minecraft:looting_enchant",
               "count": {
-                "min": 0.0,
-                "max": 1.0
-              }
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
             }
           ],
           "name": "minecraft:beef"
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "name": "wool",
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:brown_wool"
         }
       ]
     }
