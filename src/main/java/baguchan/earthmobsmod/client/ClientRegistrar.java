@@ -8,7 +8,6 @@ import baguchan.earthmobsmod.client.render.layer.MuddyPigFlowerLayer;
 import baguchan.earthmobsmod.client.render.layer.MuddyPigMudLayer;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.PigRenderer;
@@ -16,6 +15,7 @@ import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -122,15 +122,14 @@ public class ClientRegistrar {
 
 	@SubscribeEvent
 	public static void registerEntityRenders(EntityRenderersEvent.AddLayers event) {
-		Minecraft.getInstance().getEntityRenderDispatcher().renderers.values().forEach(r -> {
-			if (r instanceof PigRenderer) {
+
+		if (event.getRenderer(EntityType.PIG) instanceof PigRenderer r) {
 				((PigRenderer) r).addLayer(new MuddyPigMudLayer((PigRenderer) r, event.getEntityModels()));
 				((PigRenderer) r).addLayer(new MuddyPigFlowerLayer((PigRenderer) r, event.getEntityModels()));
 			}
-            if (r instanceof SheepRenderer) {
+		if (event.getRenderer(EntityType.SHEEP) instanceof SheepRenderer r) {
                 ((SheepRenderer) r).addLayer(new MossSheepLayer((SheepRenderer) r, event.getEntityModels()));
             }
-		});
 	}
 
 	@SubscribeEvent
