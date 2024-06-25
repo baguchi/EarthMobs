@@ -3,7 +3,6 @@
   "pools": [
     {
       "rolls": 1,
-      "name": "porkchop",
       "entries": [
         {
           "type": "minecraft:item",
@@ -17,18 +16,32 @@
               }
             },
             {
-              "function": "minecraft:furnace_smelt",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "predicate": {
-                    "flags": {
-                      "is_on_fire": true
-                    }
-                  },
-                  "entity": "this"
-                }
-              ]
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            }
+          ],
+          "name": "minecraft:blackstone"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
             },
             {
               "count": {
@@ -40,7 +53,7 @@
               "function": "minecraft:enchanted_count_increase"
             }
           ],
-          "name": "minecraft:basalt"
+          "name": "minecraft:netherrack"
         }
       ]
     }

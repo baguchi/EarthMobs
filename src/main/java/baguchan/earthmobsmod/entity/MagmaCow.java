@@ -5,6 +5,8 @@ import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -37,6 +39,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.PathType;
 
 public class MagmaCow extends Cow {
+    private static final EntityDataAccessor<Boolean> WEAKING = SynchedEntityData.defineId(MagmaCow.class, EntityDataSerializers.BOOLEAN);
+
     private int eatAnimationTick;
     private EatLavaGoal eatBlockGoal;
 
@@ -45,6 +49,20 @@ public class MagmaCow extends Cow {
         this.setPathfindingMalus(PathType.LAVA, 8.0F);
         this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
         this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(WEAKING, false);
+    }
+
+    public void setWeaking(boolean weak) {
+        this.entityData.set(WEAKING, weak);
+    }
+
+    public boolean isWeaking() {
+        return this.entityData.get(WEAKING);
     }
 
     protected void registerGoals() {
@@ -60,6 +78,24 @@ public class MagmaCow extends Cow {
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this).setAlertOthers());
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, MagmaCube.class, true));
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.isInWater() && !this.isWeaking()) {
+            this.fizz();
+        }
+    }
+
+    private void fizz() {
+        if (this.level().isClientSide) {
+            for (int i = 0; i < 8; i++) {
+                this.level().addParticle(ParticleTypes.SMOKE, this.getRandomX(this.getBbWidth()), this.getRandomY(), this.getRandomZ(this.getBbWidth()), 0, 0, 0);
+            }
+        }
+        this.playSound(SoundEvents.LAVA_EXTINGUISH);
+        this.setWeaking(true);
     }
 
     public InteractionResult mobInteract(Player p_28941_, InteractionHand p_28942_) {
@@ -80,20 +116,18 @@ public class MagmaCow extends Cow {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.2F).add(Attributes.ARMOR, 10F).add(Attributes.ATTACK_DAMAGE, 4F).add(Attributes.KNOCKBACK_RESISTANCE, 0.6F);
     }
 
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-    }
-
     public Cow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {
         return ModEntities.MAGMA_COW.get().create(p_148884_);
     }
 
     public void addAdditionalSaveData(CompoundTag p_29864_) {
         super.addAdditionalSaveData(p_29864_);
+        p_29864_.putBoolean("Weaking", this.isWeaking());
     }
 
     public void readAdditionalSaveData(CompoundTag p_29845_) {
         super.readAdditionalSaveData(p_29845_);
+        this.setWeaking(p_29845_.getBoolean("Weaking"));
     }
 
     protected void customServerAiStep() {
@@ -140,6 +174,11 @@ public class MagmaCow extends Cow {
         return p_27600_.is(Items.MAGMA_CREAM);
     }
 
+    @Override
+    public boolean canFreeze() {
+        return super.canFreeze() && this.isWeaking();
+    }
+
     public static boolean checkMagmaSpawnRules(EntityType<? extends Animal> p_218105_, LevelAccessor p_218106_, MobSpawnType p_218107_, BlockPos p_218108_, RandomSource p_218109_) {
         return true;
     }
@@ -153,12 +192,13 @@ public class MagmaCow extends Cow {
 
     @Override
     public int getMaxSpawnClusterSize() {
-        return 8;
+        return 12;
     }
 
 
     public void ate() {
         this.heal(2);
+        this.setWeaking(false);
         if (this.isBaby()) {
             this.ageUp(60);
         }
