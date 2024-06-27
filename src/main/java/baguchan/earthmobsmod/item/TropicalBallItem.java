@@ -36,8 +36,9 @@ public class TropicalBallItem extends Item {
         return stack;
     }
 
-    public int getUseDuration(ItemStack p_41360_) {
-        return 20;
+    @Override
+    public int getUseDuration(ItemStack p_41454_, LivingEntity p_344979_) {
+        return 16;
     }
 
     public UseAnim getUseAnimation(ItemStack p_41358_) {
