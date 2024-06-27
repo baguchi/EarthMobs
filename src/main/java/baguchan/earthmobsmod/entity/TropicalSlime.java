@@ -117,7 +117,7 @@ public class TropicalSlime extends Slime implements Bucketable {
             CompoundTag tag = writeFromBucketTag(itemstack);
             if (getFishList() == null || !getFishList().isEmpty() && getFishList().size() < 4) {
                 if (!tag.isEmpty()) {
-                    addFishData(tag.getInt(TAG_FISH_VARIANT));
+                    addFishData(tag.getInt(TAG_FISH_VARIANT), false);
                 } else {
                     int i;
                     int j;
@@ -128,7 +128,7 @@ public class TropicalSlime extends Slime implements Bucketable {
                     k = this.random.nextInt(15);
                     l = this.random.nextInt(15);
 
-                    this.addFishData(i | j << 8 | k << 16 | l << 24);
+                    this.addFishData(i | j << 8 | k << 16 | l << 24, false);
                 }
             } else {
                 return InteractionResult.FAIL;
@@ -145,7 +145,7 @@ public class TropicalSlime extends Slime implements Bucketable {
         }
     }
 
-    protected void randomFishData() {
+    protected void randomFishData(boolean small) {
         int i;
         int j;
         int k;
@@ -155,10 +155,10 @@ public class TropicalSlime extends Slime implements Bucketable {
         k = this.random.nextInt(15);
         l = this.random.nextInt(15);
 
-        this.addFishData(i | j << 8 | k << 16 | l << 24);
+        this.addFishData(i | j << 8 | k << 16 | l << 24, small);
     }
 
-    protected void addFishData(int variant) {
+    protected void addFishData(int variant, boolean small) {
         CompoundTag fishTag = this.getFishData().isEmpty() ? new CompoundTag() : this.getFishData();
         ListTag listnbt = new ListTag();
 
@@ -172,6 +172,12 @@ public class TropicalSlime extends Slime implements Bucketable {
         double x = (dimensions.width() * this.random.nextDouble() - dimensions.width() * this.random.nextDouble()) * 0.5F;
         double y = (dimensions.height() * this.random.nextDouble()) * 0.8F + dimensions.height() * 0.1F;
         double z = (dimensions.width() * this.random.nextDouble() - dimensions.width() * this.random.nextDouble()) * 0.5F;
+        if (small) {
+            x = (0.6F * this.random.nextDouble() - 0.6F * this.random.nextDouble()) * 0.5F;
+            y = (0.6F * this.random.nextDouble()) * 0.8F + 0.6F * 0.1F;
+            z = (0.6F * this.random.nextDouble() - 0.6F * this.random.nextDouble()) * 0.5F;
+        }
+
         compoundnbt1.putDouble(TAG_FISH_POSX, x);
         compoundnbt1.putDouble(TAG_FISH_POSY, y);
         compoundnbt1.putDouble(TAG_FISH_POSZ, z);
@@ -230,7 +236,7 @@ public class TropicalSlime extends Slime implements Bucketable {
 
         int size = Mth.clamp(this.getSize(), 1, 5);
         for (int i = 0; i < size; i++) {
-            this.randomFishData();
+            this.randomFishData(p_30025_ == MobSpawnType.BUCKET);
         }
         return p_30026_;
     }
