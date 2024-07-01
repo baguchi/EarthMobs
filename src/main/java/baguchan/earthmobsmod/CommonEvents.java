@@ -43,8 +43,8 @@ import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.ToolActions;
 import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -94,7 +94,7 @@ public class CommonEvents {
 	@SubscribeEvent
 	public static void onToolUsing(BlockEvent.BlockToolModificationEvent event) {
 		if (!event.isSimulated()) {
-			if (event.getToolAction() == ToolActions.SHEARS_CARVE && event.getState().getBlock() == Blocks.MELON) {
+			if (event.getItemAbility() == ItemAbilities.SHEARS_CARVE && event.getState().getBlock() == Blocks.MELON) {
 				Direction direction = event.getContext().getClickedFace();
 				if (direction != Direction.DOWN && direction != Direction.UP) {
 					event.setFinalState(ModBlocks.CARVED_MELON.get().defaultBlockState().setValue(CarvedMelonBlock.FACING, direction));

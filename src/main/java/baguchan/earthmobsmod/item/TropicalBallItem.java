@@ -29,7 +29,10 @@ public class TropicalBallItem extends Item {
             serverplayer.awardStat(Stats.ITEM_USED.get(this));
         }
 
-        stack.shrink(1);
+        if (!(livingEntity instanceof Player player) || !player.isCreative()) {
+
+            stack.shrink(1);
+        }
 
         livingEntity.setAirSupply(Mth.clamp(livingEntity.getAirSupply() + 200, 0, livingEntity.getMaxAirSupply()));
 
