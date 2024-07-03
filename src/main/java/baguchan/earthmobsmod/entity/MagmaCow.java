@@ -109,6 +109,11 @@ public class MagmaCow extends Cow {
         super.aiStep();
     }
 
+    @Override
+    public boolean checkSpawnObstruction(LevelReader p_32975_) {
+        return p_32975_.isUnobstructed(this) && !p_32975_.containsAnyLiquid(this.getBoundingBox());
+    }
+
     public void handleEntityEvent(byte p_29814_) {
         if (p_29814_ == 10) {
             this.eatAnimationTick = 40;
@@ -152,7 +157,7 @@ public class MagmaCow extends Cow {
 
     @Override
     public int getMaxSpawnClusterSize() {
-        return 8;
+        return 12;
     }
 
 

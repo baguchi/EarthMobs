@@ -49,7 +49,6 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -84,7 +83,7 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
-	public static void onRightClickBlock(BlockEvent.EntityPlaceEvent event) {
+	public static void onRightClickBlock(MobSpawnEvent.PositionCheck event) {
 
 	}
 
