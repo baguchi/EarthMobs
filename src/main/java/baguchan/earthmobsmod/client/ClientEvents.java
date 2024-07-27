@@ -94,11 +94,19 @@ public class ClientEvents {
 				double deltaY2 = shadowY2 - shadowY;
 				double deltaZ2 = shadowZ2 - shadowZ;
 
+				float yRotShadow = Mth.lerp(partialtick, shadowCapability.prevYRot, shadowCapability.yRot);
+				float yRotShadow2 = Mth.lerp(partialtick, shadowCapability.prevYRot2, shadowCapability.yRot2);
+
+				float ownerYRot = entity.yRotO + (entity.getYRot() - entity.yRotO) * partialtick;
+
+				float yRot = yRotShadow - ownerYRot;
+				float yRot2 = yRotShadow2 - yRotShadow;
 				Pose pose = entity.getPose();
 
 				posestack.translate(deltaX, deltaY, deltaZ);
 
 				if (!entity.hasPose(Pose.SLEEPING)) {
+					posestack.mulPose(Axis.YP.rotationDegrees(yRot));
 					posestack.mulPose(Axis.YP.rotationDegrees(180.0F - f));
 				}
 
@@ -161,6 +169,7 @@ public class ClientEvents {
 				posestack.translate(deltaX2, deltaY2, deltaZ2);
 
 				if (!entity.hasPose(Pose.SLEEPING)) {
+					posestack.mulPose(Axis.YP.rotationDegrees(yRot2));
 					posestack.mulPose(Axis.YP.rotationDegrees(180.0F - f));
 				}
 

@@ -16,8 +16,6 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.FluidType;
 import org.joml.Matrix4f;
 
-import java.util.function.Consumer;
-
 public class MudFluidType extends FluidType {
 	public MudFluidType(FluidType.Properties properties) {
 		super(properties);
@@ -51,10 +49,7 @@ public class MudFluidType extends FluidType {
 		return true;
 	}
 
-	@Override
-	public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
-		super.initializeClient(consumer);
-		consumer.accept(new IClientFluidTypeExtensions() {
+	public static class MudRender implements IClientFluidTypeExtensions {
 			private static final ResourceLocation TEXTURE_STILL = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "block/mud");
 			private static final ResourceLocation TEXTURE_FLOW = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "block/flowing_mud");
 			private static final ResourceLocation TEXTURE_OVERLAY = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/block/mud.png");
@@ -96,6 +91,5 @@ public class MudFluidType extends FluidType {
 				BufferUploader.drawWithShader(buffer.buildOrThrow());
 				RenderSystem.disableBlend();
 			}
-		});
 	}
 }
