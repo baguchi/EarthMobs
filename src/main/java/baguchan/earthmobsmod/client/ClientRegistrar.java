@@ -110,8 +110,8 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.JOLLY_LLAMA, JollyLlamaModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.COW, RevampedCowModel::createBodyLayer);
 
-		LayerDefinition layerDefinition = BoulderingZombieModel.createBodyLayer(CubeDeformation.NONE);
-		LayerDefinition layerDefinition2 = LobberZombieModel.createBodyLayer(CubeDeformation.NONE);
+		LayerDefinition layerDefinition = BoulderingZombieModel.createBodyLayer();
+		LayerDefinition layerDefinition2 = LobberZombieModel.createBodyLayer();
 		LayerDefinition layerDefinition3 = BoulderingDrownedModel.createBodyLayer(CubeDeformation.NONE);
 		LayerDefinition layerDefinition4 = LobberDrownedModel.createBodyLayer(CubeDeformation.NONE);
 		event.registerLayerDefinition(ModModelLayers.BOULDERING_ZOMBIE, () -> layerDefinition);

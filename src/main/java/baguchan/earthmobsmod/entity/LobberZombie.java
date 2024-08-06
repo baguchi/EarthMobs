@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.entity.projectile.ZombieFlesh;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -24,13 +25,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class LobberZombie extends Zombie implements RangedAttackMob {
+	public AnimationState shootAnimationState = new AnimationState();
+
 	public LobberZombie(EntityType<? extends LobberZombie> p_34271_, Level p_34272_) {
 		super(p_34271_, p_34272_);
 		this.xpReward = 5;
 	}
 
 	protected void addBehaviourGoals() {
-		this.goalSelector.addGoal(2, new RangedAndMeleeAttack(this, 1.0D, 40, 10.0F));
+		this.goalSelector.addGoal(2, new RangedAndMeleeAttack(this, 1.0D, 40, 10.0F, (int) (0.88 * 20)) {
+			public void doAttackAnimation() {
+				level().broadcastEntityEvent(this.mob, (byte) 61);
+			}
+
+		});
 		this.goalSelector.addGoal(6, new MoveThroughVillageGoal(this, 1.0D, true, 4, this::canBreakDoors));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers(ZombifiedPiglin.class));
@@ -38,6 +46,15 @@ public class LobberZombie extends Zombie implements RangedAttackMob {
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Turtle.class, 10, true, false, Turtle.BABY_ON_LAND_SELECTOR));
+	}
+
+	@Override
+	public void handleEntityEvent(byte id) {
+		if (id == 61) {
+			this.shootAnimationState.start(this.tickCount);
+		} else {
+			super.handleEntityEvent(id);
+		}
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

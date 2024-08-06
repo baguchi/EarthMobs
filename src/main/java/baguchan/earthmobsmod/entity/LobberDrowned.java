@@ -10,6 +10,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -38,13 +39,19 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 
 public class LobberDrowned extends Drowned implements RangedAttackMob {
+
+	public AnimationState shootAnimationState = new AnimationState();
 	public LobberDrowned(EntityType<? extends LobberDrowned> p_34271_, Level p_34272_) {
 		super(p_34271_, p_34272_);
 	}
 
 	protected void addBehaviourGoals() {
 		this.goalSelector.addGoal(1, new GoToWaterGoal(this, 1.0D));
-		this.goalSelector.addGoal(2, new RangedAndMeleeAttack(this, 1.0D, 40, 6.5F));
+		this.goalSelector.addGoal(2, new RangedAndMeleeAttack(this, 1.0D, 40, 6.5F, (int) (0.88 * 20)) {
+			public void doAttackAnimation() {
+				level().broadcastEntityEvent(this.mob, (byte) 61);
+			}
+		});
 		this.goalSelector.addGoal(6, new MoveThroughVillageGoal(this, 1.0D, true, 4, this::canBreakDoors));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers(ZombifiedPiglin.class));
@@ -55,8 +62,17 @@ public class LobberDrowned extends Drowned implements RangedAttackMob {
 		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Turtle.class, 10, true, false, Turtle.BABY_ON_LAND_SELECTOR));
 	}
 
+	@Override
+	public void handleEntityEvent(byte id) {
+		if (id == 61) {
+			this.shootAnimationState.start(this.tickCount);
+		} else {
+			super.handleEntityEvent(id);
+		}
+	}
+
 	public static AttributeSupplier.Builder createAttributes() {
-		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 35.0D).add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.23F).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ARMOR, 2.0D).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 35.0D).add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.23F).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ARMOR, 2.0D).add(Attributes.STEP_HEIGHT, 1.0).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
 
 	@Override

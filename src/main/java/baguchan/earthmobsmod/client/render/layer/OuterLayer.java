@@ -1,22 +1,22 @@
 package baguchan.earthmobsmod.client.render.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.ZombieModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ZombieOuterLayer<T extends Zombie> extends RenderLayer<T, ZombieModel<T>> {
+public class OuterLayer<T extends LivingEntity> extends RenderLayer<T, EntityModel<T>> {
 	private final ResourceLocation resourceLocation;
-	private final ZombieModel<T> model;
+	private final EntityModel<T> model;
 
-	public ZombieOuterLayer(RenderLayerParent<T, ZombieModel<T>> p_174490_, ZombieModel p_174491_, ResourceLocation resourceLocation) {
+	public OuterLayer(RenderLayerParent<T, EntityModel<T>> p_174490_, EntityModel<T> p_174491_, ResourceLocation resourceLocation) {
 		super(p_174490_);
 		this.model = p_174491_;
 		this.resourceLocation = resourceLocation;

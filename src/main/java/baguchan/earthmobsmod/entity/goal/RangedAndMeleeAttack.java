@@ -25,11 +25,14 @@ public class RangedAndMeleeAttack extends Goal {
 
     private int ticksUntilNextAttack;
 
-    public RangedAndMeleeAttack(RangedAttackMob p_25768_, double p_25769_, int p_25770_, float p_25771_) {
-        this(p_25768_, p_25769_, p_25770_, p_25770_, p_25771_);
+    protected final int attackLength;
+
+    public RangedAndMeleeAttack(RangedAttackMob p_25768_, double p_25769_, int p_25770_, float p_25771_, int attackLength) {
+        this(p_25768_, p_25769_, p_25770_, p_25770_, p_25771_, attackLength);
     }
 
-    public RangedAndMeleeAttack(RangedAttackMob p_25773_, double p_25774_, int p_25775_, int p_25776_, float p_25777_) {
+    public RangedAndMeleeAttack(RangedAttackMob p_25773_, double p_25774_, int p_25775_, int p_25776_, float p_25777_, int attackLength) {
+        this.attackLength = attackLength;
         if (!(p_25773_ instanceof LivingEntity)) {
             throw new IllegalArgumentException("ArrowAttackGoal requires Mob implements RangedAttackMob");
         } else {
@@ -98,6 +101,10 @@ public class RangedAndMeleeAttack extends Goal {
             }
 
             this.mob.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
+            if (this.attackLength == this.attackTime) {
+                this.doAttackAnimation();
+            }
+            
             if (--this.attackTime == 0) {
                 if (!flag) {
                     return;
@@ -111,6 +118,9 @@ public class RangedAndMeleeAttack extends Goal {
                 this.attackTime = Mth.floor(Mth.lerp(Math.sqrt(d0) / (double) this.attackRadius, (double) this.attackIntervalMin, (double) this.attackIntervalMax));
             }
         }
+    }
+
+    public void doAttackAnimation() {
     }
 
     protected void checkAndPerformAttack(LivingEntity p_25557_, double p_25558_) {
