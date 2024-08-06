@@ -4,7 +4,6 @@ import baguchan.earthmobsmod.entity.goal.RangedAndMeleeAttack;
 import baguchan.earthmobsmod.entity.projectile.ZombieFlesh;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,7 +32,7 @@ public class LobberZombie extends Zombie implements RangedAttackMob {
 	}
 
 	protected void addBehaviourGoals() {
-		this.goalSelector.addGoal(2, new RangedAndMeleeAttack(this, 1.0D, 40, 10.0F, (int) (0.88 * 20)) {
+		this.goalSelector.addGoal(2, new RangedAndMeleeAttack(this, 1.0D, 40, 10.0F, (int) ((0.88 * 20) - (0.33 * 20))) {
 			public void doAttackAnimation() {
 				level().broadcastEntityEvent(this.mob, (byte) 61);
 			}
@@ -79,6 +78,5 @@ public class LobberZombie extends Zombie implements RangedAttackMob {
 		zombieFlesh.shoot(d1, d0 + d4, d3, 0.8F, 0.1F);
 		this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 		this.level().addFreshEntity(zombieFlesh);
-		this.swing(InteractionHand.MAIN_HAND);
 	}
 }

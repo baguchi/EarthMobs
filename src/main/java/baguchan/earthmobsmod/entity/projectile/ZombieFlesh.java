@@ -135,7 +135,12 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 		super.tick();
 
 		if (this.isInWater() && this.isDrowned()) {
-			this.setDeltaMovement(this.getDeltaMovement().scale(1.125F));
+			this.setDeltaMovement(this.getDeltaMovement().scale(1.1F));
 		}
+	}
+
+	@Override
+	protected double getDefaultGravity() {
+		return super.getDefaultGravity();
 	}
 }

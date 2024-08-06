@@ -9,7 +9,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -47,7 +46,7 @@ public class LobberDrowned extends Drowned implements RangedAttackMob {
 
 	protected void addBehaviourGoals() {
 		this.goalSelector.addGoal(1, new GoToWaterGoal(this, 1.0D));
-		this.goalSelector.addGoal(2, new RangedAndMeleeAttack(this, 1.0D, 40, 6.5F, (int) (0.88 * 20)) {
+		this.goalSelector.addGoal(2, new RangedAndMeleeAttack(this, 1.0D, 40, 6.5F, (int) ((0.88 * 20) - (0.33 * 20))) {
 			public void doAttackAnimation() {
 				level().broadcastEntityEvent(this.mob, (byte) 61);
 			}
@@ -96,7 +95,6 @@ public class LobberDrowned extends Drowned implements RangedAttackMob {
 			zombieFlesh.setDrowned(true);
 			this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 			this.level().addFreshEntity(zombieFlesh);
-			this.swing(InteractionHand.MAIN_HAND);
 		}
 	}
 

@@ -1,39 +1,18 @@
 package baguchan.earthmobsmod.client.model;
 
 import bagu_chan.bagus_lib.client.layer.IArmor;
-import baguchan.earthmobsmod.client.animation.BabyZombieAnimation;
-import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.AnimationUtils;
-import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.monster.Zombie;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class BoulderingZombieModel<T extends Zombie> extends HierarchicalModel<T> implements IArmor {
-	private final ModelPart root;
-	private final ModelPart bone;
-	public final ModelPart head;
-	public final ModelPart body;
-	public final ModelPart left_arm;
-	public final ModelPart right_arm;
-	public final ModelPart left_leg;
-	public final ModelPart right_leg;
+public class BoulderingZombieModel<T extends Zombie> extends AbstractBoulderingZombieModel<T> implements IArmor {
 
 	public BoulderingZombieModel(ModelPart root) {
-		this.root = root;
-		this.bone = root.getChild("bone");
-		this.head = this.bone.getChild("head");
-		this.body = this.bone.getChild("body");
-		this.left_arm = this.bone.getChild("left_arm");
-		this.right_arm = this.bone.getChild("right_arm");
-		this.left_leg = this.bone.getChild("left_leg");
-		this.right_leg = this.bone.getChild("right_leg");
+		super(root);
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -65,26 +44,7 @@ public class BoulderingZombieModel<T extends Zombie> extends HierarchicalModel<T
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.root.getAllParts().forEach(ModelPart::resetPose);
-		this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-		this.head.xRot = headPitch * ((float) Math.PI / 180F);
-		AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, entity.isAggressive(), this.attackTime, ageInTicks);
-
-		this.right_leg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount * 0.5F;
-		this.right_leg.yRot = 0.0F;
-		this.right_leg.zRot = 0.0F;
-		this.left_leg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount * 0.5F;
-		this.left_leg.yRot = 0.0F;
-		this.left_leg.zRot = 0.0F;
-		if (entity.onClimbable()) {
-			this.left_arm.xRot -= Mth.sin(0.25F * ageInTicks) * 0.225F;
-			this.right_arm.xRot += Mth.sin(0.25F * ageInTicks) * 0.225F;
-			this.left_leg.xRot = -0.4F - Mth.sin(0.25F * ageInTicks) * 0.225F;
-			this.right_leg.xRot = -0.4F + Mth.sin(0.25F * ageInTicks) * 0.225F;
-		}
-		if (entity.isBaby()) {
-			this.applyStatic(BabyZombieAnimation.baby);
-		}
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 	}
 
 	protected float rotlerpRad(float angle, float maxAngle, float mul) {
@@ -98,55 +58,5 @@ public class BoulderingZombieModel<T extends Zombie> extends HierarchicalModel<T
 		}
 
 		return maxAngle + angle * f;
-	}
-
-	@Override
-	public ModelPart root() {
-		return this.root;
-	}
-
-	public void translateToHead(ModelPart part, PoseStack poseStack) {
-		this.bone.translateAndRotate(poseStack);
-		part.translateAndRotate(poseStack);
-	}
-
-	public void translateToChest(ModelPart part, PoseStack poseStack) {
-		this.bone.translateAndRotate(poseStack);
-		part.translateAndRotate(poseStack);
-	}
-
-	public void translateToLeg(ModelPart part, PoseStack poseStack) {
-		this.bone.translateAndRotate(poseStack);
-		part.translateAndRotate(poseStack);
-	}
-
-	public void translateToChestPat(ModelPart part, PoseStack poseStack) {
-		this.bone.translateAndRotate(poseStack);
-		part.translateAndRotate(poseStack);
-		poseStack.scale(1.05F, 1.05F, 1.05F);
-	}
-
-	public Iterable<ModelPart> rightHandArmors() {
-		return ImmutableList.of(this.right_arm);
-	}
-
-	public Iterable<ModelPart> leftHandArmors() {
-		return ImmutableList.of(this.left_arm);
-	}
-
-	public Iterable<ModelPart> rightLegPartArmors() {
-		return ImmutableList.of(this.right_leg);
-	}
-
-	public Iterable<ModelPart> leftLegPartArmors() {
-		return ImmutableList.of(this.left_leg);
-	}
-
-	public Iterable<ModelPart> bodyPartArmors() {
-		return ImmutableList.of(this.body);
-	}
-
-	public Iterable<ModelPart> headPartArmors() {
-		return ImmutableList.of(this.head);
 	}
 }
