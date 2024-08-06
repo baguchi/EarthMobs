@@ -9,6 +9,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -93,6 +95,7 @@ public class LobberDrowned extends Drowned implements RangedAttackMob {
 			double d4 = Math.sqrt(d1 * d1 + d3 * d3) * (double) 0.1F;
 			zombieFlesh.shoot(d1, d0 + d4, d3, 0.9F, this.isUnderWater() ? 0.85F : 0.1F);
 			zombieFlesh.setDrowned(true);
+			zombieFlesh.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200));
 			this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 			this.level().addFreshEntity(zombieFlesh);
 		}

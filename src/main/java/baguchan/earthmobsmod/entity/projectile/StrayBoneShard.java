@@ -56,12 +56,6 @@ public class StrayBoneShard extends BoneShard {
                 for (MobEffectInstance mobeffectinstance : this.getPotionContents().getAllEffects()) {
                     ((LivingEntity) entity).addEffect(new MobEffectInstance(mobeffectinstance.getEffect(), Math.max(mobeffectinstance.getDuration() / 8, 1), mobeffectinstance.getAmplifier(), mobeffectinstance.isAmbient(), mobeffectinstance.isVisible()), entity);
                 }
-
-                if (!this.effects.isEmpty()) {
-                    for (MobEffectInstance mobeffectinstance1 : this.effects) {
-                        ((LivingEntity) entity).addEffect(mobeffectinstance1, entity);
-                    }
-                }
                 entity.setTicksFrozen(getTicksFrozen() + 200);
             }
         }

@@ -2,7 +2,6 @@ package baguchan.earthmobsmod.entity.projectile;
 
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
-import com.google.common.collect.Sets;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -25,11 +24,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Set;
-
 public class BoneShard extends ThrowableItemProjectile {
-	protected final Set<MobEffectInstance> effects = Sets.newHashSet();
-
 	private static final EntityDataAccessor<Integer> ID_EFFECT_COLOR = SynchedEntityData.defineId(BoneShard.class, EntityDataSerializers.INT);
 
 	public BoneShard(EntityType<? extends BoneShard> p_37391_, Level p_37392_) {
@@ -153,12 +148,6 @@ public class BoneShard extends ThrowableItemProjectile {
                 if (entity instanceof LivingEntity) {
 					for (MobEffectInstance mobeffectinstance : this.getPotionContents().getAllEffects()) {
                         ((LivingEntity) entity).addEffect(new MobEffectInstance(mobeffectinstance.getEffect(), Math.max(mobeffectinstance.getDuration() / 8, 1), mobeffectinstance.getAmplifier(), mobeffectinstance.isAmbient(), mobeffectinstance.isVisible()), entity);
-                    }
-
-                    if (!this.effects.isEmpty()) {
-                        for (MobEffectInstance mobeffectinstance1 : this.effects) {
-                            ((LivingEntity) entity).addEffect(mobeffectinstance1, entity);
-                        }
                     }
                 }
             }
