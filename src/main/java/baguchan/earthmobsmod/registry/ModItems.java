@@ -72,10 +72,18 @@ public class ModItems {
 	public static final Supplier<Item> BONE_SPIDER_SPAWNEGG = ITEMS.register("bone_spider_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BONE_SPIDER, 0x461C2E, 0x6130B7, (new Item.Properties())));
 	public static final Supplier<Item> STRAY_BONE_SPIDER_SPAWNEGG = ITEMS.register("stray_bone_spider_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.STRAY_BONE_SPIDER, 0x20112F, 0x30B6B2, (new Item.Properties())));
 	public static final Supplier<Item> VILER_WITCH_SPAWNEGG = ITEMS.register("viler_witch_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.VILER_WITCH, 0x111322, 0x37464D, (new Item.Properties())));
+
 	public static final Supplier<Item> BOULDERING_ZOMBIE_SPAWNEGG = ITEMS.register("bouldering_zombie_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BOULDERING_ZOMBIE, 0x384242, 0x52261A, (new Item.Properties())));
 	public static final Supplier<Item> LOBBER_ZOMBIE_SPAWNEGG = ITEMS.register("lobber_zombie_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.LOBBER_ZOMBIE, 0x899274, 0x436858, (new Item.Properties())));
+
 	public static final Supplier<Item> BOULDERING_DROWNED_SPAWNEGG = ITEMS.register("bouldering_drowned_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BOULDERING_DROWNED, 0x56847E, 0x52261A, (new Item.Properties())));
 	public static final Supplier<Item> LOBBER_DROWNED_SPAWNEGG = ITEMS.register("lobber_drowned_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.LOBBER_DROWNED, 0x739274, 0x3E5F51, (new Item.Properties())));
+
+
+    public static final Supplier<Item> BOULDERING_FROZEN_ZOMBIE_SPAWNEGG = ITEMS.register("bouldering_frozen_zombie_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BOULDERING_FROZEN_ZOMBIE, 0x679A90, 0x154954, (new Item.Properties())));
+    public static final Supplier<Item> LOBBER_HUSK_SPAWNEGG = ITEMS.register("lobber_husk_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.LOBBER_HUSK, 0x6C6454, 0xCFCFCF, (new Item.Properties())));
+
+
 	public static final Supplier<Item> TROPICAL_SLIME_SPAWNEGG = ITEMS.register("tropical_slime_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.TROPICAL_SLIME, 0x5B83AD, 0x90B1D3, (new Item.Properties())));
 	public static final Supplier<Item> SKELETON_WOLF_SPAWNEGG = ITEMS.register("skeleton_wolf_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.SKELETON_WOLF, 12698049, 4802889, (new Item.Properties())));
 	public static final Supplier<Item> WITHER_SKELETON_WOLF_SPAWNEGG = ITEMS.register("wither_skeleton_wolf_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.WITHER_SKELETON_WOLF, 1315860, 4672845, (new Item.Properties())));
@@ -133,8 +141,12 @@ public class ModItems {
 			event.accept(ZOMBIFIED_RABBIT_SPAWNEGG.get());
 			event.accept(BOULDERING_ZOMBIE_SPAWNEGG.get());
 			event.accept(BOULDERING_DROWNED_SPAWNEGG.get());
+            event.accept(BOULDERING_FROZEN_ZOMBIE_SPAWNEGG.get());
+
 			event.accept(LOBBER_ZOMBIE_SPAWNEGG.get());
 			event.accept(LOBBER_DROWNED_SPAWNEGG.get());
+            event.accept(LOBBER_HUSK_SPAWNEGG.get());
+
 			event.accept(TROPICAL_SLIME_SPAWNEGG.get());
 			event.accept(SKELETON_WOLF_SPAWNEGG.get());
 			event.accept(VILER_WITCH_SPAWNEGG.get());

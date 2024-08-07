@@ -5,6 +5,8 @@
     "earthmobsmod:bouldering_zombie",
     "earthmobsmod:bouldering_drowned",
     "earthmobsmod:lobber_zombie",
-    "earthmobsmod:lobber_drowned"
+    "earthmobsmod:lobber_drowned",
+    "earthmobsmod:bouldering_frozen_zombie",
+    "earthmobsmod:lobber_husk"
   ]
 }

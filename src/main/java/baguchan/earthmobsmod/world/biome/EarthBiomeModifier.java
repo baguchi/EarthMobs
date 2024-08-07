@@ -108,10 +108,17 @@ public class EarthBiomeModifier implements BiomeModifier {
 						if (biome.is(BiomeTags.IS_FOREST)) {
 							builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.LOBBER_ZOMBIE.get(), EarthMobsConfig.COMMON.lobberZombieSpawnRate.get(), 3, 4));
 						}
+                        if (biome.is(Tags.Biomes.IS_DESERT)) {
+                            builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.LOBBER_HUSK.get(), EarthMobsConfig.COMMON.lobberZombieSpawnRate.get(), 3, 4));
+                        }
 					}
 
 					if (EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get() > 0) {
-						builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_ZOMBIE.get(), EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), 4, 4));
+                        if (biome.is(Tags.Biomes.IS_COLD) && biome.is(Tags.Biomes.IS_MOUNTAIN)) {
+                            builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_FROZEN_ZOMBIE.get(), EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), 4, 4));
+                        } else {
+                            builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_ZOMBIE.get(), EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), 4, 4));
+                        }
 					}
 
 					if (EarthMobsConfig.COMMON.zombifiedRabbitSpawnRate.get() > 0) {
@@ -121,9 +128,9 @@ public class EarthBiomeModifier implements BiomeModifier {
 					if (EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get() > 0) {
 						if (biome.is(Biomes.DRIPSTONE_CAVES)) {
 							builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_DROWNED.get(), EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), 4, 4));
-							builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_ZOMBIE.get(), EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), 4, 4));
 						}
-					}
+
+                    }
 
 
 					if (biome.is(BiomeTags.IS_DEEP_OCEAN) || biome.is(BiomeTags.IS_OCEAN)) {

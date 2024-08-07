@@ -1,4 +1,4 @@
-package baguchan.earthmobsmod.client.render;
+package baguchan.earthmobsmod.client.render.zombie;
 
 import bagu_chan.bagus_lib.client.layer.CustomArmorLayer;
 import baguchan.earthmobsmod.EarthMobsMod;

@@ -125,7 +125,7 @@ public class BoulderingDrowned extends Drowned {
 			return false;
 		} else {
 			Holder<Biome> holder = p_32351_.getBiome(p_32353_);
-			boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_) && (p_32352_ == MobSpawnType.SPAWNER || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER));
+			boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (MobSpawnType.isSpawner(p_32352_) || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
 			if (!holder.is(Biomes.RIVER) && !holder.is(Biomes.FROZEN_RIVER)) {
 				return p_32354_.nextInt(40) == 0 && isDeepEnoughToSpawn(p_32351_, p_32353_) && flag;
 			} else {

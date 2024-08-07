@@ -6,6 +6,7 @@ import baguchan.earthmobsmod.client.render.*;
 import baguchan.earthmobsmod.client.render.layer.MossSheepLayer;
 import baguchan.earthmobsmod.client.render.layer.MuddyPigFlowerLayer;
 import baguchan.earthmobsmod.client.render.layer.MuddyPigMudLayer;
+import baguchan.earthmobsmod.client.render.zombie.*;
 import baguchan.earthmobsmod.fluidtype.MudFluidType;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModFluidTypes;
@@ -70,8 +71,12 @@ public class ClientRegistrar {
 		event.registerEntityRenderer(ModEntities.VILER_WITCH.get(), VilerWitchRenderer::new);
 		event.registerEntityRenderer(ModEntities.BOULDERING_ZOMBIE.get(), BoulderingZombieRenderer::new);
 		event.registerEntityRenderer(ModEntities.LOBBER_ZOMBIE.get(), LobberZombieRenderer::new);
+
 		event.registerEntityRenderer(ModEntities.BOULDERING_DROWNED.get(), BoulderingDrownedRenderer::new);
 		event.registerEntityRenderer(ModEntities.LOBBER_DROWNED.get(), LobberDrownedRenderer::new);
+
+        event.registerEntityRenderer(ModEntities.BOULDERING_FROZEN_ZOMBIE.get(), BoulderingFrozenZombieRenderer::new);
+        event.registerEntityRenderer(ModEntities.LOBBER_HUSK.get(), LobberHuskRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.TROPICAL_SLIME.get(), TropicalSlimeRenderer::new);
 		event.registerEntityRenderer(ModEntities.SKELETON_WOLF.get(), SkeletonWolfRenderer::new);

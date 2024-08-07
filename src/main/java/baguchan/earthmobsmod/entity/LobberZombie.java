@@ -21,6 +21,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class LobberZombie extends Zombie implements RangedAttackMob {
@@ -78,5 +79,10 @@ public class LobberZombie extends Zombie implements RangedAttackMob {
 		zombieFlesh.shoot(d1, d0 + d4, d3, 0.8F, 0.1F);
 		this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 		this.level().addFreshEntity(zombieFlesh);
+	}
+
+	@Override
+	protected ItemStack getSkull() {
+		return ItemStack.EMPTY;
 	}
 }

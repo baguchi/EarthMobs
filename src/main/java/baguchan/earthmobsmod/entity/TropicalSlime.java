@@ -34,7 +34,6 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -246,7 +245,7 @@ public class TropicalSlime extends Slime implements Bucketable {
             return false;
         } else {
             Holder<Biome> holder = p_32351_.getBiome(p_32353_);
-            boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_) && (p_32352_ == MobSpawnType.SPAWNER || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER));
+            boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (MobSpawnType.isSpawner(p_32352_) || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
 
             return p_32354_.nextInt(30) == 0 && flag;
         }
@@ -256,10 +255,6 @@ public class TropicalSlime extends Slime implements Bucketable {
         return p_32370_.isUnobstructed(this);
     }
 
-
-    private static boolean isDeepEnoughToSpawn(LevelAccessor p_32367_, BlockPos p_32368_) {
-        return p_32368_.getY() < p_32367_.getSeaLevel() - 5;
-    }
 
     float getSoundPitch() {
         float f = this.isTiny() ? 1.4F : 0.8F;

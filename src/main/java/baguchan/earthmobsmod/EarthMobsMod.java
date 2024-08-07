@@ -1,11 +1,13 @@
 package baguchan.earthmobsmod;
 
+import bagu_chan.bagus_lib.util.JigsawHelper;
 import baguchan.earthmobsmod.client.ClientRegistrar;
 import baguchan.earthmobsmod.message.MossMessage;
 import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.registry.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.api.distmarker.Dist;
@@ -16,6 +18,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.apache.logging.log4j.LogManager;
@@ -53,6 +56,7 @@ public class EarthMobsMod {
 		if (FMLEnvironment.dist == Dist.CLIENT) {
 			modBus.addListener(ClientRegistrar::setup);
 		}
+		NeoForge.EVENT_BUS.addListener(this::serverStart);
 	}
 
 	public void setupPackets(RegisterPayloadHandlersEvent event) {
@@ -67,6 +71,28 @@ public class EarthMobsMod {
 		ModBlocks.initFire();
 		((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BuiltInRegistries.BLOCK.getKey(ModBlocks.BUTTERCUP.get()), ModBlocks.POTTED_BUTTERCUP);
 		((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BuiltInRegistries.BLOCK.getKey(ModBlocks.PINK_DAISY.get()), ModBlocks.POTTED_PINK_DAISY);
+	}
+
+	private void serverStart(final ServerAboutToStartEvent event) {
+		JigsawHelper.registerJigsaw(event.getServer(),
+				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/slow_ranged"),
+				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/slow_ranged"), 1);
+		JigsawHelper.registerJigsaw(event.getServer(),
+				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/melee"),
+				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/melee"), 1);
+
+
+		JigsawHelper.registerJigsawWithRandomPoolAliases(event.getServer(),
+				ResourceLocation.withDefaultNamespace("trial_chambers"),
+				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/contents/slow_ranged"),
+				SimpleWeightedRandomList.<String>builder().add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/lobber_husk").toString(), 1)
+						.add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/lobber_zombie").toString(), 1).build());
+		JigsawHelper.registerJigsawWithRandomPoolAliases(event.getServer(),
+				ResourceLocation.withDefaultNamespace("trial_chambers"),
+				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/contents/melee"),
+				SimpleWeightedRandomList.<String>builder().add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/bouldering_frozen_zombie").toString(), 1)
+						.add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/bouldering_zombie").toString(), 1).build());
+
 	}
 
 

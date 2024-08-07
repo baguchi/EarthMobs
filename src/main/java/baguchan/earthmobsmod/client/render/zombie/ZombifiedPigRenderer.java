@@ -1,4 +1,4 @@
-package baguchan.earthmobsmod.client.render;
+package baguchan.earthmobsmod.client.render.zombie;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

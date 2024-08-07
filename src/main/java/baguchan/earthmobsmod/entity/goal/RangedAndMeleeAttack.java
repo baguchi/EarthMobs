@@ -101,14 +101,15 @@ public class RangedAndMeleeAttack extends Goal {
             }
 
             this.mob.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
-            if (this.attackLength == this.attackTime) {
+            if (!flag) {
+                float f = (float) Math.sqrt(d0) / this.attackRadius;
+                this.attackTime = Mth.floor(f * (float) (this.attackIntervalMax - this.attackIntervalMin) + (float) this.attackIntervalMin);
+                return;
+            } else if (this.attackLength == this.attackTime) {
                 this.doAttackAnimation();
             }
-            
+
             if (--this.attackTime == 0) {
-                if (!flag) {
-                    return;
-                }
 
                 float f = (float) Math.sqrt(d0) / this.attackRadius;
                 float f1 = Mth.clamp(f, 0.1F, 1.0F);

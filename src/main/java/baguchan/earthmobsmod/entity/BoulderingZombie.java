@@ -18,6 +18,7 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -75,10 +76,14 @@ public class BoulderingZombie extends Zombie {
 
 	public static boolean checkBoulderingSpawnRules(EntityType<? extends BoulderingZombie> p_32350_, ServerLevelAccessor p_32351_, MobSpawnType p_32352_, BlockPos p_32353_, RandomSource p_32354_) {
 		Holder<Biome> holder = p_32351_.getBiome(p_32353_);
-		boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_) && (p_32352_ == MobSpawnType.SPAWNER || p_32353_.getY() < 0 || p_32351_.getBiome(p_32353_).is(BiomeTags.IS_MOUNTAIN));
+		boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (MobSpawnType.isSpawner(p_32352_) || p_32353_.getY() < 0 && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_) || p_32351_.getBiome(p_32353_).is(BiomeTags.IS_MOUNTAIN) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
 		return checkMobSpawnRules(p_32350_, p_32351_, p_32352_, p_32353_, p_32354_) && flag;
 	}
 
+	@Override
+	protected ItemStack getSkull() {
+		return ItemStack.EMPTY;
+	}
 
 	protected PathNavigation createNavigation(Level p_33802_) {
 		return new WallClimberNavigation(this, p_33802_);
