@@ -7,7 +7,6 @@ import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.registry.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.api.distmarker.Dist;
@@ -84,18 +83,6 @@ public class EarthMobsMod {
 				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/all"),
 				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/melee"), 1);
 
-
-
-		JigsawHelper.registerJigsawWithRandomPoolAliases(event.getServer(),
-				ResourceLocation.withDefaultNamespace("trial_chambers"),
-				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/contents/ranged"),
-				SimpleWeightedRandomList.<String>builder().add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/lobber_husk").toString(), 1)
-						.add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/lobber_zombie").toString(), 1).build());
-		JigsawHelper.registerJigsawWithRandomPoolAliases(event.getServer(),
-				ResourceLocation.withDefaultNamespace("trial_chambers"),
-				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/contents/melee"),
-				SimpleWeightedRandomList.<String>builder().add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/bouldering_frozen_zombie").toString(), 1)
-						.add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/bouldering_zombie").toString(), 1).build());
 
 	}
 
