@@ -75,16 +75,20 @@ public class EarthMobsMod {
 
 	private void serverStart(final ServerAboutToStartEvent event) {
 		JigsawHelper.registerJigsaw(event.getServer(),
-				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/slow_ranged"),
-				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/slow_ranged"), 1);
-		JigsawHelper.registerJigsaw(event.getServer(),
 				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/melee"),
 				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/melee"), 1);
+		JigsawHelper.registerJigsaw(event.getServer(),
+				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/all"),
+				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/ranged"), 1);
+		JigsawHelper.registerJigsaw(event.getServer(),
+				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/all"),
+				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/melee"), 1);
+
 
 
 		JigsawHelper.registerJigsawWithRandomPoolAliases(event.getServer(),
 				ResourceLocation.withDefaultNamespace("trial_chambers"),
-				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/contents/slow_ranged"),
+				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/contents/ranged"),
 				SimpleWeightedRandomList.<String>builder().add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/lobber_husk").toString(), 1)
 						.add(ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/spawner/lobber_zombie").toString(), 1).build());
 		JigsawHelper.registerJigsawWithRandomPoolAliases(event.getServer(),

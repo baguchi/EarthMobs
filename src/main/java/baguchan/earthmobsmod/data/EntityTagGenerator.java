@@ -21,7 +21,7 @@ public class EntityTagGenerator extends EntityTypeTagsProvider {
 	@Override
 	protected void addTags(HolderLookup.Provider p_256380_) {
 		this.tag(EntityTypeTags.AXOLOTL_ALWAYS_HOSTILES).add(ModEntities.BOULDERING_DROWNED.get(), ModEntities.LOBBER_DROWNED.get());
-		this.tag(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES).add(ModEntities.STRAY_BONE_SPIDER.get(), ModEntities.MELON_GOLEM.get(), ModEntities.MAGMA_COW.get(), ModEntities.UMBRA_COW.get(), ModEntities.WOOLY_COW.get());
+		this.tag(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES).add(ModEntities.STRAY_BONE_SPIDER.get(), ModEntities.MELON_GOLEM.get(), ModEntities.MAGMA_COW.get(), ModEntities.UMBRA_COW.get(), ModEntities.WOOLY_COW.get(), ModEntities.BOULDERING_FROZEN_ZOMBIE.get());
         this.tag(EntityTypeTags.FROG_FOOD).add(ModEntities.TROPICAL_SLIME.get());
 		this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(ModEntities.BONE_SHARD.get(), ModEntities.MELON_SEED.get());
 		this.tag(EntityTypeTags.RAIDERS).add(ModEntities.VILER_WITCH.get());
