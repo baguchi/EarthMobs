@@ -15,7 +15,7 @@ public class EarthRenderType extends RenderType {
         int age = tick * (frameCount - 1) / maxAge;
 
         return create(
-                "animation_eyes",
+                "earthmobsmod:animation_eyes",
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 1536,
@@ -34,7 +34,7 @@ public class EarthRenderType extends RenderType {
         int age = tick * (frameCount - 1) / maxAge;
 
         return create(
-                "entity_animation",
+                "earthmobsmod:entity_animation",
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 1536,
