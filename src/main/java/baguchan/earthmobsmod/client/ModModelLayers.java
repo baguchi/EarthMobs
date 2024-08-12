@@ -33,6 +33,7 @@ public class ModModelLayers {
     public static ModelLayerLocation BOULDERING_DROWNED_OUTER = register("bouldering_drowned_outer");
     public static ModelLayerLocation LOBBER_DROWNED_OUTER = register("lobber_drowned_outer");
     public static ModelLayerLocation MAGMA_COW = register("magma_cow");
+    public static ModelLayerLocation MAGMA_COW_GLOW = register("magma_cow_glow");
     public static ModelLayerLocation FURNACE_GOLEM = register("furnace_golem");
     public static ModelLayerLocation COW = register("cow");
 

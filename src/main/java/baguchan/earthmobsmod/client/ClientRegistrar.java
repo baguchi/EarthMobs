@@ -111,6 +111,7 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.BABY_GHAST, BabyGhastModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.BABY_GHAST_CORE, BabyGhastModel::createCoreLayer);
 		event.registerLayerDefinition(ModModelLayers.MAGMA_COW, MagmaCowModel::createBodyLayer);
+		event.registerLayerDefinition(ModModelLayers.MAGMA_COW_GLOW, MagmaCowModel::createAnimateBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.FURNACE_GOLEM, FurnaceGolemModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.JOLLY_LLAMA, JollyLlamaModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.COW, RevampedCowModel::createBodyLayer);
