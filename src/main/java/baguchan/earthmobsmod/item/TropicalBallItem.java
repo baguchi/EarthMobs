@@ -8,6 +8,8 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -34,14 +36,15 @@ public class TropicalBallItem extends Item {
             stack.shrink(1);
         }
 
-        livingEntity.setAirSupply(Mth.clamp(livingEntity.getAirSupply() + 200, 0, livingEntity.getMaxAirSupply()));
+        livingEntity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 300));
+        livingEntity.setAirSupply(Mth.clamp(livingEntity.getAirSupply() + 600, 0, livingEntity.getMaxAirSupply()));
 
         return stack;
     }
 
     @Override
     public int getUseDuration(ItemStack p_41454_, LivingEntity p_344979_) {
-        return 16;
+        return 24;
     }
 
     public UseAnim getUseAnimation(ItemStack p_41358_) {
