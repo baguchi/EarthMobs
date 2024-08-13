@@ -5,6 +5,7 @@ import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.animal.Cow;
 
 public class RevampedCowModel<T extends Cow> extends HierarchicalModel<T> {
@@ -60,10 +61,13 @@ public class RevampedCowModel<T extends Cow> extends HierarchicalModel<T> {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.head.xRot = headPitch * ((float) Math.PI / 180F);
         this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+        this.leg1.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.leg2.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        this.leg3.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        this.leg4.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         if (entity.isBaby()) {
             this.applyStatic(EarthCowAnimation.baby);
         }
-        this.animateWalk(EarthCowAnimation.walk, limbSwing, limbSwingAmount, 1.0F, 1.5F);
     }
 
     @Override
