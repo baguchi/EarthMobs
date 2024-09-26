@@ -9,6 +9,8 @@
     "earthmobsmod:bouldering_frozen_zombie",
     "earthmobsmod:lobber_husk",
     "earthmobsmod:zombified_rabbit",
-    "earthmobsmod:zombified_pig"
+    "earthmobsmod:zombified_pig",
+    "earthmobsmod:skeleton_wolf",
+    "earthmobsmod:wither_skeleton_wolf"
   ]
 }
