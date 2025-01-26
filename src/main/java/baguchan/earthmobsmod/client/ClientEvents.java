@@ -1,11 +1,8 @@
 package baguchan.earthmobsmod.client;
 
-import baguchan.earthmobsmod.EarthMobsMod;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.common.EventBusSubscriber;
 
-@EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
+//@EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
 

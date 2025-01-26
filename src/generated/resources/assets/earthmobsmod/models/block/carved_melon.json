@@ -1,8 +1,9 @@
 {
-  "parent": "minecraft:block/orientable",
+  "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
-    "front": "earthmobsmod:block/carved_melon",
-    "side": "minecraft:block/melon_side",
-    "top": "minecraft:block/melon_top"
+    "bottom": "earthmobsmod:block/carved_melon_bottom",
+    "front": "earthmobsmod:block/carved_melon_front",
+    "side": "earthmobsmod:block/carved_melon_side",
+    "top": "earthmobsmod:block/carved_melon_top"
   }
 }

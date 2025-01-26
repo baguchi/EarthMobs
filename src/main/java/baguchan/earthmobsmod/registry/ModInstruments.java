@@ -13,8 +13,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Instrument;
 
 public class ModInstruments {
-    public static final ResourceKey<Instrument> WOODEN_HORN = create("ponder_goat_horn");
-    public static final ResourceKey<Instrument> BATTLE_HORN = create("ponder_goat_horn");
+    public static final ResourceKey<Instrument> WOODEN_HORN = create("wooden_horn");
+    public static final ResourceKey<Instrument> BATTLE_HORN = create("battle_horn");
 
 
     public static void bootstrap(BootstrapContext<Instrument> p_362126_) {

@@ -22,12 +22,12 @@ public class DataGenerators {
 
         CompletableFuture<HolderLookup.Provider> lookupProvider = datapackProvider.getRegistryProvider();
         event.getGenerator().addProvider(true, new EarthModelData(packOutput));
-        BlockTagsProvider blocktags = new BlockTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider());
+        BlockTagsProvider blocktags = new BlockTagGenerator(event.getGenerator().getPackOutput(), lookupProvider);
         event.getGenerator().addProvider(true, blocktags);
-        event.getGenerator().addProvider(true, new ItemTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), blocktags.contentsGetter()));
-        event.getGenerator().addProvider(true, new EntityTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
-        event.getGenerator().addProvider(true, ModLootTableProvider.create(packOutput, event.getLookupProvider()));
-        event.getGenerator().addProvider(true, new WorldGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
-        event.getGenerator().addProvider(true, new CustomTagGenerator.InstrumentTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
+        event.getGenerator().addProvider(true, new ItemTagGenerator(event.getGenerator().getPackOutput(), lookupProvider, blocktags.contentsGetter()));
+        event.getGenerator().addProvider(true, new EntityTagGenerator(event.getGenerator().getPackOutput(), lookupProvider));
+        event.getGenerator().addProvider(true, ModLootTableProvider.create(packOutput, lookupProvider));
+        event.getGenerator().addProvider(true, new WorldGenerator(event.getGenerator().getPackOutput(), lookupProvider));
+        event.getGenerator().addProvider(true, new CustomTagGenerator.InstrumentTagGenerator(event.getGenerator().getPackOutput(), lookupProvider));
     }
 }

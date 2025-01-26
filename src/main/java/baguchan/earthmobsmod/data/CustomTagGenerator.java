@@ -5,19 +5,19 @@ import baguchan.earthmobsmod.registry.ModInstruments;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.InstrumentTagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Instrument;
 
 import java.util.concurrent.CompletableFuture;
 
 public class CustomTagGenerator {
-    public static class InstrumentTagGenerator extends TagsProvider<Instrument> {
+    public static class InstrumentTagGenerator extends InstrumentTagsProvider {
 
         public static final TagKey<Instrument> HORNED_SHEEP = create("horned_sheep");
 
         public InstrumentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
-            super(output, Registries.INSTRUMENT, provider, EarthMobsMod.MODID);
+            super(output, provider, EarthMobsMod.MODID);
         }
 
         private static TagKey<Instrument> create(String name) {

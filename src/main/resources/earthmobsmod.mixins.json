@@ -12,7 +12,6 @@
     "SheepMixin"
   ],
   "client": [
-    "client.PigModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
