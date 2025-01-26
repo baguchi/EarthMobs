@@ -13,6 +13,7 @@ import baguchan.earthmobsmod.client.render.zombie.*;
 import baguchan.earthmobsmod.fluidtype.MudFluidType;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModFluidTypes;
+import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -102,6 +103,7 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.STRAY_BONE_SPIDER, BoneSpiderModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.VILER_WITCH, VilerWitchModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.MAGMA_COW, MagmaCowModel::createBodyLayer);
+		event.registerLayerDefinition(ModModelLayers.MAGMA_COW_BABY, () -> MagmaCowModel.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
 		event.registerLayerDefinition(ModModelLayers.MAGMA_COW_GLOW, MagmaCowModel::createAnimateBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.FURNACE_GOLEM, FurnaceGolemModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.JOLLY_LLAMA, JollyLlamaModel::createBodyLayer);

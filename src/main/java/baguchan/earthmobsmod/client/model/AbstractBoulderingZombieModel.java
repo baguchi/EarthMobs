@@ -1,6 +1,5 @@
 package baguchan.earthmobsmod.client.model;
 
-import baguchan.earthmobsmod.client.animation.BabyZombieAnimation;
 import baguchan.earthmobsmod.client.render.state.BoulderingZombieRenderState;
 import baguchi.bagus_lib.client.layer.IArmor;
 import com.google.common.collect.ImmutableList;
@@ -16,8 +15,6 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState> extends EntityModel<T> implements IArmor {
-    private final ModelPart root;
-    private final ModelPart bone;
     public final ModelPart head;
     public final ModelPart body;
     public final ModelPart left_arm;
@@ -27,39 +24,35 @@ public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState
 
     public AbstractBoulderingZombieModel(ModelPart root) {
         super(root);
-        this.root = root;
-        this.bone = root.getChild("bone");
-        this.head = this.bone.getChild("head");
-        this.body = this.bone.getChild("body");
-        this.left_arm = this.bone.getChild("left_arm");
-        this.right_arm = this.bone.getChild("right_arm");
-        this.left_leg = this.bone.getChild("left_leg");
-        this.right_leg = this.bone.getChild("right_leg");
+        this.head = root.getChild("head");
+        this.body = root.getChild("body");
+        this.left_arm = root.getChild("left_arm");
+        this.right_arm = root.getChild("right_arm");
+        this.left_leg = root.getChild("left_leg");
+        this.right_leg = root.getChild("right_leg");
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition head = bone.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, -24.0F, 0.0F));
+        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 32).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(28, 28).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition body = bone.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 32).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(28, 28).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, -24.0F, 0.0F));
+        PartDefinition left_arm = partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(0, 48).addBox(-1.0F, -2.0F, -2.0F, 5.0F, 14.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(32, 0).addBox(-1.0F, -2.0F, -2.0F, 5.0F, 14.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(5.0F, 2.0F, 0.0F));
 
-        PartDefinition left_arm = bone.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(0, 48).addBox(-1.0F, -2.0F, -2.0F, 5.0F, 14.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(32, 0).addBox(-1.0F, -2.0F, -2.0F, 5.0F, 14.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(5.0F, -22.0F, 0.0F));
+        PartDefinition right_arm = partdefinition.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(38, 44).addBox(-4.0F, -2.0F, -2.0F, 5.0F, 14.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(20, 44).addBox(-4.0F, -2.0F, -2.0F, 5.0F, 14.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(-5.0F, 2.0F, 0.0F));
 
-        PartDefinition right_arm = bone.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(38, 44).addBox(-4.0F, -2.0F, -2.0F, 5.0F, 14.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(20, 44).addBox(-4.0F, -2.0F, -2.0F, 5.0F, 14.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(-5.0F, -22.0F, 0.0F));
+        PartDefinition left_leg = partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(60, 0).addBox(-1.9F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(52, 30).addBox(-1.9F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(1.9F, 12.0F, 0.0F));
 
-        PartDefinition left_leg = bone.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(60, 0).addBox(-1.9F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(52, 30).addBox(-1.9F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(1.9F, -12.0F, 0.0F));
-
-        PartDefinition right_leg = bone.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(56, 46).addBox(-2.1F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(48, 14).addBox(-2.1F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(-1.9F, -12.0F, 0.0F));
+        PartDefinition right_leg = partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(56, 46).addBox(-2.1F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(48, 14).addBox(-2.1F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(-1.9F, 12.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
@@ -83,9 +76,6 @@ public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState
             this.left_leg.xRot = -0.4F - Mth.sin(0.25F * entity.ageInTicks) * 0.225F;
             this.right_leg.xRot = -0.4F + Mth.sin(0.25F * entity.ageInTicks) * 0.225F;
         }
-        if (entity.isBaby) {
-            this.applyStatic(BabyZombieAnimation.baby);
-        }
     }
 
     protected float rotlerpRad(float angle, float maxAngle, float mul) {
@@ -102,22 +92,18 @@ public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState
     }
 
     public void translateToHead(ModelPart part, PoseStack poseStack) {
-        this.bone.translateAndRotate(poseStack);
         part.translateAndRotate(poseStack);
     }
 
     public void translateToChest(ModelPart part, PoseStack poseStack) {
-        this.bone.translateAndRotate(poseStack);
         part.translateAndRotate(poseStack);
     }
 
     public void translateToLeg(ModelPart part, PoseStack poseStack) {
-        this.bone.translateAndRotate(poseStack);
         part.translateAndRotate(poseStack);
     }
 
     public void translateToChestPat(ModelPart part, PoseStack poseStack) {
-        this.bone.translateAndRotate(poseStack);
         part.translateAndRotate(poseStack);
         poseStack.scale(1.05F, 1.05F, 1.05F);
     }

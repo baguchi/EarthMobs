@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.client.render.zombie;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.BoulderingDrownedModel;
-import baguchan.earthmobsmod.client.model.LobberDrownedModel;
 import baguchan.earthmobsmod.client.render.layer.OuterLayer;
 import baguchan.earthmobsmod.client.render.layer.SpinAttackEffectLayer;
 import baguchan.earthmobsmod.client.render.state.BoulderingZombieRenderState;
@@ -36,7 +35,7 @@ public class BoulderingDrownedRenderer<T extends BoulderingDrowned> extends Agea
 
 	public BoulderingDrownedRenderer(EntityRendererProvider.Context p_173964_) {
 		super(p_173964_, new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED)), new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED_BABY)), 0.5F);
-		this.addLayer(new OuterLayer(this, OUTER_LOCATION, new LobberDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED_OUTER)), new LobberDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED_OUTER_BABY))));
+		this.addLayer(new OuterLayer(this, OUTER_LOCATION, new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED_OUTER)), new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED_OUTER_BABY))));
 		this.addLayer(new SpinAttackEffectLayer<>(this, p_173964_.getModelSet()));
 		this.addLayer(new baguchi.bagus_lib.client.layer.CustomArmorLayer(this, p_173964_));
 	}

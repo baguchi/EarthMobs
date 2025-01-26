@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.8.0
 // Paste this class into your mod and generate all required imports
 
 
-import baguchan.earthmobsmod.client.animation.FancyChickenAnimations;
 import net.minecraft.client.model.BabyModelTransform;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -86,9 +85,5 @@ public class FancyChickenModel<T extends ChickenRenderState> extends EntityModel
 		float f = (Mth.sin(entity.flap) + 1.0F) * entity.flapSpeed;
 		this.rightWing.zRot = f;
 		this.leftWing.zRot = -f;
-
-		if (entity.isBaby) {
-			this.applyStatic(FancyChickenAnimations.BABY);
-		}
 	}
 }

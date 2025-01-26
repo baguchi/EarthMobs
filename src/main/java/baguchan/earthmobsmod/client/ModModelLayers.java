@@ -16,7 +16,7 @@ public class ModModelLayers {
 
     public static ModelLayerLocation TEACUP_PIG = register("teacup_pig");
     public static ModelLayerLocation MUDDY_PIG = register("muddy_pig");
-    public static ModelLayerLocation MUDDY_PIG_BABY = register("muddy_pig");
+    public static ModelLayerLocation MUDDY_PIG_BABY = register("muddy_pig_baby");
     public static ModelLayerLocation JOLLY_LLAMA = register("jolly_llama");
 
 
@@ -40,6 +40,7 @@ public class ModModelLayers {
     public static ModelLayerLocation BOULDERING_DROWNED_OUTER_BABY = register("bouldering_drowned_outer_baby");
     public static ModelLayerLocation LOBBER_DROWNED_OUTER_BABY = register("lobber_drowned_outer_baby");
     public static ModelLayerLocation MAGMA_COW = register("magma_cow");
+    public static ModelLayerLocation MAGMA_COW_BABY = register("magma_cow_baby");
     public static ModelLayerLocation MAGMA_COW_GLOW = register("magma_cow_glow");
     public static ModelLayerLocation FURNACE_GOLEM = register("furnace_golem");
 

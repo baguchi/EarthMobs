@@ -10,19 +10,19 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-public class MagmaCowRenderer<T extends MagmaCow> extends MobRenderer<T, MagmaCowRenderState, MagmaCowModel<MagmaCowRenderState>> {
+public class MagmaCowRenderer<T extends MagmaCow> extends AgeableMobRenderer<T, MagmaCowRenderState, MagmaCowModel<MagmaCowRenderState>> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/magma_cow/magma_cow.png");
     private static final ResourceLocation TEXTURE_WEAK = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/magma_cow/magma_cow_no_lava.png");
     private static final ResourceLocation TEXTURE_GLOW = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/magma_cow/magma_cow_glow");
 
     public MagmaCowRenderer(EntityRendererProvider.Context p_173952_) {
-        super(p_173952_, new MagmaCowModel<>(p_173952_.bakeLayer(ModModelLayers.MAGMA_COW)), 0.3F);
+        super(p_173952_, new MagmaCowModel<>(p_173952_.bakeLayer(ModModelLayers.MAGMA_COW)), new MagmaCowModel<>(p_173952_.bakeLayer(ModModelLayers.MAGMA_COW_BABY)), 0.3F);
         this.addLayer(new EyesLayer<MagmaCowRenderState, MagmaCowModel<MagmaCowRenderState>>(this) {
 
             @Override
