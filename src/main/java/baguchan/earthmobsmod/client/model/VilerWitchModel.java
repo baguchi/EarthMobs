@@ -31,7 +31,7 @@ public class VilerWitchModel<T extends WitchRenderState> extends EntityModel<T> 
 		this.nose = this.head.getChild("nose");
 		this.rightLeg = p_170688_.getChild("right_leg");
 		this.leftLeg = p_170688_.getChild("left_leg");
-		this.arms = p_170688_.getChild("rms");
+		this.arms = p_170688_.getChild("arms");
 	}
 
 	public static LayerDefinition createBodyLayer() {

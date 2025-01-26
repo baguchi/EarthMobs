@@ -28,29 +28,32 @@ public class MuddyPigMudLayer<T extends LivingEntityRenderState, S extends Entit
     public static final ContextKey<Boolean> IS_SHEARED = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "sheared"));
 
     private final MuddyPigModel model;
+    private final MuddyPigModel babyModel;
 
     public MuddyPigMudLayer(RenderLayerParent<T, S> p_174533_, EntityModelSet p_174534_) {
 		super(p_174533_);
         this.model = new MuddyPigModel(p_174534_.bakeLayer(ModModelLayers.MUDDY_PIG));
-	}
+        this.babyModel = new MuddyPigModel(p_174534_.bakeLayer(ModModelLayers.MUDDY_PIG_BABY));
+    }
 
     @Override
     public void render(PoseStack p_117349_, MultiBufferSource p_117350_, int p_117351_, T entityRenderState, float p_117353_, float p_117354_) {
         boolean mud = entityRenderState.getRenderDataOrDefault(IS_MUD, false);
         boolean sheared = entityRenderState.getRenderDataOrDefault(IS_SHEARED, true);
+        MuddyPigModel pigModel = entityRenderState.isBaby ? this.babyModel : this.model;
 
         if (mud) {
             if (entityRenderState.isInvisible) {
                 Minecraft minecraft = Minecraft.getInstance();
                 boolean flag = entityRenderState.appearsGlowing;
                 if (flag) {
-                    this.model.setupAnim(entityRenderState);
+                    pigModel.setupAnim(entityRenderState);
                     VertexConsumer vertexconsumer = p_117350_.getBuffer(RenderType.outline(MUD_LOCATION));
-                    this.model.renderToBuffer(p_117349_, vertexconsumer, p_117351_, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F));
+                    pigModel.renderToBuffer(p_117349_, vertexconsumer, p_117351_, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F));
                 }
 
             } else {
-                coloredCutoutModelCopyLayerRender(this.model, MUD_LOCATION, p_117349_, p_117350_, p_117351_, entityRenderState, -1);
+                coloredCutoutModelCopyLayerRender(pigModel, MUD_LOCATION, p_117349_, p_117350_, p_117351_, entityRenderState, -1);
             }
 		}
 	}

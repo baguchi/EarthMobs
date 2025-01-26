@@ -27,10 +27,12 @@ public class MuddyPigFlowerLayer<T extends LivingEntityRenderState, S extends En
     public static final ContextKey<DyeColor> FLOWER_DYE = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "flower_dye"));
 
     private final MuddyPigModel model;
+    private final MuddyPigModel babyModel;
 
     public MuddyPigFlowerLayer(RenderLayerParent<T, S> p_174533_, EntityModelSet p_174534_) {
 		super(p_174533_);
         this.model = new MuddyPigModel(p_174534_.bakeLayer(ModModelLayers.MUDDY_PIG));
+        this.babyModel = new MuddyPigModel(p_174534_.bakeLayer(ModModelLayers.MUDDY_PIG_BABY));
 	}
 
     @Override
@@ -38,21 +40,22 @@ public class MuddyPigFlowerLayer<T extends LivingEntityRenderState, S extends En
         DyeColor dyeColor = entityRenderState.getRenderDataOrDefault(FLOWER_DYE, DyeColor.PINK);
         boolean mud = entityRenderState.getRenderDataOrDefault(MuddyPigMudLayer.IS_MUD, false);
         boolean sheared = entityRenderState.getRenderDataOrDefault(MuddyPigMudLayer.IS_SHEARED, true);
+        MuddyPigModel pigModel = entityRenderState.isBaby ? this.babyModel : this.model;
 
         if (mud && !sheared) {
             if (entityRenderState.isInvisible) {
                 Minecraft minecraft = Minecraft.getInstance();
                 boolean flag = entityRenderState.appearsGlowing;
                 if (flag) {
-                    this.model.setupAnim(entityRenderState);
+                    pigModel.setupAnim(entityRenderState);
                     VertexConsumer vertexconsumer = p_117350_.getBuffer(RenderType.outline(LOCATION));
-                    this.model.renderToBuffer(p_117349_, vertexconsumer, p_117351_, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F));
+                    pigModel.renderToBuffer(p_117349_, vertexconsumer, p_117351_, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F));
                 }
 
             } else {
                 int i;
                 i = Sheep.getColor(dyeColor);
-                coloredCutoutModelCopyLayerRender(model, LOCATION, p_117349_, p_117350_, p_117351_, entityRenderState, i);
+                coloredCutoutModelCopyLayerRender(pigModel, LOCATION, p_117349_, p_117350_, p_117351_, entityRenderState, i);
 			}
 		}
 	}

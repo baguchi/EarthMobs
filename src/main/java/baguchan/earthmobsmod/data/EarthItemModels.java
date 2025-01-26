@@ -16,21 +16,21 @@ public class EarthItemModels extends ItemModelGenerators {
 
     @Override
     public void run() {
-        this.createFlatItemModel(ModItems.BONE_SHARD.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.BONE_SPIDER_EYE.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.FANCY_FEATHER.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.HARDER_FLESH.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.SMELLY_EGG.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.FANCY_EGG.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.HORN.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.HORN_FLUTE.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.HYPER_RABBIT_FOOT.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.ZOMBIFIED_RABBIT_FOOT.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.MUD_BUCKET.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.TROPICAL_SLIME_BUCKET.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.TEACUP_PIG_POT.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.RUBY.get(), ModelTemplates.FLAT_ITEM);
-        this.createFlatItemModel(ModItems.TROPICAL_BALL.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.BONE_SHARD.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.BONE_SPIDER_EYE.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.FANCY_FEATHER.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.HARDER_FLESH.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.SMELLY_EGG.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.FANCY_EGG.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.HORN.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.HORN_FLUTE.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.HYPER_RABBIT_FOOT.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.ZOMBIFIED_RABBIT_FOOT.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.MUD_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.TROPICAL_SLIME_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.TEACUP_PIG_POT.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.RUBY.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.TROPICAL_BALL.get(), ModelTemplates.FLAT_ITEM);
 
         this.generateSpawnEgg(ModItems.CLUCK_SHROOM_SPAWNEGG.get(), 0xB52C17, 0xDC883B);
         this.generateSpawnEgg(ModItems.FANCY_CHICKEN_SPAWNEGG.get(), 0xF4A213, 0x202F22);

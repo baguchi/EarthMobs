@@ -7,6 +7,7 @@
   "mixins": [
     "BeeMixin",
     "EntityMixin",
+    "LivingEntityAccessor",
     "LivingEntityMixin",
     "PigMixin",
     "SheepMixin"

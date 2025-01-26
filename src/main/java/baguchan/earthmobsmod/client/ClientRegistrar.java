@@ -13,6 +13,7 @@ import baguchan.earthmobsmod.client.render.zombie.*;
 import baguchan.earthmobsmod.fluidtype.MudFluidType;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModFluidTypes;
+import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -96,6 +97,7 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.JUMBO_RABBIT, JumboRabbitModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.TEACUP_PIG, TeaCupPigModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.MUDDY_PIG, () -> MuddyPigModel.createBodyLayer(CubeDeformation.NONE));
+		event.registerLayerDefinition(ModModelLayers.MUDDY_PIG_BABY, () -> MuddyPigModel.createBodyLayer(CubeDeformation.NONE).apply(PigModel.BABY_TRANSFORMER));
 		event.registerLayerDefinition(ModModelLayers.BONE_SPIDER, BoneSpiderModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.STRAY_BONE_SPIDER, BoneSpiderModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.VILER_WITCH, VilerWitchModel::createBodyLayer);

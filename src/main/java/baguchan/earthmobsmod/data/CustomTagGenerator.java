@@ -1,7 +1,6 @@
 package baguchan.earthmobsmod.data;
 
 import baguchan.earthmobsmod.EarthMobsMod;
-import baguchan.earthmobsmod.registry.ModInstruments;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -26,8 +25,8 @@ public class CustomTagGenerator {
 
         @Override
         protected void addTags(HolderLookup.Provider p_256380_) {
-            tag(HORNED_SHEEP).add(ModInstruments.WOODEN_HORN);
-            tag(HORNED_SHEEP).add(ModInstruments.BATTLE_HORN);
+            //tag(HORNED_SHEEP).add(ModInstruments.WOODEN_HORN);
+            //tag(HORNED_SHEEP).add(ModInstruments.BATTLE_HORN);
         }
     }
 }

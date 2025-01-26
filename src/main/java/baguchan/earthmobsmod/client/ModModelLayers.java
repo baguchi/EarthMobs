@@ -16,14 +16,13 @@ public class ModModelLayers {
 
     public static ModelLayerLocation TEACUP_PIG = register("teacup_pig");
     public static ModelLayerLocation MUDDY_PIG = register("muddy_pig");
+    public static ModelLayerLocation MUDDY_PIG_BABY = register("muddy_pig");
     public static ModelLayerLocation JOLLY_LLAMA = register("jolly_llama");
 
 
     public static ModelLayerLocation BONE_SPIDER = register("bone_spider");
     public static ModelLayerLocation STRAY_BONE_SPIDER = register("stray_bone_spider");
     public static ModelLayerLocation VILER_WITCH = register("viler_witch");
-    public static ModelLayerLocation BABY_GHAST = register("baby_ghast");
-    public static ModelLayerLocation BABY_GHAST_CORE = register("baby_ghast_core");
 
 
     public static ModelLayerLocation BOULDERING_ZOMBIE = register("bouldering_zombie");

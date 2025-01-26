@@ -8,8 +8,6 @@ import baguchan.earthmobsmod.client.render.state.FurnaceGolemRenderState;
 import baguchan.earthmobsmod.entity.FurnaceGolem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +16,7 @@ public class FurnaceGolemRenderer extends MobRenderer<FurnaceGolem, FurnaceGolem
     private static final ResourceLocation GOLEM_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/furnace_golem/furnace_golem.png");
 
     public FurnaceGolemRenderer(EntityRendererProvider.Context p_174188_) {
-        super(p_174188_, new FurnaceGolemModel(p_174188_.bakeLayer(ModelLayers.IRON_GOLEM)), 0.7F);
+        super(p_174188_, new FurnaceGolemModel(p_174188_.bakeLayer(ModModelLayers.FURNACE_GOLEM)), 0.7F);
         this.addLayer(new FurnaceGolemCrackinessLayer(this));
     }
 

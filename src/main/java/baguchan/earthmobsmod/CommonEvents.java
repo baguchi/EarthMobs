@@ -7,10 +7,8 @@ import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.entity.FurnaceGolem;
 import baguchan.earthmobsmod.entity.ZombifiedPig;
 import baguchan.earthmobsmod.entity.ZombifiedRabbit;
-import baguchan.earthmobsmod.registry.ModBlocks;
-import baguchan.earthmobsmod.registry.ModCapability;
-import baguchan.earthmobsmod.registry.ModDamageSource;
-import baguchan.earthmobsmod.registry.ModEntities;
+import baguchan.earthmobsmod.mixin.LivingEntityAccessor;
+import baguchan.earthmobsmod.registry.*;
 import baguchan.earthmobsmod.util.DyeUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -22,7 +20,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Rabbit;
@@ -41,6 +41,8 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.ItemAbilities;
@@ -71,6 +73,63 @@ public class CommonEvents {
 
             wanderingTraderEntity.goalSelector.addGoal(1, new AvoidEntityGoal(wanderingTraderEntity, ZombifiedRabbit.class, 10.0F, 0.65F, 0.7F));
 		}
+	}
+
+	@SubscribeEvent
+	public static void onUpdate(EntityTickEvent.Post event) {
+		if (event.getEntity() instanceof LivingEntity livingEntity) {
+			if (livingEntity.isInFluidType(ModFluidTypes.MUD.get())) {
+				travelInFluid(livingEntity, livingEntity.getDeltaMovement(), ModFluids.MUD.get().defaultFluidState());
+
+				if (((LivingEntityAccessor) livingEntity).isJump()) {
+					livingEntity.jumpInFluid(ModFluidTypes.MUD.get());
+				}
+			}
+		}
+	}
+
+	private static void travelInFluid(LivingEntity living, Vec3 p_365480_, FluidState fluidState) {
+		boolean flag = living.getDeltaMovement().y <= 0.0;
+		double d0 = living.getY();
+		double d1 = getEffectiveGravity(living);
+		if (living.isInWater() || (living.isInFluidType(fluidState) && !living.moveInFluid(fluidState, p_365480_, d1))) {
+			float f = living.isSprinting() ? 0.9F : 0.8F;
+			float f1 = 0.02F;
+			float f2 = (float) living.getAttributeValue(Attributes.WATER_MOVEMENT_EFFICIENCY);
+			if (!living.onGround()) {
+				f2 *= 0.5F;
+			}
+
+			if (f2 > 0.0F) {
+				f += (0.54600006F - f) * f2;
+				f1 += (living.getSpeed() - f1) * f2;
+			}
+
+			if (living.hasEffect(MobEffects.DOLPHINS_GRACE)) {
+				f = 0.96F;
+			}
+
+			f1 *= (float) living.getAttributeValue(net.neoforged.neoforge.common.NeoForgeMod.SWIM_SPEED);
+			living.moveRelative(f1, p_365480_);
+			//living.move(MoverType.SELF, living.getDeltaMovement());
+			Vec3 vec3 = living.getDeltaMovement();
+			if (living.horizontalCollision && living.onClimbable()) {
+				vec3 = new Vec3(vec3.x, 0.2, vec3.z);
+			}
+
+			vec3 = vec3.multiply((double) f, 0.8F, (double) f);
+			living.setDeltaMovement(living.getFluidFallingAdjustedMovement(d1, flag, vec3).add(0, d1 / 4, 0));
+		}
+
+		Vec3 vec32 = living.getDeltaMovement();
+		if (living.horizontalCollision && living.isFree(vec32.x, vec32.y + 0.6F - living.getY() + d0, vec32.z)) {
+			living.setDeltaMovement(vec32.x, 0.3F, vec32.z);
+		}
+	}
+
+	protected static double getEffectiveGravity(LivingEntity entity) {
+		boolean flag = entity.getDeltaMovement().y <= 0.0;
+		return flag && entity.hasEffect(MobEffects.SLOW_FALLING) ? Math.min(entity.getGravity(), 0.01) : entity.getGravity();
 	}
 
 	@SubscribeEvent

@@ -27,7 +27,7 @@ public class JumboRabbit extends Rabbit {
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
-		return Rabbit.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.325F).add(Attributes.ATTACK_DAMAGE, 5.0);
+		return Rabbit.createAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.325F).add(Attributes.ATTACK_DAMAGE, 5.0);
 	}
 
 	public static boolean checkJumboSpawnRules(EntityType<JumboRabbit> p_29699_, LevelAccessor p_29700_, EntitySpawnReason p_29701_, BlockPos p_29702_, RandomSource p_29703_) {

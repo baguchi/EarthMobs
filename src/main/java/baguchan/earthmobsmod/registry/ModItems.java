@@ -1,13 +1,11 @@
 package baguchan.earthmobsmod.registry;
 
 import baguchan.earthmobsmod.EarthMobsMod;
-import baguchan.earthmobsmod.data.CustomTagGenerator;
 import baguchan.earthmobsmod.item.BoneShardItem;
 import baguchan.earthmobsmod.item.MobPotItem;
 import baguchan.earthmobsmod.item.ModEggItem;
 import baguchan.earthmobsmod.item.TropicalBallItem;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.food.FoodProperties;
@@ -36,7 +34,7 @@ public class ModItems {
 
 	public static final DeferredItem<Item> BONE_SPIDER_EYE = ITEMS.registerItem("bone_spider_eye", (prop) -> new Item((prop)));
 	public static final DeferredItem<Item> HORN = ITEMS.registerItem("horn", (prop) -> new Item((prop.stacksTo(1))));
-	public static final DeferredItem<Item> HORN_FLUTE = ITEMS.registerItem("horn_flute", (prop) -> new InstrumentItem(CustomTagGenerator.InstrumentTagGenerator.HORNED_SHEEP, (prop.stacksTo(1))));
+	public static final DeferredItem<Item> HORN_FLUTE = ITEMS.registerItem("horn_flute", (prop) -> new Item((prop.stacksTo(1))));
 
 	public static final DeferredItem<Item> HYPER_RABBIT_FOOT = ITEMS.registerItem("hyper_rabbit_foot", (prop) -> new Item((prop)));
 	public static final DeferredItem<Item> ZOMBIFIED_RABBIT_FOOT = ITEMS.registerItem("zombified_rabbit_foot", (prop) -> new Item((prop)));
@@ -147,13 +145,13 @@ public class ModItems {
 			event.accept(HARDER_FLESH.get());
 			event.accept(BONE_SPIDER_EYE.get());
 			event.accept(HORN.get());
-			event.getParameters().holders()
+			/*event.getParameters().holders()
 					.lookup(Registries.INSTRUMENT)
 					.ifPresent(
 							p_270036_ -> generateInstrumentTypes(
 									event, p_270036_, ModItems.HORN_FLUTE.get(), CustomTagGenerator.InstrumentTagGenerator.HORNED_SHEEP, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS
 							)
-					);
+					);*/
 			event.accept(HYPER_RABBIT_FOOT.get());
 			event.accept(ZOMBIFIED_RABBIT_FOOT.get());
 		}

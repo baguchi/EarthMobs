@@ -4,6 +4,9 @@ import baguchan.earthmobsmod.registry.ModBlocks;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelOutput;
 import net.minecraft.client.data.models.blockstates.BlockStateGenerator;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.Variant;
+import net.minecraft.client.data.models.blockstates.VariantProperties;
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
@@ -20,11 +23,20 @@ public class EarthBlockModels extends BlockModelGenerators {
 
     @Override
     public void run() {
-        this.createCrossBlock(ModBlocks.BUTTERCUP.get(), PlantType.NOT_TINTED);
-        this.createCrossBlock(ModBlocks.PINK_DAISY.get(), PlantType.NOT_TINTED);
-        this.createHorizontallyRotatedBlock(ModBlocks.CARVED_MELON.get(), TexturedModel.ORIENTABLE);
-        this.createHorizontallyRotatedBlock(ModBlocks.CARVED_MELON_SHOOT.get(), TexturedModel.ORIENTABLE);
+        this.createCrossBlockWithDefaultItem(ModBlocks.BUTTERCUP.get(), PlantType.NOT_TINTED);
+        this.createCrossBlockWithDefaultItem(ModBlocks.PINK_DAISY.get(), PlantType.NOT_TINTED);
+        this.createHorizontallyRotatedBlock(ModBlocks.CARVED_MELON.get(), EarthTexturedModel.ORIENTABLE_MELON);
+        this.createHorizontallyRotatedBlock(ModBlocks.CARVED_MELON_SHOOT.get(), EarthTexturedModel.ORIENTABLE_MELON);
         this.createTrivialCube(ModBlocks.RUBY.get());
+    }
+
+    public void createHorizontallyRotatedBlock(Block horizontallyRotatedBlock, TexturedModel.Provider provider) {
+        ResourceLocation resourcelocation = provider.create(horizontallyRotatedBlock, this.modelOutput);
+        this.blockStateOutput
+                .accept(
+                        MultiVariantGenerator.multiVariant(horizontallyRotatedBlock, Variant.variant().with(VariantProperties.MODEL, resourcelocation))
+                                .with(createHorizontalFacingDispatch())
+                );
     }
 
 

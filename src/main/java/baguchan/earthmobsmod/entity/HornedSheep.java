@@ -1,14 +1,11 @@
 package baguchan.earthmobsmod.entity;
 
-import baguchan.earthmobsmod.data.CustomTagGenerator;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import baguchi.bagus_lib.client.camera.CameraCore;
 import baguchi.bagus_lib.client.camera.holder.CameraHolder;
 import baguchi.bagus_lib.util.GlobalVec3;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -17,9 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
@@ -32,8 +27,6 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Instrument;
-import net.minecraft.world.item.InstrumentItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -130,10 +123,12 @@ public class HornedSheep extends Sheep {
     }
 
     public ItemStack createHorn() {
-        RandomSource randomsource = RandomSource.create((long) this.getUUID().hashCode());
+        /*RandomSource randomsource = RandomSource.create((long) this.getUUID().hashCode());
         TagKey<Instrument> tagkey = CustomTagGenerator.InstrumentTagGenerator.HORNED_SHEEP;
         HolderSet<Instrument> holderset = this.registryAccess().lookupOrThrow(Registries.INSTRUMENT).getOrThrow(tagkey);
         return InstrumentItem.create(ModItems.HORN_FLUTE.get(), holderset.getRandomElement(randomsource).get());
+    */
+        return ModItems.HORN_FLUTE.get().getDefaultInstance();
     }
 
     public void addHorns() {
