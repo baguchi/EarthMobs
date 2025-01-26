@@ -4,7 +4,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
@@ -23,11 +24,11 @@ public class ModEggItem extends Item {
 	}
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), SoundEvents.EGG_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!level.isClientSide) {
-            ThrowableItemProjectile thrownegg = typeSupplier.get().create(level);
+            ThrowableItemProjectile thrownegg = typeSupplier.get().create(level, EntitySpawnReason.MOB_SUMMONED);
             thrownegg.setPos(player.getX(), player.getEyeY() - 0.1F, player.getZ());
             thrownegg.setOwner(player);
 			thrownegg.setItem(itemstack);
@@ -40,6 +41,6 @@ public class ModEggItem extends Item {
 			itemstack.shrink(1);
 		}
 
-        return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
+        return InteractionResult.SUCCESS;
 	}
 }

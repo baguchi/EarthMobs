@@ -4,14 +4,13 @@ package baguchan.earthmobsmod.client.model;
 // Paste this class into your mod and generate all required imports
 
 
-import baguchan.earthmobsmod.entity.HornedSheep;
-import net.minecraft.client.model.SheepModel;
+import baguchan.earthmobsmod.client.render.state.HornedSheepRenderState;
+import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.util.Mth;
 
-public class HornedSheepModel<T extends HornedSheep> extends SheepModel<T> {
+public class HornedSheepModel<T extends HornedSheepRenderState> extends QuadrupedModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	private final ModelPart body;
 	private final ModelPart head;
@@ -49,19 +48,9 @@ public class HornedSheepModel<T extends HornedSheep> extends SheepModel<T> {
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        float f = ageInTicks - (float) entity.tickCount;
-
-        this.head.xRot = this.headXRot + (entity.getAggressiveAnimationScale(f) * 25F) * ((float) Math.PI / 180F);
-	}
-
-	public void prepareMobModel(T p_103687_, float p_103688_, float p_103689_, float p_103690_) {
-		super.prepareMobModel(p_103687_, p_103688_, p_103689_, p_103690_);
-		this.headXRot = p_103687_.getHeadEatAngleScale(p_103690_);
-
-		if (this.attackTime > 0) {
-			this.headXRot = -0.95F * Mth.sin(this.attackTime * (float) Math.PI);
-		}
+	public void setupAnim(T p_360805_) {
+		super.setupAnim(p_360805_);
+		this.head.y = this.head.y + p_360805_.headEatPositionScale * 9.0F * p_360805_.ageScale;
+		this.head.xRot = p_360805_.headEatAngleScale + (p_360805_.agressiveScale * 25F) * ((float) Math.PI / 180F);
 	}
 }

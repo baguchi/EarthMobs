@@ -22,6 +22,7 @@ import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 public class LobberZombie extends Zombie implements RangedAttackMob {
@@ -71,7 +72,7 @@ public class LobberZombie extends Zombie implements RangedAttackMob {
 
 	@Override
 	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
-		ZombieFlesh zombieFlesh = new ZombieFlesh(this.level(), this);
+		ZombieFlesh zombieFlesh = new ZombieFlesh(this.level(), this, Items.ROTTEN_FLESH.getDefaultInstance());
 		double d0 = p_29912_.getEyeY() - this.getEyeY();
 		double d1 = p_29912_.getX() - this.getX();
 		double d3 = p_29912_.getZ() - this.getZ();

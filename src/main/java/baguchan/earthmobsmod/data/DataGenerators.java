@@ -7,7 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
@@ -15,19 +15,19 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(modid = EarthMobsMod.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent event) {
+    public static void gatherData(GatherDataEvent.Client event) {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-        event.getGenerator().addProvider(event.includeClient(), new BlockstateGenerator(packOutput, event.getExistingFileHelper()));
-        event.getGenerator().addProvider(event.includeClient(), new ItemModelGenerator(packOutput, event.getExistingFileHelper()));
-        BlockTagsProvider blocktags = new BlockTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
-        event.getGenerator().addProvider(event.includeServer(), blocktags);
-        event.getGenerator().addProvider(event.includeServer(), new ItemTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), blocktags.contentsGetter(), event.getExistingFileHelper()));
-        event.getGenerator().addProvider(event.includeServer(), new EntityTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
-        event.getGenerator().addProvider(event.includeServer(), ModLootTableProvider.create(packOutput, event.getLookupProvider()));
-        event.getGenerator().addProvider(event.includeServer(), new WorldGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
-        event.getGenerator().addProvider(event.includeServer(), new CustomTagGenerator.InstrumentTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), existingFileHelper));
+        DatapackBuiltinEntriesProvider datapackProvider = new RegistryDataGenerator(packOutput, event.getLookupProvider());
+
+        CompletableFuture<HolderLookup.Provider> lookupProvider = datapackProvider.getRegistryProvider();
+        event.getGenerator().addProvider(true, new EarthModelData(packOutput));
+        BlockTagsProvider blocktags = new BlockTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider());
+        event.getGenerator().addProvider(true, blocktags);
+        event.getGenerator().addProvider(true, new ItemTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider(), blocktags.contentsGetter()));
+        event.getGenerator().addProvider(true, new EntityTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
+        event.getGenerator().addProvider(true, ModLootTableProvider.create(packOutput, event.getLookupProvider()));
+        event.getGenerator().addProvider(true, new WorldGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
+        event.getGenerator().addProvider(true, new CustomTagGenerator.InstrumentTagGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
     }
 }

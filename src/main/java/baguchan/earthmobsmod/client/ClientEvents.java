@@ -1,38 +1,19 @@
 package baguchan.earthmobsmod.client;
 
 import baguchan.earthmobsmod.EarthMobsMod;
-import baguchan.earthmobsmod.capability.ShadowCapability;
-import baguchan.earthmobsmod.entity.HyperRabbit;
-import baguchan.earthmobsmod.registry.ModCapability;
-import baguchan.earthmobsmod.registry.ModEffects;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.core.Direction;
-import net.minecraft.util.FastColor;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderLivingEvent;
-
-import static net.minecraft.client.renderer.entity.LivingEntityRenderer.getOverlayCoords;
 
 @EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
 
-	@SubscribeEvent
-	public static void renderEvent(RenderLivingEvent.Post<LivingEntity, EntityModel<LivingEntity>> event) {
+/*	@SubscribeEvent
+	public static void renderEvent(RenderLivingEvent.Post<LivingEntity, LivingEntityRenderState, EntityModel<LivingEntityRenderState>> event) {
 		MultiBufferSource buffer = event.getMultiBufferSource();
-		LivingEntity entity = event.getEntity();
-		LivingEntityRenderer<LivingEntity, EntityModel<LivingEntity>> renderer = event.getRenderer();
+		LivingEntityRenderState entity = event.getRenderState();
+		LivingEntityRenderer<LivingEntity, LivingEntityRenderState, EntityModel<LivingEntityRenderState>> renderer = event.getRenderer();
 		PoseStack posestack = event.getPoseStack();
 		int light = event.getPackedLight();
 		float partialtick = event.getPartialTick();
@@ -180,14 +161,13 @@ public class ClientEvents {
 				posestack.translate(0.0F, (double) -1.501F, 0.0F);
 
 
-				renderer.getModel().prepareMobModel(entity, f5, f8, partialtick);
-				renderer.getModel().setupAnim(entity, f5, f8, f7, f2, f6);
+				renderer.getModel().setupAnim(entity);
 				renderer.getModel().renderToBuffer(posestack, vertexconsumer, light, i, FastColor.ARGB32.color(255, 255, 255, (int) (0.15F * 255)));
 
 				posestack.popPose();
 			}
 		}
-	}
+	}*/
 
     protected static float getBob(LivingEntity livingEntity, float partialTick) {
         return (float) livingEntity.tickCount + partialTick;

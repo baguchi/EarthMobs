@@ -8,9 +8,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -48,7 +48,7 @@ public class SkeletonWolf extends Wolf {
 		this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
 		this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
 		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
-		this.targetSelector.addGoal(5, new NonTameRandomTargetGoal<>(this, Player.class, true, livingEntity -> {
+		this.targetSelector.addGoal(5, new NonTameRandomTargetGoal<>(this, Player.class, true, (livingEntity, serverLevel) -> {
 			return this.isWorstCondition();
 		}));
 		this.targetSelector.addGoal(6, new NonTameRandomTargetGoal<>(this, Turtle.class, false, Turtle.BABY_ON_LAND_SELECTOR));
@@ -109,7 +109,7 @@ public class SkeletonWolf extends Wolf {
 
 	@Override
 	public SkeletonWolf getBreedOffspring(ServerLevel p_149088_, AgeableMob p_149089_) {
-		SkeletonWolf skeletonWolf = ModEntities.SKELETON_WOLF.get().create(p_149088_);
+		SkeletonWolf skeletonWolf = ModEntities.SKELETON_WOLF.get().create(p_149088_, EntitySpawnReason.BREEDING);
 
 		if (this.isTame()) {
 			skeletonWolf.setOwnerUUID(this.getOwnerUUID());
@@ -143,7 +143,7 @@ public class SkeletonWolf extends Wolf {
 		return p_27574_.getBlockState(p_27573_.below()).is(Blocks.SOUL_SAND) || p_27574_.getBlockState(p_27573_.below()).is(Blocks.SOUL_SOIL) ? 10.0F : super.getWalkTargetValue(p_27573_, p_27574_);
 	}
 
-	public static boolean checkSkeletonWolfSpawnRules(EntityType<? extends SkeletonWolf> p_33018_, ServerLevelAccessor p_33019_, MobSpawnType p_33020_, BlockPos p_33021_, RandomSource p_33022_) {
+	public static boolean checkSkeletonWolfSpawnRules(EntityType<? extends SkeletonWolf> p_33018_, ServerLevelAccessor p_33019_, EntitySpawnReason p_33020_, BlockPos p_33021_, RandomSource p_33022_) {
 		return (p_33019_.getBlockState(p_33021_.below()).is(Blocks.SOUL_SAND) || p_33019_.getBlockState(p_33021_.below()).is(Blocks.SOUL_SOIL) || p_33019_.getBlockState(p_33021_.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON)) && isDarkEnoughToSpawn(p_33019_, p_33021_, p_33022_) && checkMobSpawnRules(p_33018_, p_33019_, p_33020_, p_33021_, p_33022_);
 	}
 }

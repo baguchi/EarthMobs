@@ -1,13 +1,13 @@
 package baguchan.earthmobsmod.client.model;
 
-import bagu_chan.bagus_lib.client.layer.IArmor;
 import baguchan.earthmobsmod.client.animation.LobberZombieAnimation;
-import baguchan.earthmobsmod.entity.LobberZombie;
+import baguchan.earthmobsmod.client.render.state.LobberZombieRenderState;
+import baguchi.bagus_lib.client.layer.IArmor;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class LobberZombieModel<T extends LobberZombie> extends AbstractLobberZombieModel<T> implements IArmor {
+public class LobberZombieModel<T extends LobberZombieRenderState> extends AbstractLobberZombieModel<T> implements IArmor {
 
 	public LobberZombieModel(ModelPart root) {
 		super(root);
@@ -41,9 +41,9 @@ public class LobberZombieModel<T extends LobberZombie> extends AbstractLobberZom
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		this.animate(entity.shootAnimationState, LobberZombieAnimation.shoot, ageInTicks);
+	public void setupAnim(T entity) {
+		super.setupAnim(entity);
+		this.animate(entity.shootAnimationState, LobberZombieAnimation.shoot, entity.ageInTicks);
 
 	}
 }

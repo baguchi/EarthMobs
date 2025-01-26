@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "earthmobsmod:tropical_slime_block"
-    }
+    "earthmobsmod:tropical_slime_block"
   ],
   "result": {
     "id": "earthmobsmod:tropical_ball",

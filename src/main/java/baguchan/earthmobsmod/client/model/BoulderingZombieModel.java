@@ -1,15 +1,15 @@
 package baguchan.earthmobsmod.client.model;
 
-import bagu_chan.bagus_lib.client.layer.IArmor;
+import baguchan.earthmobsmod.client.render.state.BoulderingZombieRenderState;
+import baguchi.bagus_lib.client.layer.IArmor;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.world.entity.monster.Zombie;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class BoulderingZombieModel<T extends Zombie> extends AbstractBoulderingZombieModel<T> implements IArmor {
+public class BoulderingZombieModel<T extends BoulderingZombieRenderState> extends AbstractBoulderingZombieModel<T> implements IArmor {
 
 	public BoulderingZombieModel(ModelPart root) {
 		super(root);
@@ -40,11 +40,6 @@ public class BoulderingZombieModel<T extends Zombie> extends AbstractBoulderingZ
 				.texOffs(48, 14).addBox(-2.1F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(-1.9F, -12.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 128, 128);
-	}
-
-	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 	}
 
 	protected float rotlerpRad(float angle, float maxAngle, float mul) {

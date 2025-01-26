@@ -3,16 +3,14 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.2.4
 // Paste this class into your mod and generate all required imports
 
 
-import baguchan.earthmobsmod.entity.JumboRabbit;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.RabbitRenderState;
 import net.minecraft.util.Mth;
 
-public class JumboRabbitModel<T extends JumboRabbit> extends EntityModel<T> {
+public class JumboRabbitModel<T extends RabbitRenderState> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	private final ModelPart rearFootRight;
 	private final ModelPart rearFootLeft;
@@ -30,6 +28,7 @@ public class JumboRabbitModel<T extends JumboRabbit> extends EntityModel<T> {
 	private float jumpRotation;
 
 	public JumboRabbitModel(ModelPart root) {
+		super(root);
 		this.rearFootRight = root.getChild("rearFootRight");
 		this.rearFootLeft = root.getChild("rearFootLeft");
 		this.haunchRight = root.getChild("haunchRight");
@@ -80,39 +79,22 @@ public class JumboRabbitModel<T extends JumboRabbit> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		float f = ageInTicks - (float) entity.tickCount;
-		this.nose.xRot = headPitch * ((float) Math.PI / 180F);
-		this.head.xRot = headPitch * ((float) Math.PI / 180F);
-		this.earLeft.xRot = headPitch * ((float) Math.PI / 180F);
-		this.earRight.xRot = headPitch * ((float) Math.PI / 180F);
-		this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-		this.nose.yRot = netHeadYaw * ((float) Math.PI / 180F);
+	public void setupAnim(T entity) {
+		float f = entity.partialTick;
+		this.nose.xRot = entity.xRot * ((float) Math.PI / 180F);
+		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
+		this.earLeft.xRot = entity.xRot * ((float) Math.PI / 180F);
+		this.earRight.xRot = entity.xRot * ((float) Math.PI / 180F);
+		this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
+		this.nose.yRot = entity.yRot * ((float) Math.PI / 180F);
 		this.earLeft.yRot = this.nose.yRot + 0.2617994F;
 		this.earRight.yRot = this.nose.yRot - 0.2617994F;
-		this.jumpRotation = Mth.sin(entity.getJumpCompletion(f) * (float) Math.PI);
+		this.jumpRotation = Mth.sin(entity.jumpCompletion * (float) Math.PI);
 		this.haunchRight.xRot = -0.1745F + (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
 		this.haunchLeft.xRot = -0.1745F + (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
 		this.rearFootRight.xRot = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);
 		this.rearFootLeft.xRot = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);
 		this.frontLegRight.xRot = -0.1745F + (this.jumpRotation * -29.0F) * ((float) Math.PI / 180F);
 		this.frontLegLeft.xRot = -0.1745F + (this.jumpRotation * -29.0F) * ((float) Math.PI / 180F);
-	}
-
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int i1, int i2) {
-		rearFootRight.render(poseStack, vertexConsumer, i, i1, i2);
-		rearFootLeft.render(poseStack, vertexConsumer, i, i1, i2);
-		haunchRight.render(poseStack, vertexConsumer, i, i1, i2);
-		haunchLeft.render(poseStack, vertexConsumer, i, i1, i2);
-		body.render(poseStack, vertexConsumer, i, i1, i2);
-		frontLegRight.render(poseStack, vertexConsumer, i, i1, i2);
-		frontLegLeft.render(poseStack, vertexConsumer, i, i1, i2);
-		head.render(poseStack, vertexConsumer, i, i1, i2);
-		earLeft.render(poseStack, vertexConsumer, i, i1, i2);
-		earRight.render(poseStack, vertexConsumer, i, i1, i2);
-		tail.render(poseStack, vertexConsumer, i, i1, i2);
-		nose.render(poseStack, vertexConsumer, i, i1, i2);
-
 	}
 }

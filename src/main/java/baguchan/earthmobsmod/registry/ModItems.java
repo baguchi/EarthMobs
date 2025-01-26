@@ -2,97 +2,88 @@ package baguchan.earthmobsmod.registry;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.data.CustomTagGenerator;
-import baguchan.earthmobsmod.item.*;
+import baguchan.earthmobsmod.item.BoneShardItem;
+import baguchan.earthmobsmod.item.MobPotItem;
+import baguchan.earthmobsmod.item.ModEggItem;
+import baguchan.earthmobsmod.item.TropicalBallItem;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.function.Supplier;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = EarthMobsMod.MODID)
 public class ModItems {
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, EarthMobsMod.MODID);
+	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(EarthMobsMod.MODID);
 
-	public static final Supplier<Item> RUBY = ITEMS.register("ruby", () -> new Item((new Item.Properties())));
-	public static final Supplier<Item> TROPICAL_BALL = ITEMS.register("tropical_ball", () -> new TropicalBallItem((new Item.Properties())));
+	public static final DeferredItem<Item> RUBY = ITEMS.registerItem("ruby", (prop) -> new Item((prop)));
+	public static final DeferredItem<Item> TROPICAL_BALL = ITEMS.registerItem("tropical_ball", (prop) -> new TropicalBallItem((prop.food(new FoodProperties(0, 0, true), ModConsumables.JELLY))));
 
-	public static final Supplier<Item> SMELLY_EGG = ITEMS.register("smelly_egg", () -> new ModEggItem(ModEntities.SMELLY_EGG, (new Item.Properties().stacksTo(16))));
-	public static final Supplier<Item> FANCY_EGG = ITEMS.register("fancy_egg", () -> new ModEggItem(ModEntities.FANCY_EGG, (new Item.Properties().stacksTo(16))));
-	public static final Supplier<Item> DUCK_EGG = ITEMS.register("duck_egg", () -> new ModEggItem(ModEntities.DUCK_EGG, (new Item.Properties().stacksTo(16))));
+	public static final DeferredItem<Item> SMELLY_EGG = ITEMS.registerItem("smelly_egg", (prop) -> new ModEggItem(ModEntities.SMELLY_EGG, (prop.stacksTo(16))));
+	public static final DeferredItem<Item> FANCY_EGG = ITEMS.registerItem("fancy_egg", (prop) -> new ModEggItem(ModEntities.FANCY_EGG, (prop.stacksTo(16))));
 
-	public static final Supplier<Item> BONE_SHARD = ITEMS.register("bone_shard", () -> new BoneShardItem((new Item.Properties())));
-	public static final Supplier<Item> FANCY_FEATHER = ITEMS.register("fancy_feather", () -> new Item((new Item.Properties())));
-	public static final Supplier<Item> HARDER_FLESH = ITEMS.register("harder_flesh", () -> new Item((new Item.Properties().food(ModFoods.HARDER_FLESH))));
+	public static final DeferredItem<Item> BONE_SHARD = ITEMS.registerItem("bone_shard", (prop) -> new BoneShardItem((prop)));
+	public static final DeferredItem<Item> FANCY_FEATHER = ITEMS.registerItem("fancy_feather", (prop) -> new Item((prop)));
+	public static final DeferredItem<Item> HARDER_FLESH = ITEMS.registerItem("harder_flesh", (prop) -> new Item((prop.food(ModFoods.HARDER_FLESH, ModConsumables.HARDEN_FOOD))));
 
-	public static final Supplier<Item> BONE_SPIDER_EYE = ITEMS.register("bone_spider_eye", () -> new Item((new Item.Properties())));
-	public static final Supplier<Item> HORN = ITEMS.register("horn", () -> new Item((new Item.Properties().stacksTo(1))));
-	public static final Supplier<Item> HORN_FLUTE = ITEMS.register("horn_flute", () -> new FixedInstrumentItem((new Item.Properties().stacksTo(1)), CustomTagGenerator.InstrumentTagGenerator.HORNED_SHEEP));
+	public static final DeferredItem<Item> BONE_SPIDER_EYE = ITEMS.registerItem("bone_spider_eye", (prop) -> new Item((prop)));
+	public static final DeferredItem<Item> HORN = ITEMS.registerItem("horn", (prop) -> new Item((prop.stacksTo(1))));
+	public static final DeferredItem<Item> HORN_FLUTE = ITEMS.registerItem("horn_flute", (prop) -> new InstrumentItem(CustomTagGenerator.InstrumentTagGenerator.HORNED_SHEEP, (prop.stacksTo(1))));
 
-	public static final Supplier<Item> HYPER_RABBIT_FOOT = ITEMS.register("hyper_rabbit_foot", () -> new Item((new Item.Properties())));
-	public static final Supplier<Item> ZOMBIFIED_RABBIT_FOOT = ITEMS.register("zombified_rabbit_foot", () -> new Item((new Item.Properties())));
-	public static final Supplier<Item> MUD_BUCKET = ITEMS.register("mud_bucket", () -> new BucketItem(ModFluids.MUD.value(), (new Item.Properties()).stacksTo(1).craftRemainder(Items.BUCKET)));
-	public static final Supplier<Item> TROPICAL_SLIME_BUCKET = ITEMS.register("tropical_slime_bucket", () -> new MobBucketItem(ModEntities.TROPICAL_SLIME.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties()).stacksTo(1).craftRemainder(Items.BUCKET)));
-	public static final Supplier<Item> TEACUP_PIG_POT = ITEMS.register("teacup_pig_pot", () -> new MobPotItem(ModEntities.TEACUP_PIG.get(), Fluids.EMPTY, SoundEvents.ARMOR_EQUIP_GENERIC.value(), (new Item.Properties()).stacksTo(1).craftRemainder(Items.FLOWER_POT)));
+	public static final DeferredItem<Item> HYPER_RABBIT_FOOT = ITEMS.registerItem("hyper_rabbit_foot", (prop) -> new Item((prop)));
+	public static final DeferredItem<Item> ZOMBIFIED_RABBIT_FOOT = ITEMS.registerItem("zombified_rabbit_foot", (prop) -> new Item((prop)));
+	public static final DeferredItem<Item> MUD_BUCKET = ITEMS.registerItem("mud_bucket", (prop) -> new BucketItem(ModFluids.MUD.value(), (prop).stacksTo(1).craftRemainder(Items.BUCKET)));
+	public static final DeferredItem<Item> TROPICAL_SLIME_BUCKET = ITEMS.registerItem("tropical_slime_bucket", (prop) -> new MobBucketItem(ModEntities.TROPICAL_SLIME.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (prop).stacksTo(1).craftRemainder(Items.BUCKET)));
+	public static final DeferredItem<Item> TEACUP_PIG_POT = ITEMS.registerItem("teacup_pig_pot", (prop) -> new MobPotItem(ModEntities.TEACUP_PIG.get(), Fluids.EMPTY, SoundEvents.ARMOR_EQUIP_GENERIC.value(), (prop).stacksTo(1).craftRemainder(Items.FLOWER_POT)));
 
-	public static final Supplier<Item> CLUCK_SHROOM_SPAWNEGG = ITEMS.register("cluck_shroom_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.CLUCK_SHROOM, 0xB52C17, 0xDC883B, (new Item.Properties())));
-	public static final Supplier<Item> FANCY_CHICKEN_SPAWNEGG = ITEMS.register("fancy_chicken_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.FANCY_CHICKEN, 0xF4A213, 0x202F22, (new Item.Properties())));
-	public static final Supplier<Item> WOOLY_COW_SPAWNEGG = ITEMS.register("wooly_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.WOOLY_COW, 0xDB8948, 0xFFDBB6, (new Item.Properties())));
-	public static final Supplier<Item> UMBRA_COW_SPAWNEGG = ITEMS.register("umbra_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.UMBRA_COW, 0x403E57, 0x0A0B1D, (new Item.Properties())));
-	public static final Supplier<Item> ALBINO_COW_SPAWNEGG = ITEMS.register("albino_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.ALBINO_COW, 0xECE2E2, 0xE1CFCF, (new Item.Properties())));
-	public static final Supplier<Item> ASHEN_COW_SPAWNEGG = ITEMS.register("ashen_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.ASHEN_COW, 0x5D5A66, 0x898491, (new Item.Properties())));
-	public static final Supplier<Item> CREAM_COW_SPAWNEGG = ITEMS.register("cream_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.CREAM_COW, 0xE2AB5B, 0xE8DCBB, (new Item.Properties())));
-	public static final Supplier<Item> COOKIE_COW_SPAWNEGG = ITEMS.register("cookie_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.COOKIE_COW, 0x4C5662, 0xEBE0D5, (new Item.Properties())));
-	public static final Supplier<Item> DAIRY_COW_SPAWNEGG = ITEMS.register("dairy_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.DAIRY_COW, 0xF6F4F9, 0x2E2E2D, (new Item.Properties())));
-	public static final Supplier<Item> PINTO_COW_SPAWNEGG = ITEMS.register("pinto_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.PINTO_COW, 0xEAD8C7, 0xB55E1E, (new Item.Properties())));
-	public static final Supplier<Item> SUNSET_COW_SPAWNEGG = ITEMS.register("sunset_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.SUNSET_COW, 0xE58D39, 0x171514, (new Item.Properties())));
+	public static final DeferredItem<Item> CLUCK_SHROOM_SPAWNEGG = ITEMS.registerItem("cluck_shroom_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.CLUCK_SHROOM.get(), (prop)));
+	public static final DeferredItem<Item> FANCY_CHICKEN_SPAWNEGG = ITEMS.registerItem("fancy_chicken_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.FANCY_CHICKEN.get(), (prop)));
+	public static final DeferredItem<Item> WOOLY_COW_SPAWNEGG = ITEMS.registerItem("wooly_cow_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.WOOLY_COW.get(), (prop)));
+	public static final DeferredItem<Item> UMBRA_COW_SPAWNEGG = ITEMS.registerItem("umbra_cow_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.UMBRA_COW.get(), (prop)));
 
-	public static final Supplier<Item> TEACUP_PIG_SPAWNEGG = ITEMS.register("teacup_pig_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.TEACUP_PIG, 0xEEC9C1, 0xDD5555, (new Item.Properties())));
+	public static final DeferredItem<Item> TEACUP_PIG_SPAWNEGG = ITEMS.registerItem("teacup_pig_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.TEACUP_PIG.get(), (prop)));
 
 
-	public static final Supplier<Item> HORNED_SHEEP_SPAWNEGG = ITEMS.register("horned_sheep_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.HORNED_SHEEP, 15198183, 16758197, (new Item.Properties())));
-	public static final Supplier<Item> HYPER_RABBIT_SPAWNEGG = ITEMS.register("hyper_rabbit_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.HYPER_RABBIT, 0xDA784A, 0xF4BF83, (new Item.Properties())));
-	public static final Supplier<Item> MOOBLOOM_SPAWNEGG = ITEMS.register("moobloom_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.MOOBLOOM, 0xFDCA00, 0xF7EDC1, (new Item.Properties())));
-	public static final Supplier<Item> MOOLIP_SPAWNEGG = ITEMS.register("moolip_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.MOOLIP, 0xD882B0, 0xF1DFE8, (new Item.Properties())));
-	public static final Supplier<Item> JUMBO_RABBIT_SPAWNEGG = ITEMS.register("jumbo_rabbit_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.JUMBO_RABBIT, 0x9E5C48, 0xE5B2A3, (new Item.Properties())));
-	public static final Supplier<Item> ZOMBIFILED_PIG_SPAWNEGG = ITEMS.register("zombified_pig_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.ZOMBIFIED_PIG, 15373203, 5009705, (new Item.Properties())));
-	public static final Supplier<Item> DUCK_SPAWNEGG = ITEMS.register("duck_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.DUCK, 0x64413A, 0x17951E, (new Item.Properties())));
-	public static final Supplier<Item> JOLLY_LAMMA_SPAWNEGG = ITEMS.register("jolly_llama_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.JOLLY_LLAMA, 0x673727, 0xD2BFB2, (new Item.Properties())));
+	public static final DeferredItem<Item> HORNED_SHEEP_SPAWNEGG = ITEMS.registerItem("horned_sheep_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.HORNED_SHEEP.get(), (prop)));
+	public static final DeferredItem<Item> HYPER_RABBIT_SPAWNEGG = ITEMS.registerItem("hyper_rabbit_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.HYPER_RABBIT.get(), (prop)));
+	public static final DeferredItem<Item> MOOBLOOM_SPAWNEGG = ITEMS.registerItem("moobloom_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.MOOBLOOM.get(), (prop)));
+	public static final DeferredItem<Item> MOOLIP_SPAWNEGG = ITEMS.registerItem("moolip_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.MOOLIP.get(), (prop)));
+	public static final DeferredItem<Item> JUMBO_RABBIT_SPAWNEGG = ITEMS.registerItem("jumbo_rabbit_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.JUMBO_RABBIT.get(), (prop)));
+	public static final DeferredItem<Item> ZOMBIFILED_PIG_SPAWNEGG = ITEMS.registerItem("zombified_pig_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.ZOMBIFIED_PIG.get(), (prop)));
+	public static final DeferredItem<Item> JOLLY_LAMMA_SPAWNEGG = ITEMS.registerItem("jolly_llama_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.JOLLY_LLAMA.get(), (prop)));
 
 
-	public static final Supplier<Item> BONE_SPIDER_SPAWNEGG = ITEMS.register("bone_spider_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BONE_SPIDER, 0x461C2E, 0x6130B7, (new Item.Properties())));
-	public static final Supplier<Item> STRAY_BONE_SPIDER_SPAWNEGG = ITEMS.register("stray_bone_spider_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.STRAY_BONE_SPIDER, 0x20112F, 0x30B6B2, (new Item.Properties())));
-	public static final Supplier<Item> VILER_WITCH_SPAWNEGG = ITEMS.register("viler_witch_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.VILER_WITCH, 0x111322, 0x37464D, (new Item.Properties())));
+	public static final DeferredItem<Item> BONE_SPIDER_SPAWNEGG = ITEMS.registerItem("bone_spider_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.BONE_SPIDER.get(), (prop)));
+	public static final DeferredItem<Item> STRAY_BONE_SPIDER_SPAWNEGG = ITEMS.registerItem("stray_bone_spider_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.STRAY_BONE_SPIDER.get(), (prop)));
+	public static final DeferredItem<Item> VILER_WITCH_SPAWNEGG = ITEMS.registerItem("viler_witch_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.VILER_WITCH.get(), (prop)));
 
-	public static final Supplier<Item> BOULDERING_ZOMBIE_SPAWNEGG = ITEMS.register("bouldering_zombie_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BOULDERING_ZOMBIE, 0x384242, 0x52261A, (new Item.Properties())));
-	public static final Supplier<Item> LOBBER_ZOMBIE_SPAWNEGG = ITEMS.register("lobber_zombie_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.LOBBER_ZOMBIE, 0x899274, 0x436858, (new Item.Properties())));
+	public static final DeferredItem<Item> BOULDERING_ZOMBIE_SPAWNEGG = ITEMS.registerItem("bouldering_zombie_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.BOULDERING_ZOMBIE.get(), (prop)));
+	public static final DeferredItem<Item> LOBBER_ZOMBIE_SPAWNEGG = ITEMS.registerItem("lobber_zombie_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.LOBBER_ZOMBIE.get(), (prop)));
 
-	public static final Supplier<Item> BOULDERING_DROWNED_SPAWNEGG = ITEMS.register("bouldering_drowned_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BOULDERING_DROWNED, 0x56847E, 0x52261A, (new Item.Properties())));
-	public static final Supplier<Item> LOBBER_DROWNED_SPAWNEGG = ITEMS.register("lobber_drowned_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.LOBBER_DROWNED, 0x739274, 0x3E5F51, (new Item.Properties())));
-
-
-    public static final Supplier<Item> BOULDERING_FROZEN_ZOMBIE_SPAWNEGG = ITEMS.register("bouldering_frozen_zombie_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BOULDERING_FROZEN_ZOMBIE, 0x679A90, 0x154954, (new Item.Properties())));
-    public static final Supplier<Item> LOBBER_HUSK_SPAWNEGG = ITEMS.register("lobber_husk_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.LOBBER_HUSK, 0x6C6454, 0xCFCFCF, (new Item.Properties())));
+	public static final DeferredItem<Item> BOULDERING_DROWNED_SPAWNEGG = ITEMS.registerItem("bouldering_drowned_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.BOULDERING_DROWNED.get(), (prop)));
+	public static final DeferredItem<Item> LOBBER_DROWNED_SPAWNEGG = ITEMS.registerItem("lobber_drowned_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.LOBBER_DROWNED.get(), (prop)));
 
 
-	public static final Supplier<Item> TROPICAL_SLIME_SPAWNEGG = ITEMS.register("tropical_slime_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.TROPICAL_SLIME, 0x5B83AD, 0x90B1D3, (new Item.Properties())));
-	public static final Supplier<Item> SKELETON_WOLF_SPAWNEGG = ITEMS.register("skeleton_wolf_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.SKELETON_WOLF, 12698049, 4802889, (new Item.Properties())));
-	public static final Supplier<Item> WITHER_SKELETON_WOLF_SPAWNEGG = ITEMS.register("wither_skeleton_wolf_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.WITHER_SKELETON_WOLF, 1315860, 4672845, (new Item.Properties())));
-	public static final Supplier<Item> BABY_GHAST_SPAWNEGG = ITEMS.register("baby_ghast_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BABY_GHAST, 0xFFFFFF, 0xFF9393, (new Item.Properties())));
-	public static final Supplier<Item> ZOMBIFIED_RABBIT_SPAWNEGG = ITEMS.register("zombified_rabbit_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.ZOMBIFIED_RABBIT, 0x79AD69, 0x2A5131, (new Item.Properties())));
+	public static final DeferredItem<Item> BOULDERING_FROZEN_ZOMBIE_SPAWNEGG = ITEMS.registerItem("bouldering_frozen_zombie_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.BOULDERING_FROZEN_ZOMBIE.get(), (prop)));
+	public static final DeferredItem<Item> LOBBER_HUSK_SPAWNEGG = ITEMS.registerItem("lobber_husk_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.LOBBER_HUSK.get(), (prop)));
 
-	public static final Supplier<Item> MAGMA_COW_SPAWNEGG = ITEMS.register("magma_cow_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.MAGMA_COW, 0x2C2C33, 0xFBAA59, (new Item.Properties())));
-	public static final Supplier<Item> MELON_GOLEM_SPAWNEGG = ITEMS.register("melon_golem_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.MELON_GOLEM, 14283506, 0x34791E, (new Item.Properties())));
-	public static final Supplier<Item> FURNACE_GOLEM_SPAWNEGG = ITEMS.register("furnace_golem_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.FURNACE_GOLEM, 14405058, 0x8F5846, (new Item.Properties())));
+
+	public static final DeferredItem<Item> TROPICAL_SLIME_SPAWNEGG = ITEMS.registerItem("tropical_slime_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.TROPICAL_SLIME.get(), (prop)));
+	public static final DeferredItem<Item> SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.SKELETON_WOLF.get(), (prop)));
+	public static final DeferredItem<Item> WITHER_SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("wither_skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.WITHER_SKELETON_WOLF.get(), (prop)));
+	public static final DeferredItem<Item> ZOMBIFIED_RABBIT_SPAWNEGG = ITEMS.registerItem("zombified_rabbit_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.ZOMBIFIED_RABBIT.get(), (prop)));
+
+	public static final DeferredItem<Item> MAGMA_COW_SPAWNEGG = ITEMS.registerItem("magma_cow_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.MAGMA_COW.get(), (prop)));
+	public static final DeferredItem<Item> MELON_GOLEM_SPAWNEGG = ITEMS.registerItem("melon_golem_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.MELON_GOLEM.get(), (prop)));
+	public static final DeferredItem<Item> FURNACE_GOLEM_SPAWNEGG = ITEMS.registerItem("furnace_golem_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.FURNACE_GOLEM.get(), (prop)));
 
 	private static void generateInstrumentTypes(
 			CreativeModeTab.Output p_270699_,
@@ -116,13 +107,6 @@ public class ModItems {
 			event.accept(FANCY_CHICKEN_SPAWNEGG.get());
 			event.accept(WOOLY_COW_SPAWNEGG.get());
 			event.accept(UMBRA_COW_SPAWNEGG.get());
-			event.accept(ALBINO_COW_SPAWNEGG.get());
-			event.accept(ASHEN_COW_SPAWNEGG.get());
-			event.accept(CREAM_COW_SPAWNEGG.get());
-			event.accept(COOKIE_COW_SPAWNEGG.get());
-			event.accept(DAIRY_COW_SPAWNEGG.get());
-			event.accept(PINTO_COW_SPAWNEGG.get());
-			event.accept(SUNSET_COW_SPAWNEGG.get());
 
 
 			event.accept(TEACUP_PIG_SPAWNEGG.get());
@@ -132,12 +116,10 @@ public class ModItems {
 			event.accept(MOOLIP_SPAWNEGG.get());
 			event.accept(JUMBO_RABBIT_SPAWNEGG.get());
 			event.accept(ZOMBIFILED_PIG_SPAWNEGG.get());
-			event.accept(DUCK_SPAWNEGG.get());
 			event.accept(JOLLY_LAMMA_SPAWNEGG.get());
 
 			event.accept(BONE_SPIDER_SPAWNEGG.get());
 			event.accept(STRAY_BONE_SPIDER_SPAWNEGG.get());
-			event.accept(BABY_GHAST_SPAWNEGG.get());
 			event.accept(ZOMBIFIED_RABBIT_SPAWNEGG.get());
 			event.accept(BOULDERING_ZOMBIE_SPAWNEGG.get());
 			event.accept(BOULDERING_DROWNED_SPAWNEGG.get());
@@ -160,7 +142,6 @@ public class ModItems {
 			event.accept(TROPICAL_BALL.get());
 			event.accept(SMELLY_EGG.get());
 			event.accept(FANCY_EGG.get());
-			event.accept(DUCK_EGG.get());
 			event.accept(BONE_SHARD.get());
 			event.accept(FANCY_FEATHER.get());
 			event.accept(HARDER_FLESH.get());

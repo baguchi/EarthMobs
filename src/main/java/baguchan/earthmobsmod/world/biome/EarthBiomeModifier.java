@@ -35,12 +35,6 @@ public class EarthBiomeModifier implements BiomeModifier {
 					}
 				}
 
-				if (EarthMobsConfig.COMMON.duckSpawnRate.get() > 0) {
-					if (biome.is(Tags.Biomes.IS_PLAINS) && !biome.is(Tags.Biomes.IS_COLD) && !biome.is(Tags.Biomes.IS_HOT) || biome.is(Tags.Biomes.IS_SWAMP) || biome.is(Biomes.RIVER)) {
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.DUCK.get(), EarthMobsConfig.COMMON.duckSpawnRate.get(), 3, 6));
-					}
-				}
-
 				if (EarthMobsConfig.COMMON.woolyCowSpawnRate.get() > 0) {
 					if (biome.is(Tags.Biomes.IS_MOUNTAIN) && biome.is(Tags.Biomes.IS_COLD) || biome.is(Tags.Biomes.IS_COLD)) {
 						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.WOOLY_COW.get(), EarthMobsConfig.COMMON.woolyCowSpawnRate.get(), 3, 6));
@@ -56,20 +50,6 @@ public class EarthBiomeModifier implements BiomeModifier {
 				if (EarthMobsConfig.COMMON.umbraCowSpawnRate.get() > 0) {
 					if (biome.is(Tags.Biomes.IS_MOUNTAIN) && biome.is(Tags.Biomes.IS_COLD) || biome.is(Tags.Biomes.IS_COLD)) {
 						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.UMBRA_COW.get(), EarthMobsConfig.COMMON.umbraCowSpawnRate.get(), 3, 6));
-					}
-				}
-
-
-				if (EarthMobsConfig.COMMON.commonCowSpawnRate.get() > 0) {
-					if (biome.is(Tags.Biomes.IS_PLAINS)) {
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.ALBINO_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.ASHEN_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.CREAM_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.COOKIE_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.DAIRY_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.PINTO_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
-						builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.SUNSET_COW.get(), EarthMobsConfig.COMMON.commonCowSpawnRate.get(), 3, 6));
-
 					}
 				}
 
@@ -167,12 +147,6 @@ public class EarthBiomeModifier implements BiomeModifier {
 				if (biome.is(Biomes.SOUL_SAND_VALLEY)) {
 					builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ModEntities.SKELETON_WOLF.get(), EarthMobsConfig.COMMON.skeletonWolfNetherSpawnRate.get(), 2, 3));
 					builder.getMobSpawnSettings().addMobCharge(ModEntities.SKELETON_WOLF.get(), 0.7, 0.15F);
-				}
-			}
-
-			if (EarthMobsConfig.COMMON.babyGhastSpawnRate.get() > 0) {
-				if (biome.is(Biomes.CRIMSON_FOREST)) {
-					builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.BABY_GHAST.get(), EarthMobsConfig.COMMON.babyGhastSpawnRate.get(), 3, 4));
 				}
 			}
 

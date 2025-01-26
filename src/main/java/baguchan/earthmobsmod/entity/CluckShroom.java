@@ -13,7 +13,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -43,16 +46,16 @@ public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 
 	@Nullable
 	@Override
-	public ItemEntity spawnAtLocation(ItemLike p_19999_) {
+	public ItemEntity spawnAtLocation(ServerLevel serverLevel, ItemLike p_19999_) {
 		//override to smelly egg
 		if (p_19999_.asItem() == Items.EGG) {
 			p_19999_ = ModItems.SMELLY_EGG.get();
 		}
 
-		return super.spawnAtLocation(p_19999_);
+		return super.spawnAtLocation(serverLevel, p_19999_);
 	}
 
-	public static boolean checkCluckShroomSpawnRules(EntityType<CluckShroom> p_28949_, LevelAccessor p_28950_, MobSpawnType p_28951_, BlockPos p_28952_, RandomSource p_28953_) {
+	public static boolean checkCluckShroomSpawnRules(EntityType<CluckShroom> p_28949_, LevelAccessor p_28950_, EntitySpawnReason p_28951_, BlockPos p_28952_, RandomSource p_28953_) {
 		return p_28950_.getBlockState(p_28952_.below()).is(Blocks.MYCELIUM) && p_28950_.getRawBrightness(p_28952_, 0) > 8;
 	}
 
@@ -83,7 +86,7 @@ public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 		if (!this.level().isClientSide()) {
 			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();
-			Chicken chickin = EntityType.CHICKEN.create(this.level());
+			Chicken chickin = EntityType.CHICKEN.create(this.level(), EntitySpawnReason.CONVERSION);
 			chickin.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
 			chickin.setHealth(this.getHealth());
 			chickin.yBodyRot = this.yBodyRot;
@@ -133,7 +136,7 @@ public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 	}
 
 	public CluckShroom getBreedOffspring(ServerLevel p_148942_, AgeableMob p_148943_) {
-		CluckShroom mushroomchickin = ModEntities.CLUCK_SHROOM.get().create(p_148942_);
+		CluckShroom mushroomchickin = ModEntities.CLUCK_SHROOM.get().create(p_148942_, EntitySpawnReason.BREEDING);
 		mushroomchickin.setCluckShroomType(this.getOffspringType((CluckShroom) p_148943_));
 		return mushroomchickin;
 	}

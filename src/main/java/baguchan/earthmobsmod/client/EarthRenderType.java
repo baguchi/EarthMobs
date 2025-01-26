@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.TriState;
 
 public class EarthRenderType extends RenderType {
     public EarthRenderType(String name, VertexFormat format, VertexFormat.Mode mode, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload, Runnable setupState, Runnable clearState) {
@@ -23,7 +24,7 @@ public class EarthRenderType extends RenderType {
                 true,
                 RenderType.CompositeState.builder()
                         .setShaderState(RENDERTYPE_EYES_SHADER)
-                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), false, false))
+                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), TriState.DEFAULT, false))
                         .setTransparencyState(ADDITIVE_TRANSPARENCY)
                         .setWriteMaskState(COLOR_WRITE)
                         .createCompositeState(false)
@@ -41,7 +42,7 @@ public class EarthRenderType extends RenderType {
                 true, false,
                 RenderType.CompositeState.builder()
                         .setShaderState(RENDERTYPE_ENTITY_CUTOUT_NO_CULL_SHADER)
-                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), false, false))
+                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), TriState.DEFAULT, false))
                         .setTransparencyState(NO_TRANSPARENCY)
                         .setCullState(NO_CULL)
                         .setLightmapState(LIGHTMAP)

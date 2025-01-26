@@ -3,17 +3,14 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.1.1
 // Paste this class into your mod and generate all required imports
 
 
-import baguchan.earthmobsmod.entity.HyperRabbit;
-import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.RabbitRenderState;
 import net.minecraft.util.Mth;
 
-public class HyperRabbitModel<T extends HyperRabbit> extends EntityModel<T> {
+public class HyperRabbitModel<T extends RabbitRenderState> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	private final ModelPart rearFootLeft;
 	private final ModelPart rearFootRight;
@@ -32,6 +29,7 @@ public class HyperRabbitModel<T extends HyperRabbit> extends EntityModel<T> {
 	private static final float NEW_SCALE = 0.6F;
 
 	public HyperRabbitModel(ModelPart root) {
+		super(root);
 		this.body = root.getChild("body");
 		this.rearFootLeft = this.body.getChild("rearFootLeft");
 		this.rearFootRight = this.body.getChild("rearFootRight");
@@ -107,24 +105,17 @@ public class HyperRabbitModel<T extends HyperRabbit> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		float f = ageInTicks - (float) entity.tickCount;
-		this.head.xRot = headPitch * ((float) Math.PI / 180F);
-		this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+	public void setupAnim(T entity) {
+		float f = entity.partialTick;
+		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
+		this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
 
-		this.jumpRotation = Mth.sin(entity.getJumpCompletion(f) * (float) Math.PI);
+		this.jumpRotation = Mth.sin(entity.jumpCompletion * (float) Math.PI);
 		this.haunchLeft.xRot = -0.6109F + (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
 		this.haunchRight.xRot = -0.6109F + (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
 		this.rearFootLeft.xRot = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);
 		this.rearFootRight.xRot = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);
 		this.frontLegLeft.xRot = -0.6109F + (this.jumpRotation * -29.0F) * ((float) Math.PI / 180F);
 		this.frontLegRight.xRot = -0.6109F + (this.jumpRotation * -29.0F) * ((float) Math.PI / 180F);
-	}
-
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int i1, int i2) {
-		ImmutableList.of(this.body).forEach((p_103597_) -> {
-			p_103597_.render(poseStack, vertexConsumer, i, i1, i2);
-		});
 	}
 }

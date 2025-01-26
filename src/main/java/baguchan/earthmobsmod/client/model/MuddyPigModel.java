@@ -4,14 +4,13 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.1.5
 
 
 import baguchan.earthmobsmod.api.ISheared;
-import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-public class MuddyPigModel<T extends Entity> extends PigModel<T> {
+public class MuddyPigModel extends QuadrupedModel<LivingEntityRenderState> {
 	private final ModelPart body;
 	private final ModelPart head;
 	private final ModelPart mud;
@@ -39,8 +38,8 @@ public class MuddyPigModel<T extends Entity> extends PigModel<T> {
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+	public void setupAnim(LivingEntityRenderState entity) {
+		super.setupAnim(entity);
 
 		if (entity instanceof ISheared) {
 			this.flower.visible = !((ISheared) entity).isSheared();

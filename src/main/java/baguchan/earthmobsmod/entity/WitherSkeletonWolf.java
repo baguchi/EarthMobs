@@ -5,10 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -24,7 +21,7 @@ public class WitherSkeletonWolf extends SkeletonWolf {
 
 	@Override
 	public WitherSkeletonWolf getBreedOffspring(ServerLevel p_149088_, AgeableMob p_149089_) {
-		WitherSkeletonWolf skeletonWolf = ModEntities.WITHER_SKELETON_WOLF.get().create(p_149088_);
+		WitherSkeletonWolf skeletonWolf = ModEntities.WITHER_SKELETON_WOLF.get().create(p_149088_, EntitySpawnReason.BREEDING);
 
 		if (this.isTame()) {
 			skeletonWolf.setOwnerUUID(this.getOwnerUUID());
@@ -39,8 +36,8 @@ public class WitherSkeletonWolf extends SkeletonWolf {
 	}
 
 	@Override
-	public boolean doHurtTarget(Entity p_34169_) {
-		if (!super.doHurtTarget(p_34169_)) {
+	public boolean doHurtTarget(ServerLevel serverLevel, Entity p_34169_) {
+		if (!super.doHurtTarget(serverLevel, p_34169_)) {
 			return false;
 		} else {
 			if (p_34169_ instanceof LivingEntity) {

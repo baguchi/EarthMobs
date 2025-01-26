@@ -9,8 +9,8 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -74,9 +74,9 @@ public class BoulderingZombie extends Zombie {
 		this.entityData.set(DATA_FLAGS_ID, b0);
 	}
 
-	public static boolean checkBoulderingSpawnRules(EntityType<? extends BoulderingZombie> p_32350_, ServerLevelAccessor p_32351_, MobSpawnType p_32352_, BlockPos p_32353_, RandomSource p_32354_) {
+	public static boolean checkBoulderingSpawnRules(EntityType<? extends BoulderingZombie> p_32350_, ServerLevelAccessor p_32351_, EntitySpawnReason p_32352_, BlockPos p_32353_, RandomSource p_32354_) {
 		Holder<Biome> holder = p_32351_.getBiome(p_32353_);
-		boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (MobSpawnType.isSpawner(p_32352_) || p_32353_.getY() < 0 && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_) || p_32351_.getBiome(p_32353_).is(BiomeTags.IS_MOUNTAIN) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
+		boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (EntitySpawnReason.isSpawner(p_32352_) || p_32353_.getY() < 0 && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_) || p_32351_.getBiome(p_32353_).is(BiomeTags.IS_MOUNTAIN) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
 		return checkMobSpawnRules(p_32350_, p_32351_, p_32352_, p_32353_, p_32354_) && flag;
 	}
 

@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-    "S": {
-      "item": "earthmobsmod:tropical_ball"
-    }
+    "S": "earthmobsmod:tropical_ball"
   },
   "pattern": [
     "SSS",

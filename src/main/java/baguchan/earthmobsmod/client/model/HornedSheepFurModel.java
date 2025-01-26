@@ -4,16 +4,13 @@ package baguchan.earthmobsmod.client.model;
 // Paste this class into your mod and generate all required imports
 
 
-import baguchan.earthmobsmod.entity.HornedSheep;
-import net.minecraft.client.model.SheepFurModel;
+import baguchan.earthmobsmod.client.render.state.HornedSheepRenderState;
+import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.util.Mth;
 
-public class HornedSheepFurModel<T extends HornedSheep> extends SheepFurModel<T> {
-	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	private float headXRot;
+public class HornedSheepFurModel<T extends HornedSheepRenderState> extends QuadrupedModel<T> {
 
 	public HornedSheepFurModel(ModelPart root) {
 		super(root);
@@ -33,19 +30,10 @@ public class HornedSheepFurModel<T extends HornedSheep> extends SheepFurModel<T>
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		float f = ageInTicks - (float) entity.tickCount;
+	public void setupAnim(T entity) {
+		super.setupAnim(entity);
 
-		this.head.xRot = this.headXRot + (entity.getAggressiveAnimationScale(f) * 25F) * ((float) Math.PI / 180F);
-	}
-
-	public void prepareMobModel(T p_103687_, float p_103688_, float p_103689_, float p_103690_) {
-		super.prepareMobModel(p_103687_, p_103688_, p_103689_, p_103690_);
-		this.headXRot = p_103687_.getHeadEatAngleScale(p_103690_);
-
-		if (this.attackTime > 0) {
-			this.headXRot = -0.95F * Mth.sin(this.attackTime * (float) Math.PI);
-		}
+		this.head.y = this.head.y + entity.headEatPositionScale * 9.0F * entity.ageScale;
+		this.head.xRot = entity.headEatAngleScale + (entity.agressiveScale * 25F) * ((float) Math.PI / 180F);
 	}
 }

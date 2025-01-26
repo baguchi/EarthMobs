@@ -1,18 +1,16 @@
 package baguchan.earthmobsmod.client.model;
 
-import bagu_chan.bagus_lib.client.layer.IArmor;
 import baguchan.earthmobsmod.client.animation.LobberZombieAnimation;
-import baguchan.earthmobsmod.entity.LobberDrowned;
+import baguchan.earthmobsmod.client.render.state.LobberZombieRenderState;
+import baguchi.bagus_lib.client.layer.IArmor;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
-public class LobberDrownedModel<T extends LobberDrowned> extends AbstractLobberZombieModel<T> implements IArmor {
+public class LobberDrownedModel<T extends LobberZombieRenderState> extends AbstractLobberZombieModel<T> implements IArmor {
 	public float swimAmount;
 
 	public LobberDrownedModel(ModelPart root) {
@@ -45,18 +43,11 @@ public class LobberDrownedModel<T extends LobberDrowned> extends AbstractLobberZ
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
 
-	public void prepareMobModel(T entity, float limbSwing, float limbSwingAmount, float partialTick) {
-		this.swimAmount = entity.getSwimAmount(partialTick);
-		super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick);
-	}
-
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-
-		ItemStack itemstack = entity.getItemInHand(InteractionHand.MAIN_HAND);
-
-		if (itemstack.is(Items.TRIDENT) && entity.isAggressive()) {
-			if (entity.getMainArm() == HumanoidArm.RIGHT) {
+	@Override
+	public void setupAnim(T entity) {
+		super.setupAnim(entity);
+		if (entity.rightArmPose == HumanoidModel.ArmPose.THROW_SPEAR) {
+			if (entity.mainArm == HumanoidArm.RIGHT) {
 				this.right_arm.xRot = this.right_arm.xRot * 0.5F - (float) Math.PI;
 				this.right_arm.yRot = 0.0F;
 			} else {
@@ -66,15 +57,15 @@ public class LobberDrownedModel<T extends LobberDrowned> extends AbstractLobberZ
 		}
 
 		if (swimAmount > 0.0F) {
-			this.right_arm.xRot = this.rotlerpRad(this.swimAmount, this.right_arm.xRot, -2.5132742F) + this.swimAmount * 0.35F * Mth.sin(0.1F * ageInTicks);
-			this.left_arm.xRot = this.rotlerpRad(this.swimAmount, this.left_arm.xRot, -2.5132742F) - this.swimAmount * 0.35F * Mth.sin(0.1F * ageInTicks);
+			this.right_arm.xRot = this.rotlerpRad(this.swimAmount, this.right_arm.xRot, -2.5132742F) + this.swimAmount * 0.35F * Mth.sin(0.1F * entity.ageInTicks);
+			this.left_arm.xRot = this.rotlerpRad(this.swimAmount, this.left_arm.xRot, -2.5132742F) - this.swimAmount * 0.35F * Mth.sin(0.1F * entity.ageInTicks);
 			this.right_arm.zRot = this.rotlerpRad(this.swimAmount, this.right_arm.zRot, -0.15F);
 			this.left_arm.zRot = this.rotlerpRad(this.swimAmount, this.left_arm.zRot, 0.15F);
-			this.left_leg.xRot -= this.swimAmount * 0.55F * Mth.sin(0.1F * ageInTicks);
-			this.right_leg.xRot += this.swimAmount * 0.55F * Mth.sin(0.1F * ageInTicks);
+			this.left_leg.xRot -= this.swimAmount * 0.55F * Mth.sin(0.1F * entity.ageInTicks);
+			this.right_leg.xRot += this.swimAmount * 0.55F * Mth.sin(0.1F * entity.ageInTicks);
 			this.head.xRot = 0.0F;
 		}
-		this.animate(entity.shootAnimationState, LobberZombieAnimation.shoot, ageInTicks);
+		this.animate(entity.shootAnimationState, LobberZombieAnimation.shoot, entity.ageInTicks);
 	}
 
 	protected float rotlerpRad(float angle, float maxAngle, float mul) {

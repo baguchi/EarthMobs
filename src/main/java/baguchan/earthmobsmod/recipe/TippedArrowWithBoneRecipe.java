@@ -90,7 +90,7 @@ public class TippedArrowWithBoneRecipe extends CustomRecipe {
 		return true;
 	}
 
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends CustomRecipe> getSerializer() {
 		return ModRecipes.RECIPE_TIPPED_ARROW_WITH_BONE.get();
 	}
 }

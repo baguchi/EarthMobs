@@ -4,13 +4,13 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.7.4
 
 
 import baguchan.earthmobsmod.client.animation.JollyLlamaAnimation;
-import baguchan.earthmobsmod.entity.JollyLlama;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LlamaRenderState;
 
-public class JollyLlamaModel<T extends JollyLlama> extends HierarchicalModel<T> {
+public class JollyLlamaModel<T extends LlamaRenderState> extends EntityModel<T> {
     private final ModelPart root;
     private final ModelPart head;
     private final ModelPart body;
@@ -22,6 +22,7 @@ public class JollyLlamaModel<T extends JollyLlama> extends HierarchicalModel<T> 
     private final ModelPart chest_right;
 
     public JollyLlamaModel(ModelPart root) {
+        super(root);
         this.root = root;
         this.head = root.getChild("head");
         this.body = root.getChild("body");
@@ -64,20 +65,15 @@ public class JollyLlamaModel<T extends JollyLlama> extends HierarchicalModel<T> 
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T entity) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.head.xRot = headPitch * ((float) Math.PI / 180F);
-        this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-        this.chest_right.visible = entity.hasChest();
-        this.chest_left.visible = entity.hasChest();
-        if (this.young) {
+        this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
+        this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
+        this.chest_right.visible = entity.hasChest;
+        this.chest_left.visible = entity.hasChest;
+        if (entity.isBaby) {
             this.applyStatic(JollyLlamaAnimation.BABY);
         }
-        this.animateWalk(JollyLlamaAnimation.WALK, limbSwing, limbSwingAmount, 1.0F, 1.0F);
-    }
-
-    @Override
-    public ModelPart root() {
-        return this.root;
+        this.animateWalk(JollyLlamaAnimation.WALK, entity.walkAnimationPos, entity.walkAnimationSpeed, 1.0F, 1.0F);
     }
 }

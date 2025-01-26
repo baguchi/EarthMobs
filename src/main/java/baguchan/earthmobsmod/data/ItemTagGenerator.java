@@ -10,13 +10,12 @@ import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ItemTagGenerator extends ItemTagsProvider {
-	public ItemTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> provider, ExistingFileHelper exFileHelper) {
-		super(output, lookupProvider, provider, EarthMobsMod.MODID, exFileHelper);
+	public ItemTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> provider) {
+		super(output, lookupProvider, provider, EarthMobsMod.MODID);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -24,7 +23,7 @@ public class ItemTagGenerator extends ItemTagsProvider {
 	protected void addTags(HolderLookup.Provider p_256380_) {
 		tag(ItemTags.SMALL_FLOWERS).add(ModBlocks.BUTTERCUP.get().asItem(), ModBlocks.PINK_DAISY.get().asItem());
 		tag(Tags.Items.FEATHERS).add(ModItems.FANCY_FEATHER.get());
-		tag(Tags.Items.EGGS).add(ModItems.SMELLY_EGG.get(), ModItems.DUCK_EGG.get(), ModItems.FANCY_EGG.get());
+		tag(Tags.Items.EGGS).add(ModItems.SMELLY_EGG.get(), ModItems.FANCY_EGG.get());
 		tag(ItemTags.MEAT).add(ModItems.HARDER_FLESH.get());
 	}
 }

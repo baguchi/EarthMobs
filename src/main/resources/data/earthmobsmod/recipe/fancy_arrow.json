@@ -1,15 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    },
-    "X": {
-      "item": "minecraft:flint"
-    },
-    "Y": {
-      "item": "earthmobsmod:fancy_feather"
-    }
+    "#": "minecraft:stick",
+    "X": "minecraft:flint",
+    "Y": "earthmobsmod:fancy_feather"
   },
   "pattern": [
     "X",

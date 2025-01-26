@@ -1,33 +1,37 @@
 package baguchan.earthmobsmod.client.model;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.VillagerLikeModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.WitchRenderState;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class VilerWitchModel<T extends LivingEntity> extends HierarchicalModel<T> implements HeadedModel {
+public class VilerWitchModel<T extends WitchRenderState> extends EntityModel<T> implements VillagerLikeModel, HeadedModel {
 	private final ModelPart root;
 	private final ModelPart head;
 	private final ModelPart hat;
 	private final ModelPart rightLeg;
 	private final ModelPart leftLeg;
 	protected final ModelPart nose;
-
+	protected final ModelPart arms;
 	private boolean holdingItem;
 
 	public VilerWitchModel(ModelPart p_170688_) {
+		super(p_170688_);
 		this.root = p_170688_;
 		this.head = p_170688_.getChild("head");
 		this.hat = this.head.getChild("hat");
 		this.nose = this.head.getChild("nose");
 		this.rightLeg = p_170688_.getChild("right_leg");
 		this.leftLeg = p_170688_.getChild("left_leg");
+		this.arms = p_170688_.getChild("rms");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -60,33 +64,21 @@ public class VilerWitchModel<T extends LivingEntity> extends HierarchicalModel<T
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
 
-	public ModelPart root() {
-		return this.root;
-	}
-
-	public void setupAnim(T p_102928_, float p_102929_, float p_102930_, float p_102931_, float p_102932_, float p_102933_) {
-		this.head.yRot = p_102932_ * ((float) Math.PI / 180F);
-		this.head.xRot = p_102933_ * ((float) Math.PI / 180F);
+	public void setupAnim(T entity) {
+		this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
+		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
 		this.nose.setPos(0.0F, -2.0F, 0.0F);
-		float f = 0.01F * (float) (p_102928_.getId() % 10);
-		this.nose.xRot = Mth.sin((float) p_102928_.tickCount * f) * 4.5F * ((float) Math.PI / 180F);
+		float f = 0.01F * (float) (entity.entityId % 10);
+		this.nose.xRot = Mth.sin((float) entity.ageInTicks * f) * 4.5F * ((float) Math.PI / 180F);
 		this.nose.yRot = 0.0F;
-		this.nose.zRot = Mth.cos((float) p_102928_.tickCount * f) * 2.5F * ((float) Math.PI / 180F);
-		if (this.riding) {
-			this.rightLeg.xRot = -1.4137167F;
-			this.rightLeg.yRot = ((float) Math.PI / 10F);
-			this.rightLeg.zRot = 0.07853982F;
-			this.leftLeg.xRot = -1.4137167F;
-			this.leftLeg.yRot = (-(float) Math.PI / 10F);
-			this.leftLeg.zRot = -0.07853982F;
-		} else {
-			this.rightLeg.xRot = Mth.cos(p_102929_ * 0.6662F) * 1.4F * p_102930_ * 0.5F;
-			this.rightLeg.yRot = 0.0F;
-			this.rightLeg.zRot = 0.0F;
-			this.leftLeg.xRot = Mth.cos(p_102929_ * 0.6662F + (float) Math.PI) * 1.4F * p_102930_ * 0.5F;
-			this.leftLeg.yRot = 0.0F;
-			this.leftLeg.zRot = 0.0F;
-		}
+		this.nose.zRot = Mth.cos((float) entity.ageInTicks * f) * 2.5F * ((float) Math.PI / 180F);
+
+		this.rightLeg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F) * 1.4F * entity.walkAnimationSpeed * 0.5F;
+		this.rightLeg.yRot = 0.0F;
+		this.rightLeg.zRot = 0.0F;
+		this.leftLeg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed * 0.5F;
+		this.leftLeg.yRot = 0.0F;
+		this.leftLeg.zRot = 0.0F;
 
 		if (this.holdingItem) {
 			this.nose.setPos(0.0F, 1.0F, -1.5F);
@@ -109,5 +101,16 @@ public class VilerWitchModel<T extends LivingEntity> extends HierarchicalModel<T
 
 	public void setHoldingItem(boolean p_104075_) {
 		this.holdingItem = p_104075_;
+	}
+
+	@Override
+	public void hatVisible(boolean p_382812_) {
+
+	}
+
+	@Override
+	public void translateToArms(PoseStack p_383014_) {
+		this.root.translateAndRotate(p_383014_);
+		this.arms.translateAndRotate(p_383014_);
 	}
 }

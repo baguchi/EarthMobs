@@ -5,10 +5,10 @@ import baguchan.earthmobsmod.api.IPlantMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -69,14 +69,12 @@ public class BeeGlowFlowerMobGoal extends Goal {
     }
 
     private Optional<Animal> findNearestFlowerMob(Predicate<LivingEntity> p_28076_, double p_28077_) {
-        TargetingConditions targetConditions = TargetingConditions.forNonCombat().range(p_28077_).selector(p_28076_);
-
-        Animal livingEntity = this.bee.level().getNearestEntity(this.bee.level().getEntitiesOfClass(Animal.class, this.bee.getBoundingBox().expandTowards(0, -p_28077_, 0), (p_148152_) -> {
+        List<Animal> livingEntity = this.bee.level().getEntitiesOfClass(Animal.class, this.bee.getBoundingBox().expandTowards(0, -p_28077_, 0), (p_148152_) -> {
             return true;
-        }), targetConditions, this.bee, this.bee.getX(), this.bee.getEyeY(), this.bee.getZ());
+        });
 
-        if (livingEntity != null) {
-            return Optional.of(livingEntity);
+        if (!livingEntity.isEmpty()) {
+            return Optional.of(livingEntity.getFirst());
         }
 
         return Optional.empty();

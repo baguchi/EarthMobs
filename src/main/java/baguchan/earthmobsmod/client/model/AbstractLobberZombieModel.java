@@ -1,18 +1,18 @@
 package baguchan.earthmobsmod.client.model;
 
-import bagu_chan.bagus_lib.client.layer.IArmor;
 import baguchan.earthmobsmod.client.animation.BabyZombieAnimation;
+import baguchi.bagus_lib.client.layer.IArmor;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AnimationUtils;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.monster.Zombie;
 
-public class AbstractLobberZombieModel<T extends Zombie> extends HierarchicalModel<T> implements IArmor {
+public class AbstractLobberZombieModel<T extends ZombieRenderState> extends EntityModel<T> implements IArmor {
     private final ModelPart root;
     private final ModelPart bone;
     public final ModelPart head;
@@ -23,6 +23,7 @@ public class AbstractLobberZombieModel<T extends Zombie> extends HierarchicalMod
     public final ModelPart right_leg;
 
     public AbstractLobberZombieModel(ModelPart root) {
+        super(root);
         this.root = root;
         this.bone = root.getChild("bone");
         this.head = this.bone.getChild("head");
@@ -61,28 +62,22 @@ public class AbstractLobberZombieModel<T extends Zombie> extends HierarchicalMod
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T entity) {
         this.root.getAllParts().forEach(ModelPart::resetPose);
-        this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-        this.head.xRot = headPitch * ((float) Math.PI / 180F);
-        AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, entity.isAggressive(), this.attackTime, ageInTicks);
+        this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
+        this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
+        AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, entity.isAggressive, entity.attackTime, entity.ageInTicks);
 
-        this.right_leg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount * 0.5F;
+        this.right_leg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F) * 1.4F * entity.walkAnimationSpeed * 0.5F;
         this.right_leg.yRot = 0.0F;
         this.right_leg.zRot = 0.0F;
-        this.left_leg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount * 0.5F;
+        this.left_leg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed * 0.5F;
         this.left_leg.yRot = 0.0F;
         this.left_leg.zRot = 0.0F;
-        if (entity.isBaby()) {
+        if (entity.isBaby) {
             this.applyStatic(BabyZombieAnimation.baby);
         }
     }
-
-    @Override
-    public ModelPart root() {
-        return this.root;
-    }
-
     public void translateToHead(ModelPart part, PoseStack poseStack) {
         this.bone.translateAndRotate(poseStack);
         part.translateAndRotate(poseStack);

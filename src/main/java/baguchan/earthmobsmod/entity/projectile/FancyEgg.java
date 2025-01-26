@@ -7,10 +7,12 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -20,12 +22,12 @@ public class FancyEgg extends ThrowableItemProjectile {
 		super(p_37391_, p_37392_);
 	}
 
-	public FancyEgg(Level p_37399_, LivingEntity p_37400_) {
-		super(ModEntities.FANCY_EGG.get(), p_37400_, p_37399_);
+	public FancyEgg(Level p_37399_, LivingEntity p_37400_, ItemStack p_363259_) {
+		super(ModEntities.FANCY_EGG.get(), p_37400_, p_37399_, p_363259_);
 	}
 
-	public FancyEgg(Level p_37394_, double p_37395_, double p_37396_, double p_37397_) {
-		super(ModEntities.FANCY_EGG.get(), p_37395_, p_37396_, p_37397_, p_37394_);
+	public FancyEgg(Level p_37394_, double p_37395_, double p_37396_, double p_37397_, ItemStack p_363259_) {
+		super(ModEntities.FANCY_EGG.get(), p_37395_, p_37396_, p_37397_, p_37394_, p_363259_);
 	}
 
 	protected Item getDefaultItem() {
@@ -63,7 +65,7 @@ public class FancyEgg extends ThrowableItemProjectile {
 				}
 
 				for (int j = 0; j < i; ++j) {
-					FancyChicken chicken = ModEntities.FANCY_CHICKEN.get().create(this.level());
+					FancyChicken chicken = ModEntities.FANCY_CHICKEN.get().create(this.level(), EntitySpawnReason.MOB_SUMMONED);
 					chicken.setAge(-24000);
 					chicken.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
 					this.level().addFreshEntity(chicken);

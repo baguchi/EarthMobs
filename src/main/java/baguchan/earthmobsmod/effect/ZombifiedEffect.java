@@ -1,6 +1,7 @@
 package baguchan.earthmobsmod.effect;
 
 import baguchan.earthmobsmod.registry.ModDamageSource;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -11,8 +12,9 @@ public class ZombifiedEffect extends MobEffect {
         super(beneficial, i);
     }
 
-    public boolean applyEffectTick(LivingEntity p_301282_, int p_300945_) {
-        super.applyEffectTick(p_301282_, p_300945_);
+    @Override
+    public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity p_301282_, int p_300945_) {
+        super.applyEffectTick(serverLevel, p_301282_, p_300945_);
         if (p_301282_.getType().is(EntityTypeTags.UNDEAD)) {
             p_301282_.hurt(p_301282_.damageSources().source(ModDamageSource.ZOMBIFIED), 2);
             return true;

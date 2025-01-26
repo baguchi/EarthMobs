@@ -129,7 +129,7 @@ public class RangedAndMeleeAttack extends Goal {
         if (p_25558_ <= d0 && this.ticksUntilNextAttack <= 0) {
             this.resetAttackCooldown();
             this.mob.swing(InteractionHand.MAIN_HAND);
-            this.mob.doHurtTarget(p_25557_);
+            this.mob.doHurtTarget(getServerLevel(this.mob.level()), p_25557_);
         }
 
         if (this.ticksUntilNextAttack > 0) {

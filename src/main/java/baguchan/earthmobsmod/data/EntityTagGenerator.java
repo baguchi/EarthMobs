@@ -8,13 +8,12 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
 public class EntityTagGenerator extends EntityTypeTagsProvider {
-	public EntityTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper exFileHelper) {
-		super(output, lookupProvider, EarthMobsMod.MODID, exFileHelper);
+	public EntityTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+		super(output, lookupProvider, EarthMobsMod.MODID);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -26,7 +25,7 @@ public class EntityTagGenerator extends EntityTypeTagsProvider {
 		this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(ModEntities.BONE_SHARD.get(), ModEntities.MELON_SEED.get());
 		this.tag(EntityTypeTags.RAIDERS).add(ModEntities.VILER_WITCH.get());
         this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(ModEntities.HYPER_RABBIT.get(), ModEntities.ZOMBIFIED_RABBIT.get());
-		this.tag(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(ModEntities.CLUCK_SHROOM.get(), ModEntities.FANCY_CHICKEN.get(), ModEntities.DUCK.get(), ModEntities.FURNACE_GOLEM.get(), ModEntities.MELON_GOLEM.get());
+		this.tag(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(ModEntities.CLUCK_SHROOM.get(), ModEntities.FANCY_CHICKEN.get(), ModEntities.FURNACE_GOLEM.get(), ModEntities.MELON_GOLEM.get());
         this.tag(EntityTypeTags.ZOMBIES).add(ModEntities.ZOMBIFIED_RABBIT.get(), ModEntities.ZOMBIFIED_PIG.get(), ModEntities.BOULDERING_ZOMBIE.get(), ModEntities.BOULDERING_DROWNED.get(), ModEntities.LOBBER_ZOMBIE.get(), ModEntities.LOBBER_DROWNED.get())
                 .add(ModEntities.BOULDERING_FROZEN_ZOMBIE.get(), ModEntities.LOBBER_HUSK.get());
         this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER).add(ModEntities.TROPICAL_SLIME.get());

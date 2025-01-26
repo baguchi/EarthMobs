@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,7 +15,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -31,7 +34,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.IShearable;
 import net.neoforged.neoforge.event.EventHooks;
@@ -40,7 +42,7 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
 
-public class MelonGolem extends AbstractGolem implements Shearable, RangedAttackMob, IShearable {
+public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShearable {
 	private static final EntityDataAccessor<Byte> DATA_MELON_ID = SynchedEntityData.defineId(MelonGolem.class, EntityDataSerializers.BYTE);
 	private static final byte MELON_FLAG = 16;
 	private static final float EYE_HEIGHT = 1.7F;
@@ -54,7 +56,7 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0D, 1.0000001E-5F));
 		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, (p_29932_) -> {
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, (p_29932_, serverLevel) -> {
 			return p_29932_ instanceof Enemy;
 		}));
 	}
@@ -90,8 +92,9 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 
 	}
 
-	public void aiStep() {
-		super.aiStep();
+	@Override
+	protected void customServerAiStep(ServerLevel serverLevel) {
+		super.customServerAiStep(serverLevel);
 		if (!this.level().isClientSide) {
 			int i = Mth.floor(this.getX());
 			int j = Mth.floor(this.getY());
@@ -100,7 +103,7 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 				this.hurt(this.damageSources().onFire(), 1.0F);
 			}
 
-			if (!EventHooks.canEntityGrief(this.level(), this)) {
+			if (!EventHooks.canEntityGrief(serverLevel, this)) {
 				return;
 			}
 
@@ -120,7 +123,7 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 	}
 
 	public void performRangedAttack(LivingEntity target, float p_29913_) {
-		MelonSeed melonSeed = new MelonSeed(this.level(), this);
+		MelonSeed melonSeed = new MelonSeed(this.level(), this, Items.MELON_SEEDS.getDefaultInstance());
 		double d0 = target.getEyeY() - (double) 1.1F;
 		double d1 = target.getX() - this.getX();
 		double d2 = d0 - melonSeed.getY();
@@ -130,32 +133,9 @@ public class MelonGolem extends AbstractGolem implements Shearable, RangedAttack
 		this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 		this.level().addFreshEntity(melonSeed);
 	}
-
-	protected float getStandingEyeHeight(Pose p_29917_, EntityDimensions p_29918_) {
-		return 1.7F;
-	}
-
 	protected InteractionResult mobInteract(Player p_29920_, InteractionHand p_29921_) {
 		ItemStack itemstack = p_29920_.getItemInHand(p_29921_);
-		if (false && itemstack.getItem() == Items.SHEARS && this.readyForShearing()) { //Forge: Moved to onSheared
-			this.shear(SoundSource.PLAYERS);
-			this.gameEvent(GameEvent.SHEAR, p_29920_);
-			if (!this.level().isClientSide) {
-				itemstack.hurtAndBreak(1, p_29920_, LivingEntity.getSlotForHand(p_29921_));
-			}
-
-			return InteractionResult.sidedSuccess(this.level().isClientSide);
-		} else {
-			return InteractionResult.PASS;
-		}
-	}
-
-	public void shear(SoundSource p_29907_) {
-		this.level().playSound((Player) null, this, SoundEvents.SNOW_GOLEM_SHEAR, p_29907_, 1.0F, 1.0F);
-		if (!this.level().isClientSide()) {
-			this.setMelon(false);
-			this.spawnAtLocation(new ItemStack(ModBlocks.CARVED_MELON.get()), 1.7F);
-		}
+		return InteractionResult.PASS;
 	}
 
 	public boolean readyForShearing() {

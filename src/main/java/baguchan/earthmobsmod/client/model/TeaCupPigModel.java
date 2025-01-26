@@ -3,17 +3,14 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.6.4
 // Paste this class into your mod and generate all required imports
 
 
-import baguchan.earthmobsmod.api.IMuddyPig;
-import baguchan.earthmobsmod.entity.TeaCupPig;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
 
-public class TeaCupPigModel<T extends TeaCupPig> extends EntityModel<T> {
+public class TeaCupPigModel<T extends LivingEntityRenderState> extends EntityModel<T> {
     private final ModelPart root;
     private final ModelPart head;
     private final ModelPart body;
@@ -23,6 +20,7 @@ public class TeaCupPigModel<T extends TeaCupPig> extends EntityModel<T> {
     private final ModelPart leg3;
 
     public TeaCupPigModel(ModelPart root) {
+        super(root);
         this.root = root.getChild("root");
         this.head = this.root.getChild("head");
         this.body = this.root.getChild("body");
@@ -55,25 +53,13 @@ public class TeaCupPigModel<T extends TeaCupPig> extends EntityModel<T> {
     }
 
     @Override
-    public void prepareMobModel(T p_104132_, float p_104133_, float p_104134_, float p_104135_) {
-        super.prepareMobModel(p_104132_, p_104133_, p_104134_, p_104135_);
-        if (p_104132_ instanceof IMuddyPig) {
-            this.body.zRot = ((IMuddyPig) p_104132_).getBodyRollAngle(p_104135_, -0.16F);
-        }
-    }
-
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.xRot = headPitch * ((float) Math.PI / 180F);
-        this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-        this.leg0.xRot = Mth.cos(limbSwing * 0.68F) * 1.4F * limbSwingAmount;
-        this.leg1.xRot = Mth.cos(limbSwing * 0.68F + (float) Math.PI) * 1.4F * limbSwingAmount;
-        this.leg2.xRot = Mth.cos(limbSwing * 0.68F + (float) Math.PI) * 1.4F * limbSwingAmount;
-        this.leg3.xRot = Mth.cos(limbSwing * 0.68F) * 1.4F * limbSwingAmount;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int i1, int i2) {
-        root.render(poseStack, vertexConsumer, i, i1, i2);
+    public void setupAnim(T entity) {
+        super.setupAnim(entity);
+        this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
+        this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
+        this.leg0.xRot = Mth.cos(entity.walkAnimationPos * 0.68F) * 1.4F * entity.walkAnimationSpeed;
+        this.leg1.xRot = Mth.cos(entity.walkAnimationPos * 0.68F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed;
+        this.leg2.xRot = Mth.cos(entity.walkAnimationPos * 0.68F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed;
+        this.leg3.xRot = Mth.cos(entity.walkAnimationPos * 0.68F) * 1.4F * entity.walkAnimationSpeed;
     }
 }

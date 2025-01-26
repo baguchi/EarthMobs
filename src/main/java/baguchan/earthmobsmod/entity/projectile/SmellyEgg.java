@@ -8,6 +8,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -24,12 +25,12 @@ public class SmellyEgg extends ThrowableItemProjectile {
 		super(p_37391_, p_37392_);
 	}
 
-	public SmellyEgg(Level p_37399_, LivingEntity p_37400_) {
-		super(ModEntities.SMELLY_EGG.get(), p_37400_, p_37399_);
+	public SmellyEgg(Level p_37399_, LivingEntity p_37400_, ItemStack p_363259_) {
+		super(ModEntities.SMELLY_EGG.get(), p_37400_, p_37399_, p_363259_);
 	}
 
-	public SmellyEgg(Level p_37394_, double p_37395_, double p_37396_, double p_37397_) {
-		super(ModEntities.SMELLY_EGG.get(), p_37395_, p_37396_, p_37397_, p_37394_);
+	public SmellyEgg(Level p_37394_, double p_37395_, double p_37396_, double p_37397_, ItemStack p_363259_) {
+		super(ModEntities.SMELLY_EGG.get(), p_37395_, p_37396_, p_37397_, p_37394_, p_363259_);
 	}
 
 	protected Item getDefaultItem() {
@@ -67,7 +68,7 @@ public class SmellyEgg extends ThrowableItemProjectile {
 				}
 
 				for (int j = 0; j < i; ++j) {
-					CluckShroom chicken = ModEntities.CLUCK_SHROOM.get().create(this.level());
+					CluckShroom chicken = ModEntities.CLUCK_SHROOM.get().create(this.level(), EntitySpawnReason.MOB_SUMMONED);
 					chicken.setAge(-24000);
 					if (this.random.nextBoolean()) {
 						chicken.setCluckShroomType(CluckShroom.CluckShroomType.BROWN);

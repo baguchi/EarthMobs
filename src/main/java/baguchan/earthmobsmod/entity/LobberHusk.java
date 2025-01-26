@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.entity.projectile.ZombieFlesh;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -10,13 +11,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
@@ -27,10 +29,10 @@ public class LobberHusk extends LobberZombie {
     }
 
     public static boolean checkHuskSpawnRules(
-            EntityType<LobberHusk> husk, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random
+            EntityType<LobberHusk> husk, ServerLevelAccessor level, EntitySpawnReason spawnType, BlockPos pos, RandomSource random
     ) {
         return checkMonsterSpawnRules(husk, level, spawnType, pos, random)
-                && (MobSpawnType.isSpawner(spawnType) || level.canSeeSky(pos));
+                && (EntitySpawnReason.isSpawner(spawnType) || level.canSeeSky(pos));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -63,8 +65,8 @@ public class LobberHusk extends LobberZombie {
     }
 
     @Override
-    public boolean doHurtTarget(Entity entity) {
-        boolean flag = super.doHurtTarget(entity);
+    public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
+        boolean flag = super.doHurtTarget(serverLevel, entity);
         if (flag && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity) {
             float f = this.level().getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
             ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.HUNGER, 140 * (int) f), this);
@@ -83,7 +85,7 @@ public class LobberHusk extends LobberZombie {
 
     @Override
     public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
-        ZombieFlesh zombieFlesh = new ZombieFlesh(this.level(), this);
+        ZombieFlesh zombieFlesh = new ZombieFlesh(this.level(), this, Items.ROTTEN_FLESH.getDefaultInstance());
         double d0 = p_29912_.getEyeY() - this.getEyeY();
         double d1 = p_29912_.getX() - this.getX();
         double d3 = p_29912_.getZ() - this.getZ();

@@ -7,6 +7,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -19,13 +20,13 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 public class CarvedMelonBlock extends Block {
-	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+	public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 	@Nullable
 	private BlockPattern snowGolemBase;
 	@Nullable
@@ -60,7 +61,7 @@ public class CarvedMelonBlock extends Block {
 				p_51379_.levelEvent(2001, blockinworld.getPos(), Block.getId(blockinworld.getState()));
 			}
 
-			MelonGolem melongolem = ModEntities.MELON_GOLEM.get().create(p_51379_);
+			MelonGolem melongolem = ModEntities.MELON_GOLEM.get().create(p_51379_, EntitySpawnReason.MOB_SUMMONED);
 			BlockPos blockpos1 = blockpattern$blockpatternmatch.getBlock(0, 2, 0).getPos();
 			melongolem.moveTo((double) blockpos1.getX() + 0.5D, (double) blockpos1.getY() + 0.05D, (double) blockpos1.getZ() + 0.5D, 0.0F, 0.0F);
 			p_51379_.addFreshEntity(melongolem);

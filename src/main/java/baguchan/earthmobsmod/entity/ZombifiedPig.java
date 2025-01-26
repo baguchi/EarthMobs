@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -47,6 +48,6 @@ public class ZombifiedPig extends Pig implements IMuddyPig {
 
 	@Override
 	public ZombifiedPig getBreedOffspring(ServerLevel p_149001_, AgeableMob p_149002_) {
-		return ModEntities.ZOMBIFIED_PIG.get().create(p_149001_);
+		return ModEntities.ZOMBIFIED_PIG.get().create(p_149001_, EntitySpawnReason.BREEDING);
 	}
 }

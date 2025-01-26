@@ -77,7 +77,7 @@ public abstract class EntityMixin implements IOnMud, IEntityExtension {
 		for (int j = 0; (float) j < 1.0F + this.dimensions.width() * 20.0F; ++j) {
 			double d2 = (this.random.nextDouble() * 2.0D - 1.0D) * (double) this.dimensions.width();
 			double d3 = (this.random.nextDouble() * 2.0D - 1.0D) * (double) this.dimensions.width();
-			this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, ModBlocks.MUD.get().defaultBlockState()).setPos(this.blockPosition()), realEntity.getX() + d2, (double) (f2 + 1.0F), realEntity.getZ() + d3, vec3.x, vec3.y, vec3.z);
+			this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, ModBlocks.MUD.get().defaultBlockState()), realEntity.getX() + d2, (double) (f2 + 1.0F), realEntity.getZ() + d3, vec3.x, vec3.y, vec3.z);
 		}
 
 		realEntity.gameEvent(GameEvent.SPLASH);

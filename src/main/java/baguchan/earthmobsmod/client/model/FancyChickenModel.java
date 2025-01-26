@@ -4,18 +4,20 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.8.0
 
 
 import baguchan.earthmobsmod.client.animation.FancyChickenAnimations;
-import baguchan.earthmobsmod.entity.FancyChicken;
-import net.minecraft.client.model.HierarchicalModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.BabyModelTransform;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import net.minecraft.util.Mth;
 
-public class FancyChickenModel<T extends FancyChicken> extends HierarchicalModel<T> {
+import java.util.Set;
+
+public class FancyChickenModel<T extends ChickenRenderState> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("modid", "custom_model"), "main");
+	public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(Set.of("head"));
+
 	private final ModelPart root;
 	private final ModelPart bone;
 	private final ModelPart head;
@@ -28,6 +30,7 @@ public class FancyChickenModel<T extends FancyChicken> extends HierarchicalModel
 	private final ModelPart chin;
 
 	public FancyChickenModel(ModelPart root) {
+		super(root);
 		this.root = root;
 		this.bone = root.getChild("bone");
 		this.head = this.bone.getChild("head");
@@ -69,25 +72,23 @@ public class FancyChickenModel<T extends FancyChicken> extends HierarchicalModel
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(ChickenRenderState entity) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
-		this.head.xRot = headPitch * ((float) Math.PI / 180F);
-		this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+
+		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
+		this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
 		this.bill.xRot = this.head.xRot;
 		this.bill.yRot = this.head.yRot;
 		this.chin.xRot = this.head.xRot;
 		this.chin.yRot = this.head.yRot;
-		this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-		this.rightWing.zRot = ageInTicks;
-		this.leftWing.zRot = -ageInTicks;
-		if (this.young) {
+		this.rightLeg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F) * 1.4F * entity.walkAnimationSpeed;
+		this.leftLeg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed;
+		float f = (Mth.sin(entity.flap) + 1.0F) * entity.flapSpeed;
+		this.rightWing.zRot = f;
+		this.leftWing.zRot = -f;
+
+		if (entity.isBaby) {
 			this.applyStatic(FancyChickenAnimations.BABY);
 		}
-	}
-
-	@Override
-	public ModelPart root() {
-		return this.root;
 	}
 }

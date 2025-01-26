@@ -1,15 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-    "W": {
-      "item": "minecraft:water_bucket"
-    },
-    "B": {
-      "item": "minecraft:bucket"
-    },
-    "M": {
-      "item": "minecraft:mud"
-    }
+    "W": "minecraft:water_bucket",
+    "B": "minecraft:bucket",
+    "M": "minecraft:mud"
   },
   "pattern": [
     "W",

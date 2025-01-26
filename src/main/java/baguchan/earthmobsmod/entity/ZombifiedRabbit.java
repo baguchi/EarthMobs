@@ -17,10 +17,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -138,9 +135,11 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     }
 
     private void finishConversion(ServerLevel p_34399_) {
-        Rabbit rabbit = this.convertTo(EntityType.RABBIT, false);
+        Rabbit rabbit = this.convertTo(EntityType.RABBIT, ConversionParams.single(this, false, false),
+                p_375894_ -> {
+                });
         rabbit.setVariant(this.getVariant());
-        rabbit.finalizeSpawn(p_34399_, p_34399_.getCurrentDifficultyAt(rabbit.blockPosition()), MobSpawnType.CONVERSION, (SpawnGroupData) null);
+        rabbit.finalizeSpawn(p_34399_, p_34399_.getCurrentDifficultyAt(rabbit.blockPosition()), EntitySpawnReason.CONVERSION, (SpawnGroupData) null);
         if (this.conversionStarter != null) {
             Player player = p_34399_.getPlayerByUUID(this.conversionStarter);
             if (player instanceof ServerPlayer) {
@@ -197,7 +196,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
         }
     }
 
-    public static boolean checkMonsterSpawnRules(EntityType<? extends ZombifiedRabbit> p_219014_, ServerLevelAccessor p_219015_, MobSpawnType p_219016_, BlockPos p_219017_, RandomSource p_219018_) {
+    public static boolean checkMonsterSpawnRules(EntityType<? extends ZombifiedRabbit> p_219014_, ServerLevelAccessor p_219015_, EntitySpawnReason p_219016_, BlockPos p_219017_, RandomSource p_219018_) {
         return p_219015_.getBlockState(p_219017_.below()).is(BlockTags.RABBITS_SPAWNABLE_ON) && p_219015_.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(p_219015_, p_219017_, p_219018_) && checkMobSpawnRules(p_219014_, p_219015_, p_219016_, p_219017_, p_219018_);
     }
 
@@ -220,7 +219,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     @Nullable
     @Override
     public Rabbit getBreedOffspring(ServerLevel p_149035_, AgeableMob p_149036_) {
-        Rabbit rabbit = ModEntities.ZOMBIFIED_RABBIT.get().create(p_149035_);
+        Rabbit rabbit = ModEntities.ZOMBIFIED_RABBIT.get().create(p_149035_, EntitySpawnReason.BREEDING);
         if (rabbit != null) {
             Rabbit.Variant rabbit$variant = getRandomRabbitVariant(p_149035_, this.blockPosition());
             if (this.random.nextInt(20) != 0) {

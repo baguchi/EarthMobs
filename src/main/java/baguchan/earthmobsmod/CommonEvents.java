@@ -125,7 +125,7 @@ public class CommonEvents {
 		if (itemStack.is(Blocks.CARVED_PUMPKIN.asItem())) {
 			BlockPattern.BlockPatternMatch blockpattern$blockpatternmatch1 = getOrCreateFurnaceGolemBase().find(level, pos.relative(event.getFace()));
 			if (blockpattern$blockpatternmatch1 != null) {
-				FurnaceGolem irongolem = ModEntities.FURNACE_GOLEM.get().create(level);
+				FurnaceGolem irongolem = ModEntities.FURNACE_GOLEM.get().create(level, EntitySpawnReason.MOB_SUMMONED);
 				if (irongolem != null) {
 					spawnGolemInWorld(level, blockpattern$blockpatternmatch1, irongolem, blockpattern$blockpatternmatch1.getBlock(1, 2, 0).getPos());
 				}
@@ -176,7 +176,7 @@ public class CommonEvents {
 	public static void onLightning(EntityStruckByLightningEvent event) {
 		if (event.getEntity() instanceof Pig pig) {
 			if (event.getEntity().getType() != ModEntities.ZOMBIFIED_PIG.get()) {
-				ZombifiedPig zombifiedpig = ModEntities.ZOMBIFIED_PIG.get().create(event.getEntity().level());
+				ZombifiedPig zombifiedpig = ModEntities.ZOMBIFIED_PIG.get().create(event.getEntity().level(), EntitySpawnReason.CONVERSION);
 				zombifiedpig.moveTo(pig.getX(), pig.getY(), pig.getZ(), pig.getYRot(), pig.getXRot());
 				zombifiedpig.setNoAi(pig.isNoAi());
 				zombifiedpig.setBaby(pig.isBaby());
@@ -203,9 +203,10 @@ public class CommonEvents {
         if (event.getSource().getDirectEntity() instanceof Zombie || event.getSource().getDirectEntity() instanceof ZombifiedRabbit) {
 			if (living instanceof Rabbit rabbit && !(living instanceof Enemy)) {
                 if (level instanceof ServerLevel serverLevel) {
-                    ZombifiedRabbit zombierabbit = rabbit.convertTo(ModEntities.ZOMBIFIED_RABBIT.get(), false);
+					ZombifiedRabbit zombierabbit = rabbit.convertTo(ModEntities.ZOMBIFIED_RABBIT.get(), ConversionParams.single(rabbit, false, true), p_390220_ -> {
+					});
                     if (zombierabbit != null) {
-						zombierabbit.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(zombierabbit.blockPosition()), MobSpawnType.CONVERSION, null);
+						zombierabbit.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(zombierabbit.blockPosition()), EntitySpawnReason.CONVERSION, null);
                         zombierabbit.setVariant(rabbit.getVariant());
                         EventHooks.onLivingConvert(rabbit, zombierabbit);
                         if (!rabbit.isSilent()) {
@@ -218,27 +219,40 @@ public class CommonEvents {
 
 		if (event.getSource().is(ModDamageSource.ZOMBIFIED)) {
 			if (living instanceof Rabbit rabbit && !(living instanceof Enemy)) {
-				ZombifiedRabbit zombifiedRabbit = rabbit.convertTo(ModEntities.ZOMBIFIED_RABBIT.get(), false);
-				if (zombifiedRabbit != null) {
-					zombifiedRabbit.setVariant(rabbit.getVariant());
-					if (!rabbit.isSilent()) {
-                        level.levelEvent(null, 1026, rabbit.blockPosition(), 0);
-					}
-				}
+				ZombifiedRabbit zombifiedRabbit = rabbit.convertTo(ModEntities.ZOMBIFIED_RABBIT.get(),
+						ConversionParams.single(rabbit, true, true),
+						rabbit1 -> {
+							if (rabbit1 != null) {
+								rabbit1.setVariant(rabbit.getVariant());
+								if (!rabbit1.isSilent()) {
+									level.levelEvent(null, 1026, rabbit1.blockPosition(), 0);
+								}
+							}
+						}
+				);
+
 			}
 
-			if (living instanceof Villager villager && !(living instanceof Enemy)) {
-				ZombieVillager zombieVillager = villager.convertTo(EntityType.ZOMBIE_VILLAGER, false);
-				if (zombieVillager != null) {
-					zombieVillager.setVariant(villager.getVariant());
-					zombieVillager.setVillagerData(villager.getVillagerData());
-					zombieVillager.setVillagerXp(villager.getVillagerXp());
-					zombieVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
-					zombieVillager.setTradeOffers(villager.getOffers().copy());
-					if (!villager.isSilent()) {
-                        level.levelEvent(null, 1026, villager.blockPosition(), 0);
-					}
-				}
+			if (living instanceof Villager villager && !(living instanceof Enemy) && level instanceof ServerLevel serverLevel) {
+				ZombieVillager zombieVillager = villager.convertTo(EntityType.ZOMBIE_VILLAGER,
+						ConversionParams.single(villager, true, true),
+						p_370686_ -> {
+							p_370686_.finalizeSpawn(
+									serverLevel,
+									level.getCurrentDifficultyAt(p_370686_.blockPosition()),
+									EntitySpawnReason.CONVERSION,
+									new Zombie.ZombieGroupData(false, true)
+							);
+							p_370686_.setVillagerData(villager.getVillagerData());
+							p_370686_.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+							p_370686_.setTradeOffers(villager.getOffers());
+							p_370686_.setVillagerXp(villager.getVillagerXp());
+							net.neoforged.neoforge.event.EventHooks.onLivingConvert(p_370686_, p_370686_);
+							if (!p_370686_.isSilent()) {
+								level.levelEvent(null, 1026, p_370686_.blockPosition(), 0);
+							}
+						}
+				);
 			}
 		}
     }

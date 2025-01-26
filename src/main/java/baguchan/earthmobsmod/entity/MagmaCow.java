@@ -16,9 +16,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -107,7 +107,7 @@ public class MagmaCow extends Cow {
             p_28941_.setItemInHand(p_28942_, itemstack2);
             SoundEvent soundevent = SoundEvents.BUCKET_FILL_LAVA;
             this.playSound(soundevent, 1.0F, 1.0F);
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
+            return InteractionResult.SUCCESS;
         } else {
             return super.mobInteract(p_28941_, p_28942_);
         }
@@ -118,7 +118,7 @@ public class MagmaCow extends Cow {
     }
 
     public Cow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {
-        return ModEntities.MAGMA_COW.get().create(p_148884_);
+        return ModEntities.MAGMA_COW.get().create(p_148884_, EntitySpawnReason.BREEDING);
     }
 
     public void addAdditionalSaveData(CompoundTag p_29864_) {
@@ -131,9 +131,9 @@ public class MagmaCow extends Cow {
         this.setWeaking(p_29845_.getBoolean("Weaking"));
     }
 
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel serverLevel) {
         this.eatAnimationTick = this.eatBlockGoal.getEatAnimationTick();
-        super.customServerAiStep();
+        super.customServerAiStep(serverLevel);
     }
 
     public void aiStep() {
@@ -180,7 +180,7 @@ public class MagmaCow extends Cow {
         return super.canFreeze() && this.isWeaking();
     }
 
-    public static boolean checkMagmaSpawnRules(EntityType<? extends Animal> p_218105_, LevelAccessor p_218106_, MobSpawnType p_218107_, BlockPos p_218108_, RandomSource p_218109_) {
+    public static boolean checkMagmaSpawnRules(EntityType<? extends Animal> p_218105_, LevelAccessor p_218106_, EntitySpawnReason p_218107_, BlockPos p_218108_, RandomSource p_218109_) {
         return true;
     }
 

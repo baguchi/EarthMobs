@@ -3,16 +3,14 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.7.1
 // Paste this class into your mod and generate all required imports
 
 
-import baguchan.earthmobsmod.entity.MagmaCow;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.HierarchicalModel;
+import baguchan.earthmobsmod.client.render.state.MagmaCowRenderState;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class MagmaCowModel<T extends MagmaCow> extends HierarchicalModel<T> {
+public class MagmaCowModel<T extends MagmaCowRenderState> extends EntityModel<T> {
     private final ModelPart root;
     private final ModelPart head;
     private final ModelPart leg1;
@@ -24,6 +22,7 @@ public class MagmaCowModel<T extends MagmaCow> extends HierarchicalModel<T> {
     private float headXRot;
 
     public MagmaCowModel(ModelPart root) {
+        super(root);
         this.root = root;
         this.head = root.getChild("head");
         this.leg1 = root.getChild("leg1");
@@ -100,60 +99,16 @@ public class MagmaCowModel<T extends MagmaCow> extends HierarchicalModel<T> {
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.xRot = headPitch * ((float) Math.PI / 180F);
-        this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-        this.leg1.xRot = Mth.cos(limbSwing * 0.68F) * 1.4F * limbSwingAmount;
-        this.leg2.xRot = Mth.cos(limbSwing * 0.68F + (float) Math.PI) * 1.4F * limbSwingAmount;
-        this.leg3.xRot = Mth.cos(limbSwing * 0.68F + (float) Math.PI) * 1.4F * limbSwingAmount;
-        this.leg4.xRot = Mth.cos(limbSwing * 0.68F) * 1.4F * limbSwingAmount;
-        this.head.xRot = this.headXRot;
+    public void setupAnim(T entity) {
+        super.setupAnim(entity);
+        this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
+        this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
+        this.leg1.xRot = Mth.cos(entity.walkAnimationPos * 0.68F) * 1.4F * entity.walkAnimationSpeed;
+        this.leg2.xRot = Mth.cos(entity.walkAnimationPos * 0.68F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed;
+        this.leg3.xRot = Mth.cos(entity.walkAnimationPos * 0.68F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed;
+        this.leg4.xRot = Mth.cos(entity.walkAnimationPos * 0.68F) * 1.4F * entity.walkAnimationSpeed;
+        this.head.xRot += entity.headEatAngleScale;
+
     }
 
-    public void prepareMobModel(T p_103687_, float p_103688_, float p_103689_, float p_103690_) {
-        super.prepareMobModel(p_103687_, p_103688_, p_103689_, p_103690_);
-        this.headXRot = p_103687_.getHeadEatAngleScale(p_103690_);
-
-        if (this.attackTime > 0) {
-            this.headXRot = -0.95F * Mth.sin(this.attackTime * (float) Math.PI);
-        }
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int i) {
-        if (this.young) {
-
-            poseStack.pushPose();
-            float f = 1.5F / 2.0F;
-            poseStack.scale(f, f, f);
-            poseStack.translate(0, 15.0F / 16.0F, 4.0F / 16F);
-            head.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            poseStack.popPose();
-            poseStack.pushPose();
-
-            poseStack.scale(0.5F, 0.5F, 0.5F);
-            poseStack.translate(0, 24F / 16.0F, 0);
-            leg1.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            leg2.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            leg3.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            leg4.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            body.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-
-            poseStack.popPose();
-        } else {
-            poseStack.pushPose();
-            leg1.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            leg2.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            leg3.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            leg4.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            body.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            head.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
-            poseStack.popPose();
-        }
-    }
-
-    @Override
-    public ModelPart root() {
-        return this.root;
-    }
 }

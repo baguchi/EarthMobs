@@ -4,8 +4,9 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -69,11 +70,11 @@ public class MudFluidType extends FluidType {
 				return TEXTURE_OVERLAY;
 			}
 
-			@Override
-			public void renderOverlay(Minecraft mc, PoseStack stack) {
+		@Override
+		public void renderOverlay(Minecraft mc, PoseStack stack, MultiBufferSource buffers) {
 				ResourceLocation texture = this.getRenderOverlayTexture(mc);
 				if (texture == null) return;
-				RenderSystem.setShader(GameRenderer::getPositionTexShader);
+			RenderSystem.setShader(CoreShaders.POSITION_TEX_COLOR);
 				RenderSystem.setShaderTexture(0, texture);
 				BufferBuilder buffer = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 				BlockPos playerEyePos = BlockPos.containing(mc.player.getX(), mc.player.getEyeY(), mc.player.getZ());
@@ -89,6 +90,8 @@ public class MudFluidType extends FluidType {
 				buffer.addVertex(pose, 1.0F, 1.0F, -0.5F).setUv(uOffset, vOffset);
 				buffer.addVertex(pose, -1.0F, 1.0F, -0.5F).setUv(4.0F + uOffset, vOffset);
 				BufferUploader.drawWithShader(buffer.buildOrThrow());
+			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+
 				RenderSystem.disableBlend();
 			}
 	}

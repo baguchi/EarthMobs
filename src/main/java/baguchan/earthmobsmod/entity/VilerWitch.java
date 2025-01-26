@@ -1,6 +1,7 @@
 package baguchan.earthmobsmod.entity;
 
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -9,8 +10,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Witch;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.raid.Raider;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -52,10 +55,10 @@ public class VilerWitch extends Witch {
 				holder = Potions.WEAKNESS;
 			}
 
-			ThrownPotion thrownpotion = new ThrownPotion(this.level(), this);
-			thrownpotion.setItem(PotionContents.createItemStack(Items.LINGERING_POTION, holder));
-			thrownpotion.setXRot(thrownpotion.getXRot() - -20.0F);
-			thrownpotion.shoot(d0, d1 + d3 * 0.2, d2, 0.75F, 8.0F);
+			if (this.level() instanceof ServerLevel serverlevel) {
+				ItemStack itemstack = PotionContents.createItemStack(Items.LINGERING_POTION, holder);
+				Projectile.spawnProjectileUsingShoot(ThrownPotion::new, serverlevel, itemstack, this, d0, d1 + d3 * 0.2, d2, 0.75F, 8.0F);
+			}
 			if (!this.isSilent()) {
 				this.level()
 						.playSound(
@@ -69,8 +72,6 @@ public class VilerWitch extends Witch {
 								0.8F + this.random.nextFloat() * 0.4F
 						);
 			}
-
-			this.level().addFreshEntity(thrownpotion);
 		}
 	}
 }

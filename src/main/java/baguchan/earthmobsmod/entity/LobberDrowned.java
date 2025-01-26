@@ -12,9 +12,9 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MoveThroughVillageGoal;
@@ -88,7 +88,7 @@ public class LobberDrowned extends Drowned implements RangedAttackMob {
 			this.playSound(SoundEvents.DROWNED_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 			this.level().addFreshEntity(throwntrident);
 		} else {
-			ZombieFlesh zombieFlesh = new ZombieFlesh(this.level(), this);
+			ZombieFlesh zombieFlesh = new ZombieFlesh(this.level(), this, Items.ROTTEN_FLESH.getDefaultInstance());
 			double d0 = p_29912_.getEyeY() - this.getEyeY();
 			double d1 = p_29912_.getX() - this.getX();
 			double d3 = p_29912_.getZ() - this.getZ();
@@ -101,12 +101,12 @@ public class LobberDrowned extends Drowned implements RangedAttackMob {
 		}
 	}
 
-	public static boolean checkLobberDrownedSpawnRules(EntityType<LobberDrowned> p_32350_, ServerLevelAccessor p_32351_, MobSpawnType p_32352_, BlockPos p_32353_, RandomSource p_32354_) {
+	public static boolean checkLobberDrownedSpawnRules(EntityType<LobberDrowned> p_32350_, ServerLevelAccessor p_32351_, EntitySpawnReason p_32352_, BlockPos p_32353_, RandomSource p_32354_) {
 		if (!p_32351_.getFluidState(p_32353_.below()).is(FluidTags.WATER)) {
 			return false;
 		} else {
 			Holder<Biome> holder = p_32351_.getBiome(p_32353_);
-			boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (MobSpawnType.isSpawner(p_32352_) || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
+			boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (EntitySpawnReason.isSpawner(p_32352_) || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
 			if (!holder.is(Biomes.RIVER) && !holder.is(Biomes.FROZEN_RIVER)) {
 				return p_32354_.nextInt(40) == 0 && isDeepEnoughToSpawn(p_32351_, p_32353_) && flag;
 			} else {

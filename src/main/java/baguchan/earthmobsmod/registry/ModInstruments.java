@@ -1,15 +1,36 @@
 package baguchan.earthmobsmod.registry;
 
 import baguchan.earthmobsmod.EarthMobsMod;
+import net.minecraft.Util;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Instrument;
-import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.function.Supplier;
 
 public class ModInstruments {
-    public static final DeferredRegister<Instrument> INSTRUMENTS = DeferredRegister.create(BuiltInRegistries.INSTRUMENT, EarthMobsMod.MODID);
-    public static final Supplier<Instrument> WOODEN_HORN = INSTRUMENTS.register("wooden_horn", () -> new Instrument(Holder.direct(ModSounds.HORN_WOODEN.get()), 140, 256F));
-    public static final Supplier<Instrument> BATTLE_HORN = INSTRUMENTS.register("battle_horn", () -> new Instrument(Holder.direct(ModSounds.HORN_BATTLE.get()), 140, 256F));
+    public static final ResourceKey<Instrument> WOODEN_HORN = create("ponder_goat_horn");
+    public static final ResourceKey<Instrument> BATTLE_HORN = create("ponder_goat_horn");
+
+
+    public static void bootstrap(BootstrapContext<Instrument> p_362126_) {
+        register(p_362126_, WOODEN_HORN, ModSounds.HORN_WOODEN, 7.0F, 256.0F);
+        register(p_362126_, BATTLE_HORN, ModSounds.HORN_BATTLE, 7.0F, 256.0F);
+    }
+
+    private static ResourceKey<Instrument> create(String p_220151_) {
+        return ResourceKey.create(Registries.INSTRUMENT, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, p_220151_));
+    }
+
+    static void register(
+            BootstrapContext<Instrument> p_365273_, ResourceKey<Instrument> p_360712_, Holder<SoundEvent> p_362988_, float p_362590_, float p_363159_
+    ) {
+        MutableComponent mutablecomponent = Component.translatable(Util.makeDescriptionId("instrument", p_360712_.location()));
+        p_365273_.register(p_360712_, new Instrument(p_362988_, p_362590_, p_363159_, mutablecomponent));
+    }
+
 }

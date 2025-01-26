@@ -1,15 +1,17 @@
 package baguchan.earthmobsmod.mixin;
 
-import bagu_chan.bagus_lib.api.IBaguPacket;
 import baguchan.earthmobsmod.api.IMoss;
 import baguchan.earthmobsmod.message.MossMessage;
+import baguchi.bagus_lib.api.IBaguPacket;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -54,9 +56,9 @@ public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
     }
 
     @Inject(method = "shear", at = @At("RETURN"))
-    public void onSheared(SoundSource p_29819_, CallbackInfo ci) {
+    public void onSheared(ServerLevel p_376571_, SoundSource p_29819_, ItemStack p_372915_, CallbackInfo ci) {
         if (this.moss) {
-            ItemEntity itementity = this.spawnAtLocation(Items.MOSS_BLOCK.getDefaultInstance(), 1);
+            ItemEntity itementity = this.spawnAtLocation(p_376571_, Items.MOSS_BLOCK.getDefaultInstance(), 1);
             if (itementity != null) {
                 itementity.setDeltaMovement(itementity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, this.random.nextFloat() * 0.05F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F));
             }

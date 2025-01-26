@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.item;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -15,7 +16,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class MobPotItem extends MobBucketItem {
-    public MobPotItem(EntityType<?> entitySupplier, Fluid fluidSupplier, SoundEvent soundSupplier, Properties properties) {
+    public MobPotItem(EntityType<? extends Mob> entitySupplier, Fluid fluidSupplier, SoundEvent soundSupplier, Properties properties) {
         super(entitySupplier, fluidSupplier, soundSupplier, properties);
 
     }

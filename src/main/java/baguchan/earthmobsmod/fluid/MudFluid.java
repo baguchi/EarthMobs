@@ -4,15 +4,12 @@ import baguchan.earthmobsmod.registry.ModBlocks;
 import baguchan.earthmobsmod.registry.ModFluidTypes;
 import baguchan.earthmobsmod.registry.ModFluids;
 import baguchan.earthmobsmod.registry.ModItems;
-import com.mojang.datafixers.util.Pair;
-import it.unimi.dsi.fastutil.shorts.Short2BooleanMap;
-import it.unimi.dsi.fastutil.shorts.Short2ObjectMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -69,8 +66,9 @@ public abstract class MudFluid extends WaterFluid {
 		return 100.0F;
 	}
 
+
 	@Override
-	protected boolean canConvertToSource(Level p_256670_) {
+	protected boolean canConvertToSource(ServerLevel p_376722_) {
 		return false;
 	}
 
@@ -82,8 +80,9 @@ public abstract class MudFluid extends WaterFluid {
 		return p_76252_.dimensionType().ultraWarm() ? 2 : 3;
 	}
 
+
 	@Override
-	protected int getSlopeDistance(LevelReader p_76027_, BlockPos p_76028_, int p_76029_, Direction p_76030_, BlockState p_76031_, BlockPos p_76032_, Short2ObjectMap<Pair<BlockState, FluidState>> p_76033_, Short2BooleanMap p_76034_) {
+	protected int getSlopeDistance(LevelReader p_76027_, BlockPos p_76028_, int p_76029_, Direction p_76030_, BlockState p_76031_, SpreadContext p_364491_) {
 		return 2;
 	}
 

@@ -1,31 +1,27 @@
 package baguchan.earthmobsmod.client.model;
 
-import baguchan.earthmobsmod.entity.CluckShroom;
-import com.google.common.collect.ImmutableList;
-import net.minecraft.client.model.ChickenModel;
+import baguchan.earthmobsmod.client.render.state.CluckShroomRenderState;
+import net.minecraft.client.model.BabyModelTransform;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
 
-public class CluckShroomModel<T extends CluckShroom> extends ChickenModel<T> {
+import java.util.Set;
+
+public class CluckShroomModel<T extends CluckShroomRenderState> extends EntityModel<T> {
+	public static final String RED_THING = "red_thing";
+	public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(Set.of("head", "beak", "red_thing"));
 	private final ModelPart head;
-	private final ModelPart body;
 	private final ModelPart rightLeg;
 	private final ModelPart leftLeg;
 	private final ModelPart rightWing;
 	private final ModelPart leftWing;
-	private final ModelPart beak;
-	private final ModelPart redThing;
 
 	public CluckShroomModel(ModelPart p_170490_) {
 		super(p_170490_);
 		this.head = p_170490_.getChild("head");
-		this.beak = p_170490_.getChild("beak");
-		this.redThing = p_170490_.getChild("red_thing");
-		this.body = p_170490_.getChild("body");
 		this.rightLeg = p_170490_.getChild("right_leg");
 		this.leftLeg = p_170490_.getChild("left_leg");
 		this.rightWing = p_170490_.getChild("right_wing");
@@ -55,11 +51,17 @@ public class CluckShroomModel<T extends CluckShroom> extends ChickenModel<T> {
 		return LayerDefinition.create(meshdefinition, 64, 32);
 	}
 
-	protected Iterable<ModelPart> headParts() {
-		return ImmutableList.of(this.head, this.beak, this.redThing);
-	}
-
-	protected Iterable<ModelPart> bodyParts() {
-		return ImmutableList.of(this.body, this.rightLeg, this.leftLeg, this.rightWing, this.leftWing);
+	@Override
+	public void setupAnim(T p_364616_) {
+		super.setupAnim(p_364616_);
+		float f = (Mth.sin(p_364616_.flap) + 1.0F) * p_364616_.flapSpeed;
+		this.head.xRot = p_364616_.xRot * (float) (Math.PI / 180.0);
+		this.head.yRot = p_364616_.yRot * (float) (Math.PI / 180.0);
+		float f1 = p_364616_.walkAnimationSpeed;
+		float f2 = p_364616_.walkAnimationPos;
+		this.rightLeg.xRot = Mth.cos(f2 * 0.6662F) * 1.4F * f1;
+		this.leftLeg.xRot = Mth.cos(f2 * 0.6662F + (float) Math.PI) * 1.4F * f1;
+		this.rightWing.zRot = f;
+		this.leftWing.zRot = -f;
 	}
 }

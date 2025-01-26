@@ -1,10 +1,10 @@
 package baguchan.earthmobsmod;
 
-import bagu_chan.bagus_lib.util.JigsawHelper;
 import baguchan.earthmobsmod.client.ClientRegistrar;
 import baguchan.earthmobsmod.message.MossMessage;
 import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.registry.*;
+import baguchi.bagus_lib.util.JigsawHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -47,7 +47,6 @@ public class EarthMobsMod {
 		ModItems.ITEMS.register(modBus);
 		ModSounds.SOUND_EVENTS.register(modBus);
 		ModCapability.ATTACHMENT_TYPES.register(modBus);
-		ModInstruments.INSTRUMENTS.register(modBus);
 		ModRecipes.RECIPE_SERIALIZERS.register(modBus);
 
 		container.registerConfig(ModConfig.Type.COMMON, EarthMobsConfig.COMMON_SPEC);

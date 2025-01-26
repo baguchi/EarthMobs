@@ -8,12 +8,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.RabbitRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class JumboRabbitRenderer<T extends JumboRabbit> extends MobRenderer<T, JumboRabbitModel<T>> {
+public class JumboRabbitRenderer<T extends JumboRabbit> extends MobRenderer<T, RabbitRenderState, JumboRabbitModel<RabbitRenderState>> {
     private static final ResourceLocation RABBIT_BROWN_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/brown.png");
     private static final ResourceLocation RABBIT_WHITE_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/white.png");
     private static final ResourceLocation RABBIT_BLACK_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/black.png");
@@ -25,17 +26,28 @@ public class JumboRabbitRenderer<T extends JumboRabbit> extends MobRenderer<T, J
 	}
 
 	@Override
-	protected void scale(T p_115314_, PoseStack p_115315_, float p_115316_) {
-		float scale = p_115314_.isBaby() ? 0.6F : 1.0F;
+    public RabbitRenderState createRenderState() {
+        return new RabbitRenderState();
+    }
+
+    @Override
+    public void extractRenderState(T p_363386_, RabbitRenderState p_362192_, float p_365470_) {
+        super.extractRenderState(p_363386_, p_362192_, p_365470_);
+        p_362192_.jumpCompletion = p_363386_.getJumpCompletion(p_365470_);
+        p_362192_.isToast = "Toast".equals(ChatFormatting.stripFormatting(p_363386_.getName().getString()));
+        p_362192_.variant = p_363386_.getVariant();
+    }
+
+    @Override
+    protected void scale(RabbitRenderState p_115314_, PoseStack p_115315_) {
+        float scale = p_115314_.isBaby ? 0.6F : 1.0F;
 		p_115315_.scale(scale, scale, scale);
-		super.scale(p_115314_, p_115315_, p_115316_);
+        super.scale(p_115314_, p_115315_);
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(T p_115803_) {
-		String s = ChatFormatting.stripFormatting(p_115803_.getName().getString());
-
-		switch (p_115803_.getVariant()) {
+    public ResourceLocation getTextureLocation(RabbitRenderState p_115803_) {
+        switch (p_115803_.variant) {
 			case BROWN:
 			default:
 				return RABBIT_BROWN_LOCATION;

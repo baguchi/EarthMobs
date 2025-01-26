@@ -3,16 +3,17 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.7.2
 // Paste this class into your mod and generate all required imports
 
 
+import baguchan.earthmobsmod.client.render.state.FurnaceGolemRenderState;
 import baguchan.earthmobsmod.entity.FurnaceGolem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class FurnaceGolemModel<T extends FurnaceGolem> extends HierarchicalModel<T> {
+public class FurnaceGolemModel<T extends FurnaceGolemRenderState> extends EntityModel<T> {
     private final ModelPart root;
     private final ModelPart head;
     private final ModelPart body;
@@ -23,6 +24,7 @@ public class FurnaceGolemModel<T extends FurnaceGolem> extends HierarchicalModel
     private final ModelPart head2;
 
     public FurnaceGolemModel(ModelPart root) {
+        super(root);
         this.root = root;
         this.head = root.getChild("head");
         this.body = root.getChild("body");
@@ -60,35 +62,30 @@ public class FurnaceGolemModel<T extends FurnaceGolem> extends HierarchicalModel
     }
 
     @Override
-    public void setupAnim(T p_102962_, float p_102963_, float p_102964_, float p_102965_, float p_102966_, float p_102967_) {
-        this.head.yRot = p_102966_ * ((float) Math.PI / 180F);
-        this.head.xRot = p_102967_ * ((float) Math.PI / 180F);
-        this.right_leg.xRot = -1.5F * Mth.triangleWave(p_102963_, 13.0F) * p_102964_;
-        this.left_leg.xRot = 1.5F * Mth.triangleWave(p_102963_, 13.0F) * p_102964_;
-        this.right_leg.yRot = 0.0F;
-        this.left_leg.yRot = 0.0F;
-        this.head2.copyFrom(this.head);
-    }
-
-    public void prepareMobModel(T p_102957_, float p_102958_, float p_102959_, float p_102960_) {
-        int i = p_102957_.getAttackAnimationTick();
-        this.head2.visible = p_102957_.isFurnaceActive();
-        if (i > 0) {
-            this.right_arm.xRot = -2.0F + 1.5F * Mth.triangleWave((float) i - p_102960_, 10.0F);
-            this.left_arm.xRot = -2.0F + 1.5F * Mth.triangleWave((float) i - p_102960_, 10.0F);
+    public void setupAnim(T entity) {
+        super.setupAnim(entity);
+        float f = entity.attackTicksRemaining;
+        float f1 = entity.walkAnimationSpeed;
+        float f2 = entity.walkAnimationPos;
+        if (f > 0.0F) {
+            this.right_arm.xRot = -2.0F + 1.5F * Mth.triangleWave(f, 10.0F);
+            this.left_arm.xRot = -2.0F + 1.5F * Mth.triangleWave(f, 10.0F);
         } else {
-            if (p_102957_.isFurnaceActive()) {
-                this.right_arm.xRot = -0.8F;
-                this.left_arm.xRot = -0.8F;
+            int i = entity.offerFlowerTick;
+            if (i > 0) {
+                this.right_arm.xRot = -0.8F + 0.025F * Mth.triangleWave((float) i, 70.0F);
+                this.left_arm.xRot = 0.0F;
             } else {
-                this.right_arm.xRot = (-0.2F + 1.5F * Mth.triangleWave(p_102958_, 13.0F)) * p_102959_;
-                this.left_arm.xRot = (-0.2F - 1.5F * Mth.triangleWave(p_102958_, 13.0F)) * p_102959_;
+                this.right_arm.xRot = (-0.2F + 1.5F * Mth.triangleWave(f2, 13.0F)) * f1;
+                this.left_arm.xRot = (-0.2F - 1.5F * Mth.triangleWave(f2, 13.0F)) * f1;
             }
         }
-    }
 
-    @Override
-    public ModelPart root() {
-        return this.root;
+        this.head.yRot = entity.yRot * (float) (Math.PI / 180.0);
+        this.head.xRot = entity.xRot * (float) (Math.PI / 180.0);
+        this.right_leg.xRot = -1.5F * Mth.triangleWave(f2, 13.0F) * f1;
+        this.left_leg.xRot = 1.5F * Mth.triangleWave(f2, 13.0F) * f1;
+        this.right_leg.yRot = 0.0F;
+        this.left_leg.yRot = 0.0F;
     }
 }

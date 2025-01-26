@@ -1,13 +1,13 @@
 package baguchan.earthmobsmod.client.model;
 
-import baguchan.earthmobsmod.entity.BoneSpider;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
 
-public class BoneSpiderModel<T extends BoneSpider> extends HierarchicalModel<T> {
+public class BoneSpiderModel<T extends LivingEntityRenderState> extends EntityModel<T> {
 	private final ModelPart bone;
 	private final ModelPart head;
 	private final ModelPart rightHindLeg;
@@ -20,7 +20,7 @@ public class BoneSpiderModel<T extends BoneSpider> extends HierarchicalModel<T> 
 	private final ModelPart leftFrontLeg;
 
 	public BoneSpiderModel(ModelPart p_170984_) {
-		super();
+		super(p_170984_);
 		this.bone = p_170984_.getChild("bone");
 		this.head = this.bone.getChild("head");
 		this.rightHindLeg = this.bone.getChild("right_hind_leg");
@@ -66,14 +66,9 @@ public class BoneSpiderModel<T extends BoneSpider> extends HierarchicalModel<T> 
 	}
 
 	@Override
-	public ModelPart root() {
-		return this.bone;
-	}
-
-	@Override
-	public void setupAnim(T p_103866_, float p_103867_, float p_103868_, float p_103869_, float p_103870_, float p_103871_) {
-		this.head.yRot = p_103870_ * ((float) Math.PI / 180F);
-		this.head.xRot = p_103871_ * ((float) Math.PI / 180F);
+	public void setupAnim(T entity) {
+		this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
+		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
 		float f = ((float) Math.PI / 4F);
 		this.rightHindLeg.zRot = (-(float) Math.PI / 4F);
 		this.leftHindLeg.zRot = ((float) Math.PI / 4F);
@@ -93,14 +88,14 @@ public class BoneSpiderModel<T extends BoneSpider> extends HierarchicalModel<T> 
 		this.leftMiddleFrontLeg.yRot = ((float) Math.PI / 8F);
 		this.rightFrontLeg.yRot = (-(float) Math.PI / 4F);
 		this.leftFrontLeg.yRot = ((float) Math.PI / 4F);
-		float f3 = -(Mth.cos(p_103867_ * 0.6662F * 2.0F + 0.0F) * 0.4F) * p_103868_;
-		float f4 = -(Mth.cos(p_103867_ * 0.6662F * 2.0F + (float) Math.PI) * 0.4F) * p_103868_;
-		float f5 = -(Mth.cos(p_103867_ * 0.6662F * 2.0F + ((float) Math.PI / 2F)) * 0.4F) * p_103868_;
-		float f6 = -(Mth.cos(p_103867_ * 0.6662F * 2.0F + ((float) Math.PI * 1.5F)) * 0.4F) * p_103868_;
-		float f7 = Math.abs(Mth.sin(p_103867_ * 0.6662F + 0.0F) * 0.4F) * p_103868_;
-		float f8 = Math.abs(Mth.sin(p_103867_ * 0.6662F + (float) Math.PI) * 0.4F) * p_103868_;
-		float f9 = Math.abs(Mth.sin(p_103867_ * 0.6662F + ((float) Math.PI / 2F)) * 0.4F) * p_103868_;
-		float f10 = Math.abs(Mth.sin(p_103867_ * 0.6662F + ((float) Math.PI * 1.5F)) * 0.4F) * p_103868_;
+		float f3 = -(Mth.cos(entity.walkAnimationPos * 0.6662F * 2.0F + 0.0F) * 0.4F) * entity.walkAnimationSpeed;
+		float f4 = -(Mth.cos(entity.walkAnimationPos * 0.6662F * 2.0F + (float) Math.PI) * 0.4F) * entity.walkAnimationSpeed;
+		float f5 = -(Mth.cos(entity.walkAnimationPos * 0.6662F * 2.0F + ((float) Math.PI / 2F)) * 0.4F) * entity.walkAnimationSpeed;
+		float f6 = -(Mth.cos(entity.walkAnimationPos * 0.6662F * 2.0F + ((float) Math.PI * 1.5F)) * 0.4F) * entity.walkAnimationSpeed;
+		float f7 = Math.abs(Mth.sin(entity.walkAnimationPos * 0.6662F + 0.0F) * 0.4F) * entity.walkAnimationSpeed;
+		float f8 = Math.abs(Mth.sin(entity.walkAnimationPos * 0.6662F + (float) Math.PI) * 0.4F) * entity.walkAnimationSpeed;
+		float f9 = Math.abs(Mth.sin(entity.walkAnimationPos * 0.6662F + ((float) Math.PI / 2F)) * 0.4F) * entity.walkAnimationSpeed;
+		float f10 = Math.abs(Mth.sin(entity.walkAnimationPos * 0.6662F + ((float) Math.PI * 1.5F)) * 0.4F) * entity.walkAnimationSpeed;
 		this.rightHindLeg.yRot += f3;
 		this.leftHindLeg.yRot += -f3;
 		this.rightMiddleHindLeg.yRot += f4;

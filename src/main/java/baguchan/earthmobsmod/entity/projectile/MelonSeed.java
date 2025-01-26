@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -19,12 +20,12 @@ public class MelonSeed extends ThrowableItemProjectile {
 		super(p_37391_, p_37392_);
 	}
 
-	public MelonSeed(Level p_37399_, LivingEntity p_37400_) {
-		super(ModEntities.MELON_SEED.get(), p_37400_, p_37399_);
+	public MelonSeed(Level p_37399_, LivingEntity p_37400_, ItemStack p_363259_) {
+		super(ModEntities.MELON_SEED.get(), p_37400_, p_37399_, p_363259_);
 	}
 
-	public MelonSeed(Level p_37394_, double p_37395_, double p_37396_, double p_37397_) {
-		super(ModEntities.MELON_SEED.get(), p_37395_, p_37396_, p_37397_, p_37394_);
+	public MelonSeed(Level p_37394_, double p_37395_, double p_37396_, double p_37397_, ItemStack p_363259_) {
+		super(ModEntities.MELON_SEED.get(), p_37395_, p_37396_, p_37397_, p_37394_, p_363259_);
 	}
 
 	protected Item getDefaultItem() {

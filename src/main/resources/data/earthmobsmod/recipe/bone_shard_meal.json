@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "bonemeal",
   "ingredients": [
-    {
-      "item": "earthmobsmod:bone_shard"
-    }
+    "earthmobsmod:bone_shard"
   ],
   "result": {
     "id": "minecraft:bone_meal",

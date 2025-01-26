@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
@@ -43,12 +45,12 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 		super(p_37391_, p_37392_);
 	}
 
-	public ZombieFlesh(Level p_37399_, LivingEntity p_37400_) {
-		super(ModEntities.ZOMBIE_FLESH.get(), p_37400_, p_37399_);
+	public ZombieFlesh(Level p_37399_, LivingEntity p_37400_, ItemStack p_363259_) {
+		super(ModEntities.ZOMBIE_FLESH.get(), p_37400_, p_37399_, p_363259_);
 	}
 
-	public ZombieFlesh(Level p_37394_, double p_37395_, double p_37396_, double p_37397_) {
-		super(ModEntities.ZOMBIE_FLESH.get(), p_37395_, p_37396_, p_37397_, p_37394_);
+	public ZombieFlesh(Level p_37394_, double p_37395_, double p_37396_, double p_37397_, ItemStack p_363259_) {
+		super(ModEntities.ZOMBIE_FLESH.get(), p_37395_, p_37396_, p_37397_, p_37394_, p_363259_);
 	}
 
 	@Override
@@ -174,8 +176,8 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 		Vec3 projectileMovement = this.getDeltaMovement();
 
 		int damage = Mth.ceil((3 * projectileMovement.length()));
-		if (damage > 0) {
-			if (entity.hurt(this.damageSources().thrown(this, this.getOwner()), damage)) {
+		if (damage > 0 && this.level() instanceof ServerLevel serverLevel) {
+			if (entity.hurtServer(serverLevel, this.damageSources().thrown(this, this.getOwner()), damage)) {
 
 				if (!this.level().isClientSide) {
 					this.level().broadcastEntityEvent(this, (byte) 3);
@@ -198,7 +200,7 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 		super.onHitBlock(blockHitResult);
 		Vec3 projectileMovement = this.getDeltaMovement();
 		if (projectileMovement.length() > 0.3) {
-			Vec3i direction = blockHitResult.getDirection().getNormal();
+			Vec3i direction = blockHitResult.getDirection().getUnitVec3i();
 			switch (blockHitResult.getDirection()) {
 				case UP, SOUTH, EAST:
 					direction = direction.multiply(-1);

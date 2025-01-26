@@ -4,6 +4,9 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.entity.*;
 import baguchan.earthmobsmod.entity.projectile.*;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
@@ -31,13 +34,6 @@ public class ModEntities {
     public static final Supplier<EntityType<FancyChicken>> FANCY_CHICKEN = ENTITIES.register("fancy_chicken", () -> EntityType.Builder.of(FancyChicken::new, MobCategory.CREATURE).sized(0.4F, 0.85F).clientTrackingRange(10).build(prefix("fancy_chicken")));
     public static final Supplier<EntityType<WoolyCow>> WOOLY_COW = ENTITIES.register("wooly_cow", () -> EntityType.Builder.of(WoolyCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("wooly_cow")));
     public static final Supplier<EntityType<UmbraCow>> UMBRA_COW = ENTITIES.register("umbra_cow", () -> EntityType.Builder.of(UmbraCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("umbra_cow")));
-	public static final Supplier<EntityType<EarthCow>> ASHEN_COW = ENTITIES.register("ashen_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("ashen_cow")));
-	public static final Supplier<EntityType<AlbinoCow>> ALBINO_COW = ENTITIES.register("albino_cow", () -> EntityType.Builder.of(AlbinoCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("albino_cow")));
-	public static final Supplier<EntityType<CreamCow>> CREAM_COW = ENTITIES.register("cream_cow", () -> EntityType.Builder.of(CreamCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("cream_cow")));
-	public static final Supplier<EntityType<EarthCow>> COOKIE_COW = ENTITIES.register("cookie_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("cookie_cow")));
-	public static final Supplier<EntityType<EarthCow>> DAIRY_COW = ENTITIES.register("dairy_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("dairy_cow")));
-	public static final Supplier<EntityType<EarthCow>> PINTO_COW = ENTITIES.register("pinto_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("pinto_cow")));
-	public static final Supplier<EntityType<EarthCow>> SUNSET_COW = ENTITIES.register("sunset_cow", () -> EntityType.Builder.of(EarthCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("sunset_cow")));
 	public static final Supplier<EntityType<TeaCupPig>> TEACUP_PIG = ENTITIES.register("teacup_pig", () -> EntityType.Builder.of(TeaCupPig::new, MobCategory.CREATURE).sized(0.4F, 0.4F).clientTrackingRange(10).build(prefix("teacup_pig")));
     public static final Supplier<EntityType<MagmaCow>> MAGMA_COW = ENTITIES.register("magma_cow", () -> EntityType.Builder.of(MagmaCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).fireImmune().build(prefix("magma_cow")));
 
@@ -48,7 +44,6 @@ public class ModEntities {
     public static final Supplier<EntityType<Moolip>> MOOLIP = ENTITIES.register("moolip", () -> EntityType.Builder.of(Moolip::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(8).build(prefix("moolip")));
     public static final Supplier<EntityType<JumboRabbit>> JUMBO_RABBIT = ENTITIES.register("jumbo_rabbit", () -> EntityType.Builder.of(JumboRabbit::new, MobCategory.CREATURE).sized(0.7F, 1.2F).clientTrackingRange(8).build(prefix("jumbo_rabbit")));
     public static final Supplier<EntityType<ZombifiedPig>> ZOMBIFIED_PIG = ENTITIES.register("zombified_pig", () -> EntityType.Builder.of(ZombifiedPig::new, MobCategory.CREATURE).sized(0.6F, 0.85F).fireImmune().build(prefix("zombified_pig")));
-    public static final Supplier<EntityType<Duck>> DUCK = ENTITIES.register("duck", () -> EntityType.Builder.of(Duck::new, MobCategory.CREATURE).sized(0.4F, 0.7F).build(prefix("duck")));
     public static final Supplier<EntityType<JollyLlama>> JOLLY_LLAMA = ENTITIES.register("jolly_llama", () -> EntityType.Builder.of(JollyLlama::new, MobCategory.CREATURE).sized(0.9F, 1.87F).clientTrackingRange(10).build(prefix("jolly_llama")));
 
 
@@ -75,13 +70,11 @@ public class ModEntities {
 
     public static final Supplier<EntityType<SkeletonWolf>> SKELETON_WOLF = ENTITIES.register("skeleton_wolf", () -> EntityType.Builder.of(SkeletonWolf::new, MobCategory.MONSTER).sized(0.6F, 0.85F).build(prefix("skeleton_wolf")));
     public static final Supplier<EntityType<WitherSkeletonWolf>> WITHER_SKELETON_WOLF = ENTITIES.register("wither_skeleton_wolf", () -> EntityType.Builder.of(WitherSkeletonWolf::new, MobCategory.MONSTER).sized(0.6F, 0.85F).fireImmune().immuneTo(Blocks.WITHER_ROSE).build(prefix("wither_skeleton_wolf")));
-    public static final Supplier<EntityType<BabyGhast>> BABY_GHAST = ENTITIES.register("baby_ghast", () -> EntityType.Builder.of(BabyGhast::new, MobCategory.CREATURE).sized(0.45F, 0.45F).fireImmune().build(prefix("baby_ghast")));
 
     public static final Supplier<EntityType<ZombifiedRabbit>> ZOMBIFIED_RABBIT = ENTITIES.register("zombified_rabbit", () -> EntityType.Builder.of(ZombifiedRabbit::new, MobCategory.MONSTER).sized(0.4F, 0.6F).clientTrackingRange(8).build(prefix("zombified_rabbit")));
 
     public static final Supplier<EntityType<SmellyEgg>> SMELLY_EGG = ENTITIES.register("smelly_egg", () -> EntityType.Builder.<SmellyEgg>of(SmellyEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("smelly_egg")));
     public static final Supplier<EntityType<FancyEgg>> FANCY_EGG = ENTITIES.register("fancy_egg", () -> EntityType.Builder.<FancyEgg>of(FancyEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("fancy_egg")));
-    public static final Supplier<EntityType<DuckEgg>> DUCK_EGG = ENTITIES.register("duck_egg", () -> EntityType.Builder.<DuckEgg>of(DuckEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("duck_egg")));
 
     public static final Supplier<EntityType<BoneShard>> BONE_SHARD = ENTITIES.register("bone_shard", () -> EntityType.Builder.<BoneShard>of(BoneShard::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("bone_shard")));
     public static final Supplier<EntityType<StrayBoneShard>> STRAY_BONE_SHARD = ENTITIES.register("stray_bone_shard", () -> EntityType.Builder.<StrayBoneShard>of(StrayBoneShard::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("stray_bone_shard")));
@@ -90,23 +83,15 @@ public class ModEntities {
     public static final Supplier<EntityType<ZombieFlesh>> ZOMBIE_FLESH = ENTITIES.register("zombie_flesh", () -> EntityType.Builder.<ZombieFlesh>of(ZombieFlesh::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("zombie_flesh")));
 
 
-	private static String prefix(String path) {
-		return EarthMobsMod.MODID + "." + path;
-	}
-
+    private static ResourceKey<EntityType<?>> prefix(String path) {
+        return ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, path));
+    }
 	@SubscribeEvent
 	public static void registerSpawnPlacement(RegisterSpawnPlacementsEvent event) {
         event.register(CLUCK_SHROOM.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CluckShroom::checkCluckShroomSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(FANCY_CHICKEN.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(WOOLY_COW.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(UMBRA_COW.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ALBINO_COW.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ASHEN_COW.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(COOKIE_COW.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(CREAM_COW.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(DAIRY_COW.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(PINTO_COW.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(SUNSET_COW.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
 
         event.register(TEACUP_PIG.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(MAGMA_COW.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MagmaCow::checkMagmaSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
@@ -118,7 +103,6 @@ public class ModEntities {
         event.register(MOOLIP.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(JUMBO_RABBIT.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, JumboRabbit::checkJumboSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ZOMBIFIED_PIG.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(DUCK.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(JOLLY_LLAMA.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
 
 
@@ -140,7 +124,7 @@ public class ModEntities {
         event.register(TROPICAL_SLIME.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TropicalSlime::checkTropicalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(SKELETON_WOLF.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SkeletonWolf::checkSkeletonWolfSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(WITHER_SKELETON_WOLF.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SkeletonWolf::checkSkeletonWolfSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(BABY_GHAST.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BabyGhast::checkGhastSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+
         event.register(ZOMBIFIED_RABBIT.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ZombifiedRabbit::checkMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
 	}
 
@@ -150,13 +134,6 @@ public class ModEntities {
 		event.put(FANCY_CHICKEN.get(), Chicken.createAttributes().build());
 		event.put(WOOLY_COW.get(), Cow.createAttributes().build());
 		event.put(UMBRA_COW.get(), Cow.createAttributes().build());
-		event.put(ALBINO_COW.get(), Cow.createAttributes().build());
-		event.put(ASHEN_COW.get(), Cow.createAttributes().build());
-		event.put(CREAM_COW.get(), Cow.createAttributes().build());
-		event.put(COOKIE_COW.get(), Cow.createAttributes().build());
-		event.put(DAIRY_COW.get(), Cow.createAttributes().build());
-		event.put(PINTO_COW.get(), Cow.createAttributes().build());
-		event.put(SUNSET_COW.get(), Cow.createAttributes().build());
 
 
 		event.put(TEACUP_PIG.get(), TeaCupPig.createAttributes().build());
@@ -168,7 +145,6 @@ public class ModEntities {
 		event.put(MOOLIP.get(), Cow.createAttributes().build());
 		event.put(JUMBO_RABBIT.get(), JumboRabbit.createAttributes().build());
 		event.put(ZOMBIFIED_PIG.get(), ZombifiedPig.createAttributes().build());
-        event.put(DUCK.get(), Chicken.createAttributes().build());
         event.put(JOLLY_LLAMA.get(), Llama.createAttributes().build());
 
 		event.put(MELON_GOLEM.get(), MelonGolem.createAttributes().build());
@@ -189,7 +165,7 @@ public class ModEntities {
 		event.put(TROPICAL_SLIME.get(), Monster.createMonsterAttributes().build());
 		event.put(SKELETON_WOLF.get(), SkeletonWolf.createAttributes().build());
 		event.put(WITHER_SKELETON_WOLF.get(), SkeletonWolf.createAttributes().build());
-		event.put(BABY_GHAST.get(), BabyGhast.createAttributes().build());
-		event.put(ZOMBIFIED_RABBIT.get(), ZombifiedRabbit.createAttributes().build());
+
+        event.put(ZOMBIFIED_RABBIT.get(), ZombifiedRabbit.createAttributes().build());
 	}
 }

@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.horse.Llama;
 import net.minecraft.world.level.Level;
@@ -16,6 +17,6 @@ public class JollyLlama extends Llama {
     @Nullable
     @Override
     public Llama getBreedOffspring(ServerLevel p_149545_, AgeableMob p_149546_) {
-        return ModEntities.JOLLY_LLAMA.get().create(p_149545_);
+        return ModEntities.JOLLY_LLAMA.get().create(p_149545_, EntitySpawnReason.BREEDING);
     }
 }

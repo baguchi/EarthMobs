@@ -110,9 +110,9 @@ public class BoulderingDrowned extends Drowned {
 		if ((double) p_218953_.nextFloat() > 0.9D) {
 			int i = p_218953_.nextInt(16);
 			if (i < 10) {
-				Registry<Enchantment> registry = this.registryAccess().registryOrThrow(Registries.ENCHANTMENT);
+				Registry<Enchantment> registry = this.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
 				ItemStack stack = new ItemStack(Items.TRIDENT);
-				stack.enchant(registry.getHolderOrThrow(Enchantments.RIPTIDE), 1);
+				stack.enchant(registry.getOrThrow(Enchantments.RIPTIDE), 1);
 				this.setItemSlot(EquipmentSlot.MAINHAND, stack);
 			} else {
 				this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.FISHING_ROD));
@@ -120,12 +120,12 @@ public class BoulderingDrowned extends Drowned {
 		}
 	}
 
-	public static boolean checkBoulderingDrownedSpawnRules(EntityType<BoulderingDrowned> p_32350_, ServerLevelAccessor p_32351_, MobSpawnType p_32352_, BlockPos p_32353_, RandomSource p_32354_) {
+	public static boolean checkBoulderingDrownedSpawnRules(EntityType<BoulderingDrowned> p_32350_, ServerLevelAccessor p_32351_, EntitySpawnReason p_32352_, BlockPos p_32353_, RandomSource p_32354_) {
 		if (!p_32351_.getFluidState(p_32353_.below()).is(FluidTags.WATER)) {
 			return false;
 		} else {
 			Holder<Biome> holder = p_32351_.getBiome(p_32353_);
-			boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (MobSpawnType.isSpawner(p_32352_) || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
+			boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (EntitySpawnReason.isSpawner(p_32352_) || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
 			if (!holder.is(Biomes.RIVER) && !holder.is(Biomes.FROZEN_RIVER)) {
 				return p_32354_.nextInt(40) == 0 && isDeepEnoughToSpawn(p_32351_, p_32353_) && flag;
 			} else {
@@ -140,8 +140,8 @@ public class BoulderingDrowned extends Drowned {
 
 	public void performRangedAttack(LivingEntity p_32356_, float p_32357_) {
 		if (this.distanceToSqr(p_32356_) < 42) {
-			Registry<Enchantment> registry = this.registryAccess().registryOrThrow(Registries.ENCHANTMENT);
-			int j = EnchantmentHelper.getEnchantmentLevel(registry.getHolderOrThrow(Enchantments.RIPTIDE), this);
+			Registry<Enchantment> registry = this.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+			int j = EnchantmentHelper.getEnchantmentLevel(registry.getOrThrow(Enchantments.RIPTIDE), this);
 			if (j > 0) {
 
 				double f1 = p_32356_.getX() - this.getX();

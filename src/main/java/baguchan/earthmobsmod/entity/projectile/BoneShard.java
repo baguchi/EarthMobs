@@ -10,6 +10,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -31,20 +33,20 @@ public class BoneShard extends ThrowableItemProjectile {
 		super(p_37391_, p_37392_);
 	}
 
-	public BoneShard(Level p_37399_, LivingEntity p_37400_) {
-		super(ModEntities.BONE_SHARD.get(), p_37400_, p_37399_);
+	public BoneShard(Level p_37399_, LivingEntity p_37400_, ItemStack p_363259_) {
+		super(ModEntities.BONE_SHARD.get(), p_37400_, p_37399_, p_363259_);
 	}
 
-	public BoneShard(Level p_37394_, double p_37395_, double p_37396_, double p_37397_) {
-		super(ModEntities.BONE_SHARD.get(), p_37395_, p_37396_, p_37397_, p_37394_);
+	public BoneShard(Level p_37394_, double p_37395_, double p_37396_, double p_37397_, ItemStack p_363259_) {
+		super(ModEntities.BONE_SHARD.get(), p_37395_, p_37396_, p_37397_, p_37394_, p_363259_);
 	}
 
-	public BoneShard(EntityType<? extends BoneShard> entity, double x, double y, double z, Level level) {
-		super(entity, x, y, z, level);
+	public BoneShard(EntityType<? extends BoneShard> entity, double x, double y, double z, Level level, ItemStack p_363259_) {
+		super(entity, x, y, z, level, p_363259_);
 	}
 
-	public BoneShard(EntityType<? extends BoneShard> entity, Level level, LivingEntity livingEntity) {
-		super(entity, livingEntity, level);
+	public BoneShard(EntityType<? extends BoneShard> entity, Level level, LivingEntity livingEntity, ItemStack p_363259_) {
+		super(entity, livingEntity, level, p_363259_);
 	}
 
 	protected Item getDefaultItem() {
@@ -142,8 +144,8 @@ public class BoneShard extends ThrowableItemProjectile {
         Vec3 projectileMovement = this.getDeltaMovement();
 
         int damage = Mth.ceil((3 * projectileMovement.length()));
-        if (damage > 0) {
-            if (entity.hurt(this.damageSources().thrown(this, this.getOwner()), damage)) {
+		if (damage > 0 && this.level() instanceof ServerLevel serverLevel) {
+			if (entity.hurtServer(serverLevel, this.damageSources().thrown(this, this.getOwner()), damage)) {
 
                 if (entity instanceof LivingEntity) {
 					for (MobEffectInstance mobeffectinstance : this.getPotionContents().getAllEffects()) {

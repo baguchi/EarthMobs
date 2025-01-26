@@ -9,16 +9,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -30,6 +28,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
@@ -82,7 +81,7 @@ public class FurnaceGolem extends AbstractGolem {
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, (p_28879_) -> {
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, (p_28879_, serverLevel) -> {
             return p_28879_ instanceof Enemy && !(p_28879_ instanceof Creeper);
         }));
     }
@@ -137,7 +136,7 @@ public class FurnaceGolem extends AbstractGolem {
             BlockPos pos = new BlockPos(i, j, k);
             BlockState blockstate = this.level().getBlockState(pos);
             if (!blockstate.isAir()) {
-                this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate).setPos(pos), this.getX() + ((double) this.random.nextFloat() - 0.5D) * (double) this.getBbWidth(), this.getY() + 0.1D, this.getZ() + ((double) this.random.nextFloat() - 0.5D) * (double) this.getBbWidth(), 4.0D * ((double) this.random.nextFloat() - 0.5D), 0.5D, ((double) this.random.nextFloat() - 0.5D) * 4.0D);
+                this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), this.getX() + ((double) this.random.nextFloat() - 0.5D) * (double) this.getBbWidth(), this.getY() + 0.1D, this.getZ() + ((double) this.random.nextFloat() - 0.5D) * (double) this.getBbWidth(), 4.0D * ((double) this.random.nextFloat() - 0.5D), 0.5D, ((double) this.random.nextFloat() - 0.5D) * 4.0D);
             }
         }
 
@@ -184,43 +183,38 @@ public class FurnaceGolem extends AbstractGolem {
         return (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
     }
 
-    public boolean doHurtTarget(Entity p_28837_) {
+    @Override
+    public boolean doHurtTarget(ServerLevel p_376718_, Entity p_28837_) {
         this.attackAnimationTick = 10;
-        this.level().broadcastEntityEvent(this, (byte) 4);
+        p_376718_.broadcastEntityEvent(this, (byte) 4);
         float f = this.getAttackDamage();
         float f1 = (int) f > 0 ? f / 2.0F + (float) this.random.nextInt((int) f) : f;
-        boolean flag = p_28837_.hurt(this.damageSources().mobAttack(this), f1);
+        DamageSource damagesource = this.damageSources().mobAttack(this);
+        boolean flag = p_28837_.hurtServer(p_376718_, damagesource, f1);
         if (flag) {
-            double d2;
-            if (p_28837_ instanceof LivingEntity) {
-                LivingEntity livingentity = (LivingEntity) p_28837_;
-                d2 = livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
-            } else {
-                d2 = 0.0D;
-            }
-
-            double d0 = d2;
-            double d1 = Math.max(0.0D, 1.0D - d0);
-            p_28837_.setDeltaMovement(p_28837_.getDeltaMovement().add(0.0D, (double) 0.4F * d1, 0.0D));
-            //this.doEnchantDamageEffects(this, p_28837_);
+            double d0 = p_28837_ instanceof LivingEntity livingentity ? livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) : 0.0;
+            double d1 = Math.max(0.0, 1.0 - d0);
+            p_28837_.setDeltaMovement(p_28837_.getDeltaMovement().add(0.0, 0.4F * d1, 0.0));
+            EnchantmentHelper.doPostAttackEffects(p_376718_, p_28837_, damagesource);
         }
 
         this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);
         return flag;
     }
 
-    public boolean hurt(DamageSource p_28848_, float p_28849_) {
-        FurnaceGolem.Crackiness irongolem$crackiness = this.getCrackiness();
-        boolean flag = super.hurt(p_28848_, p_28849_);
-        if (flag && this.getCrackiness() != irongolem$crackiness) {
+    @Override
+    public boolean hurtServer(ServerLevel p_376593_, DamageSource p_376434_, float p_376366_) {
+        Crackiness.Level crackiness$level = this.getCrackiness();
+        boolean flag = super.hurtServer(p_376593_, p_376434_, p_376366_);
+        if (flag && this.getCrackiness() != crackiness$level) {
             this.playSound(SoundEvents.IRON_GOLEM_DAMAGE, 1.0F, 1.0F);
         }
 
         return flag;
     }
 
-    public FurnaceGolem.Crackiness getCrackiness() {
-        return FurnaceGolem.Crackiness.byFraction(this.getHealth() / this.getMaxHealth());
+    public net.minecraft.world.entity.Crackiness.Level getCrackiness() {
+        return net.minecraft.world.entity.Crackiness.GOLEM.byFraction(this.getHealth() / this.getMaxHealth());
     }
 
     public void handleEntityEvent(byte p_28844_) {
@@ -261,7 +255,7 @@ public class FurnaceGolem extends AbstractGolem {
                     itemstack.shrink(1);
                 }
 
-                return InteractionResult.sidedSuccess(this.level().isClientSide);
+                return InteractionResult.SUCCESS;
             }
         }
     }
@@ -295,31 +289,5 @@ public class FurnaceGolem extends AbstractGolem {
 
     public Vec3 getLeashOffset() {
         return new Vec3(0.0D, (double) (0.875F * this.getEyeHeight()), (double) (this.getBbWidth() * 0.4F));
-    }
-
-    public static enum Crackiness {
-        NONE(1.0F),
-        LOW(0.75F),
-        MEDIUM(0.5F),
-        HIGH(0.25F);
-
-        private static final List<FurnaceGolem.Crackiness> BY_DAMAGE = Stream.of(values()).sorted(Comparator.comparingDouble((p_28904_) -> {
-            return (double) p_28904_.fraction;
-        })).collect(ImmutableList.toImmutableList());
-        private final float fraction;
-
-        private Crackiness(float p_28900_) {
-            this.fraction = p_28900_;
-        }
-
-        public static FurnaceGolem.Crackiness byFraction(float p_28902_) {
-            for (FurnaceGolem.Crackiness irongolem$crackiness : BY_DAMAGE) {
-                if (p_28902_ < irongolem$crackiness.fraction) {
-                    return irongolem$crackiness;
-                }
-            }
-
-            return NONE;
-        }
     }
 }

@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.registry.ModBlocks;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.level.Level;
@@ -21,6 +22,6 @@ public class Moolip extends Moobloom {
 
 	@Override
 	public Cow getBreedOffspring(ServerLevel p_148890_, AgeableMob p_148891_) {
-		return ModEntities.MOOLIP.get().create(p_148890_);
+		return ModEntities.MOOLIP.get().create(p_148890_, EntitySpawnReason.BREEDING);
 	}
 }

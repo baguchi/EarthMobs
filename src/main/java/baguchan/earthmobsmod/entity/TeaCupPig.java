@@ -13,10 +13,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Bucketable;
@@ -46,7 +43,7 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
     @Nullable
     @Override
     public TeaCupPig getBreedOffspring(ServerLevel p_149001_, AgeableMob p_149002_) {
-        return ModEntities.TEACUP_PIG.get().create(p_149001_);
+        return ModEntities.TEACUP_PIG.get().create(p_149001_, EntitySpawnReason.BREEDING);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -71,7 +68,7 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
             }
 
             p_148831_.discard();
-            return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
+            return Optional.of(InteractionResult.SUCCESS);
         } else {
             return Optional.empty();
         }

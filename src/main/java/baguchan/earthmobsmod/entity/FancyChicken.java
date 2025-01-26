@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -21,17 +22,17 @@ public class FancyChicken extends Chicken {
 
 	@Nullable
 	@Override
-	public ItemEntity spawnAtLocation(ItemLike p_19999_) {
+	public ItemEntity spawnAtLocation(ServerLevel serverLevel, ItemLike p_19999_) {
 		//override to smelly egg
 		if (p_19999_.asItem() == Items.EGG) {
 			p_19999_ = ModItems.FANCY_EGG.get();
 		}
 
-		return super.spawnAtLocation(p_19999_);
+		return super.spawnAtLocation(serverLevel, p_19999_);
 	}
 
 	@Override
 	public Chicken getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {
-		return ModEntities.FANCY_CHICKEN.get().create(p_148884_);
+		return ModEntities.FANCY_CHICKEN.get().create(p_148884_, EntitySpawnReason.BREEDING);
 	}
 }

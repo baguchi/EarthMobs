@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +25,6 @@ import net.minecraft.world.item.component.SuspiciousStewEffects;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.IShearable;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class Moobloom extends Cow implements IShearable, IFlowerCow, IHasFlower 
 			p_28941_.setItemInHand(p_28942_, itemstack2);
 			SoundEvent soundevent = SoundEvents.BONE_MEAL_USE;
 			this.playSound(soundevent, 1.0F, 1.0F);
-			return InteractionResult.sidedSuccess(this.level().isClientSide);
+			return InteractionResult.SUCCESS;
 		} else if (itemstack.is(Items.BOWL) && !this.isBaby()) {
 			SuspiciousStewEffects pair = this.getEffectFromItemStack(this.getFlower().asItem().getDefaultInstance());
 			ItemStack itemstack1 = new ItemStack(Items.SUSPICIOUS_STEW);
@@ -53,7 +53,7 @@ public class Moobloom extends Cow implements IShearable, IFlowerCow, IHasFlower 
 			p_28941_.setItemInHand(p_28942_, itemstack2);
 			SoundEvent soundevent = SoundEvents.MOOSHROOM_MILK_SUSPICIOUSLY;
 			this.playSound(soundevent, 1.0F, 1.0F);
-			return InteractionResult.sidedSuccess(this.level().isClientSide);
+			return InteractionResult.SUCCESS;
 		} else {
 			return super.mobInteract(p_28941_, p_28942_);
 		}
@@ -75,7 +75,7 @@ public class Moobloom extends Cow implements IShearable, IFlowerCow, IHasFlower 
 		if (!this.level().isClientSide()) {
 			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();
-			Cow cow = EntityType.COW.create(this.level());
+			Cow cow = EntityType.COW.create(this.level(), EntitySpawnReason.CONVERSION);
 			cow.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
 			cow.setHealth(this.getHealth());
 			cow.yBodyRot = this.yBodyRot;
@@ -102,7 +102,7 @@ public class Moobloom extends Cow implements IShearable, IFlowerCow, IHasFlower 
 
 	@Override
 	public Cow getBreedOffspring(ServerLevel p_148890_, AgeableMob p_148891_) {
-		return ModEntities.MOOBLOOM.get().create(p_148890_);
+		return ModEntities.MOOBLOOM.get().create(p_148890_, EntitySpawnReason.BREEDING);
 	}
 
 	@Override

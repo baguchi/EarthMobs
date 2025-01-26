@@ -72,7 +72,7 @@ public class TropicalSlime extends Slime implements Bucketable {
         this.goalSelector.addGoal(2, new TropicalSlime.SlimeAttackGoal(this));
         this.goalSelector.addGoal(3, new TropicalSlime.SlimeRandomDirectionGoal(this));
         this.goalSelector.addGoal(5, new TropicalSlime.SlimeKeepOnJumpingGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (p_33641_) -> {
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (p_33641_, serverLevel) -> {
             return Math.abs(p_33641_.getY() - this.getY()) <= 4.0D;
         }));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
@@ -138,7 +138,7 @@ public class TropicalSlime extends Slime implements Bucketable {
             p_28941_.setItemInHand(p_28942_, itemstack2);
             SoundEvent soundevent = SoundEvents.BUCKET_EMPTY_FISH;
             this.playSound(soundevent, 1.0F, 1.0F);
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
+            return InteractionResult.SUCCESS;
         } else {
             return this.isTiny() ? Bucketable.bucketMobPickup(p_28941_, p_28942_, this).orElse(super.mobInteract(p_28941_, p_28942_)) : super.mobInteract(p_28941_, p_28942_);
         }
@@ -200,7 +200,7 @@ public class TropicalSlime extends Slime implements Bucketable {
                     double f1 = ((CompoundTag) listTag.get(l)).getDouble(TAG_FISH_POSX);
                     double f2 = ((CompoundTag) listTag.get(l)).getDouble(TAG_FISH_POSZ);
                     double f3 = ((CompoundTag) listTag.get(l)).getDouble(TAG_FISH_POSY);
-                    TropicalFish fish = EntityType.TROPICAL_FISH.create(this.level());
+                    TropicalFish fish = EntityType.TROPICAL_FISH.create(this.level(), EntitySpawnReason.TRIGGERED);
                     if (this.isPersistenceRequired()) {
                         fish.setPersistenceRequired();
                     }
@@ -230,22 +230,22 @@ public class TropicalSlime extends Slime implements Bucketable {
     }
 
     @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_30023_, DifficultyInstance p_30024_, MobSpawnType p_30025_, @Nullable SpawnGroupData p_30026_) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_30023_, DifficultyInstance p_30024_, EntitySpawnReason p_30025_, @Nullable SpawnGroupData p_30026_) {
         p_30026_ = super.finalizeSpawn(p_30023_, p_30024_, p_30025_, p_30026_);
 
         int size = Mth.clamp(this.getSize(), 1, 5);
         for (int i = 0; i < size; i++) {
-            this.randomFishData(p_30025_ == MobSpawnType.BUCKET);
+            this.randomFishData(p_30025_ == EntitySpawnReason.BUCKET);
         }
         return p_30026_;
     }
 
-    public static boolean checkTropicalSpawnRules(EntityType<TropicalSlime> p_32350_, ServerLevelAccessor p_32351_, MobSpawnType p_32352_, BlockPos p_32353_, RandomSource p_32354_) {
+    public static boolean checkTropicalSpawnRules(EntityType<TropicalSlime> p_32350_, ServerLevelAccessor p_32351_, EntitySpawnReason p_32352_, BlockPos p_32353_, RandomSource p_32354_) {
         if (!p_32351_.getFluidState(p_32353_.below()).is(FluidTags.WATER)) {
             return false;
         } else {
             Holder<Biome> holder = p_32351_.getBiome(p_32353_);
-            boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (MobSpawnType.isSpawner(p_32352_) || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
+            boolean flag = p_32351_.getDifficulty() != Difficulty.PEACEFUL && (EntitySpawnReason.isSpawner(p_32352_) || p_32351_.getFluidState(p_32353_).is(FluidTags.WATER) && isDarkEnoughToSpawn(p_32351_, p_32353_, p_32354_));
 
             return p_32354_.nextInt(30) == 0 && flag;
         }

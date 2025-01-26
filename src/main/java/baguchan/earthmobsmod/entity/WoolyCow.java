@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Cow;
@@ -28,6 +29,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.common.IShearable;
 
 import java.util.List;
+import java.util.Optional;
 
 public class WoolyCow extends Cow implements IShearable {
 	private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(WoolyCow.class, EntityDataSerializers.BOOLEAN);
@@ -58,16 +60,16 @@ public class WoolyCow extends Cow implements IShearable {
 		builder.define(SHEARED, false);
 	}
 
-	public ResourceKey<LootTable> getDefaultLootTable() {
+	public Optional<ResourceKey<LootTable>> getDefaultLootTable() {
 		if (this.isSheared()) {
-			return WOOLY_COW_SHEARD_LOOT_TABLE;
+			return Optional.of(WOOLY_COW_SHEARD_LOOT_TABLE);
 		} else {
 			return this.getType().getDefaultLootTable();
 		}
 	}
 
 	public Cow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {
-		return ModEntities.WOOLY_COW.get().create(p_148884_);
+		return ModEntities.WOOLY_COW.get().create(p_148884_, EntitySpawnReason.BREEDING);
 	}
 
 	public void addAdditionalSaveData(CompoundTag p_29864_) {
@@ -80,9 +82,9 @@ public class WoolyCow extends Cow implements IShearable {
 		this.setSheared(p_29845_.getBoolean("Sheared"));
 	}
 
-	protected void customServerAiStep() {
+	protected void customServerAiStep(ServerLevel serverLevel) {
 		this.eatAnimationTick = this.eatBlockGoal.getEatAnimationTick();
-		super.customServerAiStep();
+		super.customServerAiStep(serverLevel);
 	}
 
 	public void aiStep() {

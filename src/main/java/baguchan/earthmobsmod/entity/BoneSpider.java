@@ -3,12 +3,14 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.entity.goal.RangedAndMeleeAttack;
 import baguchan.earthmobsmod.entity.projectile.BoneShard;
 import baguchan.earthmobsmod.registry.ModEntities;
+import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.ConversionParams;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -109,7 +111,8 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 	}
 
 	protected void doFreezeConversion() {
-		this.convertTo(ModEntities.STRAY_BONE_SPIDER.get(), true);
+		this.convertTo(ModEntities.STRAY_BONE_SPIDER.get(), ConversionParams.single(this, false, true), p_390220_ -> {
+		});
 		if (!this.isSilent()) {
 			this.level().levelEvent((Player) null, 1048, this.blockPosition(), 0);
 		}
@@ -162,7 +165,7 @@ public class BoneSpider extends Spider implements RangedAttackMob {
     }
 
 	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
-		BoneShard bone = new BoneShard(this.level(), this);
+		BoneShard bone = new BoneShard(this.level(), this, ModItems.BONE_SHARD.toStack());
 		double d1 = p_29912_.getX() - this.getX();
 		double d2 = p_29912_.getEyeY() - this.getEyeY();
 		double d3 = p_29912_.getZ() - this.getZ();
@@ -176,10 +179,10 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 		this.level().addFreshEntity(bone);
     }
 
-    @Override
-    public float getScale() {
-        return this.isBaby() ? 0.6F : 1.0F;
-    }
+	@Override
+	public float getAgeScale() {
+		return this.isBaby() ? 0.6F : 1.0F;
+	}
 
     static class SpiderTargetGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
         public SpiderTargetGoal(Spider p_33832_, Class<T> p_33833_) {

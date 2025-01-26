@@ -1,6 +1,9 @@
 package baguchan.earthmobsmod.client;
 
 import baguchan.earthmobsmod.EarthMobsMod;
+import baguchan.earthmobsmod.api.IMoss;
+import baguchan.earthmobsmod.api.IMuddyPig;
+import baguchan.earthmobsmod.api.ISheared;
 import baguchan.earthmobsmod.client.model.*;
 import baguchan.earthmobsmod.client.render.*;
 import baguchan.earthmobsmod.client.render.layer.MossSheepLayer;
@@ -10,24 +13,21 @@ import baguchan.earthmobsmod.client.render.zombie.*;
 import baguchan.earthmobsmod.fluidtype.MudFluidType;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModFluidTypes;
-import baguchan.earthmobsmod.registry.ModItems;
+import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.alchemy.PotionContents;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
@@ -44,14 +44,6 @@ public class ClientRegistrar {
         event.registerEntityRenderer(ModEntities.WOOLY_COW.get(), WoolyCowRenderer::new);
         event.registerEntityRenderer(ModEntities.UMBRA_COW.get(), UmbraCowRenderer::new);
 
-        event.registerEntityRenderer(ModEntities.ALBINO_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/albino_cow.png")));
-		event.registerEntityRenderer(ModEntities.ASHEN_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/ashen_cow.png")));
-		event.registerEntityRenderer(ModEntities.COOKIE_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/cookie_cow.png")));
-		event.registerEntityRenderer(ModEntities.CREAM_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/cream_cow.png")));
-		event.registerEntityRenderer(ModEntities.DAIRY_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/dairy_cow.png")));
-		event.registerEntityRenderer(ModEntities.PINTO_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/pinto_cow.png")));
-		event.registerEntityRenderer(ModEntities.SUNSET_COW.get(), (r) -> new RevampedCowRenderer<>(r, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cow/sunset_cow.png")));
-
         event.registerEntityRenderer(ModEntities.TEACUP_PIG.get(), TeaCupPigRenderer::new);
 
 
@@ -62,7 +54,6 @@ public class ClientRegistrar {
         event.registerEntityRenderer(ModEntities.MOOLIP.get(), MoolipRenderer::new);
         event.registerEntityRenderer(ModEntities.JUMBO_RABBIT.get(), JumboRabbitRenderer::new);
         event.registerEntityRenderer(ModEntities.ZOMBIFIED_PIG.get(), ZombifiedPigRenderer::new);
-        event.registerEntityRenderer(ModEntities.DUCK.get(), DuckRenderer::new);
 
         event.registerEntityRenderer(ModEntities.MELON_GOLEM.get(), MelonGolemRenderer::new);
 
@@ -81,14 +72,12 @@ public class ClientRegistrar {
 		event.registerEntityRenderer(ModEntities.TROPICAL_SLIME.get(), TropicalSlimeRenderer::new);
 		event.registerEntityRenderer(ModEntities.SKELETON_WOLF.get(), SkeletonWolfRenderer::new);
 		event.registerEntityRenderer(ModEntities.WITHER_SKELETON_WOLF.get(), WitherSkeletonWolfRenderer::new);
-		event.registerEntityRenderer(ModEntities.BABY_GHAST.get(), BabyGhastRenderer::new);
-        event.registerEntityRenderer(ModEntities.MAGMA_COW.get(), MagmaCowRenderer::new);
+		event.registerEntityRenderer(ModEntities.MAGMA_COW.get(), MagmaCowRenderer::new);
         event.registerEntityRenderer(ModEntities.FURNACE_GOLEM.get(), FurnaceGolemRenderer::new);
 		event.registerEntityRenderer(ModEntities.JOLLY_LLAMA.get(), JollyLlamaRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.SMELLY_EGG.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(ModEntities.FANCY_EGG.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(ModEntities.DUCK_EGG.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(ModEntities.BONE_SHARD.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(ModEntities.STRAY_BONE_SHARD.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(ModEntities.MELON_SEED.get(), ThrownItemRenderer::new);
@@ -99,6 +88,8 @@ public class ClientRegistrar {
 	public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(ModModelLayers.CLUCK_SHROOM, CluckShroomModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.FANCY_CHICKEN, FancyChickenModel::createBodyLayer);
+		event.registerLayerDefinition(ModModelLayers.CLUCK_SHROOM_BABY, () -> CluckShroomModel.createBodyLayer().apply(CluckShroomModel.BABY_TRANSFORMER));
+		event.registerLayerDefinition(ModModelLayers.FANCY_CHICKEN_BABY, () -> FancyChickenModel.createBodyLayer().apply(FancyChickenModel.BABY_TRANSFORMER));
 		event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP, HornedSheepModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_FUR, HornedSheepModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.HYPER_RABBIT, HyperRabbitModel::createBodyLayer);
@@ -108,13 +99,10 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.BONE_SPIDER, BoneSpiderModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.STRAY_BONE_SPIDER, BoneSpiderModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.VILER_WITCH, VilerWitchModel::createBodyLayer);
-		event.registerLayerDefinition(ModModelLayers.BABY_GHAST, BabyGhastModel::createBodyLayer);
-		event.registerLayerDefinition(ModModelLayers.BABY_GHAST_CORE, BabyGhastModel::createCoreLayer);
 		event.registerLayerDefinition(ModModelLayers.MAGMA_COW, MagmaCowModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.MAGMA_COW_GLOW, MagmaCowModel::createAnimateBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.FURNACE_GOLEM, FurnaceGolemModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.JOLLY_LLAMA, JollyLlamaModel::createBodyLayer);
-		event.registerLayerDefinition(ModModelLayers.COW, RevampedCowModel::createBodyLayer);
 
 		LayerDefinition layerDefinition = BoulderingZombieModel.createBodyLayer();
 		LayerDefinition layerDefinition2 = LobberZombieModel.createBodyLayer();
@@ -124,8 +112,14 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.LOBBER_ZOMBIE, () -> layerDefinition2);
 		event.registerLayerDefinition(ModModelLayers.BOULDERING_DROWNED, () -> layerDefinition3);
 		event.registerLayerDefinition(ModModelLayers.LOBBER_DROWNED, () -> layerDefinition4);
+		event.registerLayerDefinition(ModModelLayers.BOULDERING_ZOMBIE_BABY, () -> layerDefinition.apply(ZombieModel.BABY_TRANSFORMER));
+		event.registerLayerDefinition(ModModelLayers.LOBBER_ZOMBIE_BABY, () -> layerDefinition2.apply(ZombieModel.BABY_TRANSFORMER));
+		event.registerLayerDefinition(ModModelLayers.BOULDERING_DROWNED_BABY, () -> layerDefinition3.apply(ZombieModel.BABY_TRANSFORMER));
+		event.registerLayerDefinition(ModModelLayers.LOBBER_DROWNED_BABY, () -> layerDefinition4.apply(ZombieModel.BABY_TRANSFORMER));
 		event.registerLayerDefinition(ModModelLayers.BOULDERING_DROWNED_OUTER, () -> BoulderingDrownedModel.createBodyLayer(new CubeDeformation(0.25F)));
 		event.registerLayerDefinition(ModModelLayers.LOBBER_DROWNED_OUTER, () -> LobberDrownedModel.createBodyLayer(new CubeDeformation(0.25F)));
+		event.registerLayerDefinition(ModModelLayers.BOULDERING_DROWNED_OUTER_BABY, () -> BoulderingDrownedModel.createBodyLayer(new CubeDeformation(0.25F)).apply(ZombieModel.BABY_TRANSFORMER));
+		event.registerLayerDefinition(ModModelLayers.LOBBER_DROWNED_OUTER_BABY, () -> LobberDrownedModel.createBodyLayer(new CubeDeformation(0.25F)).apply(ZombieModel.BABY_TRANSFORMER));
 	}
 
 	@SubscribeEvent
@@ -146,9 +140,22 @@ public class ClientRegistrar {
 	}
 
 	@SubscribeEvent
-	public static void registerItemColorRenders(RegisterColorHandlersEvent.Item event) {
-		event.register((p_92693_, p_92694_) -> {
-			return p_92693_.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor();
-		}, ModItems.BONE_SHARD.get());
+	public static void registerLayerData(RegisterRenderStateModifiersEvent event) {
+		event.registerEntityModifier(PigRenderer.class, (pig, renderState) -> {
+			if (pig instanceof IMuddyPig muddy) {
+				renderState.setRenderData(MuddyPigMudLayer.IS_MUD, muddy.isMuddy());
+
+			}
+			if (pig instanceof ISheared sheared) {
+				renderState.setRenderData(MuddyPigMudLayer.IS_SHEARED, sheared.isSheared());
+				renderState.setRenderData(MuddyPigFlowerLayer.FLOWER_DYE, sheared.getColor());
+			}
+		});
+		event.registerEntityModifier(SheepRenderer.class, (sheep, renderState) -> {
+			if (sheep instanceof IMoss moss) {
+				renderState.setRenderData(MossSheepLayer.MOSS, moss.isMoss());
+
+			}
+		});
 	}
 }

@@ -1,14 +1,14 @@
 package baguchan.earthmobsmod.entity;
 
-import bagu_chan.bagus_lib.client.camera.CameraCore;
-import bagu_chan.bagus_lib.client.camera.holder.CameraHolder;
-import bagu_chan.bagus_lib.util.GlobalVec3;
 import baguchan.earthmobsmod.data.CustomTagGenerator;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
+import baguchi.bagus_lib.client.camera.CameraCore;
+import baguchi.bagus_lib.client.camera.holder.CameraHolder;
+import baguchi.bagus_lib.util.GlobalVec3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -23,10 +23,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -135,7 +132,7 @@ public class HornedSheep extends Sheep {
     public ItemStack createHorn() {
         RandomSource randomsource = RandomSource.create((long) this.getUUID().hashCode());
         TagKey<Instrument> tagkey = CustomTagGenerator.InstrumentTagGenerator.HORNED_SHEEP;
-        HolderSet<Instrument> holderset = BuiltInRegistries.INSTRUMENT.getOrCreateTag(tagkey);
+        HolderSet<Instrument> holderset = this.registryAccess().lookupOrThrow(Registries.INSTRUMENT).getOrThrow(tagkey);
         return InstrumentItem.create(ModItems.HORN_FLUTE.get(), holderset.getRandomElement(randomsource).get());
     }
 
@@ -178,18 +175,18 @@ public class HornedSheep extends Sheep {
 
     @Override
     public HornedSheep getBreedOffspring(ServerLevel p_149035_, AgeableMob p_149036_) {
-        return ModEntities.HORNED_SHEEP.get().create(p_149035_);
+        return ModEntities.HORNED_SHEEP.get().create(p_149035_, EntitySpawnReason.BREEDING);
     }
 
     @Override
-    public boolean hurt(DamageSource damagesource, float p_27568_) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource damagesource, float p_27568_) {
         Entity entity1 = damagesource.getEntity();
         if (entity1 != null) {
             if (entity1 instanceof LivingEntity) {
                 this.setLastHurtByMob((LivingEntity) entity1);
             }
         }
-        return super.hurt(damagesource, p_27568_);
+        return super.hurtServer(serverLevel, damagesource, p_27568_);
     }
 
     public static class HornedSheepAttackGoal extends Goal {
@@ -305,7 +302,7 @@ public class HornedSheep extends Sheep {
             if (this.hornedSheep.isWithinMeleeAttackRange(p_25557_) && (!this.attack || !this.rushing)) {
                 this.hornedSheep.swing(InteractionHand.MAIN_HAND);
                 if (!this.rushing) {
-                    this.hornedSheep.doHurtTarget(p_25557_);
+                    this.hornedSheep.doHurtTarget(getServerLevel(this.hornedSheep), p_25557_);
                     this.attack = true;
                 } else {
                     int i = this.hornedSheep.hasEffect(MobEffects.MOVEMENT_SPEED) ? this.hornedSheep.getEffect(MobEffects.MOVEMENT_SPEED).getAmplifier() + 1 : 0;
@@ -315,7 +312,7 @@ public class HornedSheep extends Sheep {
                     float f2 = p_25557_.isDamageSourceBlocked(this.hornedSheep.damageSources().mobAttack(this.hornedSheep)) ? 0.5F : 1.0F;
 
                     p_25557_.knockback((double) (f2 * f1) * (this.hornedSheep.isBaby() ? 0.2F : 1.5F), this.hornedSheep.getX() - p_25557_.getX(), this.hornedSheep.getZ() - p_25557_.getZ());
-                    p_25557_.hurt(this.hornedSheep.damageSources().mobAttack(this.hornedSheep), (float) this.hornedSheep.getAttributeValue(Attributes.ATTACK_DAMAGE) + 2.0F);
+                    p_25557_.hurtServer(getServerLevel(this.hornedSheep), this.hornedSheep.damageSources().mobAttack(this.hornedSheep), (float) this.hornedSheep.getAttributeValue(Attributes.ATTACK_DAMAGE) + 2.0F);
                 }
                 this.ticksUntilNextAttack = 30;
             }
