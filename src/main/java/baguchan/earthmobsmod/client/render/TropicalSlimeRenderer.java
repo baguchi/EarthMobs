@@ -1,13 +1,13 @@
 package baguchan.earthmobsmod.client.render;
 
 import baguchan.earthmobsmod.EarthMobsMod;
+import baguchan.earthmobsmod.client.render.layer.TropicalSlimeOuterLayer;
 import baguchan.earthmobsmod.entity.TropicalSlime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
 import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -16,7 +16,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, SlimeRenderState, SlimeModel> {
-	private static final ResourceLocation SLIME_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime.png");
+	public static final ResourceLocation SLIME_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime.png");
 
 	private static final ResourceLocation[] BASE_TEXTURE_LOCATIONS = new ResourceLocation[]{ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b.png")};
 	private static final ResourceLocation[] PATTERN_A_TEXTURE_LOCATIONS = new ResourceLocation[]{ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_1.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_2.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_3.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_4.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_5.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_6.png")};
@@ -24,7 +24,7 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, SlimeRende
 
 	public TropicalSlimeRenderer(EntityRendererProvider.Context p_174391_) {
 		super(p_174391_, new SlimeModel(p_174391_.bakeLayer(ModelLayers.SLIME)), 0.25F);
-		this.addLayer(new SlimeOuterLayer(this, p_174391_.getModelSet()));
+		this.addLayer(new TropicalSlimeOuterLayer(this, p_174391_.getModelSet()));
 	}
 
 	@Override
