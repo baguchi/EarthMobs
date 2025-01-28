@@ -4,9 +4,6 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.7.2
 
 
 import baguchan.earthmobsmod.client.render.state.FurnaceGolemRenderState;
-import baguchan.earthmobsmod.entity.FurnaceGolem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -87,5 +84,6 @@ public class FurnaceGolemModel<T extends FurnaceGolemRenderState> extends Entity
         this.left_leg.xRot = 1.5F * Mth.triangleWave(f2, 13.0F) * f1;
         this.right_leg.yRot = 0.0F;
         this.left_leg.yRot = 0.0F;
+        this.head2.copyFrom(this.head);
     }
 }

@@ -56,7 +56,7 @@ public class AbstractLobberZombieModel<T extends ZombieRenderState> extends Enti
 
     @Override
     public void setupAnim(T entity) {
-        this.root.getAllParts().forEach(ModelPart::resetPose);
+        super.setupAnim(entity);
         this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
         this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
         AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, entity.isAggressive, entity.attackTime, entity.ageInTicks);

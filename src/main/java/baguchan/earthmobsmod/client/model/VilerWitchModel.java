@@ -65,6 +65,7 @@ public class VilerWitchModel<T extends WitchRenderState> extends EntityModel<T> 
 	}
 
 	public void setupAnim(T entity) {
+		super.setupAnim(entity);
 		this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
 		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
 		this.nose.setPos(0.0F, -2.0F, 0.0F);

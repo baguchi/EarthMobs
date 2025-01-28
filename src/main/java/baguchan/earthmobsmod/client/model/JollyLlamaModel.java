@@ -66,7 +66,7 @@ public class JollyLlamaModel<T extends LlamaRenderState> extends EntityModel<T> 
 
     @Override
     public void setupAnim(T entity) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
+        super.setupAnim(entity);
         this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
         this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
         this.chest_right.visible = entity.hasChest;

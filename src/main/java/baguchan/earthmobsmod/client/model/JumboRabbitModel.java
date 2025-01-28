@@ -80,6 +80,7 @@ public class JumboRabbitModel<T extends RabbitRenderState> extends EntityModel<T
 
 	@Override
 	public void setupAnim(T entity) {
+		super.setupAnim(entity);
 		float f = entity.partialTick;
 		this.nose.xRot = entity.xRot * ((float) Math.PI / 180F);
 		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);

@@ -106,6 +106,7 @@ public class HyperRabbitModel<T extends RabbitRenderState> extends EntityModel<T
 
 	@Override
 	public void setupAnim(T entity) {
+		super.setupAnim(entity);
 		float f = entity.partialTick;
 		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
 		this.head.yRot = entity.yRot * ((float) Math.PI / 180F);

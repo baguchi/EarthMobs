@@ -11,7 +11,7 @@ import static net.minecraft.client.data.models.model.TextureMapping.getBlockText
 import static net.minecraft.client.data.models.model.TexturedModel.createDefault;
 
 public class EarthTexturedModel {
-    public static final TexturedModel.Provider ORIENTABLE_MELON = createDefault(TextureMapping::orientableCube, ModelTemplates.CUBE_ORIENTABLE_TOP_BOTTOM);
+    public static final TexturedModel.Provider ORIENTABLE_MELON = createDefault(EarthTexturedModel::orientableMelon, ModelTemplates.CUBE_ORIENTABLE_TOP_BOTTOM);
 
 
     public static TextureMapping orientableMelon(Block block) {

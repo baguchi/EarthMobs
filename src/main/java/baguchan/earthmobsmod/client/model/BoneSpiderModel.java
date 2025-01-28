@@ -67,6 +67,7 @@ public class BoneSpiderModel<T extends LivingEntityRenderState> extends EntityMo
 
 	@Override
 	public void setupAnim(T entity) {
+		super.setupAnim(entity);
 		this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
 		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
 		float f = ((float) Math.PI / 4F);

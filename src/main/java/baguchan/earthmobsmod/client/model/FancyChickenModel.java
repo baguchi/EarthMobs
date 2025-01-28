@@ -71,9 +71,8 @@ public class FancyChickenModel<T extends ChickenRenderState> extends EntityModel
 	}
 
 	@Override
-	public void setupAnim(ChickenRenderState entity) {
-		this.root().getAllParts().forEach(ModelPart::resetPose);
-
+	public void setupAnim(T entity) {
+		super.setupAnim(entity);
 		this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
 		this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
 		this.bill.xRot = this.head.xRot;
