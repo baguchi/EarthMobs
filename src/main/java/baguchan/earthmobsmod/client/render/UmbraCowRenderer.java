@@ -36,6 +36,6 @@ public class UmbraCowRenderer<T extends UmbraCow> extends MobRenderer<T, WoolyCo
 
     @Override
     public ResourceLocation getTextureLocation(WoolyCowRenderState p_110775_1_) {
-        return p_110775_1_.wool ? SHEARED_TEXTURE : TEXTURE;
+        return !p_110775_1_.wool ? SHEARED_TEXTURE : TEXTURE;
 	}
 }
