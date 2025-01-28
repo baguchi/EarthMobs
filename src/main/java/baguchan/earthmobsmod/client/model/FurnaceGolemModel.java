@@ -85,5 +85,6 @@ public class FurnaceGolemModel<T extends FurnaceGolemRenderState> extends Entity
         this.right_leg.yRot = 0.0F;
         this.left_leg.yRot = 0.0F;
         this.head2.copyFrom(this.head);
+        this.head2.visible = entity.active;
     }
 }

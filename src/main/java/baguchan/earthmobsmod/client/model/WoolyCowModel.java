@@ -13,7 +13,7 @@ public class WoolyCowModel<T extends WoolyCowRenderState> extends QuadrupedModel
     public void setupAnim(T entity) {
         super.setupAnim(entity);
         this.head.y = this.head.y + entity.headEatPositionScale * 9.0F * entity.ageScale;
-        this.head.xRot += entity.headEatAngleScale;
+        this.head.xRot = entity.headEatAngleScale;
 
 	}
 }

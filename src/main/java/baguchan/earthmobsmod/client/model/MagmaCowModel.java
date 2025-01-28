@@ -101,13 +101,12 @@ public class MagmaCowModel<T extends MagmaCowRenderState> extends EntityModel<T>
     @Override
     public void setupAnim(T entity) {
         super.setupAnim(entity);
-        this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
         this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
         this.leg1.xRot = Mth.cos(entity.walkAnimationPos * 0.68F) * 1.4F * entity.walkAnimationSpeed;
         this.leg2.xRot = Mth.cos(entity.walkAnimationPos * 0.68F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed;
         this.leg3.xRot = Mth.cos(entity.walkAnimationPos * 0.68F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed;
         this.leg4.xRot = Mth.cos(entity.walkAnimationPos * 0.68F) * 1.4F * entity.walkAnimationSpeed;
-        this.head.xRot += entity.headEatAngleScale;
+        this.head.xRot = entity.headEatAngleScale;
 
     }
 

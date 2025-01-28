@@ -34,7 +34,7 @@ public class EarthItemModels extends ItemModelGenerators {
 
         this.generateSpawnEgg(ModItems.CLUCK_SHROOM_SPAWNEGG.get(), 0xB52C17, 0xDC883B);
         this.generateSpawnEgg(ModItems.FANCY_CHICKEN_SPAWNEGG.get(), 0xF4A213, 0x202F22);
-        this.generateSpawnEgg(ModItems.WOOLY_COW_SPAWNEGG.get(), 0xDB8948, 0xFFDBB);
+        this.generateSpawnEgg(ModItems.WOOLY_COW_SPAWNEGG.get(), 0xDB8948, 0xFFDBB6);
         this.generateSpawnEgg(ModItems.UMBRA_COW_SPAWNEGG.get(), 0x403E57, 0x0A0B1D);
 
         this.generateSpawnEgg(ModItems.TEACUP_PIG_SPAWNEGG.get(), 0xEEC9C1, 0xDD5555);
@@ -61,7 +61,7 @@ public class EarthItemModels extends ItemModelGenerators {
         this.generateSpawnEgg(ModItems.VILER_WITCH_SPAWNEGG.get(), 0x111322, 0x37464D);
         this.generateSpawnEgg(ModItems.WITHER_SKELETON_WOLF_SPAWNEGG.get(), 1315860, 4672845);
         this.generateSpawnEgg(ModItems.MAGMA_COW_SPAWNEGG.get(), 0x2C2C33, 0xFBAA59);
-        this.generateSpawnEgg(ModItems.MELON_GOLEM_SPAWNEGG.get(), 14283506, 0x34791);
-        this.generateSpawnEgg(ModItems.FURNACE_GOLEM_SPAWNEGG.get(), 14405058, 0x8F584);
+        this.generateSpawnEgg(ModItems.MELON_GOLEM_SPAWNEGG.get(), 14283506, 0x34791E);
+        this.generateSpawnEgg(ModItems.FURNACE_GOLEM_SPAWNEGG.get(), 14405058, 0x8F5846);
     }
 }
