@@ -1,8 +1,8 @@
 package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.api.IPlantMob;
+import baguchan.earthmobsmod.registry.ModBuiltInLootTables;
 import baguchan.earthmobsmod.registry.ModEntities;
-import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -18,20 +18,17 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.IShearable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,19 +37,46 @@ public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 
 	private UUID lastLightningBoltUUID;
 
+	public int eggSpecialTime = this.random.nextInt(6000) + 6000;
+
 	public CluckShroom(EntityType<? extends CluckShroom> p_28236_, Level p_28237_) {
 		super(p_28236_, p_28237_);
 	}
 
-	@Nullable
 	@Override
-	public ItemEntity spawnAtLocation(ServerLevel serverLevel, ItemLike p_19999_) {
-		//override to smelly egg
-		if (p_19999_.asItem() == Items.EGG) {
-			p_19999_ = ModItems.SMELLY_EGG.get();
+	public void aiStep() {
+		super.aiStep();
+		Level var3 = this.level();
+		if (var3 instanceof ServerLevel serverlevel) {
+			if (this.isAlive() && !this.isBaby() && !this.isChickenJockey() && --this.eggSpecialTime <= 0) {
+				if (this.dropFromGiftLootTable(serverlevel, ModBuiltInLootTables.CLUCK_SHROOM_LAY, this::spawnAtLocation)) {
+					this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+					this.gameEvent(GameEvent.ENTITY_PLACE);
+				}
+				this.eggSpecialTime = this.random.nextInt(6000) + 6000;
+			}
+			//do not trigger the normal egg spawn
+			this.eggTime = 10;
 		}
+	}
 
-		return super.spawnAtLocation(serverLevel, p_19999_);
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+		if (compound.contains("SpecialEggLayTime")) {
+			this.eggSpecialTime = compound.getInt("SpecialEggLayTime");
+		}
+		this.setCluckShroomType(CluckShroom.CluckShroomType.byType(compound.getString("Type")));
+
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+		compound.putInt("SpecialEggLayTime", this.eggSpecialTime);
+
+		compound.putString("Type", this.getCluckShroomType().type);
 	}
 
 	public static boolean checkCluckShroomSpawnRules(EntityType<CluckShroom> p_28949_, LevelAccessor p_28950_, EntitySpawnReason p_28951_, BlockPos p_28952_, RandomSource p_28953_) {
@@ -114,17 +138,6 @@ public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 
 	public boolean readyForShearing() {
 		return this.isAlive() && !this.isBaby();
-	}
-
-	public void addAdditionalSaveData(CompoundTag p_28944_) {
-		super.addAdditionalSaveData(p_28944_);
-		p_28944_.putString("Type", this.getCluckShroomType().type);
-	}
-
-	public void readAdditionalSaveData(CompoundTag p_28936_) {
-		super.readAdditionalSaveData(p_28936_);
-		this.setCluckShroomType(CluckShroom.CluckShroomType.byType(p_28936_.getString("Type")));
-
 	}
 
 	public void setCluckShroomType(CluckShroom.CluckShroomType p_28929_) {
