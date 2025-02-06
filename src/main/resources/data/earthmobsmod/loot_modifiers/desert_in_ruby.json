@@ -4,6 +4,10 @@
     {
       "condition": "neoforge:loot_table_id",
       "loot_table_id": "minecraft:archaeology/desert_pyramid"
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.15
     }
   ],
   "loot_table": "earthmobsmod:injects/desert_in_ruby"

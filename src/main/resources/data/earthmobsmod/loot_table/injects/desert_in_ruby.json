@@ -7,11 +7,6 @@
           "type": "minecraft:item",
           "weight": 1,
           "name": "earthmobsmod:ruby"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:air"
         }
       ]
     }
