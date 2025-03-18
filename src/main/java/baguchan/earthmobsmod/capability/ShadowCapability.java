@@ -115,7 +115,7 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 				for (int l = 0; l < list.size(); ++l) {
 					LivingEntity entity2 = list.get(l);
 					if (entity != entity2 && !entity.isAlliedTo(entity2)) {
-						entity2.knockback(2.0D * percentBoost, entity2.getX() - entity.getX(), entity2.getZ() - entity.getZ());
+						entity2.knockback(5.0D * percentBoost, entity.getDeltaMovement().x, entity.getDeltaMovement().z);
 						entity2.hurt(entity.damageSources().mobAttack(entity), Mth.floor(8.0F * percentBoost));
 					}
 				}
@@ -155,7 +155,7 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 					return;
 				}
 
-				float f = 0.15F * percentBoost;
+				float f = 0.2F * percentBoost;
 				attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_BOOST_UUID, (double) f, AttributeModifier.Operation.ADD_VALUE));
 			}
 		}

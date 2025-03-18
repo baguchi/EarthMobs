@@ -49,6 +49,13 @@ public class HyperRabbit extends Rabbit {
 	@Override
 	public void aiStep() {
 		super.aiStep();
+		if (!this.level().isClientSide()) {
+			if (this.getLastDamageSource() != null && !this.isSpark()) {
+				this.setSpark(true);
+			} else if (this.getLastDamageSource() == null && this.isSpark()) {
+				this.setSpark(false);
+			}
+		}
 	}
 
 	@Override
