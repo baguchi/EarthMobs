@@ -34,8 +34,8 @@ public class ModEffects {
 	public static final DeferredHolder<MobEffect, MobEffect> ZOMBIFIED = MOB_EFFECTS.register("zombified", () -> new ZombifiedEffect(MobEffectCategory.BENEFICIAL, 0x2A5131));
 	public static final DeferredHolder<MobEffect, MobEffect> HARD_BODY = MOB_EFFECTS.register("toughness", () -> new HardBodyEffect(MobEffectCategory.BENEFICIAL, 0x4D575A).addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "effect.tough"), 0.25, AttributeModifier.Operation.ADD_VALUE).addAttributeModifier(Attributes.ARMOR_TOUGHNESS, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "effect.tough"), 0.5F, AttributeModifier.Operation.ADD_VALUE));
 
-	public static final DeferredHolder<Potion, Potion> HYPER_SPARK_POTION = POTION.register("hyper_spark", () -> new Potion("hyper_spark", new MobEffectInstance(HYPER_SPARK, 3600)));
-	public static final DeferredHolder<Potion, Potion> LONG_HYPER_SPARK_POTION = POTION.register("long_hyper_spark", () -> new Potion("long_hyper_spark", new MobEffectInstance(HYPER_SPARK, 9600)));
+	public static final DeferredHolder<Potion, Potion> HYPER_SPARK_POTION = POTION.register("hyper_spark", () -> new Potion("hyper_spark", new MobEffectInstance(HYPER_SPARK, 1200)));
+	public static final DeferredHolder<Potion, Potion> LONG_HYPER_SPARK_POTION = POTION.register("long_hyper_spark", () -> new Potion("long_hyper_spark", new MobEffectInstance(HYPER_SPARK, 2400)));
 
 	public static final DeferredHolder<Potion, Potion> UNDEAD_BODY_POTION = POTION.register("undead_body", () -> new Potion("undead_body", new MobEffectInstance(UNDEAD_BODY, 3600)));
 	public static final DeferredHolder<Potion, Potion> LONG_UNDEAD_BODY_POTION = POTION.register("long_undead_body", () -> new Potion("long_undead_body", new MobEffectInstance(UNDEAD_BODY, 9600)));

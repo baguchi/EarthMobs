@@ -17,7 +17,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import org.jetbrains.annotations.Nullable;
@@ -45,6 +44,11 @@ public class HyperRabbit extends Rabbit {
 		} else {
 			this.setSpark(false);
 		}
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
 	}
 
 	@Override
@@ -85,7 +89,7 @@ public class HyperRabbit extends Rabbit {
 	}
 
 	public void push(Entity p_33636_) {
-		if (p_33636_ instanceof LivingEntity && !(p_33636_ instanceof HyperRabbit) && !(p_33636_ instanceof Player)) {
+		if (p_33636_ instanceof LivingEntity && !(p_33636_ instanceof HyperRabbit)) {
 			this.dealDamage((LivingEntity) p_33636_);
 		}
 		super.push(p_33636_);
@@ -107,12 +111,6 @@ public class HyperRabbit extends Rabbit {
 		}
 	}
 
-	@Override
-	public void playerTouch(Player p_20081_) {
-		super.playerTouch(p_20081_);
-		this.dealDamage(p_20081_);
-	}
-
 	static class RabbitPanicGoal extends PanicGoal {
 		private final HyperRabbit rabbit;
 
@@ -124,15 +122,11 @@ public class HyperRabbit extends Rabbit {
 		@Override
 		public void start() {
 			super.start();
-			this.rabbit.setSpark(true);
 		}
 
 		@Override
 		public void stop() {
 			super.stop();
-			if (this.rabbit.getVariant() != Variant.EVIL) {
-				this.rabbit.setSpark(false);
-			}
 		}
 
 		public void tick() {
