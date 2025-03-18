@@ -28,7 +28,7 @@ public class ModEffects {
 	public static final DeferredRegister<Potion> POTION = DeferredRegister.create(BuiltInRegistries.POTION, EarthMobsMod.MODID);
 
 
-	public static final DeferredHolder<MobEffect, MobEffect> HYPER_SPARK = MOB_EFFECTS.register("hyper_spark", () -> new HyperSparkEffect(MobEffectCategory.BENEFICIAL, 0xDA784A));
+	public static final DeferredHolder<MobEffect, MobEffect> HYPER_SPARK = MOB_EFFECTS.register("hyper_spark", () -> new HyperSparkEffect(MobEffectCategory.BENEFICIAL, 0xDA784A).addAttributeModifier(Attributes.STEP_HEIGHT, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "effect.hyper_spark"), 0.5, AttributeModifier.Operation.ADD_VALUE));
 
 	public static final DeferredHolder<MobEffect, MobEffect> UNDEAD_BODY = MOB_EFFECTS.register("undead_body", () -> new UndeadBodyEffect(MobEffectCategory.NEUTRAL, 0xFFFFFF));
 	public static final DeferredHolder<MobEffect, MobEffect> ZOMBIFIED = MOB_EFFECTS.register("zombified", () -> new ZombifiedEffect(MobEffectCategory.BENEFICIAL, 0x2A5131));

@@ -68,6 +68,8 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 					pushEntities(mob);
 				}
 				tryAddBooster(mob);
+			} else {
+				percentBoost = 0F;
 			}
 		}
 	}
