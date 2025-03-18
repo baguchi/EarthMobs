@@ -31,9 +31,9 @@ public class HyperRabbit extends Rabbit {
 
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.getAvailableGoals().stream().map(it -> it.getGoal()).filter(it -> it instanceof PanicGoal).findFirst().ifPresent(goal -> {
+		this.goalSelector.getAvailableGoals().stream().map(it -> it.getGoal()).filter(it -> it instanceof PanicGoal && !(it instanceof HyperRabbit.RabbitPanicGoal)).findFirst().ifPresent(goal -> {
 			this.goalSelector.removeGoal(goal);
-			this.goalSelector.addGoal(1, new RabbitPanicGoal(this, 1.25D));
+			this.goalSelector.addGoal(1, new RabbitPanicGoal(this, 2.25D));
 		});
 	}
 

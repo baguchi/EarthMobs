@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.api.IMoss;
 import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.api.ISheared;
+import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.client.model.*;
 import baguchan.earthmobsmod.client.render.*;
 import baguchan.earthmobsmod.client.render.layer.MossSheepLayer;
@@ -11,8 +12,10 @@ import baguchan.earthmobsmod.client.render.layer.MuddyPigFlowerLayer;
 import baguchan.earthmobsmod.client.render.layer.MuddyPigMudLayer;
 import baguchan.earthmobsmod.client.render.zombie.*;
 import baguchan.earthmobsmod.fluidtype.MudFluidType;
+import baguchan.earthmobsmod.registry.ModCapability;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModFluidTypes;
+import com.google.common.reflect.TypeToken;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.ZombieModel;
@@ -21,6 +24,9 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -34,6 +40,8 @@ import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEve
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class ClientRegistrar {
+	public static final ContextKey<ShadowCapability> SHADOW = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow"));
+
     public static void setup(FMLClientSetupEvent event) {
 
     }
@@ -158,6 +166,18 @@ public class ClientRegistrar {
 		event.registerEntityModifier(SheepRenderer.class, (sheep, renderState) -> {
 			if (sheep instanceof IMoss moss) {
 				renderState.setRenderData(MossSheepLayer.MOSS, moss.isMoss());
+
+			}
+		});
+		event.registerEntityModifier(TypeToken.of(PlayerRenderer.class), (player, renderState) -> {
+			if (player.getData(ModCapability.SHADOW_ATTACH.get()) != null) {
+				renderState.setRenderData(SHADOW, player.getData(ModCapability.SHADOW_ATTACH.get()));
+
+			}
+		});
+		event.registerEntityModifier(TypeToken.of(HyperRabbitRenderer.class), (player, renderState) -> {
+			if (player.getData(ModCapability.SHADOW_ATTACH.get()) != null) {
+				renderState.setRenderData(SHADOW, player.getData(ModCapability.SHADOW_ATTACH.get()));
 
 			}
 		});

@@ -1,6 +1,7 @@
 package baguchan.earthmobsmod.capability;
 
 import baguchan.earthmobsmod.EarthMobsMod;
+import baguchan.earthmobsmod.entity.HyperRabbit;
 import baguchan.earthmobsmod.registry.ModEffects;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -13,6 +14,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import net.neoforged.neoforge.attachment.IAttachmentSerializer;
 import org.jetbrains.annotations.Nullable;
@@ -21,74 +24,88 @@ import java.util.List;
 
 public class ShadowCapability implements IAttachmentSerializer<CompoundTag, ShadowCapability> {
 	private static final ResourceLocation SPEED_MODIFIER_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow_speed");
-	public float prevShadowX;
-	public float prevShadowY;
-	public float prevShadowZ;
+	public Vec3 prevShadow = Vec3.ZERO;
 
-	public float shadowX;
-	public float shadowY;
-	public float shadowZ;
+	public Vec3 shadow = Vec3.ZERO;
 
-	public float prevShadowX2;
-	public float prevShadowY2;
-	public float prevShadowZ2;
+	public Vec3 prevShadow2 = Vec3.ZERO;
 
-	public float shadowX2;
-	public float shadowY2;
-	public float shadowZ2;
+	public Vec3 shadow2 = Vec3.ZERO;
 
-	public float prevYBodyRot;
-	public float yBodyRot;
-	public float prevYBodyRot2;
-	public float yBodyRot2;
+	public Vec2 shadowRot = Vec2.ZERO;
+	public Vec2 shadowRot2 = Vec2.ZERO;
+	public Vec2 prevShadowRot = Vec2.ZERO;
+	public Vec2 prevShadowRot2 = Vec2.ZERO;
 
-	public float prevYRot;
-	public float yRot;
-	public float prevYRot2;
-	public float yRot2;
-	public float prevRotationPitch;
-	public float xRot;
-	public float prevRotationPitch2;
-	public float xRot2;
+	public float percentBoost = 0.0F;
 
-	private float percentBoost;
+	public void tick(LivingEntity mob) {
+		double elasticity = 0.25D;
+		this.prevShadow = this.shadow;
+		this.prevShadow2 = this.shadow2;
+		this.prevShadowRot = this.shadowRot;
+		this.prevShadowRot2 = this.shadowRot2;
+		this.shadowRot = new Vec2((float) (mob.getXRot() + (this.shadowRot.x - mob.getXRot()) * elasticity * 0.75D), (float) (mob.yBodyRot + (this.shadowRot.y - mob.yBodyRot) * elasticity * 0.75D));
+		this.shadowRot2 = new Vec2((float) (this.shadowRot.x + (this.shadowRot2.x - this.shadowRot.x) * elasticity * 0.3499999940395355D), (float) (this.shadowRot.y + (this.shadowRot2.y - this.shadowRot.y) * elasticity * 0.3499999940395355D));
+		float shadowX = (float) (this.shadow.x + (mob.getX() - this.shadow.x) * elasticity);
+		float shadowY = (float) (this.shadow.y + (mob.getY() - this.shadow.y) * elasticity);
+		float shadowZ = (float) (this.shadow.z + (mob.getZ() - this.shadow.z) * elasticity);
+		float shadowX2 = (float) (this.shadow2.x + (this.shadow.x - this.shadow2.x) * elasticity * 0.375D);
+		float shadowY2 = (float) (this.shadow2.y + (this.shadow.y - this.shadow2.y) * elasticity * 0.375D);
+		float shadowZ2 = (float) (this.shadow2.z + (this.shadow.z - this.shadow2.z) * elasticity * 0.375D);
+		this.shadow = new Vec3(shadowX, shadowY, shadowZ);
+		this.shadow2 = new Vec3(shadowX2, shadowY2, shadowZ2);
 
-	public void tick(LivingEntity livingEntity) {
-		if (!livingEntity.level().isClientSide) {
-			removeBoost(livingEntity);
+		if (!mob.level().isClientSide) {
+			removeBoost(mob);
 		}
 
-			double elasticity = 0.25D;
-			this.prevShadowX = this.shadowX;
-			this.prevShadowY = this.shadowY;
-			this.prevShadowZ = this.shadowZ;
-			this.prevShadowX2 = this.shadowX2;
-			this.prevShadowY2 = this.shadowY2;
-			this.prevShadowZ2 = this.shadowZ2;
-			this.prevYBodyRot = this.yBodyRot;
-			this.prevYBodyRot2 = this.yBodyRot2;
-		this.prevYRot = this.yRot;
-		this.prevYRot2 = this.yRot2;
-		this.yRot = (float) (this.yRot + (livingEntity.getYRot() - this.yRot) * elasticity);
-		this.yRot2 = (float) (this.yRot2 + (this.yRot - this.yRot2) * elasticity);
-
-		this.yBodyRot = (float) (this.yBodyRot + (livingEntity.yBodyRot - this.yBodyRot) * elasticity);
-		this.yBodyRot2 = (float) (this.yBodyRot2 + (this.yBodyRot - this.yBodyRot2) * elasticity);
-		this.xRot = (float) (this.xRot + (livingEntity.getXRot() - this.xRot) * elasticity);
-		this.xRot2 = (float) (this.xRot2 + (this.xRot - this.xRot2) * elasticity);
-			this.shadowX = (float) (this.shadowX + (livingEntity.getX() - this.shadowX) * elasticity);
-			this.shadowY = (float) (this.shadowY + (livingEntity.getY() - this.shadowY) * elasticity);
-			this.shadowZ = (float) (this.shadowZ + (livingEntity.getZ() - this.shadowZ) * elasticity);
-		this.shadowX2 = (float) (this.shadowX2 + (this.shadowX - this.shadowX2) * elasticity);
-		this.shadowY2 = (float) (this.shadowY2 + (this.shadowY - this.shadowY2) * elasticity);
-		this.shadowZ2 = (float) (this.shadowZ2 + (this.shadowZ - this.shadowZ2) * elasticity);
-
-		if (livingEntity.hasEffect(ModEffects.HYPER_SPARK)) {
-			if (percentBoost >= 0.65F) {
-				pushEntities(livingEntity);
+		if (mob instanceof HyperRabbit hyperRabbit && hyperRabbit.isSpark()) {
+			this.percentBoost = 1F;
+		} else {
+			if (mob.hasEffect(ModEffects.HYPER_SPARK)) {
+				if (percentBoost >= 0.65F) {
+					pushEntities(mob);
+				}
+				tryAddBooster(mob);
 			}
-			tryAddBooster(livingEntity);
 		}
+	}
+
+	public void setPercentBoost(float percentBoost) {
+		this.percentBoost = percentBoost;
+	}
+
+	public Vec3 getShadow() {
+		return shadow;
+	}
+
+	public Vec3 getShadow2() {
+		return shadow2;
+	}
+
+	public Vec3 getPrevShadow() {
+		return prevShadow;
+	}
+
+	public Vec3 getPrevShadow2() {
+		return prevShadow2;
+	}
+
+	public Vec2 getShadowRot() {
+		return shadowRot;
+	}
+
+	public Vec2 getShadowRot2() {
+		return shadowRot2;
+	}
+
+	public Vec2 getPrevShadowRot() {
+		return prevShadowRot;
+	}
+
+	public Vec2 getPrevShadowRot2() {
+		return prevShadowRot2;
 	}
 
 	protected void pushEntities(LivingEntity entity) {
@@ -117,7 +134,7 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 	}
 
 	protected void tryAddBooster(LivingEntity entity) {
-        if (entity.isSprinting() && entity.getPose() == Pose.STANDING) {
+		if (entity.isSprinting() && !entity.isInWater() && entity.getPose() == Pose.STANDING) {
             if (percentBoost <= 1) {
                 percentBoost += 0.01F;
             } else {

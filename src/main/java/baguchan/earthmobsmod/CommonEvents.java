@@ -47,6 +47,7 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
@@ -256,6 +257,18 @@ public class CommonEvents {
 			}
 		}
     }
+
+	@SubscribeEvent
+	public static void onHurtCheck(EntityInvulnerabilityCheckEvent event) {
+		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
+		if (shadowCapability != null) {
+			if (!event.getSource().is(DamageTypeTags.BYPASSES_ARMOR) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE)) {
+				if (shadowCapability.getPercentBoost() > 0.9F) {
+					event.setInvulnerable(true);
+				}
+			}
+		}
+	}
 
     @SubscribeEvent
 	public static void onHurt(LivingIncomingDamageEvent event) {

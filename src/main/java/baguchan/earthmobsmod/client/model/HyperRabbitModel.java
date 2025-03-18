@@ -3,14 +3,14 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.1.1
 // Paste this class into your mod and generate all required imports
 
 
+import baguchan.earthmobsmod.client.render.state.HyperRabbitRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.entity.state.RabbitRenderState;
 import net.minecraft.util.Mth;
 
-public class HyperRabbitModel<T extends RabbitRenderState> extends EntityModel<T> {
+public class HyperRabbitModel<T extends HyperRabbitRenderState> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	private final ModelPart rearFootLeft;
 	private final ModelPart rearFootRight;
