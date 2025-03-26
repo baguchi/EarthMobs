@@ -8,21 +8,21 @@ import baguchan.earthmobsmod.client.render.layer.HornedSheepWoolUndercoatLayer;
 import baguchan.earthmobsmod.client.render.layer.MossSheepLayer;
 import baguchan.earthmobsmod.client.render.state.HornedSheepRenderState;
 import baguchan.earthmobsmod.entity.HornedSheep;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class HornedSheepRenderer extends MobRenderer<HornedSheep, HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> {
+public class HornedSheepRenderer extends AgeableMobRenderer<HornedSheep, HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep.png");
     private static final ResourceLocation TEXTURE_HORNLESS = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep_hornless.png");
 
 
 
 	public HornedSheepRenderer(EntityRendererProvider.Context p_173952_) {
-		super(p_173952_, new HornedSheepModel<>(p_173952_.bakeLayer(ModModelLayers.HORNED_SHEEP)), 0.5F);
+		super(p_173952_, new HornedSheepModel<>(p_173952_.bakeLayer(ModModelLayers.HORNED_SHEEP)), new HornedSheepModel<>(p_173952_.bakeLayer(ModModelLayers.HORNED_SHEEP_BABY)), 0.5F);
 		this.addLayer(new HornedSheepWoolLayer(this, p_173952_.getModelSet()));
 		this.addLayer(new HornedSheepWoolUndercoatLayer(this, p_173952_.getModelSet()));
         this.addLayer(new MossSheepLayer(this, p_173952_.getModelSet()));

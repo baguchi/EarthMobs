@@ -102,8 +102,8 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.FANCY_CHICKEN_BABY, () -> FancyChickenModel.createBodyLayer().apply(FancyChickenModel.BABY_TRANSFORMER));
 		event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP, HornedSheepModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_BABY, () -> HornedSheepModel.createBodyLayer().apply(HornedSheepModel.BABY_TRANSFORMER));
-		event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_UNDERCOAT, HornedSheepModel::createBodyLayer);
-		event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_BABY_UNDERCOAT, () -> HornedSheepModel.createBodyLayer().apply(HornedSheepModel.BABY_TRANSFORMER));
+		event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_UNDERCOAT, HornedSheepModel::createUnderLayer);
+		event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_BABY_UNDERCOAT, () -> HornedSheepModel.createUnderLayer().apply(HornedSheepModel.BABY_TRANSFORMER));
 		event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_FUR, HornedSheepModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.HYPER_RABBIT, HyperRabbitModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.JUMBO_RABBIT, JumboRabbitModel::createBodyLayer);
