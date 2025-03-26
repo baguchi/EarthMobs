@@ -9,6 +9,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -31,9 +32,9 @@ public class MobPotItem extends MobBucketItem {
 
     }
     @Override
-    public boolean emptyContents(@javax.annotation.Nullable Player p_150716_, Level p_150717_, BlockPos p_150718_, @javax.annotation.Nullable BlockHitResult p_150719_, @Nullable ItemStack container) {
+    public boolean emptyContents(@Nullable LivingEntity p_394627_, Level p_150717_, BlockPos p_150718_, @Nullable BlockHitResult p_150719_, @Nullable ItemStack container) {
         //only play the sound because low capacity
-        this.playEmptySound(p_150716_, p_150717_, p_150718_);
+        this.playEmptySound(p_394627_, p_150717_, p_150718_);
         return true;
     }
 

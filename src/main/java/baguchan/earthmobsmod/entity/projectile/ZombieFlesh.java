@@ -167,7 +167,7 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 
 	public void readAdditionalSaveData(CompoundTag p_36875_) {
 		super.readAdditionalSaveData(p_36875_);
-		this.setDrowned(p_36875_.getBoolean("Drowned"));
+		this.setDrowned(p_36875_.getBooleanOr("Drowned", false));
 	}
 
 	protected void onHitEntity(EntityHitResult p_37404_) {

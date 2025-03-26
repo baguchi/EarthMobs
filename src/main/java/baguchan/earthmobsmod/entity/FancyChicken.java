@@ -42,7 +42,8 @@ public class FancyChicken extends Chicken {
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("SpecialEggLayTime")) {
-			this.eggSpecialTime = compound.getInt("SpecialEggLayTime");
+			compound.getInt("SpecialEggLayTime").ifPresent(p_409318_ -> this.eggSpecialTime = p_409318_);
+
 		}
 
 	}

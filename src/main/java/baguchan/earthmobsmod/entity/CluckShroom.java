@@ -64,10 +64,9 @@ public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		if (compound.contains("SpecialEggLayTime")) {
-			this.eggSpecialTime = compound.getInt("SpecialEggLayTime");
-		}
-		this.setCluckShroomType(CluckShroom.CluckShroomType.byType(compound.getString("Type")));
+		compound.getInt("SpecialEggLayTime").ifPresent(p_409318_ -> this.eggSpecialTime = p_409318_);
+
+		this.setCluckShroomType(CluckShroom.CluckShroomType.byType(compound.getStringOr("Type", "")));
 
 	}
 
@@ -111,7 +110,7 @@ public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();
 			Chicken chickin = EntityType.CHICKEN.create(this.level(), EntitySpawnReason.CONVERSION);
-			chickin.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+			chickin.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
 			chickin.setHealth(this.getHealth());
 			chickin.yBodyRot = this.yBodyRot;
 			if (this.hasCustomName()) {

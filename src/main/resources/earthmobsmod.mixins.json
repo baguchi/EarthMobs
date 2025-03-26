@@ -9,6 +9,7 @@
     "EntityMixin",
     "LivingEntityMixin",
     "PigMixin",
+    "SheepAccessor",
     "SheepMixin"
   ],
   "client": [

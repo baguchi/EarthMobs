@@ -9,7 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -52,7 +52,7 @@ public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     public void readAdditionalSaveData(CompoundTag p_27576_, CallbackInfo callbackInfo) {
-        this.setMoss(p_27576_.getBoolean("Moss"));
+        this.setMoss(p_27576_.getBooleanOr("Moss", false));
     }
 
     @Inject(method = "shear", at = @At("RETURN"))

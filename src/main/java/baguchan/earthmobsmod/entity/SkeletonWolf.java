@@ -16,7 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.animal.Turtle;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -112,7 +112,7 @@ public class SkeletonWolf extends Wolf {
 		SkeletonWolf skeletonWolf = ModEntities.SKELETON_WOLF.get().create(p_149088_, EntitySpawnReason.BREEDING);
 
 		if (this.isTame()) {
-			skeletonWolf.setOwnerUUID(this.getOwnerUUID());
+			skeletonWolf.setOwnerReference(this.getOwnerReference());
 			skeletonWolf.setTame(true, true);
 		}
 		return skeletonWolf;

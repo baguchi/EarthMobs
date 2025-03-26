@@ -73,7 +73,7 @@ public class SmellyEgg extends ThrowableItemProjectile {
 					if (this.random.nextBoolean()) {
 						chicken.setCluckShroomType(CluckShroom.CluckShroomType.BROWN);
 					}
-					chicken.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
+                    chicken.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
 					this.level().addFreshEntity(chicken);
 				}
 			} else if (this.random.nextInt(3) == 0) {

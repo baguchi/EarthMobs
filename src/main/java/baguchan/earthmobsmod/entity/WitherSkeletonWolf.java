@@ -24,7 +24,7 @@ public class WitherSkeletonWolf extends SkeletonWolf {
 		WitherSkeletonWolf skeletonWolf = ModEntities.WITHER_SKELETON_WOLF.get().create(p_149088_, EntitySpawnReason.BREEDING);
 
 		if (this.isTame()) {
-			skeletonWolf.setOwnerUUID(this.getOwnerUUID());
+			skeletonWolf.setOwnerReference(this.getOwnerReference());
 			skeletonWolf.setTame(true, true);
 		}
 		return skeletonWolf;

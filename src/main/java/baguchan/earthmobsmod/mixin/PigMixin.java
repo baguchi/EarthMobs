@@ -146,7 +146,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 			if (((IOnMud) this).isOnMud() && (!this.isMuddy() || this.isSheared()) && !this.isShaking) {
 				this.isShaking = true;
 				this.inMud = true;
-			} else if (this.isInWaterRainOrBubble() && this.isMuddy() && !this.isShaking) {
+			} else if (this.isInWater() && this.isMuddy() && !this.isShaking) {
 				this.isShaking = true;
 				this.inMud = false;
 			} else if (!this.inMud && this.isShaking) {
@@ -219,9 +219,9 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 
 	@Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
 	public void readAdditionalSaveData(CompoundTag p_27576_, CallbackInfo callbackInfo) {
-		this.setMuddy(p_27576_.getBoolean("Muddy"));
-		this.setSheared(p_27576_.getBoolean("Sheared"));
-		this.setColor(DyeColor.byId(p_27576_.getByte("Color")));
+		this.setMuddy(p_27576_.getBooleanOr("Muddy", false));
+		this.setSheared(p_27576_.getBooleanOr("Sheared", false));
+		this.setColor(DyeColor.byId(p_27576_.getByteOr("Color", (byte) 0)));
 	}
 
 	@Override

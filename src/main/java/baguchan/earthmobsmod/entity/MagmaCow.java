@@ -127,7 +127,7 @@ public class MagmaCow extends Cow {
 
     public void readAdditionalSaveData(CompoundTag p_29845_) {
         super.readAdditionalSaveData(p_29845_);
-        this.setWeaking(p_29845_.getBoolean("Weaking"));
+        this.setWeaking(p_29845_.getBooleanOr("Weaking", false));
     }
 
     protected void customServerAiStep(ServerLevel serverLevel) {

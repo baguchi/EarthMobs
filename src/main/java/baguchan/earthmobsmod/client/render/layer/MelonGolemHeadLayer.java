@@ -10,11 +10,11 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
@@ -41,13 +41,13 @@ public class MelonGolemHeadLayer extends RenderLayer<MelonGolemRenderState, Snow
                 Block block = p_388156_.aggressive ? ModBlocks.CARVED_MELON_SHOOT.get() : ModBlocks.CARVED_MELON.get();
 
                 BlockState blockstate = block.defaultBlockState();
-                BakedModel bakedmodel = this.blockRenderer.getBlockModel(blockstate);
+                BlockStateModel bakedmodel = this.blockRenderer.getBlockModel(blockstate);
                 int i = LivingEntityRenderer.getOverlayCoords(p_388156_, 0.0F);
                 p_117483_.translate(-0.5F, -0.5F, -0.5F);
                 VertexConsumer vertexconsumer = p_388156_.appearsGlowing && p_388156_.isInvisible
                         ? p_117484_.getBuffer(RenderType.outline(TextureAtlas.LOCATION_BLOCKS))
                         : p_117484_.getBuffer(ItemBlockRenderTypes.getRenderType(blockstate));
-                this.blockRenderer.getModelRenderer().renderModel(p_117483_.last(), vertexconsumer, blockstate, bakedmodel, 0.0F, 0.0F, 0.0F, p_117485_, i);
+                this.blockRenderer.getModelRenderer().renderModel(p_117483_.last(), vertexconsumer, bakedmodel, 0.0F, 0.0F, 0.0F, p_117485_, i);
                 p_117483_.popPose();
             }
         }

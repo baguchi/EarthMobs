@@ -78,7 +78,7 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 	public void readAdditionalSaveData(CompoundTag p_29915_) {
 		super.readAdditionalSaveData(p_29915_);
 		if (p_29915_.contains("Melon")) {
-			this.setMelon(p_29915_.getBoolean("Melon"));
+			this.setMelon(p_29915_.getBooleanOr("Melon", false));
 		}
 
 	}

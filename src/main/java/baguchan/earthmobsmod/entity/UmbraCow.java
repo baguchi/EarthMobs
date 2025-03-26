@@ -12,7 +12,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -25,7 +24,7 @@ import java.util.Optional;
 public class UmbraCow extends WoolyCow {
 	public static final ResourceKey<LootTable> UMBRA_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "entities/umbra_cow_sheared"));
 
-	public UmbraCow(EntityType<? extends Cow> p_28285_, Level p_28286_) {
+	public UmbraCow(EntityType<? extends UmbraCow> p_28285_, Level p_28286_) {
 		super(p_28285_, p_28286_);
 	}
 
@@ -38,7 +37,7 @@ public class UmbraCow extends WoolyCow {
 		}
 	}
 
-	public Cow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {
+	public WoolyCow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {
 		return ModEntities.UMBRA_COW.get().create(p_148884_, EntitySpawnReason.BREEDING);
 	}
 

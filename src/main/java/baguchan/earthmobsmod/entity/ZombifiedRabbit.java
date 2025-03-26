@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -59,6 +60,10 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
         this.goalSelector.getAvailableGoals().stream().map(it -> it.getGoal()).filter(it -> it instanceof PanicGoal || it instanceof AvoidEntityGoal<?>).findFirst().ifPresent(goal -> {
             this.goalSelector.removeGoal(goal);
         });
+        this.goalSelector.addGoal(4, new RabbitAttackGoal(this));
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
     }
 
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
@@ -75,16 +80,20 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
 
 
         p_34397_.putInt("ConversionTime", this.isConverting() ? this.conversionTime : -1);
-        if (this.conversionStarter != null) {
-            p_34397_.putUUID("ConversionPlayer", this.conversionStarter);
-        }
+        p_34397_.storeNullable("ConversionPlayer", UUIDUtil.CODEC, this.conversionStarter);
+
     }
 
     public void readAdditionalSaveData(CompoundTag p_34387_) {
         super.readAdditionalSaveData(p_34387_);
+        int i = p_34387_.getIntOr("ConversionTime", -1);
 
-        if (p_34387_.contains("ConversionTime", 99) && p_34387_.getInt("ConversionTime") > -1) {
-            this.startConverting(p_34387_.hasUUID("ConversionPlayer") ? p_34387_.getUUID("ConversionPlayer") : null, p_34387_.getInt("ConversionTime"));
+        if (i != -1) {
+            UUID uuid = p_34387_.read("ConversionPlayer", UUIDUtil.CODEC).orElse(null);
+            this.startConverting(uuid, i);
+        } else {
+            this.getEntityData().set(DATA_CONVERTING_ID, false);
+            this.conversionTime = -1;
         }
 
     }
@@ -130,7 +139,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
         this.conversionTime = p_34385_;
         this.getEntityData().set(DATA_CONVERTING_ID, true);
         this.removeEffect(MobEffects.WEAKNESS);
-        this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, p_34385_, Math.min(this.level().getDifficulty().getId() - 1, 0)));
+        this.addEffect(new MobEffectInstance(MobEffects.STRENGTH, p_34385_, Math.min(this.level().getDifficulty().getId() - 1, 0)));
         this.level().broadcastEntityEvent(this, (byte) 16);
     }
 
@@ -138,7 +147,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
         Rabbit rabbit = this.convertTo(EntityType.RABBIT, ConversionParams.single(this, false, false),
                 p_375894_ -> {
                 });
-        rabbit.setVariant(this.getVariant());
+        //rabbit.setVariant(this.getVariant());
         rabbit.finalizeSpawn(p_34399_, p_34399_.getCurrentDifficultyAt(rabbit.blockPosition()), EntitySpawnReason.CONVERSION, (SpawnGroupData) null);
         if (this.conversionStarter != null) {
             Player player = p_34399_.getPlayerByUUID(this.conversionStarter);
@@ -147,7 +156,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
             }
         }
 
-        rabbit.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
+        rabbit.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, 0));
         if (!this.isSilent()) {
             p_34399_.levelEvent((Player) null, 1027, this.blockPosition(), 0);
         }
@@ -166,19 +175,6 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
             }
         }
         super.aiStep();
-    }
-
-    @Override
-    public void setVariant(Rabbit.Variant p_262578_) {
-        if (p_262578_ != Variant.EVIL) {
-            this.getAttribute(Attributes.ARMOR).setBaseValue(2.0D);
-            this.goalSelector.addGoal(4, new RabbitAttackGoal(this));
-            this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-            this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        }
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
-
-        super.setVariant(p_262578_);
     }
 
     public static boolean isDarkEnoughToSpawn(ServerLevelAccessor p_219010_, BlockPos p_219011_, RandomSource p_219012_) {
@@ -237,7 +233,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
                 }
             }
 
-            rabbit.setVariant(rabbit$variant);
+            //rabbit.setVariant(rabbit$variant);
         }
 
         return rabbit;

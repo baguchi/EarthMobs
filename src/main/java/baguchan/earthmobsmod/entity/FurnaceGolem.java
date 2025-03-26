@@ -1,7 +1,6 @@
 package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.registry.ModDamageSource;
-import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -37,9 +36,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class FurnaceGolem extends AbstractGolem {
     private static final EntityDataAccessor<Boolean> FURNACE_ACTIVE = SynchedEntityData.defineId(FurnaceGolem.class, EntityDataSerializers.BOOLEAN);
@@ -68,9 +65,9 @@ public class FurnaceGolem extends AbstractGolem {
     @Override
     public void readAdditionalSaveData(CompoundTag p_28857_) {
         super.readAdditionalSaveData(p_28857_);
-        this.setFurnaceActive(p_28857_.getBoolean("FurnaceActive"));
-        this.activeTime = p_28857_.getInt("ActiveTick");
-        this.cooldownTime = p_28857_.getInt("CooldownTick");
+        this.setFurnaceActive(p_28857_.getBooleanOr("FurnaceActive", false));
+        this.activeTime = p_28857_.getIntOr("ActiveTick", 0);
+        this.cooldownTime = p_28857_.getIntOr("CooldownTick", 0);
     }
 
     protected void registerGoals() {

@@ -1,5 +1,6 @@
 package baguchan.earthmobsmod.entity;
 
+import baguchan.earthmobsmod.mixin.SheepAccessor;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
 import baguchi.bagus_lib.client.camera.CameraCore;
@@ -23,8 +24,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.animal.goat.Goat;
+import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -53,7 +54,7 @@ public class HornedSheep extends Sheep {
 
     @Override
     protected void registerGoals() {
-        this.eatBlockGoal = new EatBlockGoal(this);
+        ((SheepAccessor) this).setEatBlockGoal(new EatBlockGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.3F) {
             @Override
@@ -81,7 +82,7 @@ public class HornedSheep extends Sheep {
         this.goalSelector.addGoal(4, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new TemptGoal(this, 1.1D, Ingredient.of(Items.WHEAT), false));
         this.goalSelector.addGoal(6, new FollowParentGoal(this, 1.1D));
-        this.goalSelector.addGoal(7, this.eatBlockGoal);
+        this.goalSelector.addGoal(7, ((SheepAccessor) this).eatBlockGoal());
         this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
@@ -142,7 +143,7 @@ public class HornedSheep extends Sheep {
 
     public void readAdditionalSaveData(CompoundTag p_149373_) {
         super.readAdditionalSaveData(p_149373_);
-        this.entityData.set(DATA_HAS_HORN, p_149373_.getBoolean("HasHorn"));
+        this.entityData.set(DATA_HAS_HORN, p_149373_.getBooleanOr("HasHorn", true));
     }
 
     public void aiStep() {
@@ -292,22 +293,21 @@ public class HornedSheep extends Sheep {
             }
         }
 
-        protected void checkAndPerformAttack(LivingEntity p_25557_) {
-            double d0 = this.getAttackReachSqr(p_25557_);
-            if (this.hornedSheep.isWithinMeleeAttackRange(p_25557_) && (!this.attack || !this.rushing)) {
+        protected void checkAndPerformAttack(LivingEntity livingEntity) {
+            double d0 = this.getAttackReachSqr(livingEntity);
+            if (this.hornedSheep.isWithinMeleeAttackRange(livingEntity) && (!this.attack || !this.rushing)) {
                 this.hornedSheep.swing(InteractionHand.MAIN_HAND);
                 if (!this.rushing) {
-                    this.hornedSheep.doHurtTarget(getServerLevel(this.hornedSheep), p_25557_);
+                    this.hornedSheep.doHurtTarget(getServerLevel(this.hornedSheep), livingEntity);
                     this.attack = true;
                 } else {
-                    int i = this.hornedSheep.hasEffect(MobEffects.MOVEMENT_SPEED) ? this.hornedSheep.getEffect(MobEffects.MOVEMENT_SPEED).getAmplifier() + 1 : 0;
-                    int j = this.hornedSheep.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) ? this.hornedSheep.getEffect(MobEffects.MOVEMENT_SLOWDOWN).getAmplifier() + 1 : 0;
+                    int i = this.hornedSheep.hasEffect(MobEffects.SPEED) ? this.hornedSheep.getEffect(MobEffects.SPEED).getAmplifier() + 1 : 0;
+                    int j = this.hornedSheep.hasEffect(MobEffects.SLOWNESS) ? this.hornedSheep.getEffect(MobEffects.SLOWNESS).getAmplifier() + 1 : 0;
                     float f = 0.25F * (float) (i - j);
                     float f1 = Mth.clamp(this.hornedSheep.getSpeed() * 1.65F, 0.2F, 3.0F) + f;
-                    float f2 = p_25557_.isDamageSourceBlocked(this.hornedSheep.damageSources().mobAttack(this.hornedSheep)) ? 0.5F : 1.0F;
-
-                    p_25557_.knockback((double) (f2 * f1) * (this.hornedSheep.isBaby() ? 0.2F : 1.5F), this.hornedSheep.getX() - p_25557_.getX(), this.hornedSheep.getZ() - p_25557_.getZ());
-                    p_25557_.hurtServer(getServerLevel(this.hornedSheep), this.hornedSheep.damageSources().mobAttack(this.hornedSheep), (float) this.hornedSheep.getAttributeValue(Attributes.ATTACK_DAMAGE) + 2.0F);
+                    float f2 = livingEntity.applyItemBlocking(getServerLevel(this.hornedSheep.level()), this.hornedSheep.damageSources().mobAttack(this.hornedSheep), f);
+                    livingEntity.knockback((double) (f2 * f1) * (this.hornedSheep.isBaby() ? 0.2F : 1.5F), this.hornedSheep.getX() - livingEntity.getX(), this.hornedSheep.getZ() - livingEntity.getZ());
+                    livingEntity.hurtServer(getServerLevel(this.hornedSheep), this.hornedSheep.damageSources().mobAttack(this.hornedSheep), (float) this.hornedSheep.getAttributeValue(Attributes.ATTACK_DAMAGE) + 2.0F);
                 }
                 this.ticksUntilNextAttack = 30;
             }

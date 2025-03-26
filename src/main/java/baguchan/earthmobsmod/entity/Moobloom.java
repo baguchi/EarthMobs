@@ -76,7 +76,7 @@ public class Moobloom extends Cow implements IShearable, IFlowerCow, IHasFlower 
 			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();
 			Cow cow = EntityType.COW.create(this.level(), EntitySpawnReason.CONVERSION);
-			cow.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+			cow.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
 			cow.setHealth(this.getHealth());
 			cow.yBodyRot = this.yBodyRot;
 			if (this.hasCustomName()) {

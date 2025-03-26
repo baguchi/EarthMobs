@@ -116,7 +116,7 @@ public class TropicalSlime extends Slime implements Bucketable {
             CompoundTag tag = writeFromBucketTag(itemstack);
             if (getFishList() == null || !getFishList().isEmpty() && getFishList().size() < 4) {
                 if (!tag.isEmpty()) {
-                    addFishData(tag.getInt(TAG_FISH_VARIANT), false);
+                    addFishData(tag.getIntOr(TAG_FISH_VARIANT, -1), false);
                 } else {
                     int i;
                     int j;
@@ -162,7 +162,7 @@ public class TropicalSlime extends Slime implements Bucketable {
         ListTag listnbt = new ListTag();
 
         if (fishTag.contains(TAG_FISH_LIST)) {
-            listnbt = fishTag.getList(TAG_FISH_LIST, 10);
+            listnbt = fishTag.getListOrEmpty(TAG_FISH_LIST);
         }
 
         CompoundTag compoundnbt1 = new CompoundTag();
@@ -197,16 +197,16 @@ public class TropicalSlime extends Slime implements Bucketable {
 
                 float f = (float) i / 4.0F;
                 for (int l = 0; l < listTag.size(); ++l) {
-                    double f1 = ((CompoundTag) listTag.get(l)).getDouble(TAG_FISH_POSX);
-                    double f2 = ((CompoundTag) listTag.get(l)).getDouble(TAG_FISH_POSZ);
-                    double f3 = ((CompoundTag) listTag.get(l)).getDouble(TAG_FISH_POSY);
+                    double f1 = ((CompoundTag) listTag.get(l)).getDoubleOr(TAG_FISH_POSX, 0);
+                    double f2 = ((CompoundTag) listTag.get(l)).getDoubleOr(TAG_FISH_POSZ, 0);
+                    double f3 = ((CompoundTag) listTag.get(l)).getDoubleOr(TAG_FISH_POSY, 0);
                     TropicalFish fish = EntityType.TROPICAL_FISH.create(this.level(), EntitySpawnReason.TRIGGERED);
                     if (this.isPersistenceRequired()) {
                         fish.setPersistenceRequired();
                     }
-                    fish.setPackedVariant(((CompoundTag) listTag.get(l)).getInt(TAG_FISH_VARIANT));
+                    fish.setPackedVariant(((CompoundTag) listTag.get(l)).getIntOr(TAG_FISH_VARIANT, 0));
                     fish.setInvulnerable(this.isInvulnerable());
-                    fish.moveTo(this.getX() + (double) f1, this.getY() + f3, this.getZ() + (double) f2, this.random.nextFloat() * 360.0F, 0.0F);
+                    fish.snapTo(this.getX() + (double) f1, this.getY() + f3, this.getZ() + (double) f2, this.random.nextFloat() * 360.0F, 0.0F);
                     this.level().addFreshEntity(fish);
                 }
             }
@@ -225,7 +225,7 @@ public class TropicalSlime extends Slime implements Bucketable {
     public void readAdditionalSaveData(CompoundTag p_33607_) {
         super.readAdditionalSaveData(p_33607_);
         if (p_33607_.contains("FishData")) {
-            this.setFishData(p_33607_.getCompound("FishData"));
+            this.setFishData(p_33607_.getCompoundOrEmpty("FishData"));
         }
     }
 
@@ -287,7 +287,7 @@ public class TropicalSlime extends Slime implements Bucketable {
         Bucketable.loadDefaultDataFromBucketTag(this, p_149163_);
         this.setSize(1, true);
         if (p_149163_.contains("FishData")) {
-            this.setFishData(p_149163_.getCompound("FishData"));
+            this.setFishData(p_149163_.getCompoundOrEmpty("FishData"));
         }
     }
 

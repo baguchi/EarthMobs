@@ -15,12 +15,12 @@ import baguchan.earthmobsmod.util.DyeUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.TriState;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -45,7 +45,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -155,7 +154,7 @@ public class CommonEvents {
 		for (int i = 0; i < p_251935_.getWidth(); ++i) {
 			for (int j = 0; j < p_251935_.getHeight(); ++j) {
 				BlockInWorld blockinworld = p_251935_.getBlock(i, j, 0);
-				p_248711_.blockUpdated(blockinworld.getPos(), Blocks.AIR);
+				p_248711_.updateNeighborsAt(blockinworld.getPos(), Blocks.AIR);
 			}
 		}
 
@@ -178,7 +177,7 @@ public class CommonEvents {
 		if (event.getEntity() instanceof Pig pig) {
 			if (event.getEntity().getType() != ModEntities.ZOMBIFIED_PIG.get()) {
 				ZombifiedPig zombifiedpig = ModEntities.ZOMBIFIED_PIG.get().create(event.getEntity().level(), EntitySpawnReason.CONVERSION);
-				zombifiedpig.moveTo(pig.getX(), pig.getY(), pig.getZ(), pig.getYRot(), pig.getXRot());
+				zombifiedpig.snapTo(pig.getX(), pig.getY(), pig.getZ(), pig.getYRot(), pig.getXRot());
 				zombifiedpig.setNoAi(pig.isNoAi());
 				zombifiedpig.setBaby(pig.isBaby());
 				if (pig.hasCustomName()) {
@@ -208,7 +207,7 @@ public class CommonEvents {
 					});
                     if (zombierabbit != null) {
 						zombierabbit.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(zombierabbit.blockPosition()), EntitySpawnReason.CONVERSION, null);
-                        zombierabbit.setVariant(rabbit.getVariant());
+						//zombierabbit.setVariant(rabbit.getVariant());
                         EventHooks.onLivingConvert(rabbit, zombierabbit);
                         if (!rabbit.isSilent()) {
                             level.levelEvent(null, 1026, rabbit.blockPosition(), 0);
@@ -224,7 +223,7 @@ public class CommonEvents {
 						ConversionParams.single(rabbit, true, true),
 						rabbit1 -> {
 							if (rabbit1 != null) {
-								rabbit1.setVariant(rabbit.getVariant());
+								//rabbit1.setVariant(rabbit.getVariant());
 								if (!rabbit1.isSilent()) {
 									level.levelEvent(null, 1026, rabbit1.blockPosition(), 0);
 								}
@@ -245,7 +244,7 @@ public class CommonEvents {
 									new Zombie.ZombieGroupData(false, true)
 							);
 							p_370686_.setVillagerData(villager.getVillagerData());
-							p_370686_.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+							p_370686_.setGossips(villager.getGossips());
 							p_370686_.setTradeOffers(villager.getOffers());
 							p_370686_.setVillagerXp(villager.getVillagerXp());
 							net.neoforged.neoforge.event.EventHooks.onLivingConvert(p_370686_, p_370686_);
@@ -297,7 +296,7 @@ public class CommonEvents {
 
     private static void spawnGolemInWorld(Level level, BlockPattern.BlockPatternMatch blockPatternMatch, Entity summoner, BlockPos pos) {
         clearPatternBlocks(level, blockPatternMatch);
-        summoner.moveTo((double) pos.getX() + 0.5D, (double) pos.getY() + 0.05D, (double) pos.getZ() + 0.5D, 0.0F, 0.0F);
+		summoner.snapTo((double) pos.getX() + 0.5D, (double) pos.getY() + 0.05D, (double) pos.getZ() + 0.5D, 0.0F, 0.0F);
         level.addFreshEntity(summoner);
 
         for (ServerPlayer serverplayer : level.getEntitiesOfClass(ServerPlayer.class, summoner.getBoundingBox().inflate(5.0D))) {

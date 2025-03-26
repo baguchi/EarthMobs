@@ -18,7 +18,8 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.AbstractCow;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -31,14 +32,14 @@ import net.neoforged.neoforge.common.IShearable;
 import java.util.List;
 import java.util.Optional;
 
-public class WoolyCow extends Cow implements IShearable {
+public class WoolyCow extends AbstractCow implements IShearable {
 	private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(WoolyCow.class, EntityDataSerializers.BOOLEAN);
 	private int eatAnimationTick;
 	private EatBlockGoal eatBlockGoal;
 
 	public static final ResourceKey<LootTable> WOOLY_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "entities/wooly_cow_sheared"));
 
-	public WoolyCow(EntityType<? extends Cow> p_28285_, Level p_28286_) {
+	public WoolyCow(EntityType<? extends WoolyCow> p_28285_, Level p_28286_) {
 		super(p_28285_, p_28286_);
 	}
 
@@ -68,7 +69,7 @@ public class WoolyCow extends Cow implements IShearable {
 		}
 	}
 
-	public Cow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {
+	public WoolyCow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {
 		return ModEntities.WOOLY_COW.get().create(p_148884_, EntitySpawnReason.BREEDING);
 	}
 
@@ -79,7 +80,7 @@ public class WoolyCow extends Cow implements IShearable {
 
 	public void readAdditionalSaveData(CompoundTag p_29845_) {
 		super.readAdditionalSaveData(p_29845_);
-		this.setSheared(p_29845_.getBoolean("Sheared"));
+		this.setSheared(p_29845_.getBooleanOr("Sheared", false));
 	}
 
 	protected void customServerAiStep(ServerLevel serverLevel) {
@@ -163,5 +164,17 @@ public class WoolyCow extends Cow implements IShearable {
 			return items;
 		}
 		return java.util.Collections.emptyList();
+	}
+
+	@Override
+	public boolean canMate(Animal p_27569_) {
+		if (p_27569_ == this) {
+			return false;
+		} else {
+			if (p_27569_ instanceof WoolyCow) {
+				return true;
+			}
+			return p_27569_.getClass() != this.getClass() ? false : this.isInLove() && p_27569_.isInLove();
+		}
 	}
 }

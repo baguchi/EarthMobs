@@ -101,11 +101,11 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
     public void loadFromBucketTag(CompoundTag p_149163_) {
         Bucketable.loadDefaultDataFromBucketTag(this, p_149163_);
         if (p_149163_.contains("Age")) {
-            this.setAge(p_149163_.getInt("Age"));
+            this.setAge(p_149163_.getIntOr("Age", 0));
         }
         if (this instanceof IMuddyPig muddy) {
             if (p_149163_.contains("Muddy")) {
-                muddy.setMuddy(p_149163_.getBoolean("Muddy"));
+                muddy.setMuddy(p_149163_.getBooleanOr("Muddy", false));
             }
         }
     }

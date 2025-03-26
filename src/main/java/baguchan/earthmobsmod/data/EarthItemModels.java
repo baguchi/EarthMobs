@@ -1,11 +1,15 @@
 package baguchan.earthmobsmod.data;
 
 import baguchan.earthmobsmod.registry.ModItems;
+import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ItemModelOutput;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelInstance;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 
 import java.util.function.BiConsumer;
 
@@ -63,5 +67,10 @@ public class EarthItemModels extends ItemModelGenerators {
         this.generateSpawnEgg(ModItems.MAGMA_COW_SPAWNEGG.get(), 0x2C2C33, 0xFBAA59);
         this.generateSpawnEgg(ModItems.MELON_GOLEM_SPAWNEGG.get(), 14283506, 0x34791E);
         this.generateSpawnEgg(ModItems.FURNACE_GOLEM_SPAWNEGG.get(), 14405058, 0x8F5846);
+    }
+
+    public void generateSpawnEgg(Item p_387114_, int p_387737_, int p_387138_) {
+        ResourceLocation resourcelocation = ModelLocationUtils.decorateItemModelLocation("bagus_lib:template_spawn_egg");
+        this.itemModelOutput.accept(p_387114_, ItemModelUtils.tintedModel(resourcelocation, new ItemTintSource[]{ItemModelUtils.constantTint(p_387737_), ItemModelUtils.constantTint(p_387138_)}));
     }
 }

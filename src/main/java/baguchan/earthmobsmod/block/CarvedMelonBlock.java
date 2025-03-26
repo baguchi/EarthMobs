@@ -63,7 +63,7 @@ public class CarvedMelonBlock extends Block {
 
 			MelonGolem melongolem = ModEntities.MELON_GOLEM.get().create(p_51379_, EntitySpawnReason.MOB_SUMMONED);
 			BlockPos blockpos1 = blockpattern$blockpatternmatch.getBlock(0, 2, 0).getPos();
-			melongolem.moveTo((double) blockpos1.getX() + 0.5D, (double) blockpos1.getY() + 0.05D, (double) blockpos1.getZ() + 0.5D, 0.0F, 0.0F);
+			melongolem.snapTo((double) blockpos1.getX() + 0.5D, (double) blockpos1.getY() + 0.05D, (double) blockpos1.getZ() + 0.5D, 0.0F, 0.0F);
 			p_51379_.addFreshEntity(melongolem);
 
 			for (ServerPlayer serverplayer : p_51379_.getEntitiesOfClass(ServerPlayer.class, melongolem.getBoundingBox().inflate(5.0D))) {
@@ -72,7 +72,7 @@ public class CarvedMelonBlock extends Block {
 
 			for (int l = 0; l < this.getOrCreateSnowGolemFull().getHeight(); ++l) {
 				BlockInWorld blockinworld3 = blockpattern$blockpatternmatch.getBlock(0, l, 0);
-				p_51379_.blockUpdated(blockinworld3.getPos(), Blocks.AIR);
+				p_51379_.neighborChanged(blockinworld3.getPos(), Blocks.AIR, null);
 			}
 		}
 	}

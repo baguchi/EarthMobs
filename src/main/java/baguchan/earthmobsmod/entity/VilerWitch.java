@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.entity.projectile.ThrownLingeringPotion;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -47,7 +47,7 @@ public class VilerWitch extends Witch {
 				}
 
 				this.setTarget(null);
-			} else if (d3 >= 8.0 && !p_34143_.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) {
+			} else if (d3 >= 8.0 && !p_34143_.hasEffect(MobEffects.SLOWNESS)) {
 				holder = Potions.SLOWNESS;
 			} else if (p_34143_.getHealth() >= 8.0F && !p_34143_.hasEffect(MobEffects.POISON)) {
 				holder = Potions.POISON;
@@ -57,7 +57,7 @@ public class VilerWitch extends Witch {
 
 			if (this.level() instanceof ServerLevel serverlevel) {
 				ItemStack itemstack = PotionContents.createItemStack(Items.LINGERING_POTION, holder);
-				Projectile.spawnProjectileUsingShoot(ThrownPotion::new, serverlevel, itemstack, this, d0, d1 + d3 * 0.2, d2, 0.75F, 8.0F);
+				Projectile.spawnProjectileUsingShoot(ThrownLingeringPotion::new, serverlevel, itemstack, this, d0, d1 + d3 * 0.2, d2, 0.75F, 8.0F);
 			}
 			if (!this.isSilent()) {
 				this.level()

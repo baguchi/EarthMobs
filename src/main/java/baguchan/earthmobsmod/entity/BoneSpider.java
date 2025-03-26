@@ -99,8 +99,8 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 
 	public void readAdditionalSaveData(CompoundTag p_149833_) {
 		super.readAdditionalSaveData(p_149833_);
-		if (p_149833_.contains("StrayConversionTime", 99) && p_149833_.getInt("StrayConversionTime") > -1) {
-			this.startFreezeConversion(p_149833_.getInt("StrayConversionTime"));
+		if (p_149833_.contains("StrayConversionTime") && p_149833_.getIntOr("StrayConversionTime", -1) > -1) {
+			this.startFreezeConversion(p_149833_.getIntOr("StrayConversionTime", -1));
 		}
 
 	}

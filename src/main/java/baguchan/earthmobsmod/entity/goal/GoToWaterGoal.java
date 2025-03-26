@@ -27,7 +27,7 @@ public class GoToWaterGoal extends Goal {
 	}
 
 	public boolean canUse() {
-		if (!this.level.isDay()) {
+        if (!this.level.isBrightOutside()) {
 			return false;
 		} else if (this.mob.isInWater()) {
 			return false;

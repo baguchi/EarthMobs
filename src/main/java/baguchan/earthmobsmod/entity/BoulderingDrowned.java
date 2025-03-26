@@ -170,7 +170,7 @@ public class BoulderingDrowned extends Drowned {
 
 	@Override
 	public void travel(Vec3 p_32394_) {
-		if (this.isControlledByLocalInstance() && this.isInWater() && this.wantsToSwim()) {
+        if (this.canSimulateMovement() && this.isInWater() && this.wantsToSwim()) {
 			this.moveRelative(0.0175F, p_32394_);
 			this.move(MoverType.SELF, this.getDeltaMovement());
 			this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));

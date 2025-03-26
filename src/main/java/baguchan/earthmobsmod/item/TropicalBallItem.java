@@ -44,7 +44,7 @@ public class TropicalBallItem extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity livingEntity, InteractionHand p_41401_) {
         if (livingEntity instanceof WaterAnimal || livingEntity instanceof Axolotl) {
-            if (!livingEntity.isInWaterOrBubble() && livingEntity.getAirSupply() < livingEntity.getMaxAirSupply()) {
+            if (!livingEntity.isInWater() && livingEntity.getAirSupply() < livingEntity.getMaxAirSupply()) {
                 if (player instanceof ServerPlayer serverplayer) {
                     CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, stack);
                     serverplayer.awardStat(Stats.ITEM_USED.get(this));
