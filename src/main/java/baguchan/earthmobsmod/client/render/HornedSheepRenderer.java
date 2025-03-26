@@ -3,7 +3,8 @@ package baguchan.earthmobsmod.client.render;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.HornedSheepModel;
-import baguchan.earthmobsmod.client.render.layer.HornedSheepFurLayer;
+import baguchan.earthmobsmod.client.render.layer.HornedSheepWoolLayer;
+import baguchan.earthmobsmod.client.render.layer.HornedSheepWoolUndercoatLayer;
 import baguchan.earthmobsmod.client.render.layer.MossSheepLayer;
 import baguchan.earthmobsmod.client.render.state.HornedSheepRenderState;
 import baguchan.earthmobsmod.entity.HornedSheep;
@@ -22,7 +23,8 @@ public class HornedSheepRenderer extends MobRenderer<HornedSheep, HornedSheepRen
 
 	public HornedSheepRenderer(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new HornedSheepModel<>(p_173952_.bakeLayer(ModModelLayers.HORNED_SHEEP)), 0.5F);
-		this.addLayer(new HornedSheepFurLayer(this, p_173952_.getModelSet()));
+		this.addLayer(new HornedSheepWoolLayer(this, p_173952_.getModelSet()));
+		this.addLayer(new HornedSheepWoolUndercoatLayer(this, p_173952_.getModelSet()));
         this.addLayer(new MossSheepLayer(this, p_173952_.getModelSet()));
 	}
 

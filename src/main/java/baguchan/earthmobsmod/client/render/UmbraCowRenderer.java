@@ -5,20 +5,20 @@ import baguchan.earthmobsmod.client.model.WoolyCowModel;
 import baguchan.earthmobsmod.client.render.state.WoolyCowRenderState;
 import baguchan.earthmobsmod.entity.UmbraCow;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class UmbraCowRenderer<T extends UmbraCow> extends MobRenderer<T, WoolyCowRenderState, WoolyCowModel<WoolyCowRenderState>> {
+public class UmbraCowRenderer<T extends UmbraCow> extends AgeableMobRenderer<T, WoolyCowRenderState, WoolyCowModel<WoolyCowRenderState>> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/umbra_cow/umbra_cow.png");
     private static final ResourceLocation SHEARED_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/umbra_cow/umbra_cow_sheared.png");
 
 
 	public UmbraCowRenderer(EntityRendererProvider.Context p_173952_) {
-		super(p_173952_, new WoolyCowModel<>(p_173952_.bakeLayer(ModelLayers.COW)), 0.5F);
+        super(p_173952_, new WoolyCowModel<>(p_173952_.bakeLayer(ModelLayers.MOOSHROOM)), new WoolyCowModel<>(p_173952_.bakeLayer(ModelLayers.MOOSHROOM_BABY)), 0.5F);
 	}
 
     @Override

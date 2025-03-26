@@ -5,13 +5,18 @@ package baguchan.earthmobsmod.client.model;
 
 
 import baguchan.earthmobsmod.client.render.state.HornedSheepRenderState;
+import net.minecraft.client.model.BabyModelTransform;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
+import java.util.Set;
+
 public class HornedSheepModel<T extends HornedSheepRenderState> extends QuadrupedModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
+
+	public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(Set.of("head"));
 	private final ModelPart body;
 	private final ModelPart head;
 	private float headXRot;

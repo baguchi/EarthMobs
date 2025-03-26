@@ -22,12 +22,12 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class HornedSheepFurLayer extends RenderLayer<HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> {
-	private static final ResourceLocation SHEEP_FUR_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/sheep/sheep_fur.png");
+public class HornedSheepWoolLayer extends RenderLayer<HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> {
+	private static final ResourceLocation SHEEP_FUR_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/sheep/sheep_wool.png");
 	private final EntityModel<HornedSheepRenderState> adultModel;
 	private final EntityModel<HornedSheepRenderState> babyModel;
 
-	public HornedSheepFurLayer(RenderLayerParent<HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> p_362577_, EntityModelSet p_362840_) {
+	public HornedSheepWoolLayer(RenderLayerParent<HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> p_362577_, EntityModelSet p_362840_) {
 		super(p_362577_);
 		this.adultModel = new HornedSheepFurModel(p_362840_.bakeLayer(ModelLayers.SHEEP_WOOL));
 		this.babyModel = new HornedSheepFurModel(p_362840_.bakeLayer(ModelLayers.SHEEP_BABY_WOOL));
