@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.mixin.SheepAccessor;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
+import baguchan.earthmobsmod.util.CombatUtils;
 import baguchi.bagus_lib.client.camera.CameraCore;
 import baguchi.bagus_lib.client.camera.holder.CameraHolder;
 import baguchi.bagus_lib.util.GlobalVec3;
@@ -305,7 +306,7 @@ public class HornedSheep extends Sheep {
                     int j = this.hornedSheep.hasEffect(MobEffects.SLOWNESS) ? this.hornedSheep.getEffect(MobEffects.SLOWNESS).getAmplifier() + 1 : 0;
                     float f = 0.25F * (float) (i - j);
                     float f1 = Mth.clamp(this.hornedSheep.getSpeed() * 1.65F, 0.2F, 3.0F) + f;
-                    float f2 = livingEntity.applyItemBlocking(getServerLevel(this.hornedSheep.level()), this.hornedSheep.damageSources().mobAttack(this.hornedSheep), f);
+                    float f2 = CombatUtils.isBlockingWithOutCheck(getServerLevel(this.hornedSheep.level()), this.hornedSheep, this.hornedSheep.damageSources().mobAttack(this.hornedSheep), f);
                     livingEntity.knockback((double) (f2 * f1) * (this.hornedSheep.isBaby() ? 0.2F : 1.5F), this.hornedSheep.getX() - livingEntity.getX(), this.hornedSheep.getZ() - livingEntity.getZ());
                     livingEntity.hurtServer(getServerLevel(this.hornedSheep), this.hornedSheep.damageSources().mobAttack(this.hornedSheep), (float) this.hornedSheep.getAttributeValue(Attributes.ATTACK_DAMAGE) + 2.0F);
                 }
