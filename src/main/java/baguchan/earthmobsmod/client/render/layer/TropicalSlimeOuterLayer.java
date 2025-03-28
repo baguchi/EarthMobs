@@ -28,7 +28,7 @@ public class TropicalSlimeOuterLayer extends RenderLayer<SlimeRenderState, Slime
             if (flag) {
                 vertexconsumer = p_117471_.getBuffer(RenderType.outline(TropicalSlimeRenderer.SLIME_LOCATION));
             } else {
-                vertexconsumer = p_117471_.getBuffer(RenderType.entityTranslucent(TropicalSlimeRenderer.SLIME_LOCATION));
+                vertexconsumer = p_117471_.getBuffer(RenderType.entityTranslucent(TropicalSlimeRenderer.SLIME_OUTER_LOCATION));
             }
 
             this.model.setupAnim(p_360800_);

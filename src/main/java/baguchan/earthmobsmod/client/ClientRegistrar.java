@@ -118,6 +118,7 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.MAGMA_COW_GLOW, MagmaCowModel::createAnimateBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.FURNACE_GOLEM, FurnaceGolemModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.JOLLY_LLAMA, JollyLlamaModel::createBodyLayer);
+		event.registerLayerDefinition(ModModelLayers.TROPICAL_SLIME, TropicalSlimeRenderer::createInnerBodyLayer);
 
 		LayerDefinition layerDefinition = BoulderingZombieModel.createBodyLayer();
 		LayerDefinition layerDefinition2 = LobberZombieModel.createBodyLayer();

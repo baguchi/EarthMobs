@@ -46,6 +46,7 @@ public class ModModelLayers {
     public static ModelLayerLocation MAGMA_COW_BABY = register("magma_cow_baby");
     public static ModelLayerLocation MAGMA_COW_GLOW = register("magma_cow_glow");
     public static ModelLayerLocation FURNACE_GOLEM = register("furnace_golem");
+    public static ModelLayerLocation TROPICAL_SLIME = register("tropical_slime");
 
 
     private static ModelLayerLocation register(String p_171294_) {
