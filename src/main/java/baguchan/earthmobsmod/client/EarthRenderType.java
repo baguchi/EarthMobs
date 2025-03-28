@@ -60,7 +60,7 @@ public abstract class EarthRenderType extends RenderType {
                         .setTextureState(new RenderStateShard.TextureStateShard(location, TriState.FALSE, false))
                         .setTexturingState(new OffsetScaleTexturingStateShard(0, (float) ((float) (age % frameCount) / frameCount), 0, (float) frameCount))
                         .setLightmapState(LIGHTMAP)
-                        .setOverlayState(OVERLAY)
+                        .setOverlayState(NO_OVERLAY)
                         .createCompositeState(false)
         );
     }
