@@ -1,12 +1,16 @@
 package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.registry.ModEntities;
+import baguchan.earthmobsmod.registry.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -26,6 +30,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.EventHooks;
@@ -57,6 +62,41 @@ public class SkeletonWolf extends Wolf {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		return Wolf.createAttributes().add(Attributes.MAX_HEALTH, 12.0F).add(Attributes.ATTACK_DAMAGE, 3.0D);
+	}
+
+	@Override
+	public void playSound(SoundEvent p_216991_) {
+		if (p_216991_ == SoundEvents.WOLF_SHAKE) {
+			super.playSound(ModSounds.SKELETON_WOLF_SHAKE.get());
+		} else {
+			super.playSound(p_216991_);
+		}
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		if (this.isAngry()) {
+			return ModSounds.SKELETON_WOLF_GROWL.get();
+		} else if (this.random.nextInt(3) != 0) {
+			return ModSounds.SKELETON_WOLF_AMBIENT.get();
+		} else {
+			return this.isTame() && this.getHealth() < 20.0F ? ModSounds.SKELETON_WOLF_WHINE.get() : ModSounds.SKELETON_WOLF_PANT.get();
+		}
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource p_406243_) {
+		return ModSounds.SKELETON_WOLF_HURT.get();
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.SKELETON_WOLF_DEATH.get();
+	}
+
+	@Override
+	protected void playStepSound(BlockPos p_406221_, BlockState p_406277_) {
+		this.playSound(ModSounds.SKELETON_WOLF_STEP.get(), 0.15F, 1.0F);
 	}
 
 	protected boolean isWorstCondition() {

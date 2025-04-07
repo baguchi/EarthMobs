@@ -5,10 +5,61 @@
     ],
     "subtitle": "subtitles.item.horn"
   },
-  "item.horn_flute.battle_horn": {
+  "entity.skeleton_wolf.ambient": {
     "sounds": [
-      "earthmobsmod:item/horn/battle_horn"
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_bark1",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_bark2",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_bark3"
     ],
-    "subtitle": "subtitles.item.horn"
+    "subtitle": "subtitles.mob.skeleton_wolf_bark"
+  },
+  "entity.skeleton_wolf.growl": {
+    "sounds": [
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_growl1",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_growl2",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_growl3"
+    ],
+    "subtitle": "subtitles.mob.skeleton_wolf_growl"
+  },
+  "entity.skeleton_wolf.step": {
+    "sounds": [
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_step1",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_step2",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_step3",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_step4",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_step5"
+    ],
+    "subtitle": "subtitles.mob.skeleton_wolf_step"
+  },
+  "entity.skeleton_wolf.howl": {
+    "sounds": [
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_howl1",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_howl2"
+    ],
+    "subtitle": "subtitles.mob.skeleton_wolf_howl"
+  },
+  "entity.skeleton_wolf.pant": {
+    "sounds": [
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_pant"
+    ],
+    "subtitle": "subtitles.mob.skeleton_wolf_pant"
+  },
+  "entity.skeleton_wolf.shake": {
+    "sounds": [
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_shake"
+    ],
+    "subtitle": "subtitles.mob.skeleton_wolf_shake"
+  },
+  "entity.skeleton_wolf.whine": {
+    "sounds": [
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_whine"
+    ],
+    "subtitle": "subtitles.mob.skeleton_wolf_whine"
+  },
+  "entity.skeleton_wolf.death": {
+    "sounds": [
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_death"
+    ],
+    "subtitle": "subtitles.mob.skeleton_wolf_death"
   }
 }
