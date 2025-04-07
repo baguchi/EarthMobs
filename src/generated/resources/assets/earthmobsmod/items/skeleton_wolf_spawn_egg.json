@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "bagus_lib:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -4079167
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -16296928
-      }
-    ]
+    "model": "earthmobsmod:item/skeleton_wolf_spawn_egg"
   }
 }

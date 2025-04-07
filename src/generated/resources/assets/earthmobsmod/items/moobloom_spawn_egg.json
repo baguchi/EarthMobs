@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "bagus_lib:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -144896
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -528959
-      }
-    ]
+    "model": "earthmobsmod:item/moobloom_spawn_egg"
   }
 }

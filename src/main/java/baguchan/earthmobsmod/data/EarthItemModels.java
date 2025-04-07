@@ -44,8 +44,8 @@ public class EarthItemModels extends ItemModelGenerators {
         this.generateSpawnEgg(ModItems.TEACUP_PIG_SPAWNEGG.get(), 0xEEC9C1, 0xDD5555);
         this.generateSpawnEgg(ModItems.HORNED_SHEEP_SPAWNEGG.get(), 15198183, 16758197);
         this.generateSpawnEgg(ModItems.HYPER_RABBIT_SPAWNEGG.get(), 0xDA784A, 0xF4BF83);
-        this.generateSpawnEgg(ModItems.MOOBLOOM_SPAWNEGG.get(), 0xFDCA00, 0xF7EDC1);
-        this.generateSpawnEgg(ModItems.MOOLIP_SPAWNEGG.get(), 0xD882B0, 0xF1DFE8);
+        this.generateFlatItem(ModItems.MOOBLOOM_SPAWNEGG.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.MOOLIP_SPAWNEGG.get(), ModelTemplates.FLAT_ITEM);
         this.generateSpawnEgg(ModItems.JUMBO_RABBIT_SPAWNEGG.get(), 0x9E5C48, 0xE5B2A3);
         this.generateSpawnEgg(ModItems.ZOMBIFILED_PIG_SPAWNEGG.get(), 15373203, 5009705);
         this.generateSpawnEgg(ModItems.JOLLY_LAMMA_SPAWNEGG.get(), 0x673727, 0xD2BFB2);
@@ -60,12 +60,12 @@ public class EarthItemModels extends ItemModelGenerators {
         this.generateSpawnEgg(ModItems.LOBBER_DROWNED_SPAWNEGG.get(), 0x739274, 0x3E5F51);
         this.generateSpawnEgg(ModItems.LOBBER_HUSK_SPAWNEGG.get(), 0x6C6454, 0xCFCFCF);
 
-        this.generateSpawnEgg(ModItems.TROPICAL_SLIME_SPAWNEGG.get(), 0x5B83AD, 0x90B1D3);
-        this.generateSpawnEgg(ModItems.SKELETON_WOLF_SPAWNEGG.get(), 12698049, 480288);
+        this.generateFlatItem(ModItems.TROPICAL_SLIME_SPAWNEGG.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.SKELETON_WOLF_SPAWNEGG.get(), ModelTemplates.FLAT_ITEM);
         this.generateSpawnEgg(ModItems.VILER_WITCH_SPAWNEGG.get(), 0x111322, 0x37464D);
         this.generateSpawnEgg(ModItems.WITHER_SKELETON_WOLF_SPAWNEGG.get(), 1315860, 4672845);
         this.generateSpawnEgg(ModItems.MAGMA_COW_SPAWNEGG.get(), 0x2C2C33, 0xFBAA59);
-        this.generateSpawnEgg(ModItems.MELON_GOLEM_SPAWNEGG.get(), 14283506, 0x34791E);
+        this.generateFlatItem(ModItems.MELON_GOLEM_SPAWNEGG.get(), ModelTemplates.FLAT_ITEM);
         this.generateSpawnEgg(ModItems.FURNACE_GOLEM_SPAWNEGG.get(), 14405058, 0x8F5846);
     }
 

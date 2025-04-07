@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "bagus_lib:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -10779731
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -7294509
-      }
-    ]
+    "model": "earthmobsmod:item/tropical_slime_spawn_egg"
   }
 }

@@ -21,6 +21,8 @@ public class ModModelLayers {
     public static ModelLayerLocation MUDDY_PIG = register("muddy_pig");
     public static ModelLayerLocation MUDDY_PIG_BABY = register("muddy_pig_baby");
     public static ModelLayerLocation JOLLY_LLAMA = register("jolly_llama");
+    public static ModelLayerLocation MOOBLOOM = register("moobloom");
+    public static ModelLayerLocation MOOBLOOM_BABY = register("moobloom_baby");
 
 
     public static ModelLayerLocation BONE_SPIDER = register("bone_spider");

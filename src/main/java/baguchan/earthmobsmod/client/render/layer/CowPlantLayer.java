@@ -1,8 +1,9 @@
 package baguchan.earthmobsmod.client.render.layer;
 
+import baguchan.earthmobsmod.client.model.MoobloomModel;
+import baguchan.earthmobsmod.client.render.state.MoobloomRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.model.CowModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -11,25 +12,24 @@ import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class CowPlantLayer extends RenderLayer<LivingEntityRenderState, CowModel> {
+public abstract class CowPlantLayer extends RenderLayer<MoobloomRenderState, MoobloomModel<MoobloomRenderState>> {
     private final BlockRenderDispatcher blockRenderer;
     private final BlockState blockState;
 
-    public CowPlantLayer(RenderLayerParent<LivingEntityRenderState, CowModel> p_117243_, BlockRenderDispatcher p_234851_, BlockState blockState) {
+    public CowPlantLayer(RenderLayerParent<MoobloomRenderState, MoobloomModel<MoobloomRenderState>> p_117243_, BlockRenderDispatcher p_234851_, BlockState blockState) {
 		super(p_117243_);
 
         this.blockRenderer = p_234851_;
         this.blockState = blockState;
     }
 
-    public void render(PoseStack p_117256_, MultiBufferSource p_117257_, int p_117258_, LivingEntityRenderState p_117259_, float p_117260_, float p_117261_) {
+    public void render(PoseStack p_117256_, MultiBufferSource p_117257_, int p_117258_, MoobloomRenderState p_117259_, float p_117260_, float p_117261_) {
         if (!p_117259_.isBaby) {
             boolean flag = p_117259_.appearsGlowing && p_117259_.isInvisible;
             if (!p_117259_.isInvisible || flag) {
@@ -53,7 +53,7 @@ public abstract class CowPlantLayer extends RenderLayer<LivingEntityRenderState,
                 this.renderMushroomBlock(p_117256_, p_117257_, p_117258_, flag, blockstate, i, blockstatemodel);
 				p_117256_.popPose();
 				p_117256_.pushPose();
-				this.getParentModel().getHead().translateAndRotate(p_117256_);
+                this.getParentModel().head.translateAndRotate(p_117256_);
                 p_117256_.translate(0.0F, -0.7F, -0.2F);
 				p_117256_.mulPose(Axis.YP.rotationDegrees(-78.0F));
 				p_117256_.scale(-1.0F, -1.0F, 1.0F);
