@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -11,10 +12,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -22,9 +20,13 @@ import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.LightLayer;
@@ -32,7 +34,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.EventHooks;
 
 public class SkeletonWolf extends Wolf {
@@ -103,48 +104,93 @@ public class SkeletonWolf extends Wolf {
 		return this.getLightLevelDependentMagicValue() < 0.4F;
 	}
 
-	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
-		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
+	@Override
+	public InteractionResult mobInteract(Player p_406380_, InteractionHand p_406261_) {
+		ItemStack itemstack = p_406380_.getItemInHand(p_406261_);
 		Item item = itemstack.getItem();
-		if (this.level().isClientSide) {
-			boolean flag = this.isOwnedBy(p_30412_) || this.isTame() || itemstack.is(Tags.Items.BONES) && !this.isTame() && !this.isAngry();
-			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-		} else {
-			if (this.isTame()) {
-				if ((itemstack.is(Tags.Items.BONES) || itemstack.is(Items.ROTTEN_FLESH)) && this.getHealth() < this.getMaxHealth()) {
-					if (!p_30412_.getAbilities().instabuild) {
-						itemstack.shrink(1);
-					}
+		if (this.isTame()) {
+			if ((itemstack.is(Items.BONE) || itemstack.is(Items.ROTTEN_FLESH)) && this.getHealth() < this.getMaxHealth()) {
+				FoodProperties foodproperties = itemstack.get(DataComponents.FOOD);
+				float f = foodproperties != null ? foodproperties.nutrition() : 2.0F;
+				this.heal(2.0F * f);
+				this.usePlayerItem(p_406380_, p_406261_, itemstack);
+				this.gameEvent(GameEvent.EAT); // Neo: add EAT game event
+				return InteractionResult.SUCCESS;
+			}
 
-					this.heal(2);
-					this.gameEvent(GameEvent.ITEM_INTERACT_START);
+			if (!(item instanceof DyeItem dyeitem && this.isOwnedBy(p_406380_))) {
+				if (this.isEquippableInSlot(itemstack, EquipmentSlot.BODY) && !this.isWearingBodyArmor() && this.isOwnedBy(p_406380_) && !this.isBaby()) {
+					this.setBodyArmorItem(itemstack.copyWithCount(1));
+					itemstack.consume(1, p_406380_);
 					return InteractionResult.SUCCESS;
 				}
 
-				if (this.isFood(itemstack)) {
-					return InteractionResult.PASS;
+				if (!itemstack.canPerformAction(net.neoforged.neoforge.common.ItemAbilities.SHEARS_REMOVE_ARMOR)
+						|| !this.isOwnedBy(p_406380_)
+						|| !this.isWearingBodyArmor()
+						|| EnchantmentHelper.has(this.getBodyArmorItem(), EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE) && !p_406380_.isCreative()) {
+					if (this.isInSittingPose()
+							&& this.isWearingBodyArmor()
+							&& this.isOwnedBy(p_406380_)
+							&& this.getBodyArmorItem().isDamaged()
+							&& this.getBodyArmorItem().isValidRepairItem(itemstack)) {
+						itemstack.shrink(1);
+						this.playSound(SoundEvents.WOLF_ARMOR_REPAIR);
+						ItemStack itemstack2 = this.getBodyArmorItem();
+						int i = (int) (itemstack2.getMaxDamage() * 0.125F);
+						itemstack2.setDamageValue(Math.max(0, itemstack2.getDamageValue() - i));
+						return InteractionResult.SUCCESS;
+					}
+
+					InteractionResult interactionresult = super.mobInteract(p_406380_, p_406261_);
+					if (!interactionresult.consumesAction() && this.isOwnedBy(p_406380_)) {
+						this.setOrderedToSit(!this.isOrderedToSit());
+						this.jumping = false;
+						this.navigation.stop();
+						this.setTarget(null);
+						return InteractionResult.SUCCESS.withoutItem();
+					}
+
+					return interactionresult;
 				}
 
-			} else if ((itemstack.is(Tags.Items.BONES) || itemstack.is(Items.ROTTEN_FLESH))) {
-				if (!p_30412_.getAbilities().instabuild) {
-					itemstack.shrink(1);
-				}
-
-                if (this.random.nextInt(4) == 0 && !EventHooks.onAnimalTame(this, p_30412_)) {
-					this.tame(p_30412_);
-					this.navigation.stop();
-					this.setTarget((LivingEntity) null);
-					this.setOrderedToSit(true);
-					this.level().broadcastEntityEvent(this, (byte) 7);
-				} else {
-					this.level().broadcastEntityEvent(this, (byte) 6);
+				itemstack.hurtAndBreak(1, p_406380_, getSlotForHand(p_406261_));
+				this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
+				ItemStack itemstack1 = this.getBodyArmorItem();
+				this.setBodyArmorItem(ItemStack.EMPTY);
+				if (this.level() instanceof ServerLevel serverlevel) {
+					this.spawnAtLocation(serverlevel, itemstack1);
 				}
 
 				return InteractionResult.SUCCESS;
 			}
 
-			return super.mobInteract(p_30412_, p_30413_);
+			/*DyeColor dyecolor = dyeitem.getDyeColor();
+			if (dyecolor != this.getCollarColor()) {
+				this.setCollarColor(dyecolor);
+				itemstack.consume(1, p_406380_);
+				return InteractionResult.SUCCESS;
+			}*/
+		} else if (!this.level().isClientSide && itemstack.is(Items.BONE) && !this.isAngry()) {
+			itemstack.consume(1, p_406380_);
+			this.tryToTame(p_406380_);
+			return InteractionResult.SUCCESS_SERVER;
 		}
+
+		return super.mobInteract(p_406380_, p_406261_);
+	}
+
+	private void tryToTame(Player p_406358_) {
+		if (this.random.nextInt(3) == 0 && !EventHooks.onAnimalTame(this, p_406358_)) {
+			this.tame(p_406358_);
+			this.navigation.stop();
+			this.setTarget((LivingEntity) null);
+			this.setOrderedToSit(true);
+			this.level().broadcastEntityEvent(this, (byte) 7);
+		} else {
+			this.level().broadcastEntityEvent(this, (byte) 6);
+		}
+
 	}
 
 	@Override

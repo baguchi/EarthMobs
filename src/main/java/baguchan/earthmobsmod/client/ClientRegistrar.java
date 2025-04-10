@@ -120,6 +120,8 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.JOLLY_LLAMA, JollyLlamaModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.MOOBLOOM, MoobloomModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.MOOBLOOM_BABY, () -> MoobloomModel.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
+		event.registerLayerDefinition(ModModelLayers.SKELETON_WOLF, SkeletonWolfRenderer::createBodyLayer);
+		event.registerLayerDefinition(ModModelLayers.SKELETON_WOLF_BABY, () -> SkeletonWolfRenderer.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
 		event.registerLayerDefinition(ModModelLayers.TROPICAL_SLIME, TropicalSlimeRenderer::createInnerBodyLayer);
 
 		LayerDefinition layerDefinition = BoulderingZombieModel.createBodyLayer();
