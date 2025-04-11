@@ -13,6 +13,14 @@
     ],
     "subtitle": "subtitles.mob.skeleton_wolf_bark"
   },
+  "entity.skeleton_wolf.hurt": {
+    "sounds": [
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_hurt1",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_hurt2",
+      "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_hurt3"
+    ],
+    "subtitle": "subtitles.mob.skeleton_wolf_hurt"
+  },
   "entity.skeleton_wolf.growl": {
     "sounds": [
       "earthmobsmod:mob/skeleton_wolf/skeleton_wolf_growl1",
