@@ -27,7 +27,6 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.context.ContextKey;
-import net.minecraft.world.entity.EntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -150,13 +149,16 @@ public class ClientRegistrar {
 	@SubscribeEvent
 	public static void registerEntityRenders(EntityRenderersEvent.AddLayers event) {
 
-		if (event.getRenderer(EntityType.PIG) instanceof PigRenderer r) {
+		event.getEntityTypes().forEach(entityType -> {
+			if (event.getRenderer(entityType) instanceof PigRenderer r) {
 				((PigRenderer) r).addLayer(new MuddyPigMudLayer((PigRenderer) r, event.getEntityModels()));
 				((PigRenderer) r).addLayer(new MuddyPigFlowerLayer((PigRenderer) r, event.getEntityModels()));
 			}
-		if (event.getRenderer(EntityType.SHEEP) instanceof SheepRenderer r) {
-                ((SheepRenderer) r).addLayer(new MossSheepLayer((SheepRenderer) r, event.getEntityModels()));
-            }
+			if (event.getRenderer(entityType) instanceof SheepRenderer r) {
+				((SheepRenderer) r).addLayer(new MossSheepLayer((SheepRenderer) r, event.getEntityModels()));
+			}
+		});
+
 	}
 
 	@SubscribeEvent
