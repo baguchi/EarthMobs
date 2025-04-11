@@ -27,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.LightLayer;
@@ -119,7 +120,7 @@ public class SkeletonWolf extends Wolf {
 			}
 
 			if (!(item instanceof DyeItem dyeitem && this.isOwnedBy(p_406380_))) {
-				if (this.isEquippableInSlot(itemstack, EquipmentSlot.BODY) && !this.isWearingBodyArmor() && this.isOwnedBy(p_406380_) && !this.isBaby()) {
+				if (this.isEquippableInSlotEvenSkeleton(itemstack, EquipmentSlot.BODY) && !this.isWearingBodyArmor() && this.isOwnedBy(p_406380_) && !this.isBaby()) {
 					this.setBodyArmorItem(itemstack.copyWithCount(1));
 					itemstack.consume(1, p_406380_);
 					return InteractionResult.SUCCESS;
@@ -178,6 +179,11 @@ public class SkeletonWolf extends Wolf {
 		}
 
 		return super.mobInteract(p_406380_, p_406261_);
+	}
+
+	public boolean isEquippableInSlotEvenSkeleton(ItemStack p_371603_, EquipmentSlot p_371841_) {
+		Equippable equippable = (Equippable) p_371603_.get(DataComponents.EQUIPPABLE);
+		return equippable == null ? p_371841_ == EquipmentSlot.MAINHAND && this.canUseSlot(EquipmentSlot.MAINHAND) : p_371841_ == equippable.slot() && this.canUseSlot(equippable.slot()) && equippable.canBeEquippedBy(EntityType.WOLF);
 	}
 
 	private void tryToTame(Player p_406358_) {
