@@ -13,6 +13,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -35,6 +36,10 @@ public class MobPotItem extends MobBucketItem {
         //only play the sound because low capacity
         this.playEmptySound(p_150716_, p_150717_, p_150718_);
         return true;
+    }
+
+    public static ItemStack getEmptySuccessItem(ItemStack p_40700_, Player p_40701_) {
+        return !p_40701_.hasInfiniteMaterials() ? new ItemStack(Items.FLOWER_POT) : p_40700_;
     }
 
     @Override
