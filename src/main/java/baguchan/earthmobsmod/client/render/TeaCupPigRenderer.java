@@ -14,7 +14,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class TeaCupPigRenderer<T extends TeaCupPig> extends MobRenderer<T, TeaCupPigRenderState, TeaCupPigModel<TeaCupPigRenderState>> {
+public class TeaCupPigRenderer extends MobRenderer<TeaCupPig, TeaCupPigRenderState, TeaCupPigModel<TeaCupPigRenderState>> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig.png");
     private static final ResourceLocation MUD_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig_mud.png");
 
@@ -29,7 +29,7 @@ public class TeaCupPigRenderer<T extends TeaCupPig> extends MobRenderer<T, TeaCu
     }
 
     @Override
-    public void extractRenderState(T p_362733_, TeaCupPigRenderState p_360515_, float p_361157_) {
+    public void extractRenderState(TeaCupPig p_362733_, TeaCupPigRenderState p_360515_, float p_361157_) {
         super.extractRenderState(p_362733_, p_360515_, p_361157_);
         p_360515_.mud = p_362733_ instanceof IMuddyPig muddyPig && muddyPig.isMuddy();
     }

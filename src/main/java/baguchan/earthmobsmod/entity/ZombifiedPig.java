@@ -1,6 +1,5 @@
 package baguchan.earthmobsmod.entity;
 
-import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
@@ -12,7 +11,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.level.Level;
 
-public class ZombifiedPig extends Pig implements IMuddyPig {
+public class ZombifiedPig extends Pig {
 	public ZombifiedPig(EntityType<? extends Pig> p_29462_, Level p_29463_) {
 		super(p_29462_, p_29463_);
 	}
@@ -20,31 +19,6 @@ public class ZombifiedPig extends Pig implements IMuddyPig {
 	public static AttributeSupplier.Builder createAttributes() {
 		return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, 0.25D);
 	}
-
-	@Override
-	public boolean isMuddy() {
-		return false;
-	}
-
-	@Override
-	public void setMuddy(boolean playing) {
-
-	}
-
-	@Override
-	public float getBodyRollAngle(float p_30433_, float p_30434_) {
-		return 0;
-	}
-
-    @Override
-    public void setColorData(byte colorData) {
-
-    }
-
-    @Override
-    public byte getColorData() {
-        return 0;
-    }
 
 	@Override
 	public ZombifiedPig getBreedOffspring(ServerLevel p_149001_, AgeableMob p_149002_) {

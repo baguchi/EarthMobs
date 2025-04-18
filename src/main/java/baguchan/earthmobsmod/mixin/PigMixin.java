@@ -43,7 +43,8 @@ import java.util.Map;
 @Mixin(Pig.class)
 public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, ISheared, IHasFlower, IBaguPacket {
 	private boolean muddy;
-	private byte colorData;
+	private boolean sheared;
+	private DyeColor dyeColor = DyeColor.LIME;
 	private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_29841_) -> {
 		p_29841_.put(DyeColor.WHITE, Items.WHITE_DYE);
 		p_29841_.put(DyeColor.ORANGE, Items.ORANGE_DYE);
@@ -91,53 +92,43 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	@Override
 	public void resync(Entity entity) {
 		if (!this.level().isClientSide) {
-			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new MudMessage(this.getId(), this.muddy, this.colorData));
+			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new MudMessage(this.getId(), this.muddy, this.dyeColor));
 		}
 	}
 
 	@Override
-	public float getBodyRollAngle(float p_30433_, float p_30434_) {
-		float f = (Mth.lerp(p_30433_, this.shakeAnimO, this.shakeAnim) + p_30434_) / 1.8F;
-		if (f < 0.0F) {
-			f = 0.0F;
-		} else if (f > 1.0F) {
-			f = 1.0F;
-		}
+	public float getBodyRollScale(float p_30433_) {
+		float f = (Mth.lerp(p_30433_, this.shakeAnimO, this.shakeAnim));
 
-		return Mth.sin(f * (float) Math.PI) * Mth.sin(f * (float) Math.PI * 11.0F) * 0.15F * (float) Math.PI;
+		return f;
 	}
 
 	public boolean isSheared() {
-		return (this.colorData & 16) != 0;
+		return this.sheared;
 	}
 
-	public void setSheared(boolean p_29879_) {
-		byte b0 = this.colorData;
-		if (p_29879_) {
-			this.colorData = (byte) (b0 | 16);
-		} else {
-			this.colorData = (byte) (b0 & -17);
-		}
+	public void setSheared(boolean sheared) {
+		this.sheared = sheared;
 		this.resync(this);
 	}
 
 	public DyeColor getColor() {
-		return DyeColor.byId(this.colorData & 15);
+		return this.dyeColor;
 	}
 
-	public void setColor(DyeColor p_29856_) {
-		byte b0 = this.colorData;
-		this.colorData = (byte) (b0 & 240 | p_29856_.getId() & 15);
+	public void setColor(DyeColor color) {
+		this.dyeColor = color;
 		this.resync(this);
 	}
 
-	public void setColorData(byte colorData) {
-		this.colorData = colorData;
+	@Override
+	public void setSheared(DyeColor sheared) {
+		this.dyeColor = sheared;
 		this.resync(this);
 	}
 
-	public byte getColorData() {
-		return colorData;
+	public DyeColor getSheared() {
+		return dyeColor;
 	}
 
 	public void tick() {
@@ -191,7 +182,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 					this.shakeAnim = 0.0F;
 					this.setMuddy(true);
 					this.setSheared(false);
-					this.setColor(DyeUtil.getRandomColor(this.random));
+					this.setSheared(DyeUtil.getRandomColor(this.random));
 				}
 
 				if (this.shakeAnim > 0.4F) {

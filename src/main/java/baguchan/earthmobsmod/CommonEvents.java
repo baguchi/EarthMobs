@@ -31,6 +31,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.WanderingTrader;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
@@ -85,8 +86,7 @@ public class CommonEvents {
         if (entity instanceof IMuddyPig muddy) {
 			if (serverLevelAccessor.getBiome(BlockPos.containing(event.getX(), event.getY(), event.getZ())).is(Tags.Biomes.IS_SWAMP)) {
 				muddy.setMuddy(true);
-                byte b0 = muddy.getColorData();
-                muddy.setColorData((byte) (b0 & 240 | DyeUtil.getRandomColor(serverLevelAccessor.getRandom()).getId() & 15));
+				muddy.setSheared(DyeColor.byId(DyeUtil.getRandomColor(serverLevelAccessor.getRandom()).getId()));
 			}
 		}
 	}

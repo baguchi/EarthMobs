@@ -40,6 +40,7 @@ import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEve
 @EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class ClientRegistrar {
 	public static final ContextKey<ShadowCapability> SHADOW = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow"));
+	public static final ContextKey<Float> SHAKE = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shake"));
 
     public static void setup(FMLClientSetupEvent event) {
 
@@ -166,7 +167,17 @@ public class ClientRegistrar {
 		event.registerEntityModifier(PigRenderer.class, (pig, renderState) -> {
 			if (pig instanceof IMuddyPig muddy) {
 				renderState.setRenderData(MuddyPigMudLayer.IS_MUD, muddy.isMuddy());
-
+				renderState.setRenderData(SHAKE, muddy.getBodyRollScale(renderState.partialTick));
+			}
+			if (pig instanceof ISheared sheared) {
+				renderState.setRenderData(MuddyPigMudLayer.IS_SHEARED, sheared.isSheared());
+				renderState.setRenderData(MuddyPigFlowerLayer.FLOWER_DYE, sheared.getColor());
+			}
+		});
+		event.registerEntityModifier(TeaCupPigRenderer.class, (pig, renderState) -> {
+			if (pig instanceof IMuddyPig muddy) {
+				renderState.setRenderData(MuddyPigMudLayer.IS_MUD, muddy.isMuddy());
+				renderState.setRenderData(SHAKE, muddy.getBodyRollScale(renderState.partialTick));
 			}
 			if (pig instanceof ISheared sheared) {
 				renderState.setRenderData(MuddyPigMudLayer.IS_SHEARED, sheared.isSheared());

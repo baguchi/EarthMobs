@@ -2,6 +2,8 @@ package baguchan.earthmobsmod.client;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.capability.ShadowCapability;
+import baguchan.earthmobsmod.client.animation.ShakeAnimations;
+import baguchi.bagus_lib.client.event.BagusModelEvent;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -24,7 +26,10 @@ import static net.minecraft.client.renderer.entity.LivingEntityRenderer.getOverl
 @EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
-
+    @SubscribeEvent
+    public static void renderAnimationEvent(BagusModelEvent.PostAnimate event) {
+        event.animateWalk(ShakeAnimations.shake, event.getEntityRenderState().ageInTicks, 1F, 1F, event.getEntityRenderState().getRenderDataOrDefault(ClientRegistrar.SHAKE, 0F));
+    }
     @SubscribeEvent
     public static void renderEvent(RenderLivingEvent.Post<LivingEntity, LivingEntityRenderState, EntityModel<LivingEntityRenderState>> event) {
         MultiBufferSource buffer = event.getMultiBufferSource();
