@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.block.CarvedMelonBlock;
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.entity.FurnaceGolem;
+import baguchan.earthmobsmod.entity.TeaCupPig;
 import baguchan.earthmobsmod.entity.ZombifiedPig;
 import baguchan.earthmobsmod.entity.ZombifiedRabbit;
 import baguchan.earthmobsmod.registry.ModBlocks;
@@ -31,17 +32,21 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.WanderingTrader;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.ItemAbilities;
@@ -136,6 +141,31 @@ public class CommonEvents {
 				event.setCanceled(true);
 			}
 
+		}
+		Player player = event.getEntity();
+		ItemStack stack = player.getItemInHand(event.getHand());
+
+		if ((stack.getItem() instanceof SpawnEggItem spawnEggItem) && spawnEggItem.getType(player.registryAccess(), stack) == ModEntities.TEACUP_PIG.get()) {
+			BlockState state = level.getBlockState(pos);
+
+			if (state.is(Blocks.FLOWER_POT)) {
+				event.setCanceled(true);
+				level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+				if (level instanceof ServerLevel serverLevel) {
+
+					TeaCupPig teaCupPig = ModEntities.TEACUP_PIG.get().spawn(serverLevel, stack, player, pos.below(), EntitySpawnReason.SPAWN_ITEM_USE, true, false);
+					if (teaCupPig != null) {
+						stack.consume(1, player);
+						if (event.getFace() != null) {
+							teaCupPig.setYRot(event.getFace().toYRot());
+							teaCupPig.yRotO = event.getFace().toYRot();
+						}
+						serverLevel.gameEvent(player, GameEvent.ENTITY_PLACE, pos);
+						teaCupPig.setOnPot(true);
+					}
+				}
+			}
 		}
 	}
 

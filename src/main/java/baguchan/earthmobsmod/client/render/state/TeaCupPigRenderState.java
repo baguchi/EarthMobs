@@ -4,4 +4,5 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 public class TeaCupPigRenderState extends LivingEntityRenderState {
     public boolean mud;
+    public boolean pot;
 }

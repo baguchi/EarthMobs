@@ -32,6 +32,7 @@ public class TeaCupPigRenderer extends MobRenderer<TeaCupPig, TeaCupPigRenderSta
     public void extractRenderState(TeaCupPig p_362733_, TeaCupPigRenderState p_360515_, float p_361157_) {
         super.extractRenderState(p_362733_, p_360515_, p_361157_);
         p_360515_.mud = p_362733_ instanceof IMuddyPig muddyPig && muddyPig.isMuddy();
+        p_360515_.pot = p_362733_.isOnPot();
     }
 
     @Override

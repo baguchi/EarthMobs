@@ -7,16 +7,16 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
@@ -28,15 +28,73 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.IShearable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 public class TeaCupPig extends Pig implements IShearable, Bucketable {
+
+    private static final EntityDataAccessor<Boolean> DATA_POT = SynchedEntityData.defineId(TeaCupPig.class, EntityDataSerializers.BOOLEAN);
+
     public TeaCupPig(EntityType<? extends Pig> p_29462_, Level p_29463_) {
         super(p_29462_, p_29463_);
     }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_POT, false);
+    }
+
+    public void setOnPot(boolean hidden) {
+        this.getEntityData().set(DATA_POT, hidden);
+    }
+
+    public boolean isOnPot() {
+        return this.getEntityData().get(DATA_POT);
+    }
+
+    @Override
+    public void aiStep() {
+        if (this.isOnPot()) {
+            BlockState state = this.level().getBlockState(this.blockPosition());
+            if (state.getBlock() instanceof FlowerPotBlock) {
+                this.yBodyRot = this.yRotO;
+                this.yBodyRotO = yRotO;
+                this.yHeadRot = this.yRotO;
+                this.yHeadRotO = this.yRotO;
+
+                //if (!this.level().isClientSide()) this.targetSelector.tick(); // Tick target selector, so that our Tome can find an enemy to ambush
+
+                if (this.getTarget() != null) {
+                    this.setOnPot(false);
+                    this.setDeltaMovement(0.0D, 0.25D, 0.0D);
+                }
+
+                return;
+            } else {
+                this.setOnPot(false);
+            }
+        }
+
+        super.aiStep();
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.entityData.set(DATA_POT, tag.getBooleanOr("on_pot", false));
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("on_pot", this.entityData.get(DATA_POT));
+    }
+
 
     @Override
     public float getVoicePitch() {
@@ -123,5 +181,21 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
     @Override
     public boolean isShearable(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
         return false;
+    }
+
+
+    @Override
+    public EntityDimensions getDefaultDimensions(Pose p_316276_) {
+        EntityDimensions entitydimensions = super.getDefaultDimensions(p_316276_);
+        return this.isOnPot() ? EntityDimensions.scalable(0.3F, 0.55F).scale(this.getAgeScale()) : entitydimensions;
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> p_219422_) {
+        if (DATA_POT.equals(p_219422_)) {
+            this.refreshDimensions();
+        }
+
+        super.onSyncedDataUpdated(p_219422_);
     }
 }
