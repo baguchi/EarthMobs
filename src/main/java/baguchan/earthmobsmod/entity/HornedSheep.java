@@ -8,7 +8,6 @@ import baguchi.bagus_lib.client.camera.CameraCore;
 import baguchi.bagus_lib.client.camera.holder.CameraHolder;
 import baguchi.bagus_lib.util.GlobalVec3;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -33,6 +32,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
@@ -137,12 +138,14 @@ public class HornedSheep extends Sheep {
         this.entityData.set(DATA_HAS_HORN, true);
     }
 
-    public void addAdditionalSaveData(CompoundTag p_149385_) {
+    @Override
+    public void addAdditionalSaveData(ValueOutput p_149385_) {
         super.addAdditionalSaveData(p_149385_);
         p_149385_.putBoolean("HasHorn", this.hasHorn());
     }
 
-    public void readAdditionalSaveData(CompoundTag p_149373_) {
+    @Override
+    public void readAdditionalSaveData(ValueInput p_149373_) {
         super.readAdditionalSaveData(p_149373_);
         this.entityData.set(DATA_HAS_HORN, p_149373_.getBooleanOr("HasHorn", true));
     }

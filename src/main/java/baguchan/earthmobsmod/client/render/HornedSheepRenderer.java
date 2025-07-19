@@ -11,10 +11,8 @@ import baguchan.earthmobsmod.entity.HornedSheep;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class HornedSheepRenderer extends AgeableMobRenderer<HornedSheep, HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep.png");
     private static final ResourceLocation TEXTURE_HORNLESS = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep_hornless.png");

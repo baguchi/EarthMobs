@@ -4,7 +4,6 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -26,6 +25,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.common.IShearable;
 
@@ -73,12 +74,14 @@ public class WoolyCow extends AbstractCow implements IShearable {
 		return ModEntities.WOOLY_COW.get().create(p_148884_, EntitySpawnReason.BREEDING);
 	}
 
-	public void addAdditionalSaveData(CompoundTag p_29864_) {
+	@Override
+	public void addAdditionalSaveData(ValueOutput p_29864_) {
 		super.addAdditionalSaveData(p_29864_);
 		p_29864_.putBoolean("Sheared", this.isSheared());
 	}
 
-	public void readAdditionalSaveData(CompoundTag p_29845_) {
+	@Override
+	public void readAdditionalSaveData(ValueInput p_29845_) {
 		super.readAdditionalSaveData(p_29845_);
 		this.setSheared(p_29845_.getBooleanOr("Sheared", false));
 	}

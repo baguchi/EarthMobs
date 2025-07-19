@@ -9,10 +9,8 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.entity.state.WitchRenderState;
 import net.minecraft.util.Mth;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class VilerWitchModel<T extends WitchRenderState> extends EntityModel<T> implements VillagerLikeModel, HeadedModel {
 	private final ModelPart root;
 	private final ModelPart head;

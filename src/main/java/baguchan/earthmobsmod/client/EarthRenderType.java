@@ -5,9 +5,6 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.TriState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
 
 public abstract class EarthRenderType extends RenderType {
@@ -25,7 +22,7 @@ public abstract class EarthRenderType extends RenderType {
                 true,
                 RenderPipelines.EYES,
                 RenderType.CompositeState.builder()
-                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), TriState.DEFAULT, false))
+                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), false))
                         .createCompositeState(false)
         );
     }
@@ -40,7 +37,7 @@ public abstract class EarthRenderType extends RenderType {
                 true,
                 RenderPipelines.ENTITY_CUTOUT_NO_CULL,
                 RenderType.CompositeState.builder()
-                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), TriState.FALSE, false))
+                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), false))
                         .setLightmapState(LIGHTMAP)
                         .setOverlayState(OVERLAY)
                         .createCompositeState(false)
@@ -57,7 +54,7 @@ public abstract class EarthRenderType extends RenderType {
                 true,
                 RenderPipelines.BREEZE_WIND,
                 RenderType.CompositeState.builder()
-                        .setTextureState(new RenderStateShard.TextureStateShard(location, TriState.FALSE, false))
+                        .setTextureState(new RenderStateShard.TextureStateShard(location, false))
                         .setTexturingState(new OffsetScaleTexturingStateShard(0, (float) ((float) (age % frameCount) / frameCount), 0, (float) frameCount))
                         .setLightmapState(LIGHTMAP)
                         .setOverlayState(NO_OVERLAY)
@@ -65,7 +62,6 @@ public abstract class EarthRenderType extends RenderType {
         );
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static final class OffsetScaleTexturingStateShard extends TexturingStateShard {
         public OffsetScaleTexturingStateShard(float p_110290_, float p_110291_, float scaleX, float scaleY) {
             super("offset_scale_texturing", () -> RenderSystem.setTextureMatrix((new Matrix4f()).scale(scaleX, scaleY, 0).translation(p_110290_, p_110291_, 0.0F)), () -> RenderSystem.resetTextureMatrix());

@@ -28,7 +28,6 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.context.ContextKey;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -36,8 +35,8 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 
-@OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+
+@EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
 public class ClientRegistrar {
 	public static final ContextKey<ShadowCapability> SHADOW = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow"));
 	public static final ContextKey<Float> SHAKE = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shake"));

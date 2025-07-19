@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.client.model;
 import baguchan.earthmobsmod.client.animation.LobberZombieAnimation;
 import baguchan.earthmobsmod.client.render.state.LobberZombieRenderState;
 import baguchi.bagus_lib.client.layer.IArmor;
+import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,9 +13,11 @@ import net.minecraft.world.entity.HumanoidArm;
 
 public class LobberDrownedModel<T extends LobberZombieRenderState> extends AbstractLobberZombieModel<T> implements IArmor {
 	public float swimAmount;
+	private final KeyframeAnimation shootAnimation;
 
 	public LobberDrownedModel(ModelPart root) {
 		super(root);
+		shootAnimation = LobberZombieAnimation.shoot.bake(root);
 	}
 
 	public static LayerDefinition createBodyLayer(CubeDeformation cubeDeformation) {
@@ -64,7 +67,7 @@ public class LobberDrownedModel<T extends LobberZombieRenderState> extends Abstr
 			this.right_leg.xRot += this.swimAmount * 0.55F * Mth.sin(0.1F * entity.ageInTicks);
 			this.head.xRot = 0.0F;
 		}
-		this.animate(entity.shootAnimationState, LobberZombieAnimation.shoot, entity.ageInTicks);
+		this.shootAnimation.apply(entity.shootAnimationState, entity.ageInTicks);
 	}
 
 	protected float rotlerpRad(float angle, float maxAngle, float mul) {

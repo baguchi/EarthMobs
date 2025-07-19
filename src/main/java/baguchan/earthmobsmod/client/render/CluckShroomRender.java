@@ -8,10 +8,8 @@ import baguchan.earthmobsmod.client.render.state.CluckShroomRenderState;
 import baguchan.earthmobsmod.entity.CluckShroom;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class CluckShroomRender<T extends CluckShroom> extends AbstractChickenRender<T, CluckShroomRenderState, CluckShroomModel<CluckShroomRenderState>> {
 	private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cluck_shroom/cluck_shroom.png");
 	private static final ResourceLocation TEXTURE_BROWN = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cluck_shroom/brown_cluck_shroom.png");

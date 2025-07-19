@@ -5,6 +5,7 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.6.4
 
 import baguchan.earthmobsmod.client.animation.TeaCupPigAnimations;
 import baguchan.earthmobsmod.client.render.state.TeaCupPigRenderState;
+import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -19,6 +20,7 @@ public class TeaCupPigModel<T extends TeaCupPigRenderState> extends EntityModel<
     private final ModelPart leg4;
     private final ModelPart leg2;
     private final ModelPart leg3;
+    private final KeyframeAnimation potAnimation;
 
     public TeaCupPigModel(ModelPart root) {
         super(root);
@@ -29,6 +31,7 @@ public class TeaCupPigModel<T extends TeaCupPigRenderState> extends EntityModel<
         this.leg4 = this.root.getChild("leg4");
         this.leg2 = this.root.getChild("leg2");
         this.leg3 = this.root.getChild("leg3");
+        this.potAnimation = TeaCupPigAnimations.pot.bake(root);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -64,7 +67,7 @@ public class TeaCupPigModel<T extends TeaCupPigRenderState> extends EntityModel<
         this.leg4.xRot = Mth.cos(entity.walkAnimationPos * 0.68F) * 1.4F * entity.walkAnimationSpeed;
         if (entity.pot) {
             this.root.getAllParts().forEach(ModelPart::resetPose);
-            this.applyStatic(TeaCupPigAnimations.pot);
+            this.potAnimation.applyStatic();
         }
     }
 }

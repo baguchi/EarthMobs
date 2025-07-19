@@ -22,7 +22,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 
-@EventBusSubscriber(modid = EarthMobsMod.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = EarthMobsMod.MODID)
 public class ModEffects {
 	public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, EarthMobsMod.MODID);
 	public static final DeferredRegister<Potion> POTION = DeferredRegister.create(BuiltInRegistries.POTION, EarthMobsMod.MODID);

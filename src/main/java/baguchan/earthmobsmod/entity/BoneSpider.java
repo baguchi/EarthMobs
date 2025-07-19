@@ -4,7 +4,6 @@ import baguchan.earthmobsmod.entity.goal.RangedAndMeleeAttack;
 import baguchan.earthmobsmod.entity.projectile.BoneShard;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModItems;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -24,6 +23,8 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.Collection;
 import java.util.EnumSet;
@@ -92,14 +93,14 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 		super.tick();
 	}
 
-	public void addAdditionalSaveData(CompoundTag p_149836_) {
+	public void addAdditionalSaveData(ValueOutput p_149836_) {
 		super.addAdditionalSaveData(p_149836_);
 		p_149836_.putInt("StrayConversionTime", this.isFreezeConverting() ? this.conversionTime : -1);
 	}
 
-	public void readAdditionalSaveData(CompoundTag p_149833_) {
+	public void readAdditionalSaveData(ValueInput p_149833_) {
 		super.readAdditionalSaveData(p_149833_);
-		if (p_149833_.contains("StrayConversionTime") && p_149833_.getIntOr("StrayConversionTime", -1) > -1) {
+		if (p_149833_.getInt("StrayConversionTime").isPresent()) {
 			this.startFreezeConversion(p_149833_.getIntOr("StrayConversionTime", -1));
 		}
 

@@ -6,10 +6,8 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.CrossedArmsItemLayer;
 import net.minecraft.client.renderer.entity.state.WitchRenderState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class VilerWitchItemLayer extends CrossedArmsItemLayer<WitchRenderState, VilerWitchModel<WitchRenderState>> {
     public VilerWitchItemLayer(RenderLayerParent<WitchRenderState, VilerWitchModel<WitchRenderState>> p_234926_) {
         super(p_234926_);

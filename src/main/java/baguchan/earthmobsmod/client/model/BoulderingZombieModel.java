@@ -3,10 +3,8 @@ package baguchan.earthmobsmod.client.model;
 import baguchan.earthmobsmod.client.render.state.BoulderingZombieRenderState;
 import baguchi.bagus_lib.client.layer.IArmor;
 import net.minecraft.client.model.geom.ModelPart;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class BoulderingZombieModel<T extends BoulderingZombieRenderState> extends AbstractBoulderingZombieModel<T> implements IArmor {
 
 	public BoulderingZombieModel(ModelPart root) {

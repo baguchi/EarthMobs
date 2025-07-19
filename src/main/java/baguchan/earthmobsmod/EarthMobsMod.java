@@ -59,8 +59,8 @@ public class EarthMobsMod {
 
 	public void setupPackets(RegisterPayloadHandlersEvent event) {
 		PayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
-		registrar.playBidirectional(MossMessage.TYPE, MossMessage.STREAM_CODEC, (handler, payload) -> handler.handle(handler, payload));
-		registrar.playBidirectional(MudMessage.TYPE, MudMessage.STREAM_CODEC, (handler, payload) -> handler.handle(handler, payload));
+		registrar.playToClient(MossMessage.TYPE, MossMessage.STREAM_CODEC, (handler, payload) -> handler.handle(handler, payload));
+		registrar.playToClient(MudMessage.TYPE, MudMessage.STREAM_CODEC, (handler, payload) -> handler.handle(handler, payload));
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {

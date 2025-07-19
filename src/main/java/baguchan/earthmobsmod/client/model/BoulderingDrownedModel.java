@@ -7,10 +7,8 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class BoulderingDrownedModel<T extends BoulderingZombieRenderState> extends AbstractBoulderingZombieModel<T> implements baguchi.bagus_lib.client.layer.IArmor {
 
 	public float swimAmount;

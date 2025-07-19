@@ -4,6 +4,7 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.7.4
 
 
 import baguchan.earthmobsmod.client.animation.JollyLlamaAnimation;
+import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -20,6 +21,10 @@ public class JollyLlamaModel<T extends LlamaRenderState> extends EntityModel<T> 
     private final ModelPart leg4;
     private final ModelPart chest_left;
     private final ModelPart chest_right;
+    private final KeyframeAnimation walkAnimation;
+    private final KeyframeAnimation babyAnimation;
+
+
 
     public JollyLlamaModel(ModelPart root) {
         super(root);
@@ -32,6 +37,8 @@ public class JollyLlamaModel<T extends LlamaRenderState> extends EntityModel<T> 
         this.leg4 = root.getChild("leg4");
         this.chest_left = this.body.getChild("chest_left");
         this.chest_right = this.body.getChild("chest_right");
+        this.walkAnimation = JollyLlamaAnimation.WALK.bake(root);
+        this.babyAnimation = JollyLlamaAnimation.BABY.bake(root);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -72,8 +79,8 @@ public class JollyLlamaModel<T extends LlamaRenderState> extends EntityModel<T> 
         this.chest_right.visible = entity.hasChest;
         this.chest_left.visible = entity.hasChest;
         if (entity.isBaby) {
-            this.applyStatic(JollyLlamaAnimation.BABY);
+            this.babyAnimation.applyStatic();
         }
-        this.animateWalk(JollyLlamaAnimation.WALK, entity.walkAnimationPos, entity.walkAnimationSpeed, 1.0F, 1.0F);
+        this.walkAnimation.applyWalk(entity.walkAnimationPos, entity.walkAnimationSpeed, 1.0F, 1.0F);
     }
 }

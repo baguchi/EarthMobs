@@ -11,9 +11,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ARGB;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.item.DyeColor;
 
 public class HornedSheepWoolUndercoatLayer extends RenderLayer<HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> {
@@ -28,27 +25,10 @@ public class HornedSheepWoolUndercoatLayer extends RenderLayer<HornedSheepRender
     }
 
     @Override
-    public void render(PoseStack p_360648_, MultiBufferSource p_361412_, int p_361724_, HornedSheepRenderState p_362704_, float p_363845_, float p_360883_) {
-
-        EntityModel<HornedSheepRenderState> entitymodel = p_362704_.isBaby ? this.babyModel : this.adultModel;
-        if (!p_362704_.isInvisible) {
-            int i;
-            if (p_362704_.customName != null && "jeb_".equals(p_362704_.customName.getString())) {
-                int j = 25;
-                int k = Mth.floor(p_362704_.ageInTicks);
-                int l = k / 25 + p_362704_.id;
-                int i1 = DyeColor.values().length;
-                int j1 = l % i1;
-                int k1 = (l + 1) % i1;
-                float f = ((float) (k % 25) + Mth.frac(p_362704_.ageInTicks)) / 25.0F;
-                int l1 = Sheep.getColor(DyeColor.byId(j1));
-                int i2 = Sheep.getColor(DyeColor.byId(k1));
-                i = ARGB.lerp(f, l1, i2);
-            } else {
-                i = Sheep.getColor(p_362704_.woolColor);
-            }
-
-            coloredCutoutModelCopyLayerRender(entitymodel, SHEEP_FUR_LOCATION, p_360648_, p_361412_, p_361724_, p_362704_, i);
+    public void render(PoseStack p_406212_, MultiBufferSource p_406331_, int p_406201_, HornedSheepRenderState p_406356_, float p_406239_, float p_406245_) {
+        if (!p_406356_.isInvisible && (p_406356_.isJebSheep() || p_406356_.woolColor != DyeColor.WHITE)) {
+            EntityModel<HornedSheepRenderState> entitymodel = p_406356_.isBaby ? this.babyModel : this.adultModel;
+            coloredCutoutModelCopyLayerRender(entitymodel, SHEEP_FUR_LOCATION, p_406212_, p_406331_, p_406201_, p_406356_, p_406356_.getWoolColor());
         }
     }
 }

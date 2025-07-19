@@ -21,8 +21,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -76,7 +74,7 @@ public class EarthModelData extends ModelProvider {
         return CompletableFuture.allOf(blockModelOutput.save(output, this.blockStatePathProvider), modelOutput.save(output, this.modelPathProvider), itemModelOutput.save(output, this.itemInfoPathProvider));
     }
 
-    @OnlyIn(Dist.CLIENT)
+
     static class ItemInfoCollector implements ItemModelOutput {
         private final Map<Item, ClientItem> itemInfos;
         private final Map<Item, Item> copies;
@@ -134,7 +132,7 @@ public class EarthModelData extends ModelProvider {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+
     static class SimpleModelCollector implements BiConsumer<ResourceLocation, ModelInstance> {
         private final Map<ResourceLocation, ModelInstance> models = new HashMap();
 
@@ -158,7 +156,7 @@ public class EarthModelData extends ModelProvider {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+
     static class BlockStateGeneratorCollector implements Consumer<BlockModelDefinitionGenerator> {
         private final Map<Block, BlockModelDefinitionGenerator> generators;
         private final Supplier<Stream<? extends Holder<Block>>> knownBlocks;

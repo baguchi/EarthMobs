@@ -8,7 +8,6 @@ import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -26,6 +25,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -160,12 +161,14 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 		return this.entityData.get(DATA_DROWNED);
 	}
 
-	public void addAdditionalSaveData(CompoundTag p_36881_) {
+	@Override
+	public void addAdditionalSaveData(ValueOutput p_36881_) {
 		super.addAdditionalSaveData(p_36881_);
 		p_36881_.putBoolean("Drowned", this.isDrowned());
 	}
 
-	public void readAdditionalSaveData(CompoundTag p_36875_) {
+	@Override
+	public void readAdditionalSaveData(ValueInput p_36875_) {
 		super.readAdditionalSaveData(p_36875_);
 		this.setDrowned(p_36875_.getBooleanOr("Drowned", false));
 	}

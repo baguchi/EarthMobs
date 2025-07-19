@@ -14,14 +14,8 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ARGB;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.animal.sheep.Sheep;
-import net.minecraft.world.item.DyeColor;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class HornedSheepWoolLayer extends RenderLayer<HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> {
 	private static final ResourceLocation SHEEP_FUR_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/sheep/sheep_wool.png");
 	private final EntityModel<HornedSheepRenderState> adultModel;
@@ -44,23 +38,7 @@ public class HornedSheepWoolLayer extends RenderLayer<HornedSheepRenderState, Ho
 					entitymodel.renderToBuffer(p_360648_, vertexconsumer, p_361724_, LivingEntityRenderer.getOverlayCoords(p_362704_, 0.0F), -16777216);
 				}
 			} else {
-				int i;
-				if (p_362704_.customName != null && "jeb_".equals(p_362704_.customName.getString())) {
-					int j = 25;
-					int k = Mth.floor(p_362704_.ageInTicks);
-					int l = k / 25 + p_362704_.id;
-					int i1 = DyeColor.values().length;
-					int j1 = l % i1;
-					int k1 = (l + 1) % i1;
-					float f = ((float) (k % 25) + Mth.frac(p_362704_.ageInTicks)) / 25.0F;
-					int l1 = Sheep.getColor(DyeColor.byId(j1));
-					int i2 = Sheep.getColor(DyeColor.byId(k1));
-					i = ARGB.lerp(f, l1, i2);
-				} else {
-					i = Sheep.getColor(p_362704_.woolColor);
-				}
-
-				coloredCutoutModelCopyLayerRender(entitymodel, SHEEP_FUR_LOCATION, p_360648_, p_361412_, p_361724_, p_362704_, i);
+				coloredCutoutModelCopyLayerRender(entitymodel, SHEEP_FUR_LOCATION, p_360648_, p_361412_, p_361724_, p_362704_, p_362704_.getWoolColor());
 			}
 		}
 	}

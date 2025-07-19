@@ -18,7 +18,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = EarthMobsMod.MODID)
+@EventBusSubscriber(modid = EarthMobsMod.MODID)
 public class ModItems {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(EarthMobsMod.MODID);
 

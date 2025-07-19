@@ -40,7 +40,7 @@ public class MudMessage implements CustomPacketPayload, IPayloadHandler<MudMessa
     }
 
     public MudMessage(FriendlyByteBuf buf) {
-        this(buf.readInt(), buf.readBoolean(), buf.readJsonWithCodec(DyeColor.CODEC));
+        this(buf.readInt(), buf.readBoolean(), buf.readLenientJsonWithCodec(DyeColor.CODEC));
     }
 
     public void handle(MudMessage message, IPayloadContext context) {

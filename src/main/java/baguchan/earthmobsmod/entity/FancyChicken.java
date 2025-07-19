@@ -2,7 +2,6 @@ package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.registry.ModBuiltInLootTables;
 import baguchan.earthmobsmod.registry.ModEntities;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.AgeableMob;
@@ -11,6 +10,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class FancyChicken extends Chicken {
 
@@ -39,9 +40,9 @@ public class FancyChicken extends Chicken {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
+	public void readAdditionalSaveData(ValueInput compound) {
 		super.readAdditionalSaveData(compound);
-		if (compound.contains("SpecialEggLayTime")) {
+		if (compound.getInt("SpecialEggLayTime").isPresent()) {
 			compound.getInt("SpecialEggLayTime").ifPresent(p_409318_ -> this.eggSpecialTime = p_409318_);
 
 		}
@@ -49,7 +50,7 @@ public class FancyChicken extends Chicken {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
+	public void addAdditionalSaveData(ValueOutput compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("SpecialEggLayTime", this.eggSpecialTime);
 	}

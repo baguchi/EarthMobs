@@ -12,7 +12,6 @@ import com.google.common.collect.Maps;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -28,6 +27,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.IShearable;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -202,17 +203,17 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	}
 
 	@Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-	public void addAdditionalSaveData(CompoundTag p_27587_, CallbackInfo callbackInfo) {
-		p_27587_.putBoolean("Muddy", this.isMuddy());
-		p_27587_.putBoolean("Sheared", this.isSheared());
-		p_27587_.putByte("Color", (byte) this.getColor().getId());
+	public void addAdditionalSaveData(ValueOutput p_421731_, CallbackInfo ci) {
+		p_421731_.putBoolean("Muddy", this.isMuddy());
+		p_421731_.putBoolean("Sheared", this.isSheared());
+		p_421731_.putByte("Color", (byte) this.getColor().getId());
 	}
 
 	@Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-	public void readAdditionalSaveData(CompoundTag p_27576_, CallbackInfo callbackInfo) {
-		this.setMuddy(p_27576_.getBooleanOr("Muddy", false));
-		this.setSheared(p_27576_.getBooleanOr("Sheared", false));
-		this.setColor(DyeColor.byId(p_27576_.getByteOr("Color", (byte) 0)));
+	public void readAdditionalSaveData(ValueInput p_422591_, CallbackInfo ci) {
+		this.setMuddy(p_422591_.getBooleanOr("Muddy", false));
+		this.setSheared(p_422591_.getBooleanOr("Sheared", false));
+		this.setColor(DyeColor.byId(p_422591_.getByteOr("Color", (byte) 0)));
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -38,6 +37,8 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -75,7 +76,8 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
         return Rabbit.createAttributes().add(Attributes.MAX_HEALTH, 8.0D);
     }
 
-    public void addAdditionalSaveData(CompoundTag p_34397_) {
+    @Override
+    public void addAdditionalSaveData(ValueOutput p_34397_) {
         super.addAdditionalSaveData(p_34397_);
 
 
@@ -84,7 +86,8 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
 
     }
 
-    public void readAdditionalSaveData(CompoundTag p_34387_) {
+    @Override
+    public void readAdditionalSaveData(ValueInput p_34387_) {
         super.readAdditionalSaveData(p_34387_);
         int i = p_34387_.getIntOr("ConversionTime", -1);
 

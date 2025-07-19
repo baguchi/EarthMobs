@@ -4,7 +4,6 @@ import baguchan.earthmobsmod.entity.goal.EatLavaGoal;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -36,6 +35,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class MagmaCow extends Cow {
     private static final EntityDataAccessor<Boolean> WEAKING = SynchedEntityData.defineId(MagmaCow.class, EntityDataSerializers.BOOLEAN);
@@ -120,12 +121,12 @@ public class MagmaCow extends Cow {
         return ModEntities.MAGMA_COW.get().create(p_148884_, EntitySpawnReason.BREEDING);
     }
 
-    public void addAdditionalSaveData(CompoundTag p_29864_) {
+    public void addAdditionalSaveData(ValueOutput p_29864_) {
         super.addAdditionalSaveData(p_29864_);
         p_29864_.putBoolean("Weaking", this.isWeaking());
     }
 
-    public void readAdditionalSaveData(CompoundTag p_29845_) {
+    public void readAdditionalSaveData(ValueInput p_29845_) {
         super.readAdditionalSaveData(p_29845_);
         this.setWeaking(p_29845_.getBooleanOr("Weaking", false));
     }

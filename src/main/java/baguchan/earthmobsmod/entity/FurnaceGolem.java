@@ -4,7 +4,6 @@ import baguchan.earthmobsmod.registry.ModDamageSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -33,6 +32,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -55,7 +56,7 @@ public class FurnaceGolem extends AbstractGolem {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag p_28867_) {
+    public void addAdditionalSaveData(ValueOutput p_28867_) {
         super.addAdditionalSaveData(p_28867_);
         p_28867_.putBoolean("FurnaceActive", this.isFurnaceActive());
         p_28867_.putInt("ActiveTick", this.activeTime);
@@ -63,7 +64,7 @@ public class FurnaceGolem extends AbstractGolem {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag p_28857_) {
+    public void readAdditionalSaveData(ValueInput p_28857_) {
         super.readAdditionalSaveData(p_28857_);
         this.setFurnaceActive(p_28857_.getBooleanOr("FurnaceActive", false));
         this.activeTime = p_28857_.getIntOr("ActiveTick", 0);

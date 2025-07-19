@@ -14,10 +14,8 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public abstract class CowPlantLayer extends RenderLayer<MoobloomRenderState, MoobloomModel<MoobloomRenderState>> {
     private final BlockRenderDispatcher blockRenderer;
     private final BlockState blockState;

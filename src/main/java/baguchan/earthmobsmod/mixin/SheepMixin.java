@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.mixin;
 import baguchan.earthmobsmod.api.IMoss;
 import baguchan.earthmobsmod.message.MossMessage;
 import baguchi.bagus_lib.api.IBaguPacket;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -14,6 +13,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -46,13 +47,13 @@ public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    public void addAdditionalSaveData(CompoundTag p_27587_, CallbackInfo callbackInfo) {
-        p_27587_.putBoolean("Moss", this.isMoss());
+    public void addAdditionalSaveData(ValueOutput p_422587_, CallbackInfo ci) {
+        p_422587_.putBoolean("Moss", this.isMoss());
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    public void readAdditionalSaveData(CompoundTag p_27576_, CallbackInfo callbackInfo) {
-        this.setMoss(p_27576_.getBooleanOr("Moss", false));
+    public void readAdditionalSaveData(ValueInput p_421604_, CallbackInfo ci) {
+        this.setMoss(p_421604_.getBooleanOr("Moss", false));
     }
 
     @Inject(method = "shear", at = @At("RETURN"))

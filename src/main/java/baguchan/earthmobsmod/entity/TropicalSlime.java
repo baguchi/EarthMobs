@@ -40,6 +40,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidType;
 
@@ -222,19 +224,17 @@ public class TropicalSlime extends Slime implements Bucketable {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag p_33619_) {
+    public void addAdditionalSaveData(ValueOutput p_33619_) {
         super.addAdditionalSaveData(p_33619_);
         if (this.getFishData() != null) {
-            p_33619_.put("FishData", this.getFishData());
+            p_33619_.store("FishData", CompoundTag.CODEC, this.getFishData());
         }
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag p_33607_) {
+    public void readAdditionalSaveData(ValueInput p_33607_) {
         super.readAdditionalSaveData(p_33607_);
-        if (p_33607_.contains("FishData")) {
-            this.setFishData(p_33607_.getCompoundOrEmpty("FishData"));
-        }
+        this.setFishData(p_33607_.read("FishData", CompoundTag.CODEC).orElse(new CompoundTag()));
     }
 
     @Nullable

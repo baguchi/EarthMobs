@@ -3,8 +3,6 @@ package baguchan.earthmobsmod.capability;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.entity.HyperRabbit;
 import baguchan.earthmobsmod.registry.ModEffects;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntitySelector;
@@ -14,15 +12,16 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import net.neoforged.neoforge.attachment.IAttachmentSerializer;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ShadowCapability implements IAttachmentSerializer<CompoundTag, ShadowCapability> {
+public class ShadowCapability implements IAttachmentSerializer<ShadowCapability> {
 	private static final ResourceLocation SPEED_MODIFIER_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow_speed");
 	public Vec3 prevShadow = Vec3.ZERO;
 
@@ -167,12 +166,12 @@ public class ShadowCapability implements IAttachmentSerializer<CompoundTag, Shad
 	}
 
 	@Override
-	public ShadowCapability read(IAttachmentHolder iAttachmentHolder, CompoundTag compoundTag, HolderLookup.Provider provider) {
+	public ShadowCapability read(IAttachmentHolder iAttachmentHolder, ValueInput valueInput) {
 		return null;
 	}
 
 	@Override
-	public @Nullable CompoundTag write(ShadowCapability shadowCapability, HolderLookup.Provider provider) {
-		return null;
+	public boolean write(ShadowCapability shadowCapability, ValueOutput valueOutput) {
+		return false;
 	}
 }

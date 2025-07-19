@@ -8,9 +8,7 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-@OnlyIn(Dist.CLIENT)
+
 public class WoolyCowRenderer<T extends WoolyCow> extends AgeableMobRenderer<T, WoolyCowRenderState, WoolyCowModel<WoolyCowRenderState>> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow.png");
     private static final ResourceLocation SHEARED_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow_sheared.png");

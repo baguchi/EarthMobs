@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.PigModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -28,7 +29,9 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void renderAnimationEvent(BagusModelEvent.PostAnimate event) {
-        event.animateWalk(ShakeAnimations.shake, event.getEntityRenderState().ageInTicks, 1F, 1F, event.getEntityRenderState().getRenderDataOrDefault(ClientRegistrar.SHAKE, 0F));
+        if (event.getModel() instanceof PigModel model) {
+            ShakeAnimations.shake.bake(event.getModel().root()).applyWalk(event.getEntityRenderState().ageInTicks, 1F, 1F, event.getEntityRenderState().getRenderDataOrDefault(ClientRegistrar.SHAKE, 0F));
+        }
     }
     @SubscribeEvent
     public static void renderEvent(RenderLivingEvent.Post<LivingEntity, LivingEntityRenderState, EntityModel<LivingEntityRenderState>> event) {

@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.entity.projectile.MelonSeed;
 import baguchan.earthmobsmod.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -34,6 +33,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.IShearable;
 import net.neoforged.neoforge.event.EventHooks;
@@ -70,16 +71,14 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 		builder.define(DATA_MELON_ID, (byte) 16);
 	}
 
-	public void addAdditionalSaveData(CompoundTag p_29923_) {
+	public void addAdditionalSaveData(ValueOutput p_29923_) {
 		super.addAdditionalSaveData(p_29923_);
 		p_29923_.putBoolean("Melon", this.hasMelon());
 	}
 
-	public void readAdditionalSaveData(CompoundTag p_29915_) {
+	public void readAdditionalSaveData(ValueInput p_29915_) {
 		super.readAdditionalSaveData(p_29915_);
-		if (p_29915_.contains("Melon")) {
-			this.setMelon(p_29915_.getBooleanOr("Melon", false));
-		}
+		this.setMelon(p_29915_.getBooleanOr("Melon", true));
 
 	}
 

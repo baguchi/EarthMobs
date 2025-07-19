@@ -12,10 +12,8 @@ import net.minecraft.client.renderer.entity.state.WitchRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class VilerWitchRenderer<T extends VilerWitch> extends MobRenderer<T, WitchRenderState, VilerWitchModel<WitchRenderState>> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/viler_witch.png");
 

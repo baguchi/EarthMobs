@@ -8,10 +8,8 @@ import baguchan.earthmobsmod.entity.FancyChicken;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class FancyChickenRenderer<T extends FancyChicken> extends AbstractChickenRender<T, ChickenRenderState, FancyChickenModel<ChickenRenderState>> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/fancy_chicken.png");
 
