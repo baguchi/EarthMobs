@@ -50,15 +50,15 @@ public abstract class EarthRenderType extends RenderType {
         return create(
                 "earthmobsmod:entity_animation_all_texture",
                 1536,
-                false,
                 true,
-                RenderPipelines.BREEZE_WIND,
+                true,
+                ClientRegistrar.ANIMATION_ENTITY,
                 RenderType.CompositeState.builder()
                         .setTextureState(new RenderStateShard.TextureStateShard(location, false))
                         .setTexturingState(new OffsetScaleTexturingStateShard(0, (float) ((float) (age % frameCount) / frameCount), 0, (float) frameCount))
                         .setLightmapState(LIGHTMAP)
-                        .setOverlayState(NO_OVERLAY)
-                        .createCompositeState(false)
+                        .setOverlayState(OVERLAY)
+                        .createCompositeState(true)
         );
     }
 

@@ -16,6 +16,8 @@ import baguchan.earthmobsmod.registry.ModCapability;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModFluidTypes;
 import com.google.common.reflect.TypeToken;
+import com.mojang.blaze3d.pipeline.BlendFunction;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.ZombieModel;
@@ -32,8 +34,11 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
+
+import static net.minecraft.client.renderer.RenderPipelines.ENTITY_SNIPPET;
 
 
 @EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
@@ -41,6 +46,14 @@ public class ClientRegistrar {
 	public static final ContextKey<ShadowCapability> SHADOW = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow"));
 	public static final ContextKey<Float> SHAKE = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shake"));
 
+	public static final RenderPipeline ANIMATION_ENTITY =
+			RenderPipeline.builder(ENTITY_SNIPPET)
+					.withLocation(EarthMobsMod.prefix("pipeline/animation_entity"))
+					.withShaderDefine("APPLY_TEXTURE_MATRIX")
+					.withShaderDefine("NO_OVERLAY")
+					.withBlend(BlendFunction.TRANSLUCENT)
+					.withCull(false)
+					.build();
     public static void setup(FMLClientSetupEvent event) {
 
     }
@@ -144,6 +157,11 @@ public class ClientRegistrar {
 	@SubscribeEvent
 	public static void registerClientExtension(RegisterClientExtensionsEvent event) {
 		event.registerFluidType(new MudFluidType.MudRender(), ModFluidTypes.MUD.get());
+	}
+
+	@SubscribeEvent
+	public static void registerClientExtension(RegisterRenderPipelinesEvent event) {
+		event.registerPipeline(ANIMATION_ENTITY);
 	}
 
 	@SubscribeEvent
