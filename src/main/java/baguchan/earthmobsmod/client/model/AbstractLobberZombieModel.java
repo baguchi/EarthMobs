@@ -60,6 +60,15 @@ public class AbstractLobberZombieModel<T extends ZombieRenderState> extends Enti
         this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
         this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
 
+        AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, entity.isAggressive, entity.attackTime, entity.ageInTicks);
+
+        this.right_leg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F) * 1.4F * entity.walkAnimationSpeed * 0.5F;
+        this.right_leg.yRot = 0.0F;
+        this.right_leg.zRot = 0.0F;
+        this.left_leg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed * 0.5F;
+        this.left_leg.yRot = 0.0F;
+        this.left_leg.zRot = 0.0F;
+
         if (entity.isPassenger) {
             this.right_arm.xRot += (float) (-Math.PI / 5);
             this.left_arm.xRot += (float) (-Math.PI / 5);
@@ -70,14 +79,6 @@ public class AbstractLobberZombieModel<T extends ZombieRenderState> extends Enti
             this.left_leg.yRot = (float) (-Math.PI / 10);
             this.left_leg.zRot = -0.07853982F;
         }
-        AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, entity.isAggressive, entity.attackTime, entity.ageInTicks);
-
-        this.right_leg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F) * 1.4F * entity.walkAnimationSpeed * 0.5F;
-        this.right_leg.yRot = 0.0F;
-        this.right_leg.zRot = 0.0F;
-        this.left_leg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F + (float) Math.PI) * 1.4F * entity.walkAnimationSpeed * 0.5F;
-        this.left_leg.yRot = 0.0F;
-        this.left_leg.zRot = 0.0F;
     }
     public void translateToHead(ModelPart part, PoseStack poseStack) {
         part.translateAndRotate(poseStack);
