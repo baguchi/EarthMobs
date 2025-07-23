@@ -7,8 +7,8 @@ import baguchan.earthmobsmod.client.render.state.LobberZombieRenderState;
 import baguchan.earthmobsmod.entity.LobberHusk;
 import baguchi.bagus_lib.client.layer.CustomArmorLayer;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
@@ -22,11 +22,11 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 
 
-public class LobberHuskRenderer<T extends LobberHusk> extends MobRenderer<T, LobberZombieRenderState, LobberZombieModel<LobberZombieRenderState>> {
+public class LobberHuskRenderer<T extends LobberHusk> extends AgeableMobRenderer<T, LobberZombieRenderState, LobberZombieModel<LobberZombieRenderState>> {
     private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_husk.png");
 
     public LobberHuskRenderer(EntityRendererProvider.Context p_173964_) {
-        super(p_173964_, new LobberZombieModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_ZOMBIE)), 0.5F);
+        super(p_173964_, new LobberZombieModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_ZOMBIE)), new LobberZombieModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_ZOMBIE_BABY)), 0.5F);
         this.addLayer(new CustomArmorLayer<>(this, p_173964_));
     }
 
