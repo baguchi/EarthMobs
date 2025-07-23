@@ -39,8 +39,10 @@ public class LobberDrownedRenderer<T extends LobberDrowned> extends AgeableMobRe
     }
 
 
+    @Override
     public void extractRenderState(T p_365075_, LobberZombieRenderState p_361774_, float p_363123_) {
         super.extractRenderState(p_365075_, p_361774_, p_363123_);
+        p_361774_.shootAnimationState.copyFrom(p_365075_.shootAnimationState);
         extractHumanoidRenderState(p_365075_, p_361774_, p_363123_, this.itemModelResolver);
         p_361774_.leftArmPose = this.getArmPose(p_365075_, HumanoidArm.LEFT);
         p_361774_.rightArmPose = this.getArmPose(p_365075_, HumanoidArm.RIGHT);
