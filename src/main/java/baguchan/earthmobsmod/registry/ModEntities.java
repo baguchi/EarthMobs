@@ -54,17 +54,38 @@ public class ModEntities {
     public static final Supplier<EntityType<BoneSpider>> BONE_SPIDER = ENTITIES.register("bone_spider", () -> EntityType.Builder.of(BoneSpider::new, MobCategory.MONSTER).sized(1.4F, 0.9F).build(prefix("bone_spider")));
     public static final Supplier<EntityType<StrayBoneSpider>> STRAY_BONE_SPIDER = ENTITIES.register("stray_bone_spider", () -> EntityType.Builder.of(StrayBoneSpider::new, MobCategory.MONSTER).sized(1.4F, 0.9F).build(prefix("stray_bone_spider")));
 
-    public static final Supplier<EntityType<VilerWitch>> VILER_WITCH = ENTITIES.register("viler_witch", () -> EntityType.Builder.of(VilerWitch::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build(prefix("viler_witch")));
+    public static final Supplier<EntityType<VilerWitch>> VILER_WITCH = ENTITIES.register("viler_witch", () -> EntityType.Builder.of(VilerWitch::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F)
+            .passengerAttachments(2.0125F)
+            .ridingOffset(-0.7F)
+            .clientTrackingRange(8).build(prefix("viler_witch")));
 
-    public static final Supplier<EntityType<BoulderingZombie>> BOULDERING_ZOMBIE = ENTITIES.register("bouldering_zombie", () -> EntityType.Builder.of(BoulderingZombie::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build(prefix("bouldering_zombie")));
-    public static final Supplier<EntityType<LobberZombie>> LOBBER_ZOMBIE = ENTITIES.register("lobber_zombie", () -> EntityType.Builder.of(LobberZombie::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build(prefix("lobber_zombie")));
+    public static final Supplier<EntityType<BoulderingZombie>> BOULDERING_ZOMBIE = ENTITIES.register("bouldering_zombie", () -> EntityType.Builder.of(BoulderingZombie::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F)
+            .passengerAttachments(2.0125F)
+            .ridingOffset(-0.7F)
+            .clientTrackingRange(8).build(prefix("bouldering_zombie")));
+    public static final Supplier<EntityType<LobberZombie>> LOBBER_ZOMBIE = ENTITIES.register("lobber_zombie", () -> EntityType.Builder.of(LobberZombie::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F)
+            .passengerAttachments(2.0125F)
+            .ridingOffset(-0.7F)
+            .clientTrackingRange(8).build(prefix("lobber_zombie")));
 
-    public static final Supplier<EntityType<BoulderingDrowned>> BOULDERING_DROWNED = ENTITIES.register("bouldering_drowned", () -> EntityType.Builder.of(BoulderingDrowned::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build(prefix("bouldering_drowned")));
-    public static final Supplier<EntityType<LobberDrowned>> LOBBER_DROWNED = ENTITIES.register("lobber_drowned", () -> EntityType.Builder.of(LobberDrowned::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build(prefix("lobber_drowned")));
+    public static final Supplier<EntityType<BoulderingDrowned>> BOULDERING_DROWNED = ENTITIES.register("bouldering_drowned", () -> EntityType.Builder.of(BoulderingDrowned::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F)
+            .passengerAttachments(2.0125F)
+            .ridingOffset(-0.7F)
+            .clientTrackingRange(8).build(prefix("bouldering_drowned")));
+    public static final Supplier<EntityType<LobberDrowned>> LOBBER_DROWNED = ENTITIES.register("lobber_drowned", () -> EntityType.Builder.of(LobberDrowned::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F)
+            .passengerAttachments(2.0125F)
+            .ridingOffset(-0.7F)
+            .clientTrackingRange(8).build(prefix("lobber_drowned")));
 
 
-    public static final Supplier<EntityType<BoulderingFrozenZombie>> BOULDERING_FROZEN_ZOMBIE = ENTITIES.register("bouldering_frozen_zombie", () -> EntityType.Builder.of(BoulderingFrozenZombie::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build(prefix("bouldering_frozen_zombie")));
-    public static final Supplier<EntityType<LobberHusk>> LOBBER_HUSK = ENTITIES.register("lobber_husk", () -> EntityType.Builder.of(LobberHusk::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build(prefix("lobber_husk")));
+    public static final Supplier<EntityType<BoulderingFrozenZombie>> BOULDERING_FROZEN_ZOMBIE = ENTITIES.register("bouldering_frozen_zombie", () -> EntityType.Builder.of(BoulderingFrozenZombie::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F)
+            .passengerAttachments(2.0125F)
+            .ridingOffset(-0.7F)
+            .clientTrackingRange(8).build(prefix("bouldering_frozen_zombie")));
+    public static final Supplier<EntityType<LobberHusk>> LOBBER_HUSK = ENTITIES.register("lobber_husk", () -> EntityType.Builder.of(LobberHusk::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F)
+            .passengerAttachments(2.0125F)
+            .ridingOffset(-0.7F)
+            .clientTrackingRange(8).build(prefix("lobber_husk")));
 
 	public static final Supplier<EntityType<TropicalSlime>> TROPICAL_SLIME = ENTITIES.register("tropical_slime", () -> EntityType.Builder.of(TropicalSlime::new, MobCategory.MONSTER).sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10).build(prefix("tropical_slime")));
 

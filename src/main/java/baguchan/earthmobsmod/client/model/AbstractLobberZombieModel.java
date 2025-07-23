@@ -59,6 +59,17 @@ public class AbstractLobberZombieModel<T extends ZombieRenderState> extends Enti
         super.setupAnim(entity);
         this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
         this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
+
+        if (entity.isPassenger) {
+            this.right_arm.xRot += (float) (-Math.PI / 5);
+            this.left_arm.xRot += (float) (-Math.PI / 5);
+            this.right_leg.xRot = -1.4137167F;
+            this.right_leg.yRot = (float) (Math.PI / 10);
+            this.right_leg.zRot = 0.07853982F;
+            this.left_leg.xRot = -1.4137167F;
+            this.left_leg.yRot = (float) (-Math.PI / 10);
+            this.left_leg.zRot = -0.07853982F;
+        }
         AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, entity.isAggressive, entity.attackTime, entity.ageInTicks);
 
         this.right_leg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F) * 1.4F * entity.walkAnimationSpeed * 0.5F;
