@@ -1,6 +1,8 @@
 package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.registry.ModEntities;
+import baguchi.bagus_lib.entity.ISmartJump;
+import baguchi.bagus_lib.entity.path.node.SmartNodeEvaluator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -12,13 +14,31 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.phys.Vec3;
 
-public class JumboRabbit extends Rabbit {
+public class JumboRabbit extends Rabbit implements ISmartJump {
 	public JumboRabbit(EntityType<? extends Rabbit> p_29656_, Level p_29657_) {
 		super(p_29656_, p_29657_);
+	}
+
+	@Override
+	protected PathNavigation createNavigation(Level p_21480_) {
+		return new GroundPathNavigation(this, p_21480_) {
+			protected PathFinder createPathFinder(int p_219479_) {
+				this.nodeEvaluator = new SmartNodeEvaluator();
+				this.nodeEvaluator.setCanPassDoors(true);
+				this.nodeEvaluator.setCanOpenDoors(false);
+				this.nodeEvaluator.setCanFloat(true);
+				return new PathFinder(this.nodeEvaluator, p_219479_);
+			}
+		};
 	}
 
 	@Override
@@ -42,4 +62,31 @@ public class JumboRabbit extends Rabbit {
 			return p_29659_.hurtServer(serverLevel, this.damageSources().mobAttack(this), 5.0F);
 		}
 	}
+
+	@Override
+	protected float getJumpPower() {
+		float f = 0.3F;
+		Path path = this.navigation.getPath();
+		if (path != null && !path.isDone()) {
+			Vec3 vec3 = path.getNextEntityPos(this);
+			if (vec3.y > this.getY() + 0.5) {
+				f = 0.5F;
+			}
+			if (vec3.y > this.getY() + 1.5) {
+				f = 0.65F;
+			}
+
+            /*if (vec3.y > this.getY() + 2.5) {
+                f = 1.0F;
+            }*/
+		}
+
+		return super.getJumpPower((float) (f / this.getAttributeValue(Attributes.JUMP_STRENGTH)));
+	}
+
+	@Override
+	public float getSuppportJump() {
+		return 2.125F;
+	}
+
 }
