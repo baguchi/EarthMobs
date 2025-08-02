@@ -88,7 +88,7 @@ public class RangedAndMeleeAttack extends Goal {
             this.checkAndPerformAttack(this.target, d0);
             this.attackTime = -1;
         } else {
-            if (flag) {
+            if (flag && this.seeTime < 10) {
                 ++this.seeTime;
             } else if (this.seeTime > 0) {
                 --this.seeTime;
