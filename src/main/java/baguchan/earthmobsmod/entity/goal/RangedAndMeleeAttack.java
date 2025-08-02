@@ -82,7 +82,7 @@ public class RangedAndMeleeAttack extends Goal {
         double d0 = this.mob.distanceToSqr(this.target.getX(), this.target.getY(), this.target.getZ());
         boolean flag = this.mob.getSensing().hasLineOfSight(this.target);
         double attackReach = this.getAttackReachSqr(this.target);
-        if (d0 <= 16F) {
+        if (d0 <= 26F) {
             this.mob.getNavigation().moveTo(this.target, this.speedModifier);
 
             this.checkAndPerformAttack(this.target, d0);
