@@ -58,7 +58,7 @@ public class RangedAndMeleeAttack extends Goal {
     }
 
     public boolean canContinueToUse() {
-        return this.canUse() || this.target.isAlive() && !this.mob.getNavigation().isDone();
+        return this.canUse() || !this.mob.getNavigation().isDone();
     }
 
     @Override
@@ -90,8 +90,8 @@ public class RangedAndMeleeAttack extends Goal {
         } else {
             if (flag) {
                 ++this.seeTime;
-            } else {
-                this.seeTime = 0;
+            } else if (this.seeTime > 0) {
+                --this.seeTime;
             }
 
             if (!(d0 > (double) this.attackRadiusSqr) && this.seeTime >= 5) {
