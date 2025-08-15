@@ -38,11 +38,13 @@ public class BoulderingDrownedRenderer<T extends BoulderingDrowned> extends Agea
 		this.addLayer(new baguchi.bagus_lib.client.layer.CustomArmorLayer(this, p_173964_));
 	}
 
+	@Override
 	public void extractRenderState(T p_365075_, BoulderingZombieRenderState p_361774_, float p_363123_) {
 		super.extractRenderState(p_365075_, p_361774_, p_363123_);
 		extractHumanoidRenderState(p_365075_, p_361774_, p_363123_, this.itemModelResolver);
 		p_361774_.leftArmPose = this.getArmPose(p_365075_, HumanoidArm.LEFT);
 		p_361774_.rightArmPose = this.getArmPose(p_365075_, HumanoidArm.RIGHT);
+		p_361774_.climbable = p_365075_.isClimbing();
 	}
 
 	public static void extractHumanoidRenderState(LivingEntity p_365104_, HumanoidRenderState p_362998_, float p_363706_, ItemModelResolver p_388651_) {
