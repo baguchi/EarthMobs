@@ -10,9 +10,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -66,22 +65,25 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.2F);
 	}
 
+	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 		builder.define(DATA_MELON_ID, (byte) 16);
 	}
 
+	@Override
 	public void addAdditionalSaveData(ValueOutput p_29923_) {
 		super.addAdditionalSaveData(p_29923_);
 		p_29923_.putBoolean("Melon", this.hasMelon());
 	}
 
+	@Override
 	public void readAdditionalSaveData(ValueInput p_29915_) {
 		super.readAdditionalSaveData(p_29915_);
 		this.setMelon(p_29915_.getBooleanOr("Melon", true));
-
 	}
 
+	@Override
 	public boolean isSensitiveToWater() {
 		return true;
 	}
@@ -98,7 +100,7 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 			int i = Mth.floor(this.getX());
 			int j = Mth.floor(this.getY());
 			int k = Mth.floor(this.getZ());
-			if (this.level().getBiome(new BlockPos(i, 0, k)).value().getBaseTemperature() > 1.0F) {
+			if (this.level().getBiome(new BlockPos(i, 0, k)).is(BiomeTags.SNOW_GOLEM_MELTS)) {
 				this.hurt(this.damageSources().onFire(), 1.0F);
 			}
 
@@ -118,9 +120,9 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 				}
 			}
 		}
-
 	}
 
+	@Override
 	public void performRangedAttack(LivingEntity target, float p_29913_) {
 		MelonSeed melonSeed = new MelonSeed(this.level(), this, Items.MELON_SEEDS.getDefaultInstance());
 		double d0 = target.getEyeY() - (double) 1.1F;
@@ -131,10 +133,6 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 		melonSeed.shoot(d1, d2 + d4, d3, 1.6F, 12.0F);
 		this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 		this.level().addFreshEntity(melonSeed);
-	}
-	protected InteractionResult mobInteract(Player p_29920_, InteractionHand p_29921_) {
-		ItemStack itemstack = p_29920_.getItemInHand(p_29921_);
-		return InteractionResult.PASS;
 	}
 
 	public boolean readyForShearing() {
@@ -170,6 +168,7 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 		return SoundEvents.SNOW_GOLEM_DEATH;
 	}
 
+	@Override
 	public Vec3 getLeashOffset() {
 		return new Vec3(0.0D, (double) (0.75F * this.getEyeHeight()), (double) (this.getBbWidth() * 0.4F));
 	}

@@ -23,9 +23,11 @@ public class MelonGolemRenderer extends MobRenderer<MelonGolem, MelonGolemRender
         return new MelonGolemRenderState();
     }
 
+    @Override
     public void extractRenderState(MelonGolem p_364437_, MelonGolemRenderState p_388288_, float p_364064_) {
         super.extractRenderState(p_364437_, p_388288_, p_364064_);
         p_388288_.hasPumpkin = p_364437_.hasMelon();
+        p_388288_.aggressive = p_364437_.isAggressive();
 	}
 
     @Override
