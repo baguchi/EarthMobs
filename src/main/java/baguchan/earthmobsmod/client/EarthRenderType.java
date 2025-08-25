@@ -51,7 +51,7 @@ public abstract class EarthRenderType extends RenderType {
                 "earthmobsmod:entity_animation_all_texture",
                 1536,
                 true,
-                true,
+                false,
                 ClientRegistrar.ANIMATION_ENTITY,
                 RenderType.CompositeState.builder()
                         .setTextureState(new RenderStateShard.TextureStateShard(location, false))

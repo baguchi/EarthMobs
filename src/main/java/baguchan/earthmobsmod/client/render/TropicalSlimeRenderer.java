@@ -22,10 +22,6 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, SlimeRende
 	public static final ResourceLocation SLIME_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime.png");
 	public static final ResourceLocation SLIME_OUTER_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_outer.png");
 
-	private static final ResourceLocation[] BASE_TEXTURE_LOCATIONS = new ResourceLocation[]{ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b.png")};
-	private static final ResourceLocation[] PATTERN_A_TEXTURE_LOCATIONS = new ResourceLocation[]{ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_1.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_2.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_3.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_4.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_5.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_a_pattern_6.png")};
-	private static final ResourceLocation[] PATTERN_B_TEXTURE_LOCATIONS = new ResourceLocation[]{ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_1.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_2.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_3.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_4.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_5.png"), ResourceLocation.withDefaultNamespace("textures/entity/fish/tropical_b_pattern_6.png")};
-
 	public TropicalSlimeRenderer(EntityRendererProvider.Context p_174391_) {
 		super(p_174391_, new SlimeModel(p_174391_.bakeLayer(ModModelLayers.TROPICAL_SLIME)), 0.25F);
 		this.addLayer(new TropicalSlimeOuterLayer(this, p_174391_.getModelSet()));

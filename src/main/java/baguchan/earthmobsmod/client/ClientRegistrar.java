@@ -16,7 +16,6 @@ import baguchan.earthmobsmod.registry.ModCapability;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModFluidTypes;
 import com.google.common.reflect.TypeToken;
-import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
@@ -49,10 +48,9 @@ public class ClientRegistrar {
 	public static final RenderPipeline ANIMATION_ENTITY =
 			RenderPipeline.builder(ENTITY_SNIPPET)
 					.withLocation(EarthMobsMod.prefix("pipeline/animation_entity"))
-					.withShaderDefine("APPLY_TEXTURE_MATRIX")
-					.withShaderDefine("NO_OVERLAY")
-					.withBlend(BlendFunction.TRANSLUCENT)
-					.withCull(false)
+                    .withShaderDefine("ALPHA_CUTOUT", 0.1F)
+                    .withSampler("Sampler1")
+                    .withCull(false)
 					.build();
     public static void setup(FMLClientSetupEvent event) {
 
