@@ -47,11 +47,12 @@ public class ClientRegistrar {
 
 	public static final RenderPipeline ANIMATION_ENTITY =
 			RenderPipeline.builder(ENTITY_SNIPPET)
-					.withLocation(EarthMobsMod.prefix("pipeline/animation_entity"))
+                    .withLocation(EarthMobsMod.prefix("pipeline/animation_entity"))
                     .withShaderDefine("ALPHA_CUTOUT", 0.1F)
                     .withSampler("Sampler1")
                     .withCull(false)
-					.build();
+                    .build();
+
     public static void setup(FMLClientSetupEvent event) {
 
     }
