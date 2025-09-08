@@ -1,10 +1,10 @@
 package baguchan.earthmobsmod.client.render;
 
 import baguchan.earthmobsmod.EarthMobsMod;
+import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.WoolyCowModel;
 import baguchan.earthmobsmod.client.render.state.WoolyCowRenderState;
 import baguchan.earthmobsmod.entity.UmbraCow;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +16,7 @@ public class UmbraCowRenderer<T extends UmbraCow> extends AgeableMobRenderer<T, 
 
 
 	public UmbraCowRenderer(EntityRendererProvider.Context p_173952_) {
-        super(p_173952_, new WoolyCowModel<>(p_173952_.bakeLayer(ModelLayers.MOOSHROOM)), new WoolyCowModel<>(p_173952_.bakeLayer(ModelLayers.MOOSHROOM_BABY)), 0.5F);
+        super(p_173952_, new WoolyCowModel<>(p_173952_.bakeLayer(ModModelLayers.WOOLY_COW)), new WoolyCowModel<>(p_173952_.bakeLayer(ModModelLayers.WOOLY_COW_BABY)), 0.5F);
 	}
 
     @Override
