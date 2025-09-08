@@ -36,19 +36,19 @@ public class EarthBiomeModifier implements BiomeModifier {
 				}
 
 				if (EarthMobsConfig.COMMON.woolyCowSpawnRate.get() > 0) {
-					if (biome.is(Tags.Biomes.IS_MOUNTAIN) && biome.is(Tags.Biomes.IS_COLD) || biome.is(Tags.Biomes.IS_COLD)) {
+                    if (biome.is(Tags.Biomes.IS_COLD)) {
 						builder.getMobSpawnSettings().addSpawn(MobCategory.CREATURE, EarthMobsConfig.COMMON.woolyCowSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.WOOLY_COW.get(), 3, 4));
 					}
 				}
 
 				if (EarthMobsConfig.COMMON.jollyLLamaSpawnRate.get() > 0) {
-					if (biome.is(Tags.Biomes.IS_MOUNTAIN) && biome.is(Tags.Biomes.IS_COLD)) {
+                    if (biome.is(BiomeTags.SPAWNS_COLD_VARIANT_FARM_ANIMALS) && (biome.is(Tags.Biomes.IS_MOUNTAIN_PEAK) || biome.is(Tags.Biomes.IS_MOUNTAIN_SLOPE))) {
 						builder.getMobSpawnSettings().addSpawn(MobCategory.CREATURE, EarthMobsConfig.COMMON.jollyLLamaSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.JOLLY_LLAMA.get(), 3, 4));
 					}
 				}
 
 				if (EarthMobsConfig.COMMON.umbraCowSpawnRate.get() > 0) {
-					if (biome.is(Tags.Biomes.IS_MOUNTAIN) && biome.is(Tags.Biomes.IS_COLD) || biome.is(Tags.Biomes.IS_COLD)) {
+                    if (biome.is(Tags.Biomes.IS_COLD)) {
 						builder.getMobSpawnSettings().addSpawn(MobCategory.CREATURE, EarthMobsConfig.COMMON.umbraCowSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.UMBRA_COW.get(), 3, 4));
 
 					}

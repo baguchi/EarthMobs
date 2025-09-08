@@ -70,7 +70,7 @@ public class EarthMobsConfig {
                     .defineInRange("Duck SpawnRate", 8, 0, 100);
             jollyLLamaSpawnRate = builder
                     .comment("Changed Jolly LLama SpawnRate. [0 ~ 100]")
-                    .defineInRange("Jolly Llama SpawnRate", 5, 0, 100);
+                    .defineInRange("Jolly Llama SpawnRate", 8, 0, 100);
             hornedSheepSpawnRate = builder
                     .comment("Changed Horned Sheep SpawnRate. [0 ~ 100]")
                     .defineInRange("Horned Sheep SpawnRate", 10, 0, 100);
