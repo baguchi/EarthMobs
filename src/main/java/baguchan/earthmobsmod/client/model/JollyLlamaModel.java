@@ -81,6 +81,6 @@ public class JollyLlamaModel<T extends LlamaRenderState> extends EntityModel<T> 
         if (entity.isBaby) {
             this.babyAnimation.applyStatic();
         }
-        this.walkAnimation.applyWalk(entity.walkAnimationPos, entity.walkAnimationSpeed, 1.0F, 1.0F);
+        this.walkAnimation.applyWalk(entity.walkAnimationPos, entity.walkAnimationSpeed, 2.0F, 2.5F);
     }
 }
