@@ -43,6 +43,7 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
 
     public TeaCupPig(EntityType<? extends Pig> p_29462_, Level p_29463_) {
         super(p_29462_, p_29463_);
+        this.refreshDimensions();
     }
 
     @Override
@@ -194,10 +195,9 @@ public class TeaCupPig extends Pig implements IShearable, Bucketable {
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> p_219422_) {
+        super.onSyncedDataUpdated(p_219422_);
         if (DATA_POT.equals(p_219422_)) {
             this.refreshDimensions();
         }
-
-        super.onSyncedDataUpdated(p_219422_);
     }
 }
