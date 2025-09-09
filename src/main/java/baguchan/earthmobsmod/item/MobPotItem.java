@@ -80,13 +80,13 @@ public class MobPotItem extends MobBucketItem {
 
     public void checkExtraContent(@Nullable LivingEntity p_394402_, Level p_151147_, ItemStack p_151148_, BlockPos p_151149_) {
         if (p_151147_ instanceof ServerLevel) {
-            this.spawn((ServerLevel) p_151147_, p_151148_, p_151149_);
+            this.spawn(p_394402_, (ServerLevel) p_151147_, p_151148_, p_151149_);
             p_151147_.gameEvent(p_394402_, GameEvent.ENTITY_PLACE, p_151149_);
         }
 
     }
 
-    private void spawn(ServerLevel p_151142_, ItemStack p_151143_, BlockPos p_151144_) {
+    private void spawn(@Nullable LivingEntity livingEntity, ServerLevel p_151142_, ItemStack p_151143_, BlockPos p_151144_) {
         boolean flag = p_151142_.getBlockState(p_151144_).is(Blocks.FLOWER_POT);
 
         Mob mob = (Mob) this.type.create(p_151142_, EntityType.createDefaultStackConfig(p_151142_, p_151143_, (LivingEntity) null), flag ? p_151144_.below() : p_151144_, EntitySpawnReason.BUCKET, true, false);
@@ -96,6 +96,12 @@ public class MobPotItem extends MobBucketItem {
             bucketable.setFromBucket(true);
             if (flag && mob instanceof TeaCupPig teaCupPig) {
                 teaCupPig.setOnPot(true);
+                if (livingEntity != null) {
+                    teaCupPig.setYRot(livingEntity.getNearestViewDirection().toYRot());
+                    teaCupPig.yRotO = livingEntity.getNearestViewDirection().toYRot();
+                    teaCupPig.setOldPosAndRot();
+                }
+
             }
         }
 

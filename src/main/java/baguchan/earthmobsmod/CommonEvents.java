@@ -157,10 +157,10 @@ public class CommonEvents {
 					TeaCupPig teaCupPig = ModEntities.TEACUP_PIG.get().spawn(serverLevel, stack, player, pos.below(), EntitySpawnReason.SPAWN_ITEM_USE, true, false);
 					if (teaCupPig != null) {
 						stack.consume(1, player);
-						if (event.getFace() != null) {
-							teaCupPig.setYRot(event.getFace().toYRot());
-							teaCupPig.yRotO = event.getFace().toYRot();
-						}
+                        teaCupPig.setYRot(event.getEntity().getNearestViewDirection().toYRot());
+                        teaCupPig.yRotO = event.getEntity().getNearestViewDirection().toYRot();
+                        teaCupPig.setOldPosAndRot();
+
 						serverLevel.gameEvent(player, GameEvent.ENTITY_PLACE, pos);
 						teaCupPig.setOnPot(true);
 					}
