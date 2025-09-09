@@ -97,8 +97,8 @@ public class MobPotItem extends MobBucketItem {
             if (flag && mob instanceof TeaCupPig teaCupPig) {
                 teaCupPig.setOnPot(true);
                 if (livingEntity != null) {
-                    teaCupPig.setYRot(livingEntity.getNearestViewDirection().toYRot());
-                    teaCupPig.yRotO = livingEntity.getNearestViewDirection().toYRot();
+                    teaCupPig.setYRot(livingEntity.getNearestViewDirection().getOpposite().toYRot());
+                    teaCupPig.yRotO = livingEntity.getNearestViewDirection().getOpposite().toYRot();
                     teaCupPig.setOldPosAndRot();
                 }
 
