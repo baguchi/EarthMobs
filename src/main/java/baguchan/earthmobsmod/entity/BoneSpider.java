@@ -74,7 +74,7 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 	}
 
 	public void tick() {
-		if (!this.level().isClientSide && this.isAlive() && !this.isNoAi()) {
+        if (!this.level().isClientSide() && this.isAlive() && !this.isNoAi()) {
 			if (this.isFreezeConverting()) {
 				--this.conversionTime;
 				if (this.conversionTime < 0) {

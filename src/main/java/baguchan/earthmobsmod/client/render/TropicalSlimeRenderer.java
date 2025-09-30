@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.EarthRenderType;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.render.layer.TropicalSlimeOuterLayer;
+import baguchan.earthmobsmod.client.render.state.TropicalSlimeRenderState;
 import baguchan.earthmobsmod.entity.TropicalSlime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
@@ -12,15 +13,15 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 
-public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, SlimeRenderState, SlimeModel> {
+public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, TropicalSlimeRenderState, SlimeModel> {
 	public static final ResourceLocation SLIME_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime.png");
-	public static final ResourceLocation SLIME_OUTER_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_outer.png");
+    public static final ResourceLocation NO_FISH_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_no_fish.png");
+    public static final ResourceLocation SLIME_OUTER_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_outer.png");
 
 	public TropicalSlimeRenderer(EntityRendererProvider.Context p_174391_) {
 		super(p_174391_, new SlimeModel(p_174391_.bakeLayer(ModModelLayers.TROPICAL_SLIME)), 0.25F);
@@ -38,9 +39,12 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, SlimeRende
 	}
 
 	@Override
-	protected @Nullable RenderType getRenderType(SlimeRenderState p_360858_, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
+    protected @Nullable RenderType getRenderType(TropicalSlimeRenderState p_360858_, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
 
 		if (!p_115324_ && p_115323_) {
+            if (!p_360858_.fish) {
+                return RenderType.entityCutoutNoCull(NO_FISH_LOCATION);
+            }
 			return EarthRenderType.entityAnimationWithAllTexture(TropicalSlimeRenderer.SLIME_LOCATION, 100, 48, (int) (p_360858_.ageInTicks - p_360858_.partialTick));
 		}
 
@@ -48,12 +52,12 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, SlimeRende
 	}
 
 	@Override
-	protected float getShadowRadius(SlimeRenderState p_383137_) {
+    protected float getShadowRadius(TropicalSlimeRenderState p_383137_) {
 		return (float) p_383137_.size * 0.25F;
 	}
 
 	@Override
-	protected void scale(SlimeRenderState p_364158_, PoseStack p_115964_) {
+    protected void scale(TropicalSlimeRenderState p_364158_, PoseStack p_115964_) {
 		float f = 0.999F;
 		p_115964_.scale(0.999F, 0.999F, 0.999F);
 		p_115964_.translate(0.0F, 0.001F, 0.0F);
@@ -64,18 +68,19 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, SlimeRende
 	}
 
 	@Override
-	public SlimeRenderState createRenderState() {
-		return new SlimeRenderState();
+    public TropicalSlimeRenderState createRenderState() {
+        return new TropicalSlimeRenderState();
 	}
 
 	@Override
-	public void extractRenderState(TropicalSlime p_362664_, SlimeRenderState p_365237_, float p_361099_) {
+    public void extractRenderState(TropicalSlime p_362664_, TropicalSlimeRenderState p_365237_, float p_361099_) {
 		super.extractRenderState(p_362664_, p_365237_, p_361099_);
 		p_365237_.squish = Mth.lerp(p_361099_, p_362664_.oSquish, p_362664_.squish);
 		p_365237_.size = p_362664_.getSize();
+        p_365237_.fish = p_362664_.hasFish();
 	}
 
-	public ResourceLocation getTextureLocation(SlimeRenderState p_115974_) {
+    public ResourceLocation getTextureLocation(TropicalSlimeRenderState p_115974_) {
 		return SLIME_LOCATION;
 	}
 }

@@ -42,46 +42,46 @@ public class ModItems {
 	public static final DeferredItem<Item> TROPICAL_SLIME_BUCKET = ITEMS.registerItem("tropical_slime_bucket", (prop) -> new MobBucketItem(ModEntities.TROPICAL_SLIME.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (prop).stacksTo(1).craftRemainder(Items.BUCKET)));
 	public static final DeferredItem<Item> TEACUP_PIG_POT = ITEMS.registerItem("teacup_pig_pot", (prop) -> new MobPotItem(ModEntities.TEACUP_PIG.get(), Fluids.EMPTY, SoundEvents.ARMOR_EQUIP_GENERIC.value(), (prop).stacksTo(1).craftRemainder(Items.FLOWER_POT)));
 
-	public static final DeferredItem<Item> CLUCK_SHROOM_SPAWNEGG = ITEMS.registerItem("cluck_shroom_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.CLUCK_SHROOM.get(), (prop)));
-	public static final DeferredItem<Item> FANCY_CHICKEN_SPAWNEGG = ITEMS.registerItem("fancy_chicken_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.FANCY_CHICKEN.get(), (prop)));
-	public static final DeferredItem<Item> WOOLY_COW_SPAWNEGG = ITEMS.registerItem("wooly_cow_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.WOOLY_COW.get(), (prop)));
-	public static final DeferredItem<Item> UMBRA_COW_SPAWNEGG = ITEMS.registerItem("umbra_cow_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.UMBRA_COW.get(), (prop)));
+    public static final DeferredItem<Item> CLUCK_SHROOM_SPAWNEGG = ITEMS.registerItem("cluck_shroom_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.CLUCK_SHROOM.get()))));
+    public static final DeferredItem<Item> FANCY_CHICKEN_SPAWNEGG = ITEMS.registerItem("fancy_chicken_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.FANCY_CHICKEN.get()))));
+    public static final DeferredItem<Item> WOOLY_COW_SPAWNEGG = ITEMS.registerItem("wooly_cow_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.WOOLY_COW.get()))));
+    public static final DeferredItem<Item> UMBRA_COW_SPAWNEGG = ITEMS.registerItem("umbra_cow_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.UMBRA_COW.get()))));
 
-	public static final DeferredItem<Item> TEACUP_PIG_SPAWNEGG = ITEMS.registerItem("teacup_pig_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.TEACUP_PIG.get(), (prop)));
-
-
-	public static final DeferredItem<Item> HORNED_SHEEP_SPAWNEGG = ITEMS.registerItem("horned_sheep_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.HORNED_SHEEP.get(), (prop)));
-	public static final DeferredItem<Item> HYPER_RABBIT_SPAWNEGG = ITEMS.registerItem("hyper_rabbit_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.HYPER_RABBIT.get(), (prop)));
-	public static final DeferredItem<Item> MOOBLOOM_SPAWNEGG = ITEMS.registerItem("moobloom_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.MOOBLOOM.get(), (prop)));
-	public static final DeferredItem<Item> MOOLIP_SPAWNEGG = ITEMS.registerItem("moolip_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.MOOLIP.get(), (prop)));
-	public static final DeferredItem<Item> JUMBO_RABBIT_SPAWNEGG = ITEMS.registerItem("jumbo_rabbit_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.JUMBO_RABBIT.get(), (prop)));
-	public static final DeferredItem<Item> ZOMBIFILED_PIG_SPAWNEGG = ITEMS.registerItem("zombified_pig_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.ZOMBIFIED_PIG.get(), (prop)));
-	public static final DeferredItem<Item> JOLLY_LAMMA_SPAWNEGG = ITEMS.registerItem("jolly_llama_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.JOLLY_LLAMA.get(), (prop)));
+    public static final DeferredItem<Item> TEACUP_PIG_SPAWNEGG = ITEMS.registerItem("teacup_pig_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.TEACUP_PIG.get()))));
 
 
-	public static final DeferredItem<Item> BONE_SPIDER_SPAWNEGG = ITEMS.registerItem("bone_spider_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.BONE_SPIDER.get(), (prop)));
-	public static final DeferredItem<Item> STRAY_BONE_SPIDER_SPAWNEGG = ITEMS.registerItem("stray_bone_spider_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.STRAY_BONE_SPIDER.get(), (prop)));
-	public static final DeferredItem<Item> VILER_WITCH_SPAWNEGG = ITEMS.registerItem("viler_witch_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.VILER_WITCH.get(), (prop)));
-
-	public static final DeferredItem<Item> BOULDERING_ZOMBIE_SPAWNEGG = ITEMS.registerItem("bouldering_zombie_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.BOULDERING_ZOMBIE.get(), (prop)));
-	public static final DeferredItem<Item> LOBBER_ZOMBIE_SPAWNEGG = ITEMS.registerItem("lobber_zombie_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.LOBBER_ZOMBIE.get(), (prop)));
-
-	public static final DeferredItem<Item> BOULDERING_DROWNED_SPAWNEGG = ITEMS.registerItem("bouldering_drowned_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.BOULDERING_DROWNED.get(), (prop)));
-	public static final DeferredItem<Item> LOBBER_DROWNED_SPAWNEGG = ITEMS.registerItem("lobber_drowned_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.LOBBER_DROWNED.get(), (prop)));
+    public static final DeferredItem<Item> HORNED_SHEEP_SPAWNEGG = ITEMS.registerItem("horned_sheep_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.HORNED_SHEEP.get()))));
+    public static final DeferredItem<Item> HYPER_RABBIT_SPAWNEGG = ITEMS.registerItem("hyper_rabbit_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.HYPER_RABBIT.get()))));
+    public static final DeferredItem<Item> MOOBLOOM_SPAWNEGG = ITEMS.registerItem("moobloom_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.MOOBLOOM.get()))));
+    public static final DeferredItem<Item> MOOLIP_SPAWNEGG = ITEMS.registerItem("moolip_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.MOOLIP.get()))));
+    public static final DeferredItem<Item> JUMBO_RABBIT_SPAWNEGG = ITEMS.registerItem("jumbo_rabbit_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.JUMBO_RABBIT.get()))));
+    public static final DeferredItem<Item> ZOMBIFILED_PIG_SPAWNEGG = ITEMS.registerItem("zombified_pig_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.ZOMBIFIED_PIG.get()))));
+    public static final DeferredItem<Item> JOLLY_LAMMA_SPAWNEGG = ITEMS.registerItem("jolly_llama_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.JOLLY_LLAMA.get()))));
 
 
-	public static final DeferredItem<Item> BOULDERING_FROZEN_ZOMBIE_SPAWNEGG = ITEMS.registerItem("bouldering_frozen_zombie_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.BOULDERING_FROZEN_ZOMBIE.get(), (prop)));
-	public static final DeferredItem<Item> LOBBER_HUSK_SPAWNEGG = ITEMS.registerItem("lobber_husk_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.LOBBER_HUSK.get(), (prop)));
+    public static final DeferredItem<Item> BONE_SPIDER_SPAWNEGG = ITEMS.registerItem("bone_spider_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.BONE_SPIDER.get()))));
+    public static final DeferredItem<Item> STRAY_BONE_SPIDER_SPAWNEGG = ITEMS.registerItem("stray_bone_spider_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.STRAY_BONE_SPIDER.get()))));
+    public static final DeferredItem<Item> VILER_WITCH_SPAWNEGG = ITEMS.registerItem("viler_witch_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.VILER_WITCH.get()))));
+
+    public static final DeferredItem<Item> BOULDERING_ZOMBIE_SPAWNEGG = ITEMS.registerItem("bouldering_zombie_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.BOULDERING_ZOMBIE.get()))));
+    public static final DeferredItem<Item> LOBBER_ZOMBIE_SPAWNEGG = ITEMS.registerItem("lobber_zombie_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.LOBBER_ZOMBIE.get()))));
+
+    public static final DeferredItem<Item> BOULDERING_DROWNED_SPAWNEGG = ITEMS.registerItem("bouldering_drowned_spawn_egg", (prop) -> new SpawnEggItem(prop.spawnEgg(ModEntities.BOULDERING_DROWNED.get())));
+    public static final DeferredItem<Item> LOBBER_DROWNED_SPAWNEGG = ITEMS.registerItem("lobber_drowned_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.LOBBER_DROWNED.get()))));
 
 
-	public static final DeferredItem<Item> TROPICAL_SLIME_SPAWNEGG = ITEMS.registerItem("tropical_slime_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.TROPICAL_SLIME.get(), (prop)));
-	public static final DeferredItem<Item> SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.SKELETON_WOLF.get(), (prop)));
-	public static final DeferredItem<Item> WITHER_SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("wither_skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.WITHER_SKELETON_WOLF.get(), (prop)));
-	public static final DeferredItem<Item> ZOMBIFIED_RABBIT_SPAWNEGG = ITEMS.registerItem("zombified_rabbit_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.ZOMBIFIED_RABBIT.get(), (prop)));
+    public static final DeferredItem<Item> BOULDERING_FROZEN_ZOMBIE_SPAWNEGG = ITEMS.registerItem("bouldering_frozen_zombie_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.BOULDERING_FROZEN_ZOMBIE.get()))));
+    public static final DeferredItem<Item> LOBBER_HUSK_SPAWNEGG = ITEMS.registerItem("lobber_husk_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.LOBBER_HUSK.get()))));
 
-	public static final DeferredItem<Item> MAGMA_COW_SPAWNEGG = ITEMS.registerItem("magma_cow_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.MAGMA_COW.get(), (prop)));
-	public static final DeferredItem<Item> MELON_GOLEM_SPAWNEGG = ITEMS.registerItem("melon_golem_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.MELON_GOLEM.get(), (prop)));
-	public static final DeferredItem<Item> FURNACE_GOLEM_SPAWNEGG = ITEMS.registerItem("furnace_golem_spawn_egg", (prop) -> new SpawnEggItem(ModEntities.FURNACE_GOLEM.get(), (prop)));
+
+    public static final DeferredItem<Item> TROPICAL_SLIME_SPAWNEGG = ITEMS.registerItem("tropical_slime_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.TROPICAL_SLIME.get()))));
+    public static final DeferredItem<Item> SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.SKELETON_WOLF.get()))));
+    public static final DeferredItem<Item> WITHER_SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("wither_skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.WITHER_SKELETON_WOLF.get()))));
+    public static final DeferredItem<Item> ZOMBIFIED_RABBIT_SPAWNEGG = ITEMS.registerItem("zombified_rabbit_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.ZOMBIFIED_RABBIT.get()))));
+
+    public static final DeferredItem<Item> MAGMA_COW_SPAWNEGG = ITEMS.registerItem("magma_cow_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.MAGMA_COW.get()))));
+    public static final DeferredItem<Item> MELON_GOLEM_SPAWNEGG = ITEMS.registerItem("melon_golem_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.MELON_GOLEM.get()))));
+    public static final DeferredItem<Item> FURNACE_GOLEM_SPAWNEGG = ITEMS.registerItem("furnace_golem_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.FURNACE_GOLEM.get()))));
 
 	private static void generateInstrumentTypes(
 			CreativeModeTab.Output p_270699_,

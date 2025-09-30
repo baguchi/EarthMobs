@@ -41,7 +41,7 @@ public abstract class SheepMixin extends Animal implements IMoss, IBaguPacket {
 
     @Override
     public void resync(Entity entity) {
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new MossMessage(this.getId(), this.moss));
         }
     }

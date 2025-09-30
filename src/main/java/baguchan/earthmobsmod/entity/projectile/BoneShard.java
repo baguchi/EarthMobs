@@ -103,7 +103,7 @@ public class BoneShard extends ThrowableItemProjectile {
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
 			this.makeParticle(2);
 		}
 	}
@@ -158,7 +158,7 @@ public class BoneShard extends ThrowableItemProjectile {
 
 	protected void onHit(HitResult p_37488_) {
 		super.onHit(p_37488_);
-		if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
 			this.level().broadcastEntityEvent(this, (byte) 3);
 			this.playSound(SoundEvents.TURTLE_EGG_BREAK, 0.4F, 1.25F);
 			this.discard();

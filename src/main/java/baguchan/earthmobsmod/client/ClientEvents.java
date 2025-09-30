@@ -5,12 +5,11 @@ import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.client.animation.ShakeAnimations;
 import baguchi.bagus_lib.client.event.BagusModelEvent;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.PigModel;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.Direction;
@@ -35,11 +34,11 @@ public class ClientEvents {
     }
     @SubscribeEvent
     public static void renderEvent(RenderLivingEvent.Post<LivingEntity, LivingEntityRenderState, EntityModel<LivingEntityRenderState>> event) {
-        MultiBufferSource buffer = event.getMultiBufferSource();
+        SubmitNodeCollector buffer = event.getSubmitNodeCollector();
         LivingEntityRenderState entity = event.getRenderState();
         LivingEntityRenderer<LivingEntity, LivingEntityRenderState, EntityModel<LivingEntityRenderState>> renderer = event.getRenderer();
         PoseStack posestack = event.getPoseStack();
-        int light = event.getPackedLight();
+        int light = event.getRenderState().lightCoords;
         float partialtick = event.getPartialTick();
 
 
@@ -76,7 +75,7 @@ public class ClientEvents {
         }
     }
 
-    private static void setupRender(LivingEntityRenderState entity, LivingEntityRenderer<LivingEntity, LivingEntityRenderState, EntityModel<LivingEntityRenderState>> renderer, PoseStack posestack, MultiBufferSource buffer, int light) {
+    private static void setupRender(LivingEntityRenderState entity, LivingEntityRenderer<LivingEntity, LivingEntityRenderState, EntityModel<LivingEntityRenderState>> renderer, PoseStack posestack, SubmitNodeCollector buffer, int light) {
         if (entity.hasPose(Pose.SLEEPING)) {
             Direction direction = entity.bedOrientation;
             if (direction != null) {
@@ -91,14 +90,12 @@ public class ClientEvents {
         posestack.scale(-1.0F, -1.0F, 1.0F);
         //renderer.scale(entity, posestack);
         posestack.translate(0.0F, -1.501F, 0.0F);
-        renderer.getModel().setupAnim(entity);
         RenderType rendertype = RenderType.entityTranslucent(renderer.getTextureLocation(entity));
-        if (rendertype != null) {
-            VertexConsumer vertexconsumer = buffer.getBuffer(rendertype);
+        if (rendertype != null && renderer.getModel() instanceof EntityModel<LivingEntityRenderState> entityModel) {
             int i = getOverlayCoords(entity, 0.0F);
             int j = 654311423;
             int k = ARGB.multiply(j, -1);
-            renderer.getModel().renderToBuffer(posestack, vertexconsumer, light, i, k);
+            buffer.submitModel(entityModel, entity, posestack, rendertype, light, i, k, null, entity.outlineColor, null);
         }
     }
 

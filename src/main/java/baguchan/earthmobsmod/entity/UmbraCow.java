@@ -45,7 +45,7 @@ public class UmbraCow extends WoolyCow {
 	@Override
 	public List<ItemStack> onSheared(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		level.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
-		if (!level.isClientSide) {
+        if (!level.isClientSide()) {
 			this.setSheared(true);
 			int i = 1 + this.random.nextInt(3);
 

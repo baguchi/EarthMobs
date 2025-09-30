@@ -126,7 +126,7 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
 			this.makeParticle(2);
 		}
 
@@ -182,7 +182,7 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 		if (damage > 0 && this.level() instanceof ServerLevel serverLevel) {
 			if (entity.hurtServer(serverLevel, this.damageSources().thrown(this, this.getOwner()), damage)) {
 
-				if (!this.level().isClientSide) {
+                if (!this.level().isClientSide()) {
 					this.level().broadcastEntityEvent(this, (byte) 3);
 					this.playSound(SoundEvents.SLIME_BLOCK_BREAK, 0.4F, 1.0F);
 					this.discard();
@@ -213,7 +213,7 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 			this.setDeltaMovement(projectileMovement.multiply(new Vec3(direction.getX(), direction.getY(), direction.getZ())).multiply(0.75, 0.65, 0.75));
 			this.playSound(SoundEvents.SLIME_BLOCK_BREAK, 0.4F, 1.0F);
 		} else {
-			if (!this.level().isClientSide) {
+            if (!this.level().isClientSide()) {
 				this.level().broadcastEntityEvent(this, (byte) 3);
 				this.playSound(SoundEvents.SLIME_BLOCK_BREAK, 0.4F, 1.0F);
 				this.discard();

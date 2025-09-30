@@ -60,7 +60,7 @@ public class SmellyEgg extends ThrowableItemProjectile {
 
 	protected void onHit(HitResult p_37488_) {
 		super.onHit(p_37488_);
-		if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
 			if (this.random.nextInt(8) == 0) {
 				int i = 1;
 				if (this.random.nextInt(32) == 0) {

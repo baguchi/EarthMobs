@@ -55,7 +55,7 @@ public class ShadowCapability implements IAttachmentSerializer<ShadowCapability>
 		this.shadow = new Vec3(shadowX, shadowY, shadowZ);
 		this.shadow2 = new Vec3(shadowX2, shadowY2, shadowZ2);
 
-		if (!mob.level().isClientSide) {
+        if (!mob.level().isClientSide()) {
 			removeBoost(mob);
 		}
 
@@ -150,7 +150,7 @@ public class ShadowCapability implements IAttachmentSerializer<ShadowCapability>
 			}
 		}
 		if (percentBoost > 0) {
-			if (!entity.level().isClientSide) {
+            if (!entity.level().isClientSide()) {
 				AttributeInstance attributeinstance = entity.getAttribute(Attributes.MOVEMENT_SPEED);
 				if (attributeinstance == null) {
 					return;

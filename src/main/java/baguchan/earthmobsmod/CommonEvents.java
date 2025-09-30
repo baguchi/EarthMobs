@@ -119,7 +119,7 @@ public class CommonEvents {
 		if (itemStack.getItem() instanceof ShearsItem && event.getEntity().level().getBlockState(pos).getBlock() == Blocks.MELON) {
 			Direction direction = event.getHitVec().getDirection();
 			if (direction != Direction.DOWN && direction != Direction.UP) {
-				itemStack.hurtAndBreak(1, event.getEntity(), LivingEntity.getSlotForHand(hand));
+                itemStack.hurtAndBreak(1, event.getEntity(), hand);
 				level.playSound(null, pos, SoundEvents.PUMPKIN_CARVE, SoundSource.BLOCKS, 1.0F, 1.0F);
 
 				level.setBlock(pos, ModBlocks.CARVED_MELON.get().defaultBlockState().setValue(CarvedMelonBlock.FACING, direction), 2);
@@ -145,7 +145,7 @@ public class CommonEvents {
 		Player player = event.getEntity();
 		ItemStack stack = player.getItemInHand(event.getHand());
 
-		if ((stack.getItem() instanceof SpawnEggItem spawnEggItem) && spawnEggItem.getType(player.registryAccess(), stack) == ModEntities.TEACUP_PIG.get()) {
+        if ((stack.getItem() instanceof SpawnEggItem spawnEggItem) && spawnEggItem.getType(stack) == ModEntities.TEACUP_PIG.get()) {
 			BlockState state = level.getBlockState(pos);
 
 			if (state.is(Blocks.FLOWER_POT)) {

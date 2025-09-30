@@ -40,8 +40,7 @@ public class HornedSheepRenderer extends AgeableMobRenderer<HornedSheep, HornedS
 		p_360515_.headEatPositionScale = p_362733_.getHeadEatPositionScale(p_361157_);
 		p_360515_.isSheared = p_362733_.isSheared();
 		p_360515_.woolColor = p_362733_.getColor();
-		p_360515_.id = p_362733_.getId();
-	}
+    }
 
 	@Override
 	public ResourceLocation getTextureLocation(HornedSheepRenderState p_110775_1_) {

@@ -25,7 +25,6 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.context.ContextKey;
 import net.neoforged.api.distmarker.Dist;
@@ -208,12 +207,12 @@ public class ClientRegistrar {
 
 			}
 		});
-		event.registerEntityModifier(TypeToken.of(PlayerRenderer.class), (player, renderState) -> {
+		/*event.registerEntityModifier(TypeToken.of(AvatarRenderer.class), (player, renderState) -> {
 			if (player.getData(ModCapability.SHADOW_ATTACH.get()) != null) {
 				renderState.setRenderData(SHADOW, player.getData(ModCapability.SHADOW_ATTACH.get()));
 
 			}
-		});
+		});*/
 		event.registerEntityModifier(TypeToken.of(HyperRabbitRenderer.class), (player, renderState) -> {
 			if (player.getData(ModCapability.SHADOW_ATTACH.get()) != null) {
 				renderState.setRenderData(SHADOW, player.getData(ModCapability.SHADOW_ATTACH.get()));

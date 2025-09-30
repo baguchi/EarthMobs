@@ -2,7 +2,7 @@ package baguchan.earthmobsmod.client.render.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
@@ -21,8 +21,10 @@ public class OuterLayer<T extends LivingEntityRenderState> extends RenderLayer<T
         this.babyModel = babyModel;
 	}
 
-    public void render(PoseStack p_116913_, MultiBufferSource p_116914_, int p_116915_, T p_361730_, float p_116917_, float p_116918_) {
-        EntityModel<T> drownedmodel = p_361730_.isBaby ? this.babyModel : this.model;
-        coloredCutoutModelCopyLayerRender(drownedmodel, location, p_116913_, p_116914_, p_116915_, p_361730_, -1);
-	}
+    @Override
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, T entityRenderState, float v, float v1) {
+        EntityModel<T> drownedmodel = entityRenderState.isBaby ? this.babyModel : this.model;
+
+        coloredCutoutModelCopyLayerRender(drownedmodel, this.location, poseStack, submitNodeCollector, i, entityRenderState, -1, 1);
+    }
 }

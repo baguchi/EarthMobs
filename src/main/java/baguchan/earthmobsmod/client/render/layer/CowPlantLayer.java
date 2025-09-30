@@ -4,10 +4,9 @@ import baguchan.earthmobsmod.client.model.MoobloomModel;
 import baguchan.earthmobsmod.client.render.state.MoobloomRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -27,50 +26,49 @@ public abstract class CowPlantLayer extends RenderLayer<MoobloomRenderState, Moo
         this.blockState = blockState;
     }
 
-    public void render(PoseStack p_117256_, MultiBufferSource p_117257_, int p_117258_, MoobloomRenderState p_117259_, float p_117260_, float p_117261_) {
-        if (!p_117259_.isBaby) {
-            boolean flag = p_117259_.appearsGlowing && p_117259_.isInvisible;
-            if (!p_117259_.isInvisible || flag) {
+    @Override
+    public void submit(PoseStack p_117256_, SubmitNodeCollector p_432964_, int p_117258_, MoobloomRenderState p_361786_, float p_117260_, float p_117261_) {
+        if (!p_361786_.isBaby) {
+            boolean flag = p_361786_.appearsGlowing() && p_361786_.isInvisible;
+            if (!p_361786_.isInvisible || flag) {
                 BlockState blockstate = this.blockState;
-				int i = LivingEntityRenderer.getOverlayCoords(p_117259_, 0.0F);
+                int i = LivingEntityRenderer.getOverlayCoords(p_361786_, 0.0F);
                 BlockStateModel blockstatemodel = this.blockRenderer.getBlockModel(blockstate);
-				p_117256_.pushPose();
+                p_117256_.pushPose();
                 p_117256_.translate(0.2F, -0.35F, 0.5F);
-				p_117256_.mulPose(Axis.YP.rotationDegrees(-48.0F));
-				p_117256_.scale(-1.0F, -1.0F, 1.0F);
+                p_117256_.mulPose(Axis.YP.rotationDegrees(-48.0F));
+                p_117256_.scale(-1.0F, -1.0F, 1.0F);
                 p_117256_.translate(-0.5F, -0.5F, -0.5F);
-                this.renderMushroomBlock(p_117256_, p_117257_, p_117258_, flag, blockstate, i, blockstatemodel);
-				p_117256_.popPose();
-				p_117256_.pushPose();
+                this.submitMushroomBlock(p_117256_, p_432964_, p_117258_, flag, p_361786_.outlineColor, blockstate, i, blockstatemodel);
+                p_117256_.popPose();
+                p_117256_.pushPose();
                 p_117256_.translate(0.2F, -0.35F, 0.5F);
-				p_117256_.mulPose(Axis.YP.rotationDegrees(42.0F));
+                p_117256_.mulPose(Axis.YP.rotationDegrees(42.0F));
                 p_117256_.translate(0.1F, 0.0F, -0.6F);
-				p_117256_.mulPose(Axis.YP.rotationDegrees(-48.0F));
-				p_117256_.scale(-1.0F, -1.0F, 1.0F);
+                p_117256_.mulPose(Axis.YP.rotationDegrees(-48.0F));
+                p_117256_.scale(-1.0F, -1.0F, 1.0F);
                 p_117256_.translate(-0.5F, -0.5F, -0.5F);
-                this.renderMushroomBlock(p_117256_, p_117257_, p_117258_, flag, blockstate, i, blockstatemodel);
-				p_117256_.popPose();
-				p_117256_.pushPose();
-                this.getParentModel().head.translateAndRotate(p_117256_);
+                this.submitMushroomBlock(p_117256_, p_432964_, p_117258_, flag, p_361786_.outlineColor, blockstate, i, blockstatemodel);
+                p_117256_.popPose();
+                p_117256_.pushPose();
+                (this.getParentModel()).head.translateAndRotate(p_117256_);
                 p_117256_.translate(0.0F, -0.7F, -0.2F);
-				p_117256_.mulPose(Axis.YP.rotationDegrees(-78.0F));
-				p_117256_.scale(-1.0F, -1.0F, 1.0F);
+                p_117256_.mulPose(Axis.YP.rotationDegrees(-78.0F));
+                p_117256_.scale(-1.0F, -1.0F, 1.0F);
                 p_117256_.translate(-0.5F, -0.5F, -0.5F);
-                this.renderMushroomBlock(p_117256_, p_117257_, p_117258_, flag, blockstate, i, blockstatemodel);
-				p_117256_.popPose();
-			}
-		}
-	}
-
-    private void renderMushroomBlock(
-            PoseStack p_234853_, MultiBufferSource p_234854_, int p_234855_, boolean p_234856_, BlockState p_234857_, int p_234858_, BlockStateModel p_404741_
-    ) {
-        if (p_234856_) {
-            ModelBlockRenderer.renderModel(
-                    p_234853_.last(), p_234854_.getBuffer(RenderType.outline(TextureAtlas.LOCATION_BLOCKS)), p_404741_, 0.0F, 0.0F, 0.0F, p_234855_, p_234858_
-            );
-        } else {
-            this.blockRenderer.renderSingleBlock(p_234857_, p_234853_, p_234854_, p_234855_, p_234858_);
+                this.submitMushroomBlock(p_117256_, p_432964_, p_117258_, flag, p_361786_.outlineColor, blockstate, i, blockstatemodel);
+                p_117256_.popPose();
+            }
         }
+
+    }
+
+    private void submitMushroomBlock(PoseStack p_434000_, SubmitNodeCollector p_432929_, int p_434041_, boolean p_435008_, int p_433442_, BlockState p_434785_, int p_440741_, BlockStateModel p_434408_) {
+        if (p_435008_) {
+            p_432929_.submitBlockModel(p_434000_, RenderType.outline(TextureAtlas.LOCATION_BLOCKS), p_434408_, 0.0F, 0.0F, 0.0F, p_434041_, p_440741_, p_433442_);
+        } else {
+            p_432929_.submitBlock(p_434000_, p_434785_, p_434041_, p_440741_, p_433442_);
+        }
+
     }
 }

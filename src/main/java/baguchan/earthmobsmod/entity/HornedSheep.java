@@ -154,7 +154,7 @@ public class HornedSheep extends Sheep {
         this.updateSwingTime();
         super.aiStep();
 
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
 
             this.aggressiveScaleOld = this.aggressiveScale;
             if (this.isAggressive()) {

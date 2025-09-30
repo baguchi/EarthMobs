@@ -7,6 +7,7 @@ import net.minecraft.client.model.VillagerLikeModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.WitchRenderState;
 import net.minecraft.util.Mth;
 
@@ -103,14 +104,9 @@ public class VilerWitchModel<T extends WitchRenderState> extends EntityModel<T> 
 		this.holdingItem = p_104075_;
 	}
 
-	@Override
-	public void hatVisible(boolean p_382812_) {
-
-	}
-
-	@Override
-	public void translateToArms(PoseStack p_383014_) {
-		this.root.translateAndRotate(p_383014_);
-		this.arms.translateAndRotate(p_383014_);
-	}
+    @Override
+    public void translateToArms(EntityRenderState entityRenderState, PoseStack poseStack) {
+        this.root.translateAndRotate(poseStack);
+        this.arms.translateAndRotate(poseStack);
+    }
 }

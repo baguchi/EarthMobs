@@ -90,7 +90,7 @@ public class MagmaCow extends Cow {
     }
 
     private void fizz() {
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             for (int i = 0; i < 8; i++) {
                 this.level().addParticle(ParticleTypes.SMOKE, this.getRandomX(this.getBbWidth()), this.getRandomY(), this.getRandomZ(this.getBbWidth()), 0, 0, 0);
             }
@@ -138,7 +138,7 @@ public class MagmaCow extends Cow {
 
     public void aiStep() {
         this.updateSwingTime();
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
         }
 

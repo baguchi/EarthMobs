@@ -7,8 +7,8 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.util.Mth;
 
 public class LivingSpinAttackEffectModel extends EntityModel<LivingEntityRenderState> {
@@ -42,7 +42,7 @@ public class LivingSpinAttackEffectModel extends EntityModel<LivingEntityRenderS
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    public void setupAnim(PlayerRenderState p_368555_) {
+    public void setupAnim(AvatarRenderState p_368555_) {
         super.setupAnim(p_368555_);
 
         for (int i = 0; i < this.boxes.length; i++) {

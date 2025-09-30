@@ -58,7 +58,7 @@ public class BoulderingDrowned extends Drowned {
 
 	public void tick() {
 		super.tick();
-		if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
 			this.setClimbing(this.horizontalCollision);
 		}
 	}
@@ -73,7 +73,7 @@ public class BoulderingDrowned extends Drowned {
 	}
 
 	public void updateSwimming() {
-		if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
 			if (this.isEffectiveAi() && this.isInWater() && this.wantsToSwim()) {
 				this.navigation = this.waterNavigation;
 				this.setSwimming(true);
@@ -183,7 +183,7 @@ public class BoulderingDrowned extends Drowned {
 
 	public void startAutoSpinAttack(int p_204080_) {
 		this.autoSpinAttackTicks = p_204080_;
-		if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
 			this.setLivingEntityFlag(4, true);
 		}
 	}

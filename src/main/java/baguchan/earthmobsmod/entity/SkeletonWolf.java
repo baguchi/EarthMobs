@@ -155,7 +155,7 @@ public class SkeletonWolf extends Wolf {
 					return interactionresult;
 				}
 
-				itemstack.hurtAndBreak(1, p_406380_, getSlotForHand(p_406261_));
+                itemstack.hurtAndBreak(1, p_406380_, p_406261_);
 				this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 				ItemStack itemstack1 = this.getBodyArmorItem();
 				this.setBodyArmorItem(ItemStack.EMPTY);
@@ -172,7 +172,7 @@ public class SkeletonWolf extends Wolf {
 				itemstack.consume(1, p_406380_);
 				return InteractionResult.SUCCESS;
 			}*/
-		} else if (!this.level().isClientSide && itemstack.is(Items.BONE) && !this.isAngry()) {
+        } else if (!this.level().isClientSide() && itemstack.is(Items.BONE) && !this.isAngry()) {
 			itemstack.consume(1, p_406380_);
 			this.tryToTame(p_406380_);
 			return InteractionResult.SUCCESS_SERVER;
@@ -238,4 +238,9 @@ public class SkeletonWolf extends Wolf {
 	public static boolean checkSkeletonWolfSpawnRules(EntityType<? extends SkeletonWolf> p_33018_, ServerLevelAccessor p_33019_, EntitySpawnReason p_33020_, BlockPos p_33021_, RandomSource p_33022_) {
 		return (p_33019_.getBlockState(p_33021_.below()).is(Blocks.SOUL_SAND) || p_33019_.getBlockState(p_33021_.below()).is(Blocks.SOUL_SOIL) || p_33019_.getBlockState(p_33021_.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON)) && isDarkEnoughToSpawn(p_33019_, p_33021_, p_33022_) && checkMobSpawnRules(p_33018_, p_33019_, p_33020_, p_33021_, p_33022_);
 	}
+
+    @Override
+    public boolean requiresCustomPersistence() {
+        return super.requiresCustomPersistence() || this.isTame();
+    }
 }

@@ -102,7 +102,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     }
 
     public void tick() {
-        if (!this.level().isClientSide && this.isAlive() && this.isConverting()) {
+        if (!this.level().isClientSide() && this.isAlive() && this.isConverting()) {
             this.conversionTime -= 1;
             if (this.conversionTime <= 0 && EventHooks.canLivingConvert(this, EntityType.VILLAGER, (timer) -> this.conversionTime = timer)) {
                 this.finishConversion((ServerLevel) this.level());
@@ -120,7 +120,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
                     itemstack.shrink(1);
                 }
 
-                if (!this.level().isClientSide) {
+                if (!this.level().isClientSide()) {
                     this.startConverting(p_34394_.getUUID(), this.random.nextInt(2401) + 3600);
                 }
 
@@ -202,11 +202,6 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     @Override
     public boolean removeWhenFarAway(double p_27598_) {
         return true;
-    }
-
-    @Override
-    protected boolean shouldDespawnInPeaceful() {
-        return false;
     }
 
     static class RabbitAttackGoal extends MeleeAttackGoal {

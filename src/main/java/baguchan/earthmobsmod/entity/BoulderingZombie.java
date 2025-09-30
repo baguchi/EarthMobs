@@ -18,7 +18,6 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -42,7 +41,7 @@ public class BoulderingZombie extends Zombie {
 
 	public void tick() {
 		super.tick();
-		if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
 			this.setClimbing(this.horizontalCollision);
 		}
 	}
@@ -80,11 +79,7 @@ public class BoulderingZombie extends Zombie {
 		return checkMobSpawnRules(p_32350_, p_32351_, p_32352_, p_32353_, p_32354_) && flag;
 	}
 
-	@Override
-	protected ItemStack getSkull() {
-		return ItemStack.EMPTY;
-	}
-
+    @Override
 	protected PathNavigation createNavigation(Level p_33802_) {
 		return new WallClimberNavigation(this, p_33802_);
 	}
