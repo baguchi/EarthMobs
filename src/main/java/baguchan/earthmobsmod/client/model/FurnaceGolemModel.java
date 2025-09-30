@@ -84,7 +84,7 @@ public class FurnaceGolemModel<T extends FurnaceGolemRenderState> extends Entity
         this.left_leg.xRot = 1.5F * Mth.triangleWave(f2, 13.0F) * f1;
         this.right_leg.yRot = 0.0F;
         this.left_leg.yRot = 0.0F;
-        this.head2.copyFrom(this.head);
+        this.head2.setRotation(this.head.xRot, this.head.yRot, this.head.zRot);
         this.head2.visible = entity.active;
     }
 }

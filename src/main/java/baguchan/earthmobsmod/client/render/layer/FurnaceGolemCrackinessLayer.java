@@ -4,7 +4,7 @@ import baguchan.earthmobsmod.client.model.FurnaceGolemModel;
 import baguchan.earthmobsmod.client.render.state.FurnaceGolemRenderState;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
@@ -19,12 +19,13 @@ public class FurnaceGolemCrackinessLayer<T extends FurnaceGolemRenderState> exte
         super(p_117135_);
     }
 
-    public void render(PoseStack p_117148_, MultiBufferSource p_117149_, int p_117150_, T p_117151_, float p_117152_, float p_117153_) {
-        if (!p_117151_.isInvisible) {
-            Crackiness.Level irongolem$crackiness = p_117151_.crackiness;
+    @Override
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, T t, float v, float v1) {
+        if (!t.isInvisible) {
+            Crackiness.Level irongolem$crackiness = t.crackiness;
             if (irongolem$crackiness != Crackiness.Level.NONE) {
                 ResourceLocation resourcelocation = resourceLocations.get(irongolem$crackiness);
-                renderColoredCutoutModel(this.getParentModel(), resourcelocation, p_117148_, p_117149_, p_117150_, p_117151_, -1);
+                renderColoredCutoutModel(this.getParentModel(), resourcelocation, poseStack, submitNodeCollector, i, t, -1, 1);
             }
         }
     }

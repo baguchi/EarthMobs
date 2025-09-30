@@ -96,7 +96,7 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 	@Override
 	protected void customServerAiStep(ServerLevel serverLevel) {
 		super.customServerAiStep(serverLevel);
-		if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
 			int i = Mth.floor(this.getX());
 			int j = Mth.floor(this.getY());
 			int k = Mth.floor(this.getZ());

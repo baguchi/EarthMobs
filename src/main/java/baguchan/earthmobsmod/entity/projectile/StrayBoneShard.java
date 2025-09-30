@@ -46,7 +46,7 @@ public class StrayBoneShard extends BoneShard {
 
     public void tick() {
         super.tick();
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             this.level().broadcastEntityEvent(this, (byte) 4);
         }
     }

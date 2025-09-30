@@ -155,7 +155,7 @@ public class SkeletonWolf extends Wolf {
 					return interactionresult;
 				}
 
-				itemstack.hurtAndBreak(1, p_406380_, getSlotForHand(p_406261_));
+                itemstack.hurtAndBreak(1, p_406380_, p_406261_);
 				this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 				ItemStack itemstack1 = this.getBodyArmorItem();
 				this.setBodyArmorItem(ItemStack.EMPTY);
@@ -172,7 +172,7 @@ public class SkeletonWolf extends Wolf {
 				itemstack.consume(1, p_406380_);
 				return InteractionResult.SUCCESS;
 			}*/
-		} else if (!this.level().isClientSide && itemstack.is(Items.BONE) && !this.isAngry()) {
+        } else if (!this.level().isClientSide() && itemstack.is(Items.BONE) && !this.isAngry()) {
 			itemstack.consume(1, p_406380_);
 			this.tryToTame(p_406380_);
 			return InteractionResult.SUCCESS_SERVER;

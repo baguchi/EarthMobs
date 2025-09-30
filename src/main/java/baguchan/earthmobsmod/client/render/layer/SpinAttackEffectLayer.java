@@ -2,7 +2,6 @@ package baguchan.earthmobsmod.client.render.layer;
 
 import baguchan.earthmobsmod.client.model.LivingSpinAttackEffectModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -11,10 +10,11 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
@@ -36,11 +36,10 @@ public class SpinAttackEffectLayer<T extends LivingEntityRenderState, M extends 
     }
 
     @Override
-    public void render(PoseStack p_117349_, MultiBufferSource p_117350_, int p_117351_, T p_361554_, float p_117353_, float p_117354_) {
-        if (p_361554_.isAutoSpinAttack) {
-            VertexConsumer vertexconsumer = p_117350_.getBuffer(this.model.renderType(TEXTURE));
-            this.model.setupAnim(p_361554_);
-            this.model.renderToBuffer(p_117349_, vertexconsumer, p_117351_, OverlayTexture.NO_OVERLAY);
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, T entityRenderState, float v, float v1) {
+        if (entityRenderState.isAutoSpinAttack) {
+            submitNodeCollector.submitModel(this.model, entityRenderState, poseStack, this.model.renderType(TEXTURE), i, OverlayTexture.NO_OVERLAY, entityRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
         }
+
     }
 }

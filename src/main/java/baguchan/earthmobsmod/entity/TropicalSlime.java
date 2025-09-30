@@ -8,10 +8,10 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -33,8 +33,6 @@ import net.minecraft.world.entity.animal.TropicalFish;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -51,15 +49,8 @@ import java.util.EnumSet;
 import static net.minecraft.world.entity.monster.Monster.isDarkEnoughToSpawn;
 
 public class TropicalSlime extends Slime implements Bucketable {
-    public static final EntityDataAccessor<CompoundTag> DATA_FISHS = SynchedEntityData.defineId(TropicalSlime.class, EntityDataSerializers.COMPOUND_TAG);
+    public static final EntityDataAccessor<Boolean> HAS_FISHS = SynchedEntityData.defineId(TropicalSlime.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(TropicalSlime.class, EntityDataSerializers.BOOLEAN);
-
-
-    public static final String TAG_FISH_VARIANT = "FishVariant";
-    public static final String TAG_FISH_POSX = "FishPosX";
-    public static final String TAG_FISH_POSY = "FishPosY";
-    public static final String TAG_FISH_POSZ = "FishPosZ";
-    public static final String TAG_FISH_LIST = "FishList";
 
     public TropicalSlime(EntityType<? extends Slime> p_33588_, Level p_33589_) {
         super(p_33588_, p_33589_);
@@ -69,7 +60,7 @@ public class TropicalSlime extends Slime implements Bucketable {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        builder.define(DATA_FISHS, new CompoundTag());
+        builder.define(HAS_FISHS, false);
         builder.define(FROM_BUCKET, false);
     }
 
@@ -89,16 +80,8 @@ public class TropicalSlime extends Slime implements Bucketable {
     }
 
     @Nullable
-    public CompoundTag getFishData() {
-        return this.entityData.get(DATA_FISHS);
-    }
-
-    @Nullable
-    public ListTag getFishList() {
-        if (getFishData() != null) {
-            return (ListTag) getFishData().get(TAG_FISH_LIST);
-        }
-        return null;
+    public boolean hasFish() {
+        return this.entityData.get(HAS_FISHS);
     }
 
     @Override
@@ -106,135 +89,45 @@ public class TropicalSlime extends Slime implements Bucketable {
         return new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(ModItems.TROPICAL_BALL.asItem()));
     }
 
-    public void setFishData(CompoundTag p_36363_) {
-        this.entityData.set(DATA_FISHS, p_36363_);
-    }
-
-    public CompoundTag writeFromBucketTag(ItemStack p_149163_) {
-        CompoundTag newTag = new CompoundTag();
-
-        if (p_149163_.get(DataComponents.BUCKET_ENTITY_DATA) != null) {
-            newTag = p_149163_.get(DataComponents.BUCKET_ENTITY_DATA).copyTag();
-        }
-
-        return newTag;
+    public void setHasFish(boolean p_36363_) {
+        this.entityData.set(HAS_FISHS, p_36363_);
     }
 
     public InteractionResult mobInteract(Player p_28941_, InteractionHand p_28942_) {
-        ItemStack itemstack = p_28941_.getItemInHand(p_28942_);
-        if (itemstack.is(Items.TROPICAL_FISH_BUCKET)) {
-            CompoundTag tag = writeFromBucketTag(itemstack);
-            if (getFishList() == null || !getFishList().isEmpty() && getFishList().size() < 4) {
-                if (!tag.isEmpty()) {
-                    addFishData(tag.getIntOr(TAG_FISH_VARIANT, -1), false);
-                } else {
-                    int i;
-                    int j;
-                    int k;
-                    int l;
-                    i = this.random.nextInt(2);
-                    j = this.random.nextInt(6);
-                    k = this.random.nextInt(15);
-                    l = this.random.nextInt(15);
-
-                    this.addFishData(i | j << 8 | k << 16 | l << 24, false);
-                }
-            } else {
-                return InteractionResult.FAIL;
-            }
-            ItemStack itemstack1 = new ItemStack(Items.BUCKET);
-
-            ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, p_28941_, itemstack1, false);
-            p_28941_.setItemInHand(p_28942_, itemstack2);
-            SoundEvent soundevent = SoundEvents.BUCKET_EMPTY_FISH;
-            this.playSound(soundevent, 1.0F, 1.0F);
-            return InteractionResult.SUCCESS;
-        } else {
-            return this.isTiny() ? Bucketable.bucketMobPickup(p_28941_, p_28942_, this).orElse(super.mobInteract(p_28941_, p_28942_)) : super.mobInteract(p_28941_, p_28942_);
-        }
-    }
-
-    protected void randomFishData(boolean small) {
-        int i;
-        int j;
-        int k;
-        int l;
-        i = this.random.nextInt(2);
-        j = this.random.nextInt(6);
-        k = this.random.nextInt(15);
-        l = this.random.nextInt(15);
-
-        this.addFishData(i | j << 8 | k << 16 | l << 24, small);
-    }
-
-    protected void addFishData(int variant, boolean small) {
-        CompoundTag fishTag = this.getFishData().isEmpty() ? new CompoundTag() : this.getFishData();
-        ListTag listnbt = new ListTag();
-
-        if (fishTag.contains(TAG_FISH_LIST)) {
-            listnbt = fishTag.getListOrEmpty(TAG_FISH_LIST);
-        }
-
-        CompoundTag compoundnbt1 = new CompoundTag();
-        compoundnbt1.putInt(TAG_FISH_VARIANT, variant);
-        EntityDimensions dimensions = this.getDimensions(this.getPose());
-        double x = (dimensions.width() * this.random.nextDouble() - dimensions.width() * this.random.nextDouble()) * 0.5F;
-        double y = (dimensions.height() * this.random.nextDouble()) * 0.8F + dimensions.height() * 0.1F;
-        double z = (dimensions.width() * this.random.nextDouble() - dimensions.width() * this.random.nextDouble()) * 0.5F;
-        if (small) {
-            x = (0.6F * this.random.nextDouble() - 0.6F * this.random.nextDouble()) * 0.5F;
-            y = (0.6F * this.random.nextDouble()) * 0.8F + 0.6F * 0.1F;
-            z = (0.6F * this.random.nextDouble() - 0.6F * this.random.nextDouble()) * 0.5F;
-        }
-
-        compoundnbt1.putDouble(TAG_FISH_POSX, x);
-        compoundnbt1.putDouble(TAG_FISH_POSY, y);
-        compoundnbt1.putDouble(TAG_FISH_POSZ, z);
-        listnbt.add(compoundnbt1);
-        fishTag.put(TAG_FISH_LIST, listnbt);
-        this.setFishData(fishTag);
+        return this.isTiny() ? Bucketable.bucketMobPickup(p_28941_, p_28942_, this).orElse(super.mobInteract(p_28941_, p_28942_)) : super.mobInteract(p_28941_, p_28942_);
     }
 
     @Override
     public void remove(RemovalReason p_149847_) {
         super.remove(p_149847_);
-        CompoundTag compoundTag = this.getFishData();
 
-        if (this.isDeadOrDying()) {
-            if (compoundTag != null && compoundTag.get(TAG_FISH_LIST) != null) {
-                int i = this.getSize();
-                ListTag listTag = (ListTag) compoundTag.get(TAG_FISH_LIST);
-
-                float f = (float) i / 4.0F;
-                for (int l = 0; l < listTag.size(); ++l) {
-                    double f1 = ((CompoundTag) listTag.get(l)).getDoubleOr(TAG_FISH_POSX, 0);
-                    double f2 = ((CompoundTag) listTag.get(l)).getDoubleOr(TAG_FISH_POSZ, 0);
-                    double f3 = ((CompoundTag) listTag.get(l)).getDoubleOr(TAG_FISH_POSY, 0);
-                    TropicalFish fish = EntityType.TROPICAL_FISH.create(this.level(), EntitySpawnReason.TRIGGERED);
-                    if (this.isPersistenceRequired()) {
-                        fish.setPersistenceRequired();
-                    }
-                    fish.setPackedVariant(((CompoundTag) listTag.get(l)).getIntOr(TAG_FISH_VARIANT, 0));
-                    fish.setInvulnerable(this.isInvulnerable());
-                    fish.snapTo(this.getX() + (double) f1, this.getY() + f3, this.getZ() + (double) f2, this.random.nextFloat() * 360.0F, 0.0F);
-                    this.level().addFreshEntity(fish);
-                }
+        if (this.isDeadOrDying() && this.level() instanceof ServerLevel serverLevel && this.hasFish()) {
+            double f1 = 0;
+            double f2 = 0;
+            double f3 = 0;
+            TropicalFish fish = EntityType.TROPICAL_FISH.create(this.level(), EntitySpawnReason.TRIGGERED);
+            if (this.isPersistenceRequired()) {
+                fish.setPersistenceRequired();
             }
+            fish.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(this.blockPosition()), EntitySpawnReason.EVENT, null);
+            fish.setInvulnerable(this.isInvulnerable());
+            fish.snapTo(this.getX() + (double) f1, this.getY() + f3, this.getZ() + (double) f2, this.random.nextFloat() * 360.0F, 0.0F);
+            this.level().addFreshEntity(fish);
         }
     }
 
     @Override
     public void addAdditionalSaveData(ValueOutput p_33619_) {
         super.addAdditionalSaveData(p_33619_);
-        if (this.getFishData() != null) {
-            p_33619_.store("FishData", CompoundTag.CODEC, this.getFishData());
+        if (this.hasFish()) {
+            p_33619_.putBoolean("HasFish", this.hasFish());
         }
     }
 
     @Override
     public void readAdditionalSaveData(ValueInput p_33607_) {
         super.readAdditionalSaveData(p_33607_);
-        this.setFishData(p_33607_.read("FishData", CompoundTag.CODEC).orElse(new CompoundTag()));
+        this.setHasFish(p_33607_.getBooleanOr("HasFish", false));
     }
 
     @Nullable
@@ -242,9 +135,7 @@ public class TropicalSlime extends Slime implements Bucketable {
         p_30026_ = super.finalizeSpawn(p_30023_, p_30024_, p_30025_, p_30026_);
 
         int size = Mth.clamp(this.getSize(), 1, 5);
-        for (int i = 0; i < size; i++) {
-            this.randomFishData(p_30025_ == EntitySpawnReason.BUCKET);
-        }
+        this.setHasFish(true);
         return p_30026_;
     }
 
@@ -283,8 +174,8 @@ public class TropicalSlime extends Slime implements Bucketable {
         Bucketable.saveDefaultDataToBucketTag(this, p_149187_);
         CustomData.update(DataComponents.BUCKET_ENTITY_DATA, p_149187_, compoundTag -> {
 
-        if (this.getFishData() != null) {
-            compoundTag.put("FishData", this.getFishData());
+            if (this.hasFish()) {
+                compoundTag.putBoolean("HasFish", this.hasFish());
         }
         });
 
@@ -294,8 +185,8 @@ public class TropicalSlime extends Slime implements Bucketable {
     public void loadFromBucketTag(CompoundTag p_149163_) {
         Bucketable.loadDefaultDataFromBucketTag(this, p_149163_);
         this.setSize(1, true);
-        if (p_149163_.contains("FishData")) {
-            this.setFishData(p_149163_.getCompoundOrEmpty("FishData"));
+        if (p_149163_.contains("HasFish")) {
+            this.setHasFish(p_149163_.getBooleanOr("HasFish", false));
         }
     }
 

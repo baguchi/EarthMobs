@@ -4,16 +4,16 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.MuddyPigModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.context.ContextKey;
 
@@ -35,24 +35,19 @@ public class MuddyPigMudLayer<T extends LivingEntityRenderState, S extends Entit
     }
 
     @Override
-    public void render(PoseStack p_117349_, MultiBufferSource p_117350_, int p_117351_, T entityRenderState, float p_117353_, float p_117354_) {
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, T entityRenderState, float v, float v1) {
         boolean mud = entityRenderState.getRenderDataOrDefault(IS_MUD, false);
         boolean sheared = entityRenderState.getRenderDataOrDefault(IS_SHEARED, true);
         MuddyPigModel pigModel = entityRenderState.isBaby ? this.babyModel : this.model;
 
         if (mud) {
             if (entityRenderState.isInvisible) {
-                Minecraft minecraft = Minecraft.getInstance();
-                boolean flag = entityRenderState.appearsGlowing;
-                if (flag) {
-                    pigModel.setupAnim(entityRenderState);
-                    VertexConsumer vertexconsumer = p_117350_.getBuffer(RenderType.outline(MUD_LOCATION));
-                    pigModel.renderToBuffer(p_117349_, vertexconsumer, p_117351_, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F));
+                if (entityRenderState.appearsGlowing()) {
+                    submitNodeCollector.submitModel(pigModel, entityRenderState, poseStack, RenderType.outline(MUD_LOCATION), i, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, entityRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
                 }
-
             } else {
-                coloredCutoutModelCopyLayerRender(pigModel, MUD_LOCATION, p_117349_, p_117350_, p_117351_, entityRenderState, -1);
+                coloredCutoutModelCopyLayerRender(pigModel, MUD_LOCATION, poseStack, submitNodeCollector, i, entityRenderState, -1, 1);
             }
-		}
-	}
+        }
+    }
 }

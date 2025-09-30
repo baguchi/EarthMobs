@@ -17,7 +17,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.EatBlockGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.player.Player;
@@ -65,9 +64,6 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 		p_29841_.put(DyeColor.BLACK, Items.BLACK_DYE);
 	});
 
-	private int eatAnimationTick;
-	private EatBlockGoal eatBlockGoal;
-
 	private boolean inMud;
 	private boolean isShaking;
 	private float shakeAnim;
@@ -92,7 +88,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 
 	@Override
 	public void resync(Entity entity) {
-		if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
 			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new MudMessage(this.getId(), this.muddy, this.dyeColor));
 		}
 	}
@@ -225,7 +221,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		level.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
 		this.gameEvent(GameEvent.SHEAR, player);
-		if (!level.isClientSide) {
+        if (!level.isClientSide()) {
 			this.setSheared(true);
 			int i = 1 + this.random.nextInt(3);
 
