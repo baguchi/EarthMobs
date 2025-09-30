@@ -51,7 +51,7 @@ public class EarthMobsMod {
 
 		container.registerConfig(ModConfig.Type.COMMON, EarthMobsConfig.COMMON_SPEC);
 
-		if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
 			modBus.addListener(ClientRegistrar::setup);
 		}
 		NeoForge.EVENT_BUS.addListener(this::serverStart);
