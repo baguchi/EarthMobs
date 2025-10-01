@@ -32,7 +32,9 @@ public class MossSheepLayer<T extends SheepRenderState> extends RenderLayer<T, E
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, SheepRenderState hornedSheepRenderState, float v, float v1) {
-        if (!hornedSheepRenderState.isSheared) {
+        boolean moss = hornedSheepRenderState.getRenderDataOrDefault(MOSS, false);
+
+        if (!hornedSheepRenderState.isSheared && moss) {
             EntityModel<SheepRenderState> entitymodel = hornedSheepRenderState.isBaby ? this.babyModel : this.adultModel;
             if (hornedSheepRenderState.isInvisible) {
                 if (hornedSheepRenderState.appearsGlowing()) {
