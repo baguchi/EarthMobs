@@ -47,6 +47,7 @@ public class ClientRegistrar {
 	public static final RenderPipeline ANIMATION_ENTITY =
 			RenderPipeline.builder(ENTITY_SNIPPET)
                     .withLocation(EarthMobsMod.prefix("pipeline/animation_entity"))
+                    .withShaderDefine("APPLY_TEXTURE_MATRIX")
                     .withShaderDefine("ALPHA_CUTOUT", 0.1F)
                     .withSampler("Sampler1")
                     .withCull(false)
@@ -135,6 +136,7 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.SKELETON_WOLF, SkeletonWolfRenderer::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.SKELETON_WOLF_BABY, () -> SkeletonWolfRenderer.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
 		event.registerLayerDefinition(ModModelLayers.TROPICAL_SLIME, TropicalSlimeRenderer::createInnerBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.TROPICAL_SLIME_STABLE, TropicalSlimeRenderer::createStableInnerBodyLayer);
 
 		LayerDefinition layerDefinition = BoulderingZombieModel.createBodyLayer();
 		LayerDefinition layerDefinition2 = LobberZombieModel.createBodyLayer();

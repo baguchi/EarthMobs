@@ -11,8 +11,10 @@ import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
@@ -23,12 +25,31 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, TropicalSl
     public static final ResourceLocation NO_FISH_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_no_fish.png");
     public static final ResourceLocation SLIME_OUTER_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_outer.png");
 
-	public TropicalSlimeRenderer(EntityRendererProvider.Context p_174391_) {
+    public final SlimeModel noFishSlimeModel;
+    public final SlimeModel fishSlimeModel;
+
+    public TropicalSlimeRenderer(EntityRendererProvider.Context p_174391_) {
 		super(p_174391_, new SlimeModel(p_174391_.bakeLayer(ModModelLayers.TROPICAL_SLIME)), 0.25F);
 		this.addLayer(new TropicalSlimeOuterLayer(this, p_174391_.getModelSet()));
-	}
+        this.noFishSlimeModel = new SlimeModel(p_174391_.bakeLayer(ModModelLayers.TROPICAL_SLIME_STABLE));
+        this.fishSlimeModel = new SlimeModel(p_174391_.bakeLayer(ModModelLayers.TROPICAL_SLIME));
+    }
 
-	public static LayerDefinition createInnerBodyLayer() {
+    @Override
+    public void submit(TropicalSlimeRenderState p_433493_, PoseStack p_434615_, SubmitNodeCollector p_433768_, CameraRenderState p_450931_) {
+        SlimeModel var10001;
+        if (p_433493_.fish) {
+            var10001 = this.fishSlimeModel;
+        } else {
+            var10001 = this.noFishSlimeModel;
+        }
+
+        this.model = var10001;
+
+        super.submit(p_433493_, p_434615_, p_433768_, p_450931_);
+    }
+
+    public static LayerDefinition createInnerBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 		partdefinition.addOrReplaceChild("cube", CubeListBuilder.create().texOffs(0, 40).addBox(-6.0F, 14.0F, -6.0F, 12.0F, 12.0F, 12.0F, new CubeDeformation(-2.8F)), PartPose.ZERO);
@@ -37,6 +58,16 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, TropicalSl
 		partdefinition.addOrReplaceChild("mouth", CubeListBuilder.create().texOffs(49, 49).addBox(0.0F, 21.0F, -3.5F, 1.0F, 1.0F, 1.0F), PartPose.ZERO);
 		return LayerDefinition.create(meshdefinition, 64, 3072);
 	}
+
+    public static LayerDefinition createStableInnerBodyLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+        partdefinition.addOrReplaceChild("cube", CubeListBuilder.create().texOffs(0, 40).addBox(-6.0F, 14.0F, -6.0F, 12.0F, 12.0F, 12.0F, new CubeDeformation(-2.8F)), PartPose.ZERO);
+        partdefinition.addOrReplaceChild("right_eye", CubeListBuilder.create().texOffs(50, 34).addBox(-3.25F, 18.0F, -3.5F, 2.0F, 2.0F, 2.0F), PartPose.ZERO);
+        partdefinition.addOrReplaceChild("left_eye", CubeListBuilder.create().texOffs(50, 42).addBox(1.25F, 18.0F, -3.5F, 2.0F, 2.0F, 2.0F), PartPose.ZERO);
+        partdefinition.addOrReplaceChild("mouth", CubeListBuilder.create().texOffs(49, 49).addBox(0.0F, 21.0F, -3.5F, 1.0F, 1.0F, 1.0F), PartPose.ZERO);
+        return LayerDefinition.create(meshdefinition, 64, 64);
+    }
 
 	@Override
     protected @Nullable RenderType getRenderType(TropicalSlimeRenderState p_360858_, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
