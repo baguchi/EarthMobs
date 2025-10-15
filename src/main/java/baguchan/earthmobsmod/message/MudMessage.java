@@ -7,7 +7,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.DyeColor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.handling.IPayloadHandler;
 
@@ -20,9 +19,9 @@ public class MudMessage implements CustomPacketPayload, IPayloadHandler<MudMessa
 
     private final int entityId;
     private final boolean muddy;
-    private final DyeColor colorData;
+    private final byte colorData;
 
-    public MudMessage(int entityId, boolean muddy, DyeColor colorData) {
+    public MudMessage(int entityId, boolean muddy, byte colorData) {
         this.entityId = entityId;
         this.muddy = muddy;
         this.colorData = colorData;
@@ -36,11 +35,11 @@ public class MudMessage implements CustomPacketPayload, IPayloadHandler<MudMessa
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(this.entityId);
         buf.writeBoolean(this.muddy);
-        buf.writeJsonWithCodec(DyeColor.CODEC, this.colorData);
+        buf.writeByte(this.colorData);
     }
 
     public MudMessage(FriendlyByteBuf buf) {
-        this(buf.readInt(), buf.readBoolean(), buf.readLenientJsonWithCodec(DyeColor.CODEC));
+        this(buf.readInt(), buf.readBoolean(), buf.readByte());
     }
 
     public void handle(MudMessage message, IPayloadContext context) {
@@ -48,7 +47,7 @@ public class MudMessage implements CustomPacketPayload, IPayloadHandler<MudMessa
             Entity entity = Minecraft.getInstance().level.getEntity(message.entityId);
                 if (entity instanceof IMuddyPig imoss) {
                     imoss.setMuddy(message.muddy);
-                    imoss.setSheared(message.colorData);
+                    imoss.setColorData(message.colorData);
                 }
             });
 

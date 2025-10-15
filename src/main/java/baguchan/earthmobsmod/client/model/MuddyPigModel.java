@@ -1,9 +1,5 @@
 package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.1.5
-// Exported for Minecraft version 1.17 with Mojang mappings
-// Paste this class into your mod and generate all required imports
 
-
-import baguchan.earthmobsmod.api.ISheared;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -40,9 +36,5 @@ public class MuddyPigModel extends QuadrupedModel<LivingEntityRenderState> {
 	@Override
 	public void setupAnim(LivingEntityRenderState entity) {
 		super.setupAnim(entity);
-
-		if (entity instanceof ISheared) {
-			this.flower.visible = !((ISheared) entity).isSheared();
-		}
 	}
 }

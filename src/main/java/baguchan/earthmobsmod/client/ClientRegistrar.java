@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.client;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.api.IMoss;
 import baguchan.earthmobsmod.api.IMuddyPig;
-import baguchan.earthmobsmod.api.ISheared;
 import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.client.model.*;
 import baguchan.earthmobsmod.client.render.*;
@@ -188,7 +187,7 @@ public class ClientRegistrar {
 				renderState.setRenderData(MuddyPigMudLayer.IS_MUD, muddy.isMuddy());
 				renderState.setRenderData(SHAKE, muddy.getBodyRollScale(renderState.partialTick));
 			}
-			if (pig instanceof ISheared sheared) {
+            if (pig instanceof IMuddyPig sheared) {
 				renderState.setRenderData(MuddyPigMudLayer.IS_SHEARED, sheared.isSheared());
 				renderState.setRenderData(MuddyPigFlowerLayer.FLOWER_DYE, sheared.getColor());
 			}
@@ -198,7 +197,7 @@ public class ClientRegistrar {
 				renderState.setRenderData(MuddyPigMudLayer.IS_MUD, muddy.isMuddy());
 				renderState.setRenderData(SHAKE, muddy.getBodyRollScale(renderState.partialTick));
 			}
-			if (pig instanceof ISheared sheared) {
+            if (pig instanceof IMuddyPig sheared) {
 				renderState.setRenderData(MuddyPigMudLayer.IS_SHEARED, sheared.isSheared());
 				renderState.setRenderData(MuddyPigFlowerLayer.FLOWER_DYE, sheared.getColor());
 			}

@@ -37,7 +37,6 @@ public class MuddyPigMudLayer<T extends LivingEntityRenderState, S extends Entit
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, T entityRenderState, float v, float v1) {
         boolean mud = entityRenderState.getRenderDataOrDefault(IS_MUD, false);
-        boolean sheared = entityRenderState.getRenderDataOrDefault(IS_SHEARED, true);
         MuddyPigModel pigModel = entityRenderState.isBaby ? this.babyModel : this.model;
 
         if (mud) {

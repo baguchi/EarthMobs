@@ -11,9 +11,16 @@ public interface IMuddyPig {
 
 	float getBodyRollScale(float p_30433_);
 
-	void setSheared(DyeColor sheared);
+    void setSheared(boolean sheared);
 
-	DyeColor getSheared();
+    void setColorData(byte data);
+
+    boolean isSheared();
+
+
+    DyeColor getColor();
+
+    void setColor(DyeColor color);
 
 	default boolean canMuddy(LivingEntity livingEntity) {
 		return livingEntity.getType().is(ModTags.Entities.CAN_MUDDY);

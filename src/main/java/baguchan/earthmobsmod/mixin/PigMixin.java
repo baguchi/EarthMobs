@@ -4,7 +4,6 @@ package baguchan.earthmobsmod.mixin;
 import baguchan.earthmobsmod.api.IHasFlower;
 import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.api.IOnMud;
-import baguchan.earthmobsmod.api.ISheared;
 import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.util.DyeUtil;
 import baguchi.bagus_lib.api.IBaguPacket;
@@ -41,10 +40,9 @@ import java.util.List;
 import java.util.Map;
 
 @Mixin(Pig.class)
-public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, ISheared, IHasFlower, IBaguPacket {
+public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, IHasFlower, IBaguPacket {
 	private boolean muddy;
-	private boolean sheared;
-	private DyeColor dyeColor = DyeColor.LIME;
+    private byte dyeColor = 0;
 	private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_29841_) -> {
 		p_29841_.put(DyeColor.WHITE, Items.WHITE_DYE);
 		p_29841_.put(DyeColor.ORANGE, Items.ORANGE_DYE);
@@ -93,6 +91,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 		}
 	}
 
+
 	@Override
 	public float getBodyRollScale(float p_30433_) {
 		float f = (Mth.lerp(p_30433_, this.shakeAnimO, this.shakeAnim));
@@ -100,33 +99,40 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 		return f;
 	}
 
-	public boolean isSheared() {
-		return this.sheared;
-	}
-
+    @Override
 	public void setSheared(boolean sheared) {
-		this.sheared = sheared;
+        byte b0 = this.dyeColor;
+        if (sheared) {
+            this.dyeColor = (byte) (b0 | 16);
+        } else {
+            this.dyeColor = (byte) (b0 & -17);
+        }
 		this.resync(this);
 	}
 
-	public DyeColor getColor() {
-		return this.dyeColor;
-	}
+    @Override
+    public DyeColor getColor() {
+        return DyeColor.byId(this.dyeColor & 15);
+    }
 
+    @Override
 	public void setColor(DyeColor color) {
-		this.dyeColor = color;
+        byte b0 = this.dyeColor;
+
+        this.dyeColor = (byte) (b0 & 240 | color.getId() & 15);
 		this.resync(this);
 	}
 
-	@Override
-	public void setSheared(DyeColor sheared) {
-		this.dyeColor = sheared;
-		this.resync(this);
-	}
+    @Override
+    public void setColorData(byte dyeColor) {
+        this.dyeColor = dyeColor;
+        this.resync(this);
+    }
 
-	public DyeColor getSheared() {
-		return dyeColor;
-	}
+    @Override
+    public boolean isSheared() {
+        return (this.dyeColor & 16) != 0;
+    }
 
 	public void tick() {
 		super.tick();
@@ -179,7 +185,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 					this.shakeAnim = 0.0F;
 					this.setMuddy(true);
 					this.setSheared(false);
-					this.setSheared(DyeUtil.getRandomColor(this.random));
+                    this.setColor(DyeUtil.getRandomColor(this.random));
 				}
 
 				if (this.shakeAnim > 0.4F) {
@@ -201,16 +207,17 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	@Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
 	public void addAdditionalSaveData(ValueOutput p_421731_, CallbackInfo ci) {
 		p_421731_.putBoolean("Muddy", this.isMuddy());
-		p_421731_.putBoolean("Sheared", this.isSheared());
-		p_421731_.putByte("Color", (byte) this.getColor().getId());
+        p_421731_.putBoolean("Sheared", this.isSheared());
+        p_421731_.store("Color", DyeColor.LEGACY_ID_CODEC, this.getColor());
 	}
 
 	@Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
 	public void readAdditionalSaveData(ValueInput p_422591_, CallbackInfo ci) {
 		this.setMuddy(p_422591_.getBooleanOr("Muddy", false));
-		this.setSheared(p_422591_.getBooleanOr("Sheared", false));
-		this.setColor(DyeColor.byId(p_422591_.getByteOr("Color", (byte) 0)));
-	}
+        this.setSheared(p_422591_.getBooleanOr("Sheared", false));
+        this.setColor(p_422591_.read("Color", DyeColor.LEGACY_ID_CODEC).orElse(DyeColor.PINK));
+
+    }
 
 	@Override
 	public boolean isShearable(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {

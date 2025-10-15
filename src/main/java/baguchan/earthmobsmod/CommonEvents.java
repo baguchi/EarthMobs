@@ -91,7 +91,7 @@ public class CommonEvents {
         if (entity instanceof IMuddyPig muddy) {
 			if (serverLevelAccessor.getBiome(BlockPos.containing(event.getX(), event.getY(), event.getZ())).is(Tags.Biomes.IS_SWAMP)) {
 				muddy.setMuddy(true);
-				muddy.setSheared(DyeColor.byId(DyeUtil.getRandomColor(serverLevelAccessor.getRandom()).getId()));
+                muddy.setColor(DyeColor.byId(DyeUtil.getRandomColor(serverLevelAccessor.getRandom()).getId()));
 			}
 		}
 	}
