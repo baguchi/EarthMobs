@@ -2,12 +2,12 @@ package baguchan.earthmobsmod.client;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.capability.ShadowCapability;
-import baguchan.earthmobsmod.client.animation.ShakeAnimations;
+import baguchi.bagus_lib.animation.client.BaguKeyFrameController;
 import baguchi.bagus_lib.client.event.BagusModelEvent;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.PigModel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -20,6 +20,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLivingEvent;
+import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.client.renderer.entity.LivingEntityRenderer.getOverlayCoords;
 
@@ -28,8 +29,12 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void renderAnimationEvent(BagusModelEvent.PostAnimate event) {
-        if (event.getModel() instanceof PigModel model) {
-            ShakeAnimations.shake.bake(event.getModel().root()).applyWalk(event.getEntityRenderState().ageInTicks, 1F, 1F, event.getEntityRenderState().getRenderDataOrDefault(ClientRegistrar.SHAKE, 0F));
+        @Nullable BaguKeyFrameController keyFrames = event.getBaguKeyframeController();
+        if (keyFrames != null) {
+            KeyframeAnimation shake = event.getBaguKeyframeController().getKeyframe(ClientRegistrar.SHAKE_ANIMATION);
+            if (shake != null) {
+                shake.applyWalk(event.getEntityRenderState().ageInTicks, 1F, 1F, event.getEntityRenderState().getRenderDataOrDefault(ClientRegistrar.SHAKE, 0F));
+            }
         }
     }
     @SubscribeEvent
