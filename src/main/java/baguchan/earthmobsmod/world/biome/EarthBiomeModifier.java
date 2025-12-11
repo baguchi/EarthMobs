@@ -92,17 +92,11 @@ public class EarthBiomeModifier implements BiomeModifier {
 						if (biome.is(BiomeTags.IS_FOREST)) {
 							builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.lobberZombieSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.LOBBER_ZOMBIE.get(), 3, 4));
 						}
-                        if (biome.is(Tags.Biomes.IS_DESERT)) {
-							builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.lobberZombieSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.LOBBER_HUSK.get(), 3, 4));
-                        }
+
 					}
 
 					if (EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get() > 0) {
-                        if (biome.is(Tags.Biomes.IS_COLD) && biome.is(Tags.Biomes.IS_MOUNTAIN)) {
-							builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_FROZEN_ZOMBIE.get(), 3, 4));
-                        } else {
-							builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_ZOMBIE.get(), 3, 4));
-						}
+                        builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_ZOMBIE.get(), 3, 4));
 					}
 
 					if (EarthMobsConfig.COMMON.zombifiedRabbitSpawnRate.get() > 0) {
@@ -111,9 +105,8 @@ public class EarthBiomeModifier implements BiomeModifier {
 
 					if (EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get() > 0) {
 						if (biome.is(Biomes.DRIPSTONE_CAVES)) {
-							builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_FROZEN_ZOMBIE.get(), 3, 4));
+                            builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.BOULDERING_DROWNED.get(), 3, 4));
 						}
-
                     }
 
 

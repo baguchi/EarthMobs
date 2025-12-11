@@ -55,10 +55,8 @@ public class EarthItemModels extends ItemModelGenerators {
 
         this.generateSpawnEgg(ModItems.BOULDERING_ZOMBIE_SPAWNEGG.get(), 0x384242, 0x52261A);
         this.generateSpawnEgg(ModItems.BOULDERING_DROWNED_SPAWNEGG.get(), 0x56847E, 0x52261A);
-        this.generateSpawnEgg(ModItems.BOULDERING_FROZEN_ZOMBIE_SPAWNEGG.get(), 0x679A90, 0x154954);
         this.generateSpawnEgg(ModItems.LOBBER_ZOMBIE_SPAWNEGG.get(), 0x899274, 0x436858);
         this.generateSpawnEgg(ModItems.LOBBER_DROWNED_SPAWNEGG.get(), 0x739274, 0x3E5F51);
-        this.generateSpawnEgg(ModItems.LOBBER_HUSK_SPAWNEGG.get(), 0x6C6454, 0xCFCFCF);
 
         this.generateFlatItem(ModItems.TROPICAL_SLIME_SPAWNEGG.get(), ModelTemplates.FLAT_ITEM);
         this.generateFlatItem(ModItems.SKELETON_WOLF_SPAWNEGG.get(), ModelTemplates.FLAT_ITEM);

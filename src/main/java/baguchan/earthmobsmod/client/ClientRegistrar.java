@@ -89,9 +89,6 @@ public class ClientRegistrar {
         event.registerEntityRenderer(ModEntities.BOULDERING_DROWNED.get(), BoulderingDrownedRenderer::new);
         event.registerEntityRenderer(ModEntities.LOBBER_DROWNED.get(), LobberDrownedRenderer::new);
 
-        event.registerEntityRenderer(ModEntities.BOULDERING_FROZEN_ZOMBIE.get(), BoulderingFrozenZombieRenderer::new);
-        event.registerEntityRenderer(ModEntities.LOBBER_HUSK.get(), LobberHuskRenderer::new);
-
         event.registerEntityRenderer(ModEntities.TROPICAL_SLIME.get(), TropicalSlimeRenderer::new);
         event.registerEntityRenderer(ModEntities.SKELETON_WOLF.get(), SkeletonWolfRenderer::new);
         event.registerEntityRenderer(ModEntities.WITHER_SKELETON_WOLF.get(), WitherSkeletonWolfRenderer::new);

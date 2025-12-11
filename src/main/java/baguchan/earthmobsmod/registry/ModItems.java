@@ -69,11 +69,6 @@ public class ModItems {
     public static final DeferredItem<Item> BOULDERING_DROWNED_SPAWNEGG = ITEMS.registerItem("bouldering_drowned_spawn_egg", (prop) -> new SpawnEggItem(prop.spawnEgg(ModEntities.BOULDERING_DROWNED.get())));
     public static final DeferredItem<Item> LOBBER_DROWNED_SPAWNEGG = ITEMS.registerItem("lobber_drowned_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.LOBBER_DROWNED.get()))));
 
-
-    public static final DeferredItem<Item> BOULDERING_FROZEN_ZOMBIE_SPAWNEGG = ITEMS.registerItem("bouldering_frozen_zombie_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.BOULDERING_FROZEN_ZOMBIE.get()))));
-    public static final DeferredItem<Item> LOBBER_HUSK_SPAWNEGG = ITEMS.registerItem("lobber_husk_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.LOBBER_HUSK.get()))));
-
-
     public static final DeferredItem<Item> TROPICAL_SLIME_SPAWNEGG = ITEMS.registerItem("tropical_slime_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.TROPICAL_SLIME.get()))));
     public static final DeferredItem<Item> SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.SKELETON_WOLF.get()))));
     public static final DeferredItem<Item> WITHER_SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("wither_skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.WITHER_SKELETON_WOLF.get()))));
@@ -121,11 +116,9 @@ public class ModItems {
 			event.accept(ZOMBIFIED_RABBIT_SPAWNEGG.get());
 			event.accept(BOULDERING_ZOMBIE_SPAWNEGG.get());
 			event.accept(BOULDERING_DROWNED_SPAWNEGG.get());
-            event.accept(BOULDERING_FROZEN_ZOMBIE_SPAWNEGG.get());
 
 			event.accept(LOBBER_ZOMBIE_SPAWNEGG.get());
 			event.accept(LOBBER_DROWNED_SPAWNEGG.get());
-            event.accept(LOBBER_HUSK_SPAWNEGG.get());
 
 			event.accept(TROPICAL_SLIME_SPAWNEGG.get());
 			event.accept(SKELETON_WOLF_SPAWNEGG.get());

@@ -77,16 +77,6 @@ public class ModEntities {
             .ridingOffset(-0.7F)
             .clientTrackingRange(8).build(prefix("lobber_drowned")));
 
-
-    public static final Supplier<EntityType<BoulderingFrozenZombie>> BOULDERING_FROZEN_ZOMBIE = ENTITIES.register("bouldering_frozen_zombie", () -> EntityType.Builder.of(BoulderingFrozenZombie::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
-            .passengerAttachments(2.0125F)
-            .ridingOffset(-0.7F)
-            .clientTrackingRange(8).build(prefix("bouldering_frozen_zombie")));
-    public static final Supplier<EntityType<LobberHusk>> LOBBER_HUSK = ENTITIES.register("lobber_husk", () -> EntityType.Builder.of(LobberHusk::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
-            .passengerAttachments(2.0125F)
-            .ridingOffset(-0.7F)
-            .clientTrackingRange(8).build(prefix("lobber_husk")));
-
     public static final Supplier<EntityType<TropicalSlime>> TROPICAL_SLIME = ENTITIES.register("tropical_slime", () -> EntityType.Builder.of(TropicalSlime::new, MobCategory.MONSTER).notInPeaceful().sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10).build(prefix("tropical_slime")));
 
     public static final Supplier<EntityType<SkeletonWolf>> SKELETON_WOLF = ENTITIES.register("skeleton_wolf", () -> EntityType.Builder.of(SkeletonWolf::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 0.85F).build(prefix("skeleton_wolf")));
@@ -138,10 +128,6 @@ public class ModEntities {
         event.register(BOULDERING_DROWNED.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BoulderingDrowned::checkBoulderingDrownedSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(LOBBER_DROWNED.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, LobberDrowned::checkLobberDrownedSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
 
-
-        event.register(BOULDERING_FROZEN_ZOMBIE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BoulderingFrozenZombie::checkFrozenZombieSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(LOBBER_HUSK.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, LobberHusk::checkHuskSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-
         event.register(TROPICAL_SLIME.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TropicalSlime::checkTropicalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(SKELETON_WOLF.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SkeletonWolf::checkSkeletonWolfSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(WITHER_SKELETON_WOLF.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SkeletonWolf::checkSkeletonWolfSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
@@ -179,9 +165,6 @@ public class ModEntities {
         event.put(LOBBER_ZOMBIE.get(), LobberZombie.createAttributes().build());
 		event.put(BOULDERING_DROWNED.get(), BoulderingDrowned.createAttributes().build());
         event.put(LOBBER_DROWNED.get(), LobberDrowned.createAttributes().build());
-
-        event.put(BOULDERING_FROZEN_ZOMBIE.get(), BoulderingFrozenZombie.createAttributes().build());
-        event.put(LOBBER_HUSK.get(), LobberHusk.createAttributes().build());
 
 		event.put(TROPICAL_SLIME.get(), Monster.createMonsterAttributes().build());
 		event.put(SKELETON_WOLF.get(), SkeletonWolf.createAttributes().build());
