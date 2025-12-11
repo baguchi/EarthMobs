@@ -9,14 +9,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 
 public class HyperRabbitRenderer extends MobRenderer<HyperRabbit, HyperRabbitRenderState, HyperRabbitModel<HyperRabbitRenderState>> {
-    private static final ResourceLocation RABBIT_BROWN_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/brown.png");
-    private static final ResourceLocation RABBIT_WHITE_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/white.png");
-    private static final ResourceLocation RABBIT_GOLD_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/gold.png");
-    private static final ResourceLocation RABBIT_SA_X_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/hr_x.png");
+    private static final Identifier RABBIT_BROWN_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/brown.png");
+    private static final Identifier RABBIT_WHITE_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/white.png");
+    private static final Identifier RABBIT_GOLD_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/gold.png");
+    private static final Identifier RABBIT_SA_X_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/hyper_rabbit/hr_x.png");
 
 	public HyperRabbitRenderer(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new HyperRabbitModel<>(p_173952_.bakeLayer(ModModelLayers.HYPER_RABBIT)), 0.3F);
@@ -44,7 +44,7 @@ public class HyperRabbitRenderer extends MobRenderer<HyperRabbit, HyperRabbitRen
 	}
 
 	@Override
-    public ResourceLocation getTextureLocation(HyperRabbitRenderState p_115803_) {
+    public Identifier getTextureLocation(HyperRabbitRenderState p_115803_) {
 
         switch (p_115803_.variant) {
 			case WHITE, SALT:

@@ -7,11 +7,11 @@ import baguchan.earthmobsmod.client.render.state.WoolyCowRenderState;
 import baguchan.earthmobsmod.entity.WoolyCow;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class WoolyCowRenderer<T extends WoolyCow> extends AgeableMobRenderer<T, WoolyCowRenderState, WoolyCowModel<WoolyCowRenderState>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow.png");
-    private static final ResourceLocation SHEARED_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow_sheared.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow.png");
+    private static final Identifier SHEARED_TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/wooly_cow/wooly_cow_sheared.png");
 
 
 	public WoolyCowRenderer(EntityRendererProvider.Context p_173952_) {
@@ -32,7 +32,7 @@ public class WoolyCowRenderer<T extends WoolyCow> extends AgeableMobRenderer<T, 
     }
 
     @Override
-    public ResourceLocation getTextureLocation(WoolyCowRenderState p_110775_1_) {
+    public Identifier getTextureLocation(WoolyCowRenderState p_110775_1_) {
         return !p_110775_1_.wool ? SHEARED_TEXTURE : TEXTURE;
 	}
 }

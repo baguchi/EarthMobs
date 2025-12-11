@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -77,8 +78,12 @@ public abstract class MudFluid extends WaterFluid {
 	}
 
 	public int getDropOff(LevelReader p_76252_) {
-		return p_76252_.dimensionType().ultraWarm() ? 2 : 3;
-	}
+        return isFastLava(p_76252_) ? 2 : 3;
+    }
+
+    private static boolean isFastLava(LevelReader p_458135_) {
+        return (Boolean) p_458135_.environmentAttributes().getDimensionValue(EnvironmentAttributes.FAST_LAVA);
+    }
 
 
 	@Override

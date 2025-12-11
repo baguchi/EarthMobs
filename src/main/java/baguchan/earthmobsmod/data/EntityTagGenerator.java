@@ -39,6 +39,11 @@ public class EntityTagGenerator extends EntityTypeTagsProvider {
 				.add(ModEntities.ZOMBIFIED_PIG.get())
 				.add(ModEntities.SKELETON_WOLF.get())
 				.add(ModEntities.WITHER_SKELETON_WOLF.get());
+        this.tag(EntityTypeTags.BURN_IN_DAYLIGHT)
+                .add(ModEntities.BOULDERING_ZOMBIE.get(), ModEntities.LOBBER_ZOMBIE.get())
+                .add(ModEntities.BOULDERING_DROWNED.get(), ModEntities.LOBBER_DROWNED.get())
+                .add(ModEntities.BOULDERING_FROZEN_ZOMBIE.get())
+                .add(ModEntities.ZOMBIFIED_RABBIT.get());
 		this.tag(EntityTypeTags.ARTHROPOD).add(ModEntities.BONE_SPIDER.get(), ModEntities.STRAY_BONE_SPIDER.get());
 	}
 }

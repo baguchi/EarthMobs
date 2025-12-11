@@ -2,7 +2,7 @@ package baguchan.earthmobsmod.fluidtype;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -64,22 +64,22 @@ public class MudFluidType extends FluidType {
 	}
 
 	public static class MudRender implements IClientFluidTypeExtensions {
-		private static final ResourceLocation TEXTURE_STILL = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "block/mud");
-		private static final ResourceLocation TEXTURE_FLOW = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "block/flowing_mud");
-		private static final ResourceLocation TEXTURE_OVERLAY = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/block/mud.png");
+        private static final Identifier TEXTURE_STILL = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "block/mud");
+        private static final Identifier TEXTURE_FLOW = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "block/flowing_mud");
+        private static final Identifier TEXTURE_OVERLAY = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/block/mud.png");
 
 		@Override
-		public ResourceLocation getStillTexture() {
+        public Identifier getStillTexture() {
 			return TEXTURE_STILL;
 		}
 
 		@Override
-		public ResourceLocation getFlowingTexture() {
+        public Identifier getFlowingTexture() {
 			return TEXTURE_FLOW;
 		}
 
 		@Override
-		public ResourceLocation getRenderOverlayTexture(Minecraft mc) {
+        public Identifier getRenderOverlayTexture(Minecraft mc) {
 			return TEXTURE_OVERLAY;
 		}
 	}

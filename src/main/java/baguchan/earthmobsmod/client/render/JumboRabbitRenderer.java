@@ -9,14 +9,14 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.RabbitRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 
 public class JumboRabbitRenderer<T extends JumboRabbit> extends MobRenderer<T, RabbitRenderState, JumboRabbitModel<RabbitRenderState>> {
-    private static final ResourceLocation RABBIT_BROWN_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/brown.png");
-    private static final ResourceLocation RABBIT_WHITE_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/white.png");
-    private static final ResourceLocation RABBIT_BLACK_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/black.png");
-    private static final ResourceLocation RABBIT_EVIL_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/evil.png");
+    private static final Identifier RABBIT_BROWN_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/brown.png");
+    private static final Identifier RABBIT_WHITE_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/white.png");
+    private static final Identifier RABBIT_BLACK_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/black.png");
+    private static final Identifier RABBIT_EVIL_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jumbo_rabbit/evil.png");
 
 
 	public JumboRabbitRenderer(EntityRendererProvider.Context p_173952_) {
@@ -44,7 +44,7 @@ public class JumboRabbitRenderer<T extends JumboRabbit> extends MobRenderer<T, R
 	}
 
 	@Override
-    public ResourceLocation getTextureLocation(RabbitRenderState p_115803_) {
+    public Identifier getTextureLocation(RabbitRenderState p_115803_) {
         switch (p_115803_.variant) {
 			case BROWN:
 			default:

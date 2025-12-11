@@ -18,15 +18,15 @@ import baguchan.earthmobsmod.registry.ModFluidTypes;
 import baguchi.bagus_lib.client.event.RegisterBagusKeyframeEvents;
 import com.google.common.reflect.TypeToken;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
-import net.minecraft.client.model.CowModel;
-import net.minecraft.client.model.PigModel;
-import net.minecraft.client.model.ZombieModel;
+import net.minecraft.client.model.animal.cow.CowModel;
+import net.minecraft.client.model.animal.pig.PigModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.monster.zombie.ZombieModel;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextKey;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -42,10 +42,10 @@ import static net.minecraft.client.renderer.RenderPipelines.ENTITY_SNIPPET;
 
 @EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
 public class ClientRegistrar {
-    public static final ContextKey<ShadowCapability> SHADOW = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow"));
-    public static final ContextKey<Float> SHAKE = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shake"));
+    public static final ContextKey<ShadowCapability> SHADOW = new ContextKey<>(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow"));
+    public static final ContextKey<Float> SHAKE = new ContextKey<>(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "shake"));
 
-    public static final ResourceLocation SHAKE_ANIMATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shake");
+    public static final Identifier SHAKE_ANIMATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "shake");
     public static final RenderPipeline ANIMATION_ENTITY =
             RenderPipeline.builder(ENTITY_SNIPPET)
                     .withLocation(EarthMobsMod.prefix("pipeline/animation_entity"))

@@ -8,10 +8,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.LivingEntity;
@@ -95,7 +96,7 @@ public class ClientEvents {
         posestack.scale(-1.0F, -1.0F, 1.0F);
         //renderer.scale(entity, posestack);
         posestack.translate(0.0F, -1.501F, 0.0F);
-        RenderType rendertype = RenderType.entityTranslucent(renderer.getTextureLocation(entity));
+        RenderType rendertype = RenderTypes.entityTranslucent(renderer.getTextureLocation(entity));
         if (rendertype != null && renderer.getModel() instanceof EntityModel<LivingEntityRenderState> entityModel) {
             int i = getOverlayCoords(entity, 0.0F);
             int j = 654311423;

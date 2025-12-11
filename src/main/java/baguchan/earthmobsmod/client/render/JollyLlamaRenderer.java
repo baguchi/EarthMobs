@@ -7,12 +7,12 @@ import baguchan.earthmobsmod.entity.JollyLlama;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.LlamaRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 
 public class JollyLlamaRenderer<T extends JollyLlama> extends MobRenderer<T, LlamaRenderState, JollyLlamaModel<LlamaRenderState>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jolly_llama/jolly_llama.png");
-    private static final ResourceLocation TAMED_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jolly_llama/jolly_llama_tamed.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jolly_llama/jolly_llama.png");
+    private static final Identifier TAMED_TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/jolly_llama/jolly_llama_tamed.png");
 
 
     public JollyLlamaRenderer(EntityRendererProvider.Context p_174304_) {
@@ -34,7 +34,7 @@ public class JollyLlamaRenderer<T extends JollyLlama> extends MobRenderer<T, Lla
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LlamaRenderState p_114482_) {
+    public Identifier getTextureLocation(LlamaRenderState p_114482_) {
         if (!p_114482_.bodyItem.isEmpty()) {
             return TAMED_TEXTURE;
         }

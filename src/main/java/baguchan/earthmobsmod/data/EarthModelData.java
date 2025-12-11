@@ -16,8 +16,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -87,14 +87,14 @@ public class EarthModelData extends ModelProvider {
         }
 
 
-        public void accept(Item p_387063_, ItemModel.Unbaked p_388578_) {
-            this.register(p_387063_, new ClientItem(p_388578_, ClientItem.Properties.DEFAULT));
+        public void accept(Item p_387063_, ItemModel.Unbaked p_388578_, ClientItem.Properties properties) {
+            this.register(p_387063_, new ClientItem(p_388578_, properties));
         }
 
         public void register(Item p_388205_, ClientItem p_388233_) {
-            ClientItem clientitem = (ClientItem) this.itemInfos.put(p_388205_, p_388233_);
+            ClientItem clientitem = this.itemInfos.put(p_388205_, p_388233_);
             if (clientitem != null) {
-                throw new IllegalStateException("Duplicate item model definition for " + String.valueOf(p_388205_));
+                throw new IllegalStateException("Duplicate item model definition for " + p_388205_);
             }
         }
 
@@ -106,43 +106,43 @@ public class EarthModelData extends ModelProvider {
             (this.knownItems.get()).map(Holder::value).forEach((p_388426_) -> {
                 if (!this.copies.containsKey(p_388426_) && p_388426_ instanceof BlockItem blockitem) {
                     if (!this.itemInfos.containsKey(blockitem)) {
-                        ResourceLocation resourcelocation = ModelLocationUtils.getModelLocation(blockitem.getBlock());
+                        Identifier resourcelocation = ModelLocationUtils.getModelLocation(blockitem.getBlock());
                         this.accept(blockitem, ItemModelUtils.plainModel(resourcelocation));
                     }
                 }
 
             });
             this.copies.forEach((p_386494_, p_386575_) -> {
-                ClientItem clientitem = (ClientItem) this.itemInfos.get(p_386575_);
+                ClientItem clientitem = this.itemInfos.get(p_386575_);
                 if (clientitem == null) {
                     String var10002 = String.valueOf(p_386575_);
-                    throw new IllegalStateException("Missing donor: " + var10002 + " -> " + String.valueOf(p_386494_));
+                    throw new IllegalStateException("Missing donor: " + var10002 + " -> " + p_386494_);
                 } else {
                     this.register(p_386494_, clientitem);
                 }
             });
-            List<ResourceLocation> list = (this.knownItems.get()).filter((p_388636_) -> !this.itemInfos.containsKey(p_388636_.value())).map((p_388278_) -> ((ResourceKey) p_388278_.unwrapKey().orElseThrow()).location()).toList();
+            List<Identifier> list = (this.knownItems.get()).filter((p_388636_) -> !this.itemInfos.containsKey(p_388636_.value())).map((p_388278_) -> ((ResourceKey) p_388278_.unwrapKey().orElseThrow()).identifier()).toList();
             if (!list.isEmpty()) {
-                throw new IllegalStateException("Missing item model definitions for: " + String.valueOf(list));
+                throw new IllegalStateException("Missing item model definitions for: " + list);
             }
         }
 
         public CompletableFuture<?> save(CachedOutput p_387552_, PackOutput.PathProvider p_388501_) {
-            return DataProvider.saveAll(p_387552_, ClientItem.CODEC, (p_388594_) -> p_388501_.json(p_388594_.builtInRegistryHolder().key().location()), this.itemInfos);
+            return DataProvider.saveAll(p_387552_, ClientItem.CODEC, (p_388594_) -> p_388501_.json(p_388594_.builtInRegistryHolder().key().identifier()), this.itemInfos);
         }
     }
 
 
-    static class SimpleModelCollector implements BiConsumer<ResourceLocation, ModelInstance> {
-        private final Map<ResourceLocation, ModelInstance> models = new HashMap();
+    static class SimpleModelCollector implements BiConsumer<Identifier, ModelInstance> {
+        private final Map<Identifier, ModelInstance> models = new HashMap();
 
         SimpleModelCollector() {
         }
 
-        public void accept(ResourceLocation p_388633_, ModelInstance p_388119_) {
-            Supplier<JsonElement> supplier = (Supplier) this.models.put(p_388633_, p_388119_);
+        public void accept(Identifier p_388633_, ModelInstance p_388119_) {
+            Supplier<JsonElement> supplier = this.models.put(p_388633_, p_388119_);
             if (supplier != null) {
-                throw new IllegalStateException("Duplicate model definition for " + String.valueOf(p_388633_));
+                throw new IllegalStateException("Duplicate model definition for " + p_388633_);
             }
         }
 
@@ -169,23 +169,23 @@ public class EarthModelData extends ModelProvider {
 
         public void accept(BlockModelDefinitionGenerator p_388748_) {
             Block block = p_388748_.block();
-            BlockModelDefinitionGenerator blockstategenerator = (BlockModelDefinitionGenerator) this.generators.put(block, p_388748_);
+            BlockModelDefinitionGenerator blockstategenerator = this.generators.put(block, p_388748_);
             if (blockstategenerator != null) {
-                throw new IllegalStateException("Duplicate blockstate definition for " + String.valueOf(block));
+                throw new IllegalStateException("Duplicate blockstate definition for " + block);
             }
         }
 
         public void validate() {
             Stream<? extends Holder<Block>> stream = this.knownBlocks.get();
-            List<ResourceLocation> list = stream.filter((p_386843_) -> !this.generators.containsKey(p_386843_.value())).map((p_386823_) -> ((ResourceKey) p_386823_.unwrapKey().orElseThrow()).location()).toList();
+            List<Identifier> list = stream.filter((p_386843_) -> !this.generators.containsKey(p_386843_.value())).map((p_386823_) -> ((ResourceKey) p_386823_.unwrapKey().orElseThrow()).identifier()).toList();
             if (!list.isEmpty()) {
-                throw new IllegalStateException("Missing blockstate definitions for: " + String.valueOf(list));
+                throw new IllegalStateException("Missing blockstate definitions for: " + list);
             }
         }
 
         public CompletableFuture<?> save(CachedOutput p_388014_, PackOutput.PathProvider p_388192_) {
             Map<Block, BlockModelDefinition> map = Maps.transformValues(this.generators, BlockModelDefinitionGenerator::create);
-            Function<Block, Path> function = p_387598_ -> p_388192_.json(p_387598_.builtInRegistryHolder().key().location());
+            Function<Block, Path> function = p_387598_ -> p_388192_.json(p_387598_.builtInRegistryHolder().key().identifier());
             return DataProvider.saveAll(p_388014_, BlockModelDefinition.CODEC, function, map);
         }
     }

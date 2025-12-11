@@ -10,12 +10,12 @@ import baguchan.earthmobsmod.client.render.state.HornedSheepRenderState;
 import baguchan.earthmobsmod.entity.HornedSheep;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 
 public class HornedSheepRenderer extends AgeableMobRenderer<HornedSheep, HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep.png");
-    private static final ResourceLocation TEXTURE_HORNLESS = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep_hornless.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep.png");
+    private static final Identifier TEXTURE_HORNLESS = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/horned_sheep_hornless.png");
 
 
 
@@ -43,7 +43,7 @@ public class HornedSheepRenderer extends AgeableMobRenderer<HornedSheep, HornedS
     }
 
 	@Override
-	public ResourceLocation getTextureLocation(HornedSheepRenderState p_110775_1_) {
+    public Identifier getTextureLocation(HornedSheepRenderState p_110775_1_) {
 		if (!p_110775_1_.horn) {
             return TEXTURE_HORNLESS;
         }

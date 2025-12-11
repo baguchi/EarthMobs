@@ -9,11 +9,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 
 public class StrayBoneSpiderRender<T extends StrayBoneSpider> extends MobRenderer<T, LivingEntityRenderState, BoneSpiderModel<LivingEntityRenderState>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/bone_spider/stray_bone_spider.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/bone_spider/stray_bone_spider.png");
 
 	public StrayBoneSpiderRender(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new BoneSpiderModel<>(p_173952_.bakeLayer(ModModelLayers.STRAY_BONE_SPIDER)), 0.65F);
@@ -27,7 +27,7 @@ public class StrayBoneSpiderRender<T extends StrayBoneSpider> extends MobRendere
 
 
 	@Override
-	public ResourceLocation getTextureLocation(LivingEntityRenderState p_110775_1_) {
+    public Identifier getTextureLocation(LivingEntityRenderState p_110775_1_) {
 		return TEXTURE;
 	}
 

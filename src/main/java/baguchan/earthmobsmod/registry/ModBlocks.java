@@ -3,14 +3,12 @@ package baguchan.earthmobsmod.registry;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.block.CarvedMelonBlock;
 import baguchan.earthmobsmod.block.TropicalSlimeBlock;
-import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -65,7 +63,7 @@ public class ModBlocks {
     }
 
     private static ResourceKey<Block> createKey(String name) {
-        return ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, name));
+        return ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, name));
     }
 
     private static <T extends Block> DeferredBlock<T> baseRegister(String name, ResourceKey<Block> key, Function<Block.Properties, T> builder, Supplier<Block.Properties> properties, Function<DeferredBlock<T>, Supplier<? extends Item>> item) {
@@ -74,17 +72,10 @@ public class ModBlocks {
         return registered;
     }
 
-    private static <T extends Block> DeferredBlock<T> registerTorchBlock(String name, Function<BlockBehaviour.Properties, T> block, DeferredBlock<T> wallTorchBlock, BlockBehaviour.Properties properties) {
-        DeferredBlock<T> ret = BLOCKS.register(name, () -> block.apply(properties.setId(ResourceKey.create(Registries.BLOCK, EarthMobsMod.prefix(name)))));
-        ModItems.ITEMS.registerItem(name, itemProps -> new StandingAndWallBlockItem(ret.get(), wallTorchBlock.get(), Direction.DOWN, itemProps.useBlockDescriptionPrefix()), new Item.Properties());
-        return ret;
-
-    }
-
     private static <T extends Block> Supplier<BlockItem> registerBlockItem(final DeferredBlock<T> deferredBlock, String name) {
         return () -> {
             DeferredBlock<T> block = Objects.requireNonNull(deferredBlock);
-            Item.Properties properties = new Item.Properties().setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, name))).useBlockDescriptionPrefix();
+            Item.Properties properties = new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, name))).useBlockDescriptionPrefix();
             return new BlockItem(block.get(), properties);
         };
     }

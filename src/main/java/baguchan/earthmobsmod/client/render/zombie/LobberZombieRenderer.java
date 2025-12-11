@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
 
 
 public class LobberZombieRenderer<T extends LobberZombie> extends AgeableMobRenderer<T, LobberZombieRenderState, LobberZombieModel<LobberZombieRenderState>> {
-    private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_zombie.png");
+    private static final Identifier LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_zombie.png");
 
 	public LobberZombieRenderer(EntityRendererProvider.Context p_173964_) {
 		super(p_173964_, new LobberZombieModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_ZOMBIE)), new LobberZombieModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_ZOMBIE_BABY)), 0.5F);
@@ -49,7 +49,7 @@ public class LobberZombieRenderer<T extends LobberZombie> extends AgeableMobRend
 	}
 
 	public static void extractHumanoidRenderState(LivingEntity p_365104_, HumanoidRenderState p_362998_, float p_363706_, ItemModelResolver p_388651_) {
-		ArmedEntityRenderState.extractArmedEntityRenderState(p_365104_, p_362998_, p_388651_);
+        ArmedEntityRenderState.extractArmedEntityRenderState(p_365104_, p_362998_, p_388651_, p_363706_);
 		p_362998_.isCrouching = p_365104_.isCrouching();
 		p_362998_.isFallFlying = p_365104_.isFallFlying();
 		p_362998_.isVisuallySwimming = p_365104_.isVisuallySwimming();
@@ -91,7 +91,7 @@ public class LobberZombieRenderer<T extends LobberZombie> extends AgeableMobRend
 		return p_362737_.swingingArm == InteractionHand.MAIN_HAND ? humanoidarm : humanoidarm.getOpposite();
 	}
 
-	public ResourceLocation getTextureLocation(LobberZombieRenderState p_114115_) {
+    public Identifier getTextureLocation(LobberZombieRenderState p_114115_) {
 		return LOCATION;
 	}
 }

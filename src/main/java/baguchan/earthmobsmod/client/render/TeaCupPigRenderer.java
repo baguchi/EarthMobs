@@ -9,12 +9,12 @@ import baguchan.earthmobsmod.entity.TeaCupPig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 
 public class TeaCupPigRenderer extends MobRenderer<TeaCupPig, TeaCupPigRenderState, TeaCupPigModel<TeaCupPigRenderState>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig.png");
-    private static final ResourceLocation MUD_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig_mud.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig.png");
+    private static final Identifier MUD_TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/teacup_pig/teacup_pig_mud.png");
 
 
     public TeaCupPigRenderer(EntityRendererProvider.Context p_174304_) {
@@ -41,7 +41,7 @@ public class TeaCupPigRenderer extends MobRenderer<TeaCupPig, TeaCupPigRenderSta
     }
 
     @Override
-    public ResourceLocation getTextureLocation(TeaCupPigRenderState p_114482_) {
+    public Identifier getTextureLocation(TeaCupPigRenderState p_114482_) {
         boolean mud = p_114482_.mud;
         if (mud) {
             return MUD_TEXTURE;

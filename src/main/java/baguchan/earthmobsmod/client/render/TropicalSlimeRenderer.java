@@ -7,23 +7,24 @@ import baguchan.earthmobsmod.client.render.layer.TropicalSlimeOuterLayer;
 import baguchan.earthmobsmod.client.render.state.TropicalSlimeRenderState;
 import baguchan.earthmobsmod.entity.TropicalSlime;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.model.monster.slime.SlimeModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 
 public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, TropicalSlimeRenderState, SlimeModel> {
-	public static final ResourceLocation SLIME_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime.png");
-    public static final ResourceLocation NO_FISH_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_no_fish.png");
-    public static final ResourceLocation SLIME_OUTER_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_outer.png");
+    public static final Identifier SLIME_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime.png");
+    public static final Identifier NO_FISH_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_no_fish.png");
+    public static final Identifier SLIME_OUTER_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/tropical_slime/tropical_slime_outer.png");
 
     public final SlimeModel noFishSlimeModel;
     public final SlimeModel fishSlimeModel;
@@ -74,7 +75,7 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, TropicalSl
 
 		if (!p_115324_ && p_115323_) {
             if (!p_360858_.fish) {
-                return RenderType.entityCutoutNoCull(NO_FISH_LOCATION);
+                return RenderTypes.entityCutoutNoCull(NO_FISH_LOCATION);
             }
 			return EarthRenderType.entityAnimationWithAllTexture(TropicalSlimeRenderer.SLIME_LOCATION, 100, 48, (int) (p_360858_.ageInTicks - p_360858_.partialTick));
 		}
@@ -111,7 +112,7 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, TropicalSl
         p_365237_.fish = p_362664_.hasFish();
 	}
 
-    public ResourceLocation getTextureLocation(TropicalSlimeRenderState p_115974_) {
+    public Identifier getTextureLocation(TropicalSlimeRenderState p_115974_) {
 		return SLIME_LOCATION;
 	}
 }

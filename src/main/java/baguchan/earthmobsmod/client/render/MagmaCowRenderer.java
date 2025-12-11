@@ -7,20 +7,21 @@ import baguchan.earthmobsmod.client.model.MagmaCowModel;
 import baguchan.earthmobsmod.client.render.state.MagmaCowRenderState;
 import baguchan.earthmobsmod.entity.MagmaCow;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class MagmaCowRenderer<T extends MagmaCow> extends AgeableMobRenderer<T, MagmaCowRenderState, MagmaCowModel<MagmaCowRenderState>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/magma_cow/magma_cow.png");
-    private static final ResourceLocation TEXTURE_WEAK = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/magma_cow/magma_cow_no_lava.png");
-    private static final ResourceLocation TEXTURE_GLOW = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/magma_cow/magma_cow_glow");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/magma_cow/magma_cow.png");
+    private static final Identifier TEXTURE_WEAK = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/magma_cow/magma_cow_no_lava.png");
+    private static final Identifier TEXTURE_GLOW = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/magma_cow/magma_cow_glow");
 
     public MagmaCowRenderer(EntityRendererProvider.Context p_173952_) {
         super(p_173952_, new MagmaCowModel<>(p_173952_.bakeLayer(ModModelLayers.MAGMA_COW)), new MagmaCowModel<>(p_173952_.bakeLayer(ModModelLayers.MAGMA_COW_BABY)), 0.3F);
@@ -34,7 +35,7 @@ public class MagmaCowRenderer<T extends MagmaCow> extends AgeableMobRenderer<T, 
 
             @Override
             public RenderType renderType() {
-                return RenderType.eyes(TEXTURE_GLOW);
+                return RenderTypes.eyes(TEXTURE_GLOW);
             }
         });
     }
@@ -52,7 +53,7 @@ public class MagmaCowRenderer<T extends MagmaCow> extends AgeableMobRenderer<T, 
 
 
     @Override
-    public ResourceLocation getTextureLocation(MagmaCowRenderState p_110775_1_) {
+    public Identifier getTextureLocation(MagmaCowRenderState p_110775_1_) {
         if (!p_110775_1_.magma) {
             return TEXTURE_WEAK;
         }

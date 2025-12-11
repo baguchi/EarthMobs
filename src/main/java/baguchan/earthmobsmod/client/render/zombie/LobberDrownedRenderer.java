@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,8 +28,8 @@ import net.minecraft.world.item.Items;
 
 
 public class LobberDrownedRenderer<T extends LobberDrowned> extends AgeableMobRenderer<T, LobberZombieRenderState, LobberDrownedModel<LobberZombieRenderState>> {
-    private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_drowned.png");
-    private static final ResourceLocation OUTER_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_drowned_outer.png");
+    private static final Identifier LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_drowned.png");
+    private static final Identifier OUTER_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/lobber_zombie/lobber_drowned_outer.png");
 
 
     public LobberDrownedRenderer(EntityRendererProvider.Context p_173964_) {
@@ -49,7 +49,7 @@ public class LobberDrownedRenderer<T extends LobberDrowned> extends AgeableMobRe
     }
 
     public static void extractHumanoidRenderState(LivingEntity p_365104_, HumanoidRenderState p_362998_, float p_363706_, ItemModelResolver p_388651_) {
-        ArmedEntityRenderState.extractArmedEntityRenderState(p_365104_, p_362998_, p_388651_);
+        ArmedEntityRenderState.extractArmedEntityRenderState(p_365104_, p_362998_, p_388651_, p_363706_);
         p_362998_.isCrouching = p_365104_.isCrouching();
         p_362998_.isFallFlying = p_365104_.isFallFlying();
         p_362998_.isVisuallySwimming = p_365104_.isVisuallySwimming();
@@ -97,7 +97,7 @@ public class LobberDrownedRenderer<T extends LobberDrowned> extends AgeableMobRe
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LobberZombieRenderState p_361561_) {
+    public Identifier getTextureLocation(LobberZombieRenderState p_361561_) {
         return LOCATION;
     }
 
@@ -115,7 +115,7 @@ public class LobberDrownedRenderer<T extends LobberDrowned> extends AgeableMobRe
     protected HumanoidModel.ArmPose getArmPose(T p_388016_, HumanoidArm p_386643_) {
         ItemStack itemstack = p_388016_.getItemHeldByArm(p_386643_);
         return p_388016_.getMainArm() == p_386643_ && p_388016_.isAggressive() && itemstack.is(Items.TRIDENT)
-                ? HumanoidModel.ArmPose.THROW_SPEAR
+                ? HumanoidModel.ArmPose.THROW_TRIDENT
                 : HumanoidModel.ArmPose.EMPTY;
     }
 }

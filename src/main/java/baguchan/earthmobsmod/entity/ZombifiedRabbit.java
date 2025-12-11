@@ -25,9 +25,9 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -164,20 +164,6 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
             p_34399_.levelEvent((Player) null, 1027, this.blockPosition(), 0);
         }
         EventHooks.onLivingConvert(this, rabbit);
-    }
-
-    @Override
-    public void aiStep() {
-        if (this.isAlive()) {
-            boolean flag = this.isSunBurnTick();
-            if (flag) {
-
-                if (flag) {
-                    this.igniteForSeconds(8);
-                }
-            }
-        }
-        super.aiStep();
     }
 
     public static boolean isDarkEnoughToSpawn(ServerLevelAccessor p_219010_, BlockPos p_219011_, RandomSource p_219012_) {

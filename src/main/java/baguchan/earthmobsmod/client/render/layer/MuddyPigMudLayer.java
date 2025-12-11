@@ -6,24 +6,24 @@ import baguchan.earthmobsmod.client.model.MuddyPigModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextKey;
 
 
 public class MuddyPigMudLayer<T extends LivingEntityRenderState, S extends EntityModel<T>> extends RenderLayer<T, S> {
-	private static final ResourceLocation MUD_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/muddypig/muddy_pig.png");
-	private static final ResourceLocation DRY_MUD_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/muddypig/dry_muddy_pig.png");
+    private static final Identifier MUD_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/muddypig/muddy_pig.png");
+    private static final Identifier DRY_MUD_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/muddypig/dry_muddy_pig.png");
 
-    public static final ContextKey<Boolean> IS_MUD = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "mud"));
-    public static final ContextKey<Boolean> IS_SHEARED = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "sheared"));
+    public static final ContextKey<Boolean> IS_MUD = new ContextKey<>(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "mud"));
+    public static final ContextKey<Boolean> IS_SHEARED = new ContextKey<>(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "sheared"));
 
     private final MuddyPigModel model;
     private final MuddyPigModel babyModel;
@@ -42,7 +42,7 @@ public class MuddyPigMudLayer<T extends LivingEntityRenderState, S extends Entit
         if (mud) {
             if (entityRenderState.isInvisible) {
                 if (entityRenderState.appearsGlowing()) {
-                    submitNodeCollector.submitModel(pigModel, entityRenderState, poseStack, RenderType.outline(MUD_LOCATION), i, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, entityRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+                    submitNodeCollector.submitModel(pigModel, entityRenderState, poseStack, RenderTypes.outline(MUD_LOCATION), i, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, entityRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
                 }
             } else {
                 coloredCutoutModelCopyLayerRender(pigModel, MUD_LOCATION, poseStack, submitNodeCollector, i, entityRenderState, -1, 1);

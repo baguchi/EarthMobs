@@ -3,15 +3,16 @@ package baguchan.earthmobsmod.client.render.layer;
 import baguchan.earthmobsmod.client.render.state.MelonGolemRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.model.SnowGolemModel;
+import net.minecraft.client.model.animal.golem.SnowGolemModel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,7 +39,7 @@ public class MelonGolemHeadLayer extends RenderLayer<MelonGolemRenderState, Snow
             BlockStateModel blockstatemodel = this.blockRenderer.getBlockModel(blockstate);
             int i2 = LivingEntityRenderer.getOverlayCoords(melonGolemRenderState, 0.0F);
             poseStack.translate(-0.5F, -0.5F, -0.5F);
-            RenderType rendertype = melonGolemRenderState.appearsGlowing() && melonGolemRenderState.isInvisible ? RenderType.outline(TextureAtlas.LOCATION_BLOCKS) : ItemBlockRenderTypes.getRenderType(blockstate);
+            RenderType rendertype = melonGolemRenderState.appearsGlowing() && melonGolemRenderState.isInvisible ? RenderTypes.outline(TextureAtlas.LOCATION_BLOCKS) : ItemBlockRenderTypes.getRenderType(blockstate);
             submitNodeCollector.submitBlockModel(poseStack, rendertype, blockstatemodel, 0.0F, 0.0F, 0.0F, i, i2, melonGolemRenderState.outlineColor);
             poseStack.popPose();
         }

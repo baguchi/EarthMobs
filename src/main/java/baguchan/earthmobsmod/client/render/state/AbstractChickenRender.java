@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.chicken.Chicken;
 
 public abstract class AbstractChickenRender<T extends Chicken, S extends ChickenRenderState, M extends EntityModel<S>> extends AgeableMobRenderer<T, S, M> {
 

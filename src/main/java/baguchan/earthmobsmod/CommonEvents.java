@@ -25,13 +25,13 @@ import net.minecraft.util.TriState;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.animal.pig.Pig;
+import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.monster.ZombieVillager;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.WanderingTrader;
+import net.minecraft.world.entity.monster.zombie.Zombie;
+import net.minecraft.world.entity.monster.zombie.ZombieVillager;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -269,7 +269,7 @@ public class CommonEvents {
 						p_370686_ -> {
 							p_370686_.finalizeSpawn(
 									serverLevel,
-									level.getCurrentDifficultyAt(p_370686_.blockPosition()),
+                                    serverLevel.getCurrentDifficultyAt(p_370686_.blockPosition()),
 									EntitySpawnReason.CONVERSION,
 									new Zombie.ZombieGroupData(false, true)
 							);

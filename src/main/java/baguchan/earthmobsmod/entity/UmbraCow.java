@@ -4,8 +4,8 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UmbraCow extends WoolyCow {
-	public static final ResourceKey<LootTable> UMBRA_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "entities/umbra_cow_sheared"));
+    public static final ResourceKey<LootTable> UMBRA_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "entities/umbra_cow_sheared"));
 
 	public UmbraCow(EntityType<? extends UmbraCow> p_28285_, Level p_28286_) {
 		super(p_28285_, p_28286_);

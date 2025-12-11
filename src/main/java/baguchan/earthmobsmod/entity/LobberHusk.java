@@ -68,7 +68,7 @@ public class LobberHusk extends LobberZombie {
     public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
         boolean flag = super.doHurtTarget(serverLevel, entity);
         if (flag && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity) {
-            float f = this.level().getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
+            float f = serverLevel.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
             ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.HUNGER, 140 * (int) f), this);
         }
 
@@ -76,8 +76,8 @@ public class LobberHusk extends LobberZombie {
     }
 
     @Override
-    protected void doUnderWaterConversion() {
-        this.convertToZombieType(ModEntities.LOBBER_ZOMBIE.get());
+    protected void doUnderWaterConversion(ServerLevel serverLevel) {
+        this.convertToZombieType(serverLevel, ModEntities.LOBBER_ZOMBIE.get());
         if (!this.isSilent()) {
             this.level().levelEvent((Player) null, 1041, this.blockPosition(), 0);
         }
@@ -85,15 +85,17 @@ public class LobberHusk extends LobberZombie {
 
     @Override
     public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
-        ZombieFlesh zombieFlesh = new ZombieFlesh(this.level(), this, Items.ROTTEN_FLESH.getDefaultInstance());
-        double d0 = p_29912_.getEyeY() - this.getEyeY();
-        double d1 = p_29912_.getX() - this.getX();
-        double d3 = p_29912_.getZ() - this.getZ();
-        double d4 = Math.sqrt(d1 * d1 + d3 * d3) * (double) 0.1F;
-        float f = this.level().getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
-        zombieFlesh.shoot(d1, d0 + d4, d3, 0.8F, 0.1F);
-        zombieFlesh.addEffect(new MobEffectInstance(MobEffects.HUNGER, (int) (40 + 80 * f)));
+        if (this.level() instanceof ServerLevel serverLevel) {
+            ZombieFlesh zombieFlesh = new ZombieFlesh(this.level(), this, Items.ROTTEN_FLESH.getDefaultInstance());
+            double d0 = p_29912_.getEyeY() - this.getEyeY();
+            double d1 = p_29912_.getX() - this.getX();
+            double d3 = p_29912_.getZ() - this.getZ();
+            double d4 = Math.sqrt(d1 * d1 + d3 * d3) * (double) 0.1F;
+            float f = serverLevel.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
+            zombieFlesh.shoot(d1, d0 + d4, d3, 0.8F, 0.1F);
+            zombieFlesh.addEffect(new MobEffectInstance(MobEffects.HUNGER, (int) (40 + 80 * f)));
+            this.level().addFreshEntity(zombieFlesh);
+        }
         this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-        this.level().addFreshEntity(zombieFlesh);
     }
 }

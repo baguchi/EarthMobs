@@ -3,14 +3,14 @@ package baguchan.earthmobsmod.client.render.layer;
 import baguchan.earthmobsmod.client.render.TropicalSlimeRenderer;
 import baguchan.earthmobsmod.client.render.state.TropicalSlimeRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.model.monster.slime.SlimeModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 public class TropicalSlimeOuterLayer extends RenderLayer<TropicalSlimeRenderState, SlimeModel> {
     private final SlimeModel model;
@@ -31,7 +31,7 @@ public class TropicalSlimeOuterLayer extends RenderLayer<TropicalSlimeRenderStat
                                 this.model,
                                 tropicalSlimeRenderState,
                                 poseStack,
-                                RenderType.outline(TropicalSlimeRenderer.SLIME_OUTER_LOCATION),
+                                RenderTypes.outline(TropicalSlimeRenderer.SLIME_OUTER_LOCATION),
                                 i,
                                 i2,
                                 -1,
@@ -45,7 +45,7 @@ public class TropicalSlimeOuterLayer extends RenderLayer<TropicalSlimeRenderStat
                                 this.model,
                                 tropicalSlimeRenderState,
                                 poseStack,
-                                RenderType.entityTranslucent(TropicalSlimeRenderer.SLIME_OUTER_LOCATION),
+                                RenderTypes.entityTranslucent(TropicalSlimeRenderer.SLIME_OUTER_LOCATION),
                                 i,
                                 i2,
                                 -1,

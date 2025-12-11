@@ -61,7 +61,7 @@ public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState
         this.head.yRot = entity.yRot * ((float) Math.PI / 180F);
         this.head.xRot = entity.xRot * ((float) Math.PI / 180F);
 
-        AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, entity.isAggressive, entity.attackTime, entity.ageInTicks);
+        AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, entity.isAggressive, entity);
 
         this.right_leg.xRot = Mth.cos(entity.walkAnimationPos * 0.6662F) * 1.4F * entity.walkAnimationSpeed * 0.5F;
         this.right_leg.yRot = 0.0F;

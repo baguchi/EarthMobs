@@ -6,6 +6,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -16,7 +17,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -47,8 +48,8 @@ public class BoulderingZombie extends Zombie {
 	}
 
 	@Override
-	protected void doUnderWaterConversion() {
-		this.convertToZombieType(ModEntities.BOULDERING_DROWNED.get());
+    protected void doUnderWaterConversion(ServerLevel serverLevel) {
+        this.convertToZombieType(serverLevel, ModEntities.BOULDERING_DROWNED.get());
 		if (!this.isSilent()) {
 			this.level().levelEvent((Player) null, 1040, this.blockPosition(), 0);
 		}

@@ -10,8 +10,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,7 +23,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.AbstractGolem;
+import net.minecraft.world.entity.animal.golem.AbstractGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
@@ -32,11 +32,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.IShearable;
-import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -93,36 +93,35 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 
 	}
 
-	@Override
-	protected void customServerAiStep(ServerLevel serverLevel) {
-		super.customServerAiStep(serverLevel);
-        if (!this.level().isClientSide()) {
-			int i = Mth.floor(this.getX());
-			int j = Mth.floor(this.getY());
-			int k = Mth.floor(this.getZ());
-			if (this.level().getBiome(new BlockPos(i, 0, k)).is(BiomeTags.SNOW_GOLEM_MELTS)) {
-				this.hurt(this.damageSources().onFire(), 1.0F);
-			}
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.level() instanceof ServerLevel serverlevel) {
+            if (serverlevel.environmentAttributes().getValue(EnvironmentAttributes.SNOW_GOLEM_MELTS, this.position())) {
+                this.hurtServer(serverlevel, this.damageSources().onFire(), 1.0F);
+            }
 
-			if (!EventHooks.canEntityGrief(serverLevel, this)) {
-				return;
-			}
+            if (!net.neoforged.neoforge.event.EventHooks.canEntityGrief(serverlevel, this)) {
+                return;
+            }
 
-			BlockState blockstate = Blocks.SNOW.defaultBlockState();
+            BlockState blockstate = Blocks.SNOW.defaultBlockState();
 
-			for (int l = 0; l < 4; ++l) {
-				i = Mth.floor(this.getX() + (double) ((float) (l % 2 * 2 - 1) * 0.25F));
-				j = Mth.floor(this.getY());
-				k = Mth.floor(this.getZ() + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
-				BlockPos blockpos = new BlockPos(i, j, k);
-				if (this.level().isEmptyBlock(blockpos) && this.level().getBiome(blockpos).value().getBaseTemperature() < 0.8F && blockstate.canSurvive(this.level(), blockpos)) {
-					this.level().setBlockAndUpdate(blockpos, blockstate);
-				}
-			}
-		}
-	}
+            for (int i = 0; i < 4; i++) {
+                int j = Mth.floor(this.getX() + (i % 2 * 2 - 1) * 0.25F);
+                int k = Mth.floor(this.getY());
+                int l = Mth.floor(this.getZ() + (i / 2 % 2 * 2 - 1) * 0.25F);
+                BlockPos blockpos = new BlockPos(j, k, l);
+                if (this.level().getBlockState(blockpos).isAir() && blockstate.canSurvive(this.level(), blockpos)) {
+                    this.level().setBlockAndUpdate(blockpos, blockstate);
+                    this.level().gameEvent(GameEvent.BLOCK_PLACE, blockpos, GameEvent.Context.of(this, blockstate));
+                }
+            }
+        }
+    }
 
-	@Override
+
+    @Override
 	public void performRangedAttack(LivingEntity target, float p_29913_) {
 		MelonSeed melonSeed = new MelonSeed(this.level(), this, Items.MELON_SEEDS.getDefaultInstance());
 		double d0 = target.getEyeY() - (double) 1.1F;

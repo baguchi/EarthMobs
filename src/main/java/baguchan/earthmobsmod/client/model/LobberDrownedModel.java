@@ -48,7 +48,7 @@ public class LobberDrownedModel<T extends LobberZombieRenderState> extends Abstr
 	@Override
 	public void setupAnim(T entity) {
 		super.setupAnim(entity);
-		if (entity.rightArmPose == HumanoidModel.ArmPose.THROW_SPEAR) {
+        if (entity.rightArmPose == HumanoidModel.ArmPose.THROW_TRIDENT) {
 			if (entity.mainArm == HumanoidArm.RIGHT) {
 				this.right_arm.xRot = this.right_arm.xRot * 0.5F - (float) Math.PI;
 				this.right_arm.yRot = 0.0F;

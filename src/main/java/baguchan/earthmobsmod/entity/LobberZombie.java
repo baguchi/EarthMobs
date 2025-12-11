@@ -3,6 +3,7 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.entity.goal.RangedAndMeleeAttack;
 import baguchan.earthmobsmod.entity.projectile.ZombieFlesh;
 import baguchan.earthmobsmod.registry.ModEntities;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
@@ -13,13 +14,13 @@ import net.minecraft.world.entity.ai.goal.MoveThroughVillageGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Turtle;
+import net.minecraft.world.entity.animal.golem.IronGolem;
+import net.minecraft.world.entity.animal.turtle.Turtle;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.monster.ZombifiedPiglin;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.monster.zombie.Zombie;
+import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -62,8 +63,8 @@ public class LobberZombie extends Zombie implements RangedAttackMob {
 	}
 
 	@Override
-	protected void doUnderWaterConversion() {
-		this.convertToZombieType(ModEntities.LOBBER_DROWNED.get());
+    protected void doUnderWaterConversion(ServerLevel serverLevel) {
+        this.convertToZombieType(serverLevel, ModEntities.LOBBER_DROWNED.get());
 		if (!this.isSilent()) {
 			this.level().levelEvent((Player) null, 1040, this.blockPosition(), 0);
 		}

@@ -3,7 +3,7 @@ package baguchan.earthmobsmod.capability;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.entity.HyperRabbit;
 import baguchan.earthmobsmod.registry.ModEffects;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.attachment.IAttachmentSerializer;
 import java.util.List;
 
 public class ShadowCapability implements IAttachmentSerializer<ShadowCapability> {
-	private static final ResourceLocation SPEED_MODIFIER_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow_speed");
+    private static final Identifier SPEED_MODIFIER_BOOST_UUID = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow_speed");
 	public Vec3 prevShadow = Vec3.ZERO;
 
 	public Vec3 shadow = Vec3.ZERO;

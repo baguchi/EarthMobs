@@ -9,13 +9,13 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.HoldingEntityRenderState;
 import net.minecraft.client.renderer.entity.state.WitchRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 
 public class VilerWitchRenderer<T extends VilerWitch> extends MobRenderer<T, WitchRenderState, VilerWitchModel<WitchRenderState>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/viler_witch.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/viler_witch.png");
 
 	public VilerWitchRenderer(EntityRendererProvider.Context p_173952_) {
 		super(p_173952_, new VilerWitchModel<>(p_173952_.bakeLayer(ModModelLayers.VILER_WITCH)), 0.5F);
@@ -38,7 +38,7 @@ public class VilerWitchRenderer<T extends VilerWitch> extends MobRenderer<T, Wit
     }
 
     @Override
-    public ResourceLocation getTextureLocation(WitchRenderState p_110775_1_) {
+    public Identifier getTextureLocation(WitchRenderState p_110775_1_) {
 		return TEXTURE;
 	}
 }

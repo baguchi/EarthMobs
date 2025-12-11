@@ -2,7 +2,7 @@ package baguchan.earthmobsmod.client.render;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.ModModelLayers;
-import net.minecraft.client.model.WolfModel;
+import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
@@ -10,13 +10,13 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.WolfArmorLayer;
 import net.minecraft.client.renderer.entity.layers.WolfCollarLayer;
 import net.minecraft.client.renderer.entity.state.WolfRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 
 public class SkeletonWolfRenderer extends AgeableMobRenderer<Wolf, WolfRenderState, WolfModel> {
-    private static final ResourceLocation WOLF_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf.png");
-    private static final ResourceLocation WOLF_ANGRY_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf_angry.png");
+    private static final Identifier WOLF_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf.png");
+    private static final Identifier WOLF_ANGRY_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf_angry.png");
 
 	public SkeletonWolfRenderer(EntityRendererProvider.Context p_174452_) {
 		super(p_174452_, new WolfModel(p_174452_.bakeLayer(ModModelLayers.SKELETON_WOLF)), new WolfModel(p_174452_.bakeLayer(ModModelLayers.SKELETON_WOLF_BABY)), 0.5F);
@@ -58,7 +58,7 @@ public class SkeletonWolfRenderer extends AgeableMobRenderer<Wolf, WolfRenderSta
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(WolfRenderState p_116526_) {
+    public Identifier getTextureLocation(WolfRenderState p_116526_) {
 		return p_116526_.isAngry ? WOLF_ANGRY_LOCATION : WOLF_LOCATION;
 	}
 

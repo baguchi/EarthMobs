@@ -6,7 +6,7 @@ import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.registry.*;
 import baguchi.bagus_lib.util.JigsawHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.api.distmarker.Dist;
@@ -73,21 +73,21 @@ public class EarthMobsMod {
 
 	private void serverStart(final ServerAboutToStartEvent event) {
 		JigsawHelper.registerJigsaw(event.getServer(),
-				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/melee"),
-				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/melee"), 1);
+                Identifier.withDefaultNamespace("trial_chambers/spawner/melee"),
+                Identifier.fromNamespaceAndPath(MODID, "trial_chambers/connector/melee"), 1);
 		JigsawHelper.registerJigsaw(event.getServer(),
-				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/all"),
-				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/ranged"), 1);
+                Identifier.withDefaultNamespace("trial_chambers/spawner/all"),
+                Identifier.fromNamespaceAndPath(MODID, "trial_chambers/connector/ranged"), 1);
 		JigsawHelper.registerJigsaw(event.getServer(),
-				ResourceLocation.withDefaultNamespace("trial_chambers/spawner/all"),
-				ResourceLocation.fromNamespaceAndPath(MODID, "trial_chambers/connector/melee"), 1);
+                Identifier.withDefaultNamespace("trial_chambers/spawner/all"),
+                Identifier.fromNamespaceAndPath(MODID, "trial_chambers/connector/melee"), 1);
 
 
 	}
 
 
-	public static ResourceLocation prefix(String name) {
-		return ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, name.toLowerCase(Locale.ROOT));
+    public static Identifier prefix(String name) {
+        return Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, name.toLowerCase(Locale.ROOT));
 	}
 
 }

@@ -10,17 +10,17 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class FurnaceGolemRenderer extends MobRenderer<FurnaceGolem, FurnaceGolemRenderState, FurnaceGolemModel<FurnaceGolemRenderState>> {
-    private static final ResourceLocation GOLEM_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/furnace_golem/furnace_golem.png");
+    private static final Identifier GOLEM_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/furnace_golem/furnace_golem.png");
 
     public FurnaceGolemRenderer(EntityRendererProvider.Context p_174188_) {
         super(p_174188_, new FurnaceGolemModel(p_174188_.bakeLayer(ModModelLayers.FURNACE_GOLEM)), 0.7F);
         this.addLayer(new FurnaceGolemCrackinessLayer(this));
     }
 
-    public ResourceLocation getTextureLocation(FurnaceGolemRenderState p_362083_) {
+    public Identifier getTextureLocation(FurnaceGolemRenderState p_362083_) {
         return GOLEM_LOCATION;
     }
 

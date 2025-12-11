@@ -4,23 +4,23 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.render.state.ZombifiedRabbitRenderState;
 import baguchan.earthmobsmod.entity.ZombifiedRabbit;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.model.RabbitModel;
+import net.minecraft.client.model.animal.rabbit.RabbitModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 
 public class ZombifiedRabbitRenderer<T extends ZombifiedRabbit> extends AgeableMobRenderer<T, ZombifiedRabbitRenderState, RabbitModel> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit.png");
-    private static final ResourceLocation EVIL_TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit_evil.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit.png");
+    private static final Identifier EVIL_TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit_evil.png");
 
     public ZombifiedRabbitRenderer(EntityRendererProvider.Context p_173952_) {
         super(p_173952_, new RabbitModel(p_173952_.bakeLayer(ModelLayers.RABBIT)), new RabbitModel(p_173952_.bakeLayer(ModelLayers.RABBIT_BABY)), 0.3F);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ZombifiedRabbitRenderState p_115803_) {
+    public Identifier getTextureLocation(ZombifiedRabbitRenderState p_115803_) {
         switch (p_115803_.variant) {
             case EVIL:
                 return EVIL_TEXTURE;

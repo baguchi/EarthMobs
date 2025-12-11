@@ -26,8 +26,8 @@ public class BoulderingFrozenZombie extends BoulderingZombie {
     }
 
     @Override
-    protected void doUnderWaterConversion() {
-        this.convertToZombieType(ModEntities.BOULDERING_DROWNED.get());
+    protected void doUnderWaterConversion(ServerLevel serverLevel) {
+        this.convertToZombieType(serverLevel, ModEntities.BOULDERING_DROWNED.get());
         if (!this.isSilent()) {
             this.level().levelEvent((Player) null, 1040, this.blockPosition(), 0);
         }
@@ -37,7 +37,7 @@ public class BoulderingFrozenZombie extends BoulderingZombie {
     public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
         boolean flag = super.doHurtTarget(serverLevel, entity);
         if (flag && entity instanceof LivingEntity) {
-            float f = this.level().getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
+            float f = serverLevel.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
             ((LivingEntity) entity).setTicksFrozen((int) (entity.getTicksFrozen() + 40 + 120 * f));
         }
 

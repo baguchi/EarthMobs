@@ -4,13 +4,13 @@ import baguchan.earthmobsmod.client.model.MoobloomModel;
 import baguchan.earthmobsmod.client.render.state.MoobloomRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -65,7 +65,7 @@ public abstract class CowPlantLayer extends RenderLayer<MoobloomRenderState, Moo
 
     private void submitMushroomBlock(PoseStack p_434000_, SubmitNodeCollector p_432929_, int p_434041_, boolean p_435008_, int p_433442_, BlockState p_434785_, int p_440741_, BlockStateModel p_434408_) {
         if (p_435008_) {
-            p_432929_.submitBlockModel(p_434000_, RenderType.outline(TextureAtlas.LOCATION_BLOCKS), p_434408_, 0.0F, 0.0F, 0.0F, p_434041_, p_440741_, p_433442_);
+            p_432929_.submitBlockModel(p_434000_, RenderTypes.outline(TextureAtlas.LOCATION_BLOCKS), p_434408_, 0.0F, 0.0F, 0.0F, p_434041_, p_440741_, p_433442_);
         } else {
             p_432929_.submitBlock(p_434000_, p_434785_, p_434041_, p_440741_, p_433442_);
         }

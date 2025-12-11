@@ -2,7 +2,7 @@ package baguchan.earthmobsmod.registry;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -13,7 +13,7 @@ public class ModTags {
 		public static final TagKey<Fluid> MUD = tag("mud");
 
 		private static TagKey<Fluid> tag(String name) {
-            return FluidTags.create(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, name));
+            return FluidTags.create(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, name));
 		}
 	}
 
@@ -22,7 +22,7 @@ public class ModTags {
         public static final TagKey<EntityType<?>> CAN_MOSS = create("can_moss");
 
 		private static TagKey<EntityType<?>> create(String p_203849_) {
-            return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, p_203849_));
+            return TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, p_203849_));
 		}
 	}
 }

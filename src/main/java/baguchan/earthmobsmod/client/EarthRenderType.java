@@ -2,69 +2,63 @@ package baguchan.earthmobsmod.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.rendertype.LayeringTransform;
+import net.minecraft.client.renderer.rendertype.RenderSetup;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.TextureTransform;
+import net.minecraft.resources.Identifier;
 import org.joml.Matrix4f;
 
-public abstract class EarthRenderType extends RenderType {
-    public EarthRenderType(String p_173178_, int p_173181_, boolean p_173182_, boolean p_173183_, Runnable p_173184_, Runnable p_173185_) {
-        super(p_173178_, p_173181_, p_173182_, p_173183_, p_173184_, p_173185_);
-    }
+public class EarthRenderType {
 
-    public static RenderType animationEye(ResourceLocation location, int maxAge, int frameCount, int tick) {
+
+    public static RenderType animationEye(Identifier location, int maxAge, int frameCount, int tick) {
         int age = tick * (frameCount - 1) / maxAge;
 
-        return create(
+        return RenderType.create(
                 "earthmobsmod:animation_eyes",
-                1536,
-                false,
-                true,
-                RenderPipelines.EYES,
-                RenderType.CompositeState.builder()
-                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), false))
-                        .createCompositeState(false)
+                RenderSetup.builder(RenderPipelines.EYES)
+                        .withTexture("Sampler0", location.withSuffix("_" + age % frameCount + ".png"))
+                        .createRenderSetup()
         );
     }
 
-    public static RenderType entityAnimation(ResourceLocation location, int maxAge, int frameCount, int tick) {
+    public static RenderType entityAnimation(Identifier location, int maxAge, int frameCount, int tick) {
         int age = tick * (frameCount - 1) / maxAge;
 
-        return create(
+        return RenderType.create(
                 "earthmobsmod:entity_animation",
-                1536,
-                false,
-                true,
-                RenderPipelines.ENTITY_CUTOUT_NO_CULL,
-                RenderType.CompositeState.builder()
-                        .setTextureState(new RenderStateShard.TextureStateShard(location.withSuffix("_" + String.valueOf(age % frameCount) + ".png"), false))
-                        .setLightmapState(LIGHTMAP)
-                        .setOverlayState(OVERLAY)
-                        .createCompositeState(false)
-        );
+                RenderSetup.builder(RenderPipelines.ENTITY_CUTOUT_NO_CULL)
+                        .withTexture("Sampler0", location.withSuffix("_" + age % frameCount + ".png"))
+                        .useLightmap()
+                        .useOverlay()
+                        .affectsCrumbling()
+                        .setOutline(RenderSetup.OutlineProperty.AFFECTS_OUTLINE)
+                        .createRenderSetup());
     }
 
-    public static RenderType entityAnimationWithAllTexture(ResourceLocation location, int maxAge, int frameCount, int tick) {
+    public static RenderType entityAnimationWithAllTexture(Identifier location, int maxAge, int frameCount, int tick) {
         int age = tick * (frameCount - 1) / maxAge;
 
-        return create(
+        return RenderType.create(
                 "earthmobsmod:entity_animation_all_texture",
-                1536,
-                true,
-                false,
-                ClientRegistrar.ANIMATION_ENTITY,
-                RenderType.CompositeState.builder()
-                        .setTextureState(new RenderStateShard.TextureStateShard(location, false))
-                        .setTexturingState(new OffsetScaleTexturingStateShard(0, (float) ((float) (age % frameCount) / frameCount), 0, (float) frameCount))
-                        .setLightmapState(LIGHTMAP)
-                        .setOverlayState(OVERLAY)
-                        .createCompositeState(true)
+                RenderSetup.builder(ClientRegistrar.ANIMATION_ENTITY)
+                        .withTexture("Sampler0", location)
+                        .setTextureTransform(new OffsetScaleTexturingStateShard(0, (float) (age % frameCount) / frameCount, 0, (float) frameCount))
+                        .useLightmap()
+                        .useOverlay()
+                        .affectsCrumbling()
+                        .setOutline(RenderSetup.OutlineProperty.AFFECTS_OUTLINE)
+                        .createRenderSetup()
         );
     }
 
-    public static final class OffsetScaleTexturingStateShard extends TexturingStateShard {
+    public static final LayeringTransform OFFSET_SCALE = new LayeringTransform("view_offset_z_layering_forward", (p_458961_) -> RenderSystem.getProjectionType().applyLayeringTransform(p_458961_, -1.0F));
+
+
+    public static final class OffsetScaleTexturingStateShard extends TextureTransform {
         public OffsetScaleTexturingStateShard(float p_110290_, float p_110291_, float scaleX, float scaleY) {
-            super("offset_scale_texturing", () -> RenderSystem.setTextureMatrix((new Matrix4f()).scale(scaleX, scaleY, 0).translation(p_110290_, p_110291_, 0.0F)), () -> RenderSystem.resetTextureMatrix());
+            super("offset_scale_texturing", () -> (new Matrix4f().scale(scaleX, scaleY, 0).translation(p_110290_, p_110291_, 0.0F)));
         }
     }
 }

@@ -6,15 +6,15 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 
 public class OuterLayer<T extends LivingEntityRenderState> extends RenderLayer<T, EntityModel<T>> {
-    private final ResourceLocation location;
+    private final Identifier location;
 	private final EntityModel<T> model;
     private final EntityModel<T> babyModel;
 
-    public OuterLayer(RenderLayerParent<T, EntityModel<T>> p_174490_, ResourceLocation location, EntityModel<T> entityModel, EntityModel<T> babyModel) {
+    public OuterLayer(RenderLayerParent<T, EntityModel<T>> p_174490_, Identifier location, EntityModel<T> entityModel, EntityModel<T> babyModel) {
 		super(p_174490_);
         this.location = location;
         this.model = entityModel;

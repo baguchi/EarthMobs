@@ -7,12 +7,12 @@ import baguchan.earthmobsmod.client.render.state.AbstractChickenRender;
 import baguchan.earthmobsmod.client.render.state.CluckShroomRenderState;
 import baguchan.earthmobsmod.entity.CluckShroom;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 
 public class CluckShroomRender<T extends CluckShroom> extends AbstractChickenRender<T, CluckShroomRenderState, CluckShroomModel<CluckShroomRenderState>> {
-	private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cluck_shroom/cluck_shroom.png");
-	private static final ResourceLocation TEXTURE_BROWN = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cluck_shroom/brown_cluck_shroom.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cluck_shroom/cluck_shroom.png");
+    private static final Identifier TEXTURE_BROWN = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/cluck_shroom/brown_cluck_shroom.png");
 
 	public CluckShroomRender(EntityRendererProvider.Context p_173952_) {
         super(p_173952_, new CluckShroomModel<>(p_173952_.bakeLayer(ModModelLayers.CLUCK_SHROOM)), new CluckShroomModel<>(p_173952_.bakeLayer(ModModelLayers.CLUCK_SHROOM_BABY)), 0.3F);
@@ -30,7 +30,7 @@ public class CluckShroomRender<T extends CluckShroom> extends AbstractChickenRen
     }
 
     @Override
-    public ResourceLocation getTextureLocation(CluckShroomRenderState p_110775_1_) {
+    public Identifier getTextureLocation(CluckShroomRenderState p_110775_1_) {
         return p_110775_1_.type == CluckShroom.CluckShroomType.BROWN ? TEXTURE_BROWN : TEXTURE;
 	}
 }

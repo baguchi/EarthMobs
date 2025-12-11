@@ -2,7 +2,7 @@ package baguchan.earthmobsmod.client;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ModModelLayers {
     public static ModelLayerLocation CLUCK_SHROOM = register("cluck_shroom");
@@ -61,6 +61,6 @@ public class ModModelLayers {
     }
 
     private static ModelLayerLocation register(String p_171301_, String p_171302_) {
-        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, p_171301_), p_171302_);
+        return new ModelLayerLocation(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, p_171301_), p_171302_);
     }
 }

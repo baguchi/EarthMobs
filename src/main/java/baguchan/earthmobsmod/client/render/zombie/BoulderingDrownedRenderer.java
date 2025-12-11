@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,8 +28,8 @@ import net.minecraft.world.item.Items;
 
 
 public class BoulderingDrownedRenderer<T extends BoulderingDrowned> extends AgeableMobRenderer<T, BoulderingZombieRenderState, BoulderingDrownedModel<BoulderingZombieRenderState>> {
-	private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/bouldering_zombie/bouldering_drowned.png");
-	private static final ResourceLocation OUTER_LOCATION = ResourceLocation.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/bouldering_zombie/bouldering_drowned_outer.png");
+    private static final Identifier LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/bouldering_zombie/bouldering_drowned.png");
+    private static final Identifier OUTER_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/bouldering_zombie/bouldering_drowned_outer.png");
 
 	public BoulderingDrownedRenderer(EntityRendererProvider.Context p_173964_) {
 		super(p_173964_, new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED)), new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED_BABY)), 0.5F);
@@ -48,7 +48,7 @@ public class BoulderingDrownedRenderer<T extends BoulderingDrowned> extends Agea
 	}
 
 	public static void extractHumanoidRenderState(LivingEntity p_365104_, HumanoidRenderState p_362998_, float p_363706_, ItemModelResolver p_388651_) {
-		ArmedEntityRenderState.extractArmedEntityRenderState(p_365104_, p_362998_, p_388651_);
+        ArmedEntityRenderState.extractArmedEntityRenderState(p_365104_, p_362998_, p_388651_, p_363706_);
 		p_362998_.isCrouching = p_365104_.isCrouching();
 		p_362998_.isFallFlying = p_365104_.isFallFlying();
 		p_362998_.isVisuallySwimming = p_365104_.isVisuallySwimming();
@@ -96,7 +96,7 @@ public class BoulderingDrownedRenderer<T extends BoulderingDrowned> extends Agea
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(BoulderingZombieRenderState p_361561_) {
+    public Identifier getTextureLocation(BoulderingZombieRenderState p_361561_) {
 		return LOCATION;
 	}
 
@@ -114,7 +114,7 @@ public class BoulderingDrownedRenderer<T extends BoulderingDrowned> extends Agea
 	protected HumanoidModel.ArmPose getArmPose(T p_388016_, HumanoidArm p_386643_) {
 		ItemStack itemstack = p_388016_.getItemHeldByArm(p_386643_);
 		return p_388016_.getMainArm() == p_386643_ && p_388016_.isAggressive() && itemstack.is(Items.TRIDENT)
-				? HumanoidModel.ArmPose.THROW_SPEAR
+                ? HumanoidModel.ArmPose.THROW_TRIDENT
 				: HumanoidModel.ArmPose.EMPTY;
 	}
 }
