@@ -13,6 +13,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
@@ -35,7 +36,8 @@ public class LobberDrownedRenderer<T extends LobberDrowned> extends AgeableMobRe
     public LobberDrownedRenderer(EntityRendererProvider.Context p_173964_) {
         super(p_173964_, new LobberDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_DROWNED)), new LobberDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_DROWNED_BABY)), 0.5F);
         this.addLayer(new OuterLayer(this, OUTER_LOCATION, new LobberDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_DROWNED_OUTER)), new LobberDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_DROWNED_OUTER_BABY))));
-        this.addLayer(new CustomArmorLayer(this, p_173964_));
+        this.addLayer(new CustomArmorLayer<>(this, p_173964_));
+        this.addLayer(new ItemInHandLayer<>(this));
     }
 
 

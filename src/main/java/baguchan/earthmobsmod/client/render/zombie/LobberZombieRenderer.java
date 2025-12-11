@@ -10,6 +10,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
@@ -27,8 +28,9 @@ public class LobberZombieRenderer<T extends LobberZombie> extends AgeableMobRend
 
 	public LobberZombieRenderer(EntityRendererProvider.Context p_173964_) {
 		super(p_173964_, new LobberZombieModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_ZOMBIE)), new LobberZombieModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_ZOMBIE_BABY)), 0.5F);
-		this.addLayer(new CustomArmorLayer<>(this, p_173964_));
-	}
+        this.addLayer(new CustomArmorLayer<>(this, p_173964_));
+        this.addLayer(new ItemInHandLayer<>(this));
+    }
 
 	@Override
 	public LobberZombieRenderState createRenderState() {

@@ -5,14 +5,16 @@ import baguchi.bagus_lib.client.layer.IArmor;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AnimationUtils;
+import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.HumanoidArm;
 
 
-public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState> extends EntityModel<T> implements IArmor {
+public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState> extends EntityModel<T> implements IArmor, ArmedModel<T> {
     public final ModelPart head;
     public final ModelPart body;
     public final ModelPart left_arm;
@@ -138,5 +140,14 @@ public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState
 
     public Iterable<ModelPart> headPartArmors() {
         return ImmutableList.of(this.head);
+    }
+
+    @Override
+    public void translateToHand(T p_434082_, HumanoidArm p_102854_, PoseStack p_102855_) {
+        this.getArm(p_102854_).translateAndRotate(p_102855_);
+    }
+
+    public ModelPart getArm(HumanoidArm p_102852_) {
+        return p_102852_ == HumanoidArm.LEFT ? this.left_arm : this.right_arm;
     }
 }

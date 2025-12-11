@@ -7,12 +7,14 @@ import baguchan.earthmobsmod.client.render.layer.OuterLayer;
 import baguchan.earthmobsmod.client.render.layer.SpinAttackEffectLayer;
 import baguchan.earthmobsmod.client.render.state.BoulderingZombieRenderState;
 import baguchan.earthmobsmod.entity.BoulderingDrowned;
+import baguchi.bagus_lib.client.layer.CustomArmorLayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
@@ -35,7 +37,8 @@ public class BoulderingDrownedRenderer<T extends BoulderingDrowned> extends Agea
 		super(p_173964_, new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED)), new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED_BABY)), 0.5F);
 		this.addLayer(new OuterLayer(this, OUTER_LOCATION, new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED_OUTER)), new BoulderingDrownedModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_DROWNED_OUTER_BABY))));
 		this.addLayer(new SpinAttackEffectLayer<>(this, p_173964_.getModelSet()));
-		this.addLayer(new baguchi.bagus_lib.client.layer.CustomArmorLayer(this, p_173964_));
+        this.addLayer(new CustomArmorLayer<>(this, p_173964_));
+        this.addLayer(new ItemInHandLayer<>(this));
 	}
 
 	@Override

@@ -5,10 +5,12 @@ import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.BoulderingZombieModel;
 import baguchan.earthmobsmod.client.render.state.BoulderingZombieRenderState;
 import baguchan.earthmobsmod.entity.BoulderingZombie;
+import baguchi.bagus_lib.client.layer.CustomArmorLayer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
@@ -26,8 +28,9 @@ public class BoulderingZombieRenderer<T extends BoulderingZombie> extends Ageabl
 
 	public BoulderingZombieRenderer(EntityRendererProvider.Context p_173964_) {
 		super(p_173964_, new BoulderingZombieModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_ZOMBIE)), new BoulderingZombieModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_ZOMBIE_BABY)), 0.5F);
-		this.addLayer(new baguchi.bagus_lib.client.layer.CustomArmorLayer<>(this, p_173964_));
-	}
+        this.addLayer(new CustomArmorLayer<>(this, p_173964_));
+        this.addLayer(new ItemInHandLayer<>(this));
+    }
 
 	@Override
 	public BoulderingZombieRenderState createRenderState() {
