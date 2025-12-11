@@ -7,6 +7,7 @@ import baguchan.earthmobsmod.client.model.LobberZombieModel;
 import baguchan.earthmobsmod.entity.LobberZombie;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -18,6 +19,7 @@ public class LobberZombieRenderer<T extends LobberZombie> extends MobRenderer<T,
 	public LobberZombieRenderer(EntityRendererProvider.Context p_173964_) {
 		super(p_173964_, new LobberZombieModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_ZOMBIE)), 0.5F);
 		this.addLayer(new CustomArmorLayer<>(this, p_173964_));
+        this.addLayer(new ItemInHandLayer<>(this, p_173964_.getItemInHandRenderer()));
 	}
 
 	public ResourceLocation getTextureLocation(T p_114115_) {

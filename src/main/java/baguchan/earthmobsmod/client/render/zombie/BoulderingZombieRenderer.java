@@ -7,6 +7,7 @@ import baguchan.earthmobsmod.client.model.BoulderingZombieModel;
 import baguchan.earthmobsmod.entity.BoulderingZombie;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -18,6 +19,7 @@ public class BoulderingZombieRenderer<T extends BoulderingZombie> extends MobRen
 	public BoulderingZombieRenderer(EntityRendererProvider.Context p_173964_) {
 		super(p_173964_, new BoulderingZombieModel<>(p_173964_.bakeLayer(ModModelLayers.BOULDERING_ZOMBIE)), 0.5F);
 		this.addLayer(new CustomArmorLayer<>(this, p_173964_));
+        this.addLayer(new ItemInHandLayer<>(this, p_173964_.getItemInHandRenderer()));
 	}
 
 	public ResourceLocation getTextureLocation(T p_114115_) {

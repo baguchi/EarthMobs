@@ -8,6 +8,7 @@ import baguchan.earthmobsmod.entity.LobberHusk;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -19,6 +20,7 @@ public class LobberHuskRenderer<T extends LobberHusk> extends MobRenderer<T, Lob
     public LobberHuskRenderer(EntityRendererProvider.Context p_173964_) {
         super(p_173964_, new LobberZombieModel<>(p_173964_.bakeLayer(ModModelLayers.LOBBER_ZOMBIE)), 0.5F);
         this.addLayer(new CustomArmorLayer<>(this, p_173964_));
+        this.addLayer(new ItemInHandLayer<>(this, p_173964_.getItemInHandRenderer()));
     }
 
     @Override

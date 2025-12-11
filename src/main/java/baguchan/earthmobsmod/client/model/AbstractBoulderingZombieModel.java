@@ -5,17 +5,19 @@ import baguchan.earthmobsmod.client.animation.BabyZombieAnimation;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AnimationUtils;
+import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.monster.Zombie;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AbstractBoulderingZombieModel<T extends Zombie> extends HierarchicalModel<T> implements IArmor {
+public class AbstractBoulderingZombieModel<T extends Zombie> extends HierarchicalModel<T> implements IArmor, ArmedModel {
     private final ModelPart root;
     private final ModelPart bone;
     public final ModelPart head;
@@ -148,5 +150,14 @@ public class AbstractBoulderingZombieModel<T extends Zombie> extends Hierarchica
 
     public Iterable<ModelPart> headPartArmors() {
         return ImmutableList.of(this.head);
+    }
+
+    @Override
+    public void translateToHand(HumanoidArm p_102854_, PoseStack p_102855_) {
+        this.getArm(p_102854_).translateAndRotate(p_102855_);
+    }
+
+    protected ModelPart getArm(HumanoidArm p_102852_) {
+        return p_102852_ == HumanoidArm.LEFT ? this.left_arm : this.right_arm;
     }
 }
