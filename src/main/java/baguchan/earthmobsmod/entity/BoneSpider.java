@@ -3,16 +3,19 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.entity.goal.RangedAndMeleeAttack;
 import baguchan.earthmobsmod.entity.projectile.BoneShard;
 import baguchan.earthmobsmod.registry.ModEffects;
+import baguchan.earthmobsmod.registry.ModEntityDatas;
 import baguchan.earthmobsmod.registry.ModItems;
-import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -27,20 +30,23 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.monster.skeleton.Skeleton;
 import net.minecraft.world.entity.monster.spider.Spider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.EnumSet;
 
 public class BoneSpider extends Spider implements RangedAttackMob {
-	private static final EntityDataAccessor<Boolean> DATA_STRAY_CONVERSION_ID = SynchedEntityData.defineId(BoneSpider.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<PotionContents> DATA_POTION = SynchedEntityData.defineId(BoneSpider.class, ModEntityDatas.POTIONS.get());
+    private static final ColorParticleOption DEFAULT_PARTICLE = ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, -1);
 
-	public BoneSpider(EntityType<? extends BoneSpider> p_33786_, Level p_33787_) {
+    public BoneSpider(EntityType<? extends BoneSpider> p_33786_, Level p_33787_) {
 		super(p_33786_, p_33787_);
 		this.xpReward = 10;
 	}
@@ -48,8 +54,46 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
-		builder.define(DATA_STRAY_CONVERSION_ID, false);
+        builder.define(DATA_POTION, PotionContents.EMPTY);
 	}
+
+    @Override
+    protected void addAdditionalSaveData(ValueOutput p_421640_) {
+        super.addAdditionalSaveData(p_421640_);
+        if (!this.getPotionContents().equals(PotionContents.EMPTY)) {
+            p_421640_.store("potion_contents", PotionContents.CODEC, this.getPotionContents());
+        }
+    }
+
+    @Override
+    protected void readAdditionalSaveData(ValueInput p_422339_) {
+        super.readAdditionalSaveData(p_422339_);
+        this.setPotionContents((PotionContents) p_422339_.read("potion_contents", PotionContents.CODEC).orElse(PotionContents.EMPTY));
+
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.level().isClientSide()) {
+            for (int j = 0; j < 2; j++) {
+                int i = ARGB.opaque(this.getPotionContents().getColor());
+                double d0 = this.getX();
+                double d1 = this.getY();
+                double d2 = this.getZ();
+
+                this.level().addParticle(ColorParticleOption.create(DEFAULT_PARTICLE.getType(), i), d0, d1, d2, (0.5 - this.random.nextDouble()) * 0.15, 0.01F, (0.5 - this.random.nextDouble()) * 0.15);
+            }
+        }
+    }
+
+    public void setPotionContents(PotionContents p_330869_) {
+        this.entityData.set(DATA_POTION, p_330869_);
+    }
+
+    public PotionContents getPotionContents() {
+        return this.entityData.get(DATA_POTION);
+    }
 
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.ATTACK_DAMAGE, 3.0F).add(Attributes.MOVEMENT_SPEED, (double) 0.3F).add(Attributes.ARMOR, 10.0F).add(Attributes.FOLLOW_RANGE, 18.0F);
@@ -80,50 +124,56 @@ public class BoneSpider extends Spider implements RangedAttackMob {
     public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor p_478692_, DifficultyInstance p_479487_, EntitySpawnReason p_481376_, @Nullable SpawnGroupData p_480575_) {
         p_480575_ = super.finalizeSpawn(p_478692_, p_479487_, p_481376_, p_480575_);
         RandomSource randomsource = p_478692_.getRandom();
-        if (randomsource.nextInt(100) == 0) {
-            Skeleton skeleton = (Skeleton) EntityType.SKELETON.create(this.level(), EntitySpawnReason.JOCKEY);
-            if (skeleton != null) {
-                skeleton.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
-                skeleton.finalizeSpawn(p_478692_, p_479487_, p_481376_, (SpawnGroupData) null);
-                skeleton.startRiding(this, false, false);
-            }
-        }
 
-        if (p_480575_ == null || p_480575_ instanceof SpiderEffectsGroupData) {
-            p_480575_ = new BoneSpiderEffectsGroupData();
-            if (p_478692_.getDifficulty() == Difficulty.HARD && randomsource.nextFloat() < 0.125F * p_479487_.getSpecialMultiplier()) {
-                ((BoneSpiderEffectsGroupData) p_480575_).setRandomEffect(randomsource);
-            }
-        }
+        if (randomsource.nextFloat() < 0.01F) {
+            int i = randomsource.nextInt(4);
+            MobEffectInstance mobEffect;
 
-        if (p_480575_ instanceof SpiderEffectsGroupData spider$spidereffectsgroupdata) {
-            Holder<MobEffect> holder = spider$spidereffectsgroupdata.effect;
-            if (holder != null) {
-                this.addEffect(new MobEffectInstance(holder, -1));
+            if (i == 0) {
+                mobEffect = new MobEffectInstance(ModEffects.UNDEAD_BODY, 400, 0);
+
+            } else if (i == 1) {
+                mobEffect = new MobEffectInstance(ModEffects.ZOMBIFIED, 200, 0);
+
+            } else if (i == 2) {
+                mobEffect = new MobEffectInstance(MobEffects.SLOWNESS, 200, 0);
+            } else if (i == 3) {
+                mobEffect = new MobEffectInstance(MobEffects.INSTANT_DAMAGE, 1, 0);
+            } else {
+                mobEffect = new MobEffectInstance(MobEffects.POISON, 60, 0);
             }
+
+            this.setPotionContents(this.getPotionContents().withEffectAdded(mobEffect));
         }
 
         return p_480575_;
     }
 
-
-    public static class BoneSpiderEffectsGroupData implements SpawnGroupData {
-        public @Nullable Holder<MobEffect> effect;
-
-        public void setRandomEffect(RandomSource p_481946_) {
-            int i = p_481946_.nextInt(6);
-            if (i <= 1) {
-                this.effect = MobEffects.STRENGTH;
-            } else if (i <= 2) {
-                this.effect = MobEffects.REGENERATION;
-            } else if (i <= 3) {
-                this.effect = ModEffects.ZOMBIFIED;
-            } else if (i <= 4) {
-                this.effect = ModEffects.UNDEAD_BODY;
-            }
-
+    @Override
+    public <T> @Nullable T get(DataComponentType<? extends T> p_400140_) {
+        if (p_400140_ == DataComponents.POTION_CONTENTS) {
+            return (T) castComponentValue(p_400140_, this.getPotionContents());
+        } else {
+            return super.get(p_400140_);
         }
     }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter p_400159_) {
+        this.applyImplicitComponentIfPresent(p_400159_, DataComponents.POTION_CONTENTS);
+        super.applyImplicitComponents(p_400159_);
+    }
+
+    @Override
+    protected <T> boolean applyImplicitComponent(DataComponentType<T> p_400217_, T p_399556_) {
+        if (p_400217_ == DataComponents.POTION_CONTENTS) {
+            this.setPotionContents((PotionContents) castComponentValue(DataComponents.POTION_CONTENTS, p_399556_));
+            return true;
+        } else {
+            return super.applyImplicitComponent(p_400217_, p_399556_);
+        }
+    }
+
 
     static class BoneSpiderAttackGoal extends RangedAndMeleeAttack {
         private final BoneSpider spider;
@@ -170,16 +220,8 @@ public class BoneSpider extends Spider implements RangedAttackMob {
         bone.shoot(x, y + (length * 0.275F), z, 0.75F, 2.0F);
 		Collection<MobEffectInstance> collection = this.getActiveEffects();
 		if (!collection.isEmpty()) {
-			for (MobEffectInstance mobEffectInstance : this.getActiveEffects()) {
-                if (!mobEffectInstance.getEffect().value().isBeneficial()) {
-                    if (mobEffectInstance.getEffect().value().isInstantenous()) {
-                        bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), 1, 0));
-                    } else if (mobEffectInstance.isInfiniteDuration()) {
-                        bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), 100, 0));
-                    } else {
-                        bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration() / 4, 0));
-                    }
-                }
+            for (MobEffectInstance mobEffectInstance : this.getPotionContents().getAllEffects()) {
+                bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration(), 0));
             }
         }
 		this.level().addFreshEntity(bone);

@@ -38,7 +38,8 @@ public class EarthMobsMod {
 		modBus.addListener(this::setupPackets);
 		IEventBus forgeBus = NeoForge.EVENT_BUS;
 		ModBlocks.BLOCKS.register(modBus);
-		ModEntities.ENTITIES.register(modBus);
+        ModEntityDatas.ENTITIE_DATAS.register(modBus);
+        ModEntities.ENTITIES.register(modBus);
 		ModFluidTypes.FLUID_TYPES.register(modBus);
 		ModFluids.FLUIDS.register(modBus);
 		ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modBus);
