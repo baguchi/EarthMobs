@@ -52,7 +52,6 @@ public class ModEntities {
 
 
     public static final Supplier<EntityType<BoneSpider>> BONE_SPIDER = ENTITIES.register("bone_spider", () -> EntityType.Builder.of(BoneSpider::new, MobCategory.MONSTER).notInPeaceful().sized(1.4F, 0.9F).build(prefix("bone_spider")));
-    public static final Supplier<EntityType<StrayBoneSpider>> STRAY_BONE_SPIDER = ENTITIES.register("stray_bone_spider", () -> EntityType.Builder.of(StrayBoneSpider::new, MobCategory.MONSTER).notInPeaceful().sized(1.4F, 0.9F).build(prefix("stray_bone_spider")));
 
     public static final Supplier<EntityType<VilerWitch>> VILER_WITCH = ENTITIES.register("viler_witch", () -> EntityType.Builder.of(VilerWitch::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
             .passengerAttachments(2.0125F)
@@ -121,7 +120,6 @@ public class ModEntities {
         event.register(FURNACE_GOLEM.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
 
         event.register(BONE_SPIDER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(STRAY_BONE_SPIDER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(VILER_WITCH.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(BOULDERING_ZOMBIE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BoulderingZombie::checkBoulderingSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(LOBBER_ZOMBIE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
@@ -159,7 +157,6 @@ public class ModEntities {
 
 
 		event.put(BONE_SPIDER.get(), BoneSpider.createAttributes().build());
-		event.put(STRAY_BONE_SPIDER.get(), BoneSpider.createAttributes().build());
 		event.put(VILER_WITCH.get(), VilerWitch.createAttributes().build());
 		event.put(BOULDERING_ZOMBIE.get(), BoulderingZombie.createAttributes().build());
         event.put(LOBBER_ZOMBIE.get(), LobberZombie.createAttributes().build());
