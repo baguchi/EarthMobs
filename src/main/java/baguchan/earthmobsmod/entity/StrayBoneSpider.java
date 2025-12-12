@@ -43,7 +43,7 @@ public class StrayBoneSpider extends BoneSpider {
         double y = p_29912_.getEyeY() - this.getEyeY();
         double z = p_29912_.getZ() - this.getZ();
         double length = Math.sqrt(x * x + z * z);
-        bone.shoot(x, y + (length * 0.25F), z, 0.75F, 2.0F);
+        bone.shoot(x, y + (length * 0.275F), z, 0.75F, 2.0F);
 		Collection<MobEffectInstance> collection = this.getActiveEffects();
 		if (!collection.isEmpty()) {
 			for (MobEffectInstance mobEffectInstance : this.getActiveEffects()) {
