@@ -1,6 +1,7 @@
 package baguchan.earthmobsmod.client.render.layer;
 
 import baguchan.earthmobsmod.client.render.state.MelonGolemRenderState;
+import baguchan.earthmobsmod.registry.ModBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.animal.golem.SnowGolemModel;
@@ -14,7 +15,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 
@@ -35,7 +35,7 @@ public class MelonGolemHeadLayer extends RenderLayer<MelonGolemRenderState, Snow
             poseStack.translate(0.0F, -0.34375F, 0.0F);
             poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
             poseStack.scale(0.625F, -0.625F, -0.625F);
-            BlockState blockstate = Blocks.CARVED_PUMPKIN.defaultBlockState();
+            BlockState blockstate = melonGolemRenderState.aggressive ? ModBlocks.CARVED_MELON_SHOOT.get().defaultBlockState() : ModBlocks.CARVED_MELON.get().defaultBlockState();
             BlockStateModel blockstatemodel = this.blockRenderer.getBlockModel(blockstate);
             int i2 = LivingEntityRenderer.getOverlayCoords(melonGolemRenderState, 0.0F);
             poseStack.translate(-0.5F, -0.5F, -0.5F);

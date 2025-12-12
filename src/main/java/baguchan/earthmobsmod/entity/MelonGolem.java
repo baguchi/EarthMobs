@@ -30,6 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -181,8 +182,10 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 	public List<ItemStack> onSheared(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		level.playSound(null, this, SoundEvents.SNOW_GOLEM_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
 		if (!level.isClientSide()) {
+            Block block = this.isAggressive() ? ModBlocks.CARVED_MELON_SHOOT.get() : ModBlocks.CARVED_MELON.get();
+
 			setMelon(false);
-			return java.util.Collections.singletonList(new ItemStack(ModBlocks.CARVED_MELON.get()));
+            return java.util.Collections.singletonList(new ItemStack(block));
 		}
 		return java.util.Collections.emptyList();
 	}
