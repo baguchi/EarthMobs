@@ -24,7 +24,6 @@ public class EarthMobsConfig {
         public final ModConfigSpec.IntValue jollyLLamaSpawnRate;
         public final ModConfigSpec.IntValue hornedSheepSpawnRate;
         public final ModConfigSpec.IntValue boneSpiderSpawnRate;
-        public final ModConfigSpec.IntValue strayBoneSpiderSpawnRate;
         public final ModConfigSpec.IntValue hyperRabbitSpawnRate;
         public final ModConfigSpec.IntValue moobloomSpawnRate;
         public final ModConfigSpec.IntValue moolipSpawnRate;
@@ -89,9 +88,6 @@ public class EarthMobsConfig {
 			boneSpiderSpawnRate = builder
 					.comment("Changed Bone Spider SpawnRate. [0 ~ 1000]")
 					.defineInRange("Bone Spider SpawnRate", 10, 0, 1000);
-			strayBoneSpiderSpawnRate = builder
-					.comment("Changed Stray Bone Spider SpawnRate. [0 ~ 1000]")
-					.defineInRange("Stray Bone Spider SpawnRate", 10, 0, 1000);
 			boulderingZombieSpawnRate = builder
 					.comment("Changed BoulderingZombie SpawnRate. [0 ~ 1000]")
 					.defineInRange("BoulderingZombie SpawnRate", 20, 0, 1000);

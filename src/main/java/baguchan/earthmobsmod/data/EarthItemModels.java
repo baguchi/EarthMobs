@@ -50,7 +50,6 @@ public class EarthItemModels extends ItemModelGenerators {
         this.generateSpawnEgg(ModItems.ZOMBIFILED_PIG_SPAWNEGG.get(), 15373203, 5009705);
         this.generateSpawnEgg(ModItems.JOLLY_LAMMA_SPAWNEGG.get(), 0x673727, 0xD2BFB2);
         this.generateSpawnEgg(ModItems.BONE_SPIDER_SPAWNEGG.get(), 0x461C2E, 0x6130B7);
-        this.generateSpawnEgg(ModItems.STRAY_BONE_SPIDER_SPAWNEGG.get(), 0x20112F, 0x30B6B2);
         this.generateSpawnEgg(ModItems.ZOMBIFIED_RABBIT_SPAWNEGG.get(), 0x79AD69, 0x2A5131);
 
         this.generateSpawnEgg(ModItems.BOULDERING_ZOMBIE_SPAWNEGG.get(), 0x384242, 0x52261A);

@@ -81,7 +81,6 @@ public class ClientRegistrar {
         event.registerEntityRenderer(ModEntities.MELON_GOLEM.get(), MelonGolemRenderer::new);
 
         event.registerEntityRenderer(ModEntities.BONE_SPIDER.get(), BoneSpiderRender::new);
-        event.registerEntityRenderer(ModEntities.STRAY_BONE_SPIDER.get(), StrayBoneSpiderRender::new);
         event.registerEntityRenderer(ModEntities.VILER_WITCH.get(), VilerWitchRenderer::new);
         event.registerEntityRenderer(ModEntities.BOULDERING_ZOMBIE.get(), BoulderingZombieRenderer::new);
         event.registerEntityRenderer(ModEntities.LOBBER_ZOMBIE.get(), LobberZombieRenderer::new);

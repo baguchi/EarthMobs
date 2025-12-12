@@ -60,7 +60,6 @@ public class ModItems {
 
 
     public static final DeferredItem<Item> BONE_SPIDER_SPAWNEGG = ITEMS.registerItem("bone_spider_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.BONE_SPIDER.get()))));
-    public static final DeferredItem<Item> STRAY_BONE_SPIDER_SPAWNEGG = ITEMS.registerItem("stray_bone_spider_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.STRAY_BONE_SPIDER.get()))));
     public static final DeferredItem<Item> VILER_WITCH_SPAWNEGG = ITEMS.registerItem("viler_witch_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.VILER_WITCH.get()))));
 
     public static final DeferredItem<Item> BOULDERING_ZOMBIE_SPAWNEGG = ITEMS.registerItem("bouldering_zombie_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.BOULDERING_ZOMBIE.get()))));
@@ -112,7 +111,6 @@ public class ModItems {
 			event.accept(JOLLY_LAMMA_SPAWNEGG.get());
 
 			event.accept(BONE_SPIDER_SPAWNEGG.get());
-			event.accept(STRAY_BONE_SPIDER_SPAWNEGG.get());
 			event.accept(ZOMBIFIED_RABBIT_SPAWNEGG.get());
 			event.accept(BOULDERING_ZOMBIE_SPAWNEGG.get());
 			event.accept(BOULDERING_DROWNED_SPAWNEGG.get());
