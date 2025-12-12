@@ -163,14 +163,23 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 
 	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
 		BoneShard bone = new BoneShard(this.level(), this);
-		double d1 = p_29912_.getX() - this.getX();
-		double d2 = p_29912_.getEyeY() - this.getEyeY();
-		double d3 = p_29912_.getZ() - this.getZ();
-		bone.shoot(d1, d2, d3, 1.4F, 2.0F + p_29913_);
-		Collection<MobEffectInstance> collection = this.getActiveEffects();
-		if (!collection.isEmpty()) {
-			for (MobEffectInstance mobEffectInstance : this.getActiveEffects()) {
-                bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration() / 4, 0));
+        double x = p_29912_.getX() - this.getX();
+        double y = p_29912_.getEyeY() - this.getEyeY();
+        double z = p_29912_.getZ() - this.getZ();
+        double length = Math.sqrt(x * x + z * z);
+        bone.shoot(x, y + (length * 0.275F), z, 0.75F, 2.0F);
+        Collection<MobEffectInstance> collection = this.getActiveEffects();
+        if (!collection.isEmpty()) {
+            for (MobEffectInstance mobEffectInstance : this.getActiveEffects()) {
+                if (!mobEffectInstance.getEffect().value().isBeneficial()) {
+                    if (mobEffectInstance.getEffect().value().isInstantenous()) {
+                        bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), 1, 0));
+                    } else if (mobEffectInstance.isInfiniteDuration()) {
+                        bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), 100, 0));
+                    } else {
+                        bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration() / 4, 0));
+                    }
+                }
             }
         }
 		this.level().addFreshEntity(bone);
