@@ -52,7 +52,7 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 	@Override
 	protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(4, new BoneSpiderAttackGoal(this));
+        this.goalSelector.addGoal(4, new BoneSpiderAttackGoal(this, 0));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
@@ -132,8 +132,8 @@ public class BoneSpider extends Spider implements RangedAttackMob {
     static class BoneSpiderAttackGoal extends RangedAndMeleeAttack {
         private final BoneSpider spider;
 
-        public BoneSpiderAttackGoal(BoneSpider p_32247_) {
-            super(p_32247_, 1.0F, 40, 80, 14);
+        public BoneSpiderAttackGoal(BoneSpider p_32247_, int extraDuration) {
+            super(p_32247_, 1.0F, 60 + extraDuration, 100 + extraDuration, 14);
             this.spider = p_32247_;
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
         }
@@ -167,10 +167,11 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 
 	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
 		BoneShard bone = new BoneShard(this.level(), this, ModItems.BONE_SHARD.toStack());
-		double d1 = p_29912_.getX() - this.getX();
-		double d2 = p_29912_.getEyeY() - this.getEyeY();
-		double d3 = p_29912_.getZ() - this.getZ();
-		bone.shoot(d1, d2, d3, 1.4F, 2.0F + p_29913_);
+        double x = p_29912_.getX() - this.getX();
+        double y = p_29912_.getEyeY() - this.getEyeY();
+        double z = p_29912_.getZ() - this.getZ();
+        double length = Math.sqrt(x * x + z * z);
+        bone.shoot(x, y + (length * 0.25F), z, 0.75F, 2.0F);
 		Collection<MobEffectInstance> collection = this.getActiveEffects();
 		if (!collection.isEmpty()) {
 			for (MobEffectInstance mobEffectInstance : this.getActiveEffects()) {
