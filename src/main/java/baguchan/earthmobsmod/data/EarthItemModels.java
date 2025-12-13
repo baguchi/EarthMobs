@@ -30,6 +30,7 @@ public class EarthItemModels extends ItemModelGenerators {
         this.generateFlatItem(ModItems.HORN_FLUTE.get(), ModelTemplates.FLAT_ITEM);
         this.generateFlatItem(ModItems.HYPER_RABBIT_FOOT.get(), ModelTemplates.FLAT_ITEM);
         this.generateFlatItem(ModItems.ZOMBIFIED_RABBIT_FOOT.get(), ModelTemplates.FLAT_ITEM);
+        this.generateFlatItem(ModItems.HUSK_RABBIT_FOOT.get(), ModelTemplates.FLAT_ITEM);
         this.generateFlatItem(ModItems.MUD_BUCKET.get(), ModelTemplates.FLAT_ITEM);
         this.generateFlatItem(ModItems.TROPICAL_SLIME_BUCKET.get(), ModelTemplates.FLAT_ITEM);
         this.generateFlatItem(ModItems.TEACUP_PIG_POT.get(), ModelTemplates.FLAT_ITEM);
@@ -51,6 +52,7 @@ public class EarthItemModels extends ItemModelGenerators {
         this.generateSpawnEgg(ModItems.JOLLY_LAMMA_SPAWNEGG.get(), 0x673727, 0xD2BFB2);
         this.generateSpawnEgg(ModItems.BONE_SPIDER_SPAWNEGG.get(), 0x461C2E, 0x6130B7);
         this.generateSpawnEgg(ModItems.ZOMBIFIED_RABBIT_SPAWNEGG.get(), 0x79AD69, 0x2A5131);
+        this.generateSpawnEgg(ModItems.HUSK_RABBIT_SPAWNEGG.get(), 0x544937, 0x1A1714);
 
         this.generateSpawnEgg(ModItems.BOULDERING_ZOMBIE_SPAWNEGG.get(), 0x384242, 0x52261A);
         this.generateSpawnEgg(ModItems.BOULDERING_DROWNED_SPAWNEGG.get(), 0x56847E, 0x52261A);

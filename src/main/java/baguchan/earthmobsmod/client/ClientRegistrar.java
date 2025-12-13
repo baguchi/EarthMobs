@@ -73,6 +73,8 @@ public class ClientRegistrar {
         event.registerEntityRenderer(ModEntities.HORNED_SHEEP.get(), HornedSheepRenderer::new);
         event.registerEntityRenderer(ModEntities.HYPER_RABBIT.get(), HyperRabbitRenderer::new);
         event.registerEntityRenderer(ModEntities.ZOMBIFIED_RABBIT.get(), ZombifiedRabbitRenderer::new);
+        event.registerEntityRenderer(ModEntities.HUSK_RABBIT.get(), HuskRabbitRenderer::new);
+
         event.registerEntityRenderer(ModEntities.MOOBLOOM.get(), MoobloomRenderer::new);
         event.registerEntityRenderer(ModEntities.MOOLIP.get(), MoolipRenderer::new);
         event.registerEntityRenderer(ModEntities.JUMBO_RABBIT.get(), JumboRabbitRenderer::new);

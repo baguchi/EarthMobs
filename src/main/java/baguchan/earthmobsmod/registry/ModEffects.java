@@ -51,7 +51,8 @@ public class ModEffects {
 		event.getBuilder().addMix(Potions.AWKWARD, ModItems.BONE_SPIDER_EYE.get(), UNDEAD_BODY_POTION);
 		event.getBuilder().addMix(UNDEAD_BODY_POTION, Items.REDSTONE, LONG_UNDEAD_BODY_POTION);
 		event.getBuilder().addMix(Potions.AWKWARD, ModItems.ZOMBIFIED_RABBIT_FOOT.get(), ZOMBIFIED_POTION);
-		event.getBuilder().addMix(Potions.STRENGTH, ModItems.HARDER_FLESH.get(), HARD_BODY_POTION);
+        event.getBuilder().addMix(Potions.AWKWARD, ModItems.HUSK_RABBIT_FOOT.get(), ZOMBIFIED_POTION);
+        event.getBuilder().addMix(Potions.STRENGTH, ModItems.HARDER_FLESH.get(), HARD_BODY_POTION);
 		event.getBuilder().addMix(HARD_BODY_POTION, Items.REDSTONE, LONG_HARD_BODY_POTION);
 		event.getBuilder().addMix(HARD_BODY_POTION, Items.GLOWSTONE, STRONG_HARD_BODY_POTION);
 	}

@@ -38,7 +38,8 @@ public class ModItems {
 
 	public static final DeferredItem<Item> HYPER_RABBIT_FOOT = ITEMS.registerItem("hyper_rabbit_foot", (prop) -> new Item((prop)));
 	public static final DeferredItem<Item> ZOMBIFIED_RABBIT_FOOT = ITEMS.registerItem("zombified_rabbit_foot", (prop) -> new Item((prop)));
-	public static final DeferredItem<Item> MUD_BUCKET = ITEMS.registerItem("mud_bucket", (prop) -> new BucketItem(ModFluids.MUD.value(), (prop).stacksTo(1).craftRemainder(Items.BUCKET)));
+    public static final DeferredItem<Item> HUSK_RABBIT_FOOT = ITEMS.registerItem("husk_rabbit_foot", (prop) -> new Item((prop)));
+    public static final DeferredItem<Item> MUD_BUCKET = ITEMS.registerItem("mud_bucket", (prop) -> new BucketItem(ModFluids.MUD.value(), (prop).stacksTo(1).craftRemainder(Items.BUCKET)));
 	public static final DeferredItem<Item> TROPICAL_SLIME_BUCKET = ITEMS.registerItem("tropical_slime_bucket", (prop) -> new MobBucketItem(ModEntities.TROPICAL_SLIME.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (prop).stacksTo(1).craftRemainder(Items.BUCKET)));
 	public static final DeferredItem<Item> TEACUP_PIG_POT = ITEMS.registerItem("teacup_pig_pot", (prop) -> new MobPotItem(ModEntities.TEACUP_PIG.get(), Fluids.EMPTY, SoundEvents.ARMOR_EQUIP_GENERIC.value(), (prop).stacksTo(1).craftRemainder(Items.FLOWER_POT)));
 
@@ -72,6 +73,7 @@ public class ModItems {
     public static final DeferredItem<Item> SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.SKELETON_WOLF.get()))));
     public static final DeferredItem<Item> WITHER_SKELETON_WOLF_SPAWNEGG = ITEMS.registerItem("wither_skeleton_wolf_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.WITHER_SKELETON_WOLF.get()))));
     public static final DeferredItem<Item> ZOMBIFIED_RABBIT_SPAWNEGG = ITEMS.registerItem("zombified_rabbit_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.ZOMBIFIED_RABBIT.get()))));
+    public static final DeferredItem<Item> HUSK_RABBIT_SPAWNEGG = ITEMS.registerItem("husk_rabbit_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.HUSK_RABBIT.get()))));
 
     public static final DeferredItem<Item> MAGMA_COW_SPAWNEGG = ITEMS.registerItem("magma_cow_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.MAGMA_COW.get()))));
     public static final DeferredItem<Item> MELON_GOLEM_SPAWNEGG = ITEMS.registerItem("melon_golem_spawn_egg", (prop) -> new SpawnEggItem((prop.spawnEgg(ModEntities.MELON_GOLEM.get()))));
@@ -112,6 +114,7 @@ public class ModItems {
 
 			event.accept(BONE_SPIDER_SPAWNEGG.get());
 			event.accept(ZOMBIFIED_RABBIT_SPAWNEGG.get());
+            event.accept(HUSK_RABBIT_SPAWNEGG.get());
 			event.accept(BOULDERING_ZOMBIE_SPAWNEGG.get());
 			event.accept(BOULDERING_DROWNED_SPAWNEGG.get());
 
@@ -145,6 +148,7 @@ public class ModItems {
 					);*/
 			event.accept(HYPER_RABBIT_FOOT.get());
 			event.accept(ZOMBIFIED_RABBIT_FOOT.get());
+            event.accept(HUSK_RABBIT_FOOT.get());
 		}
         if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
 			event.accept(ModBlocks.TROPICAL_SLIME_BLOCK.get());

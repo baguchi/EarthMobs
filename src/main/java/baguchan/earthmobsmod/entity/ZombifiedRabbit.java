@@ -2,21 +2,12 @@ package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.UUIDUtil;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -27,25 +18,22 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
 public class ZombifiedRabbit extends Rabbit implements Enemy {
-    private static final EntityDataAccessor<Boolean> DATA_CONVERTING_ID = SynchedEntityData.defineId(ZombifiedRabbit.class, EntityDataSerializers.BOOLEAN);
 
     private int conversionTime;
     @javax.annotation.Nullable
@@ -69,7 +57,6 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
 
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        builder.define(DATA_CONVERTING_ID, false);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -79,91 +66,34 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     @Override
     public void addAdditionalSaveData(ValueOutput p_34397_) {
         super.addAdditionalSaveData(p_34397_);
-
-
-        p_34397_.putInt("ConversionTime", this.isConverting() ? this.conversionTime : -1);
-        p_34397_.storeNullable("ConversionPlayer", UUIDUtil.CODEC, this.conversionStarter);
-
     }
 
     @Override
     public void readAdditionalSaveData(ValueInput p_34387_) {
         super.readAdditionalSaveData(p_34387_);
-        int i = p_34387_.getIntOr("ConversionTime", -1);
-
-        if (i != -1) {
-            UUID uuid = p_34387_.read("ConversionPlayer", UUIDUtil.CODEC).orElse(null);
-            this.startConverting(uuid, i);
-        } else {
-            this.getEntityData().set(DATA_CONVERTING_ID, false);
-            this.conversionTime = -1;
-        }
-
     }
 
-    public void tick() {
-        if (!this.level().isClientSide() && this.isAlive() && this.isConverting()) {
-            this.conversionTime -= 1;
-            if (this.conversionTime <= 0 && EventHooks.canLivingConvert(this, EntityType.VILLAGER, (timer) -> this.conversionTime = timer)) {
-                this.finishConversion((ServerLevel) this.level());
-            }
+    @Override
+    public @org.jspecify.annotations.Nullable SpawnGroupData finalizeSpawn(
+            ServerLevelAccessor p_479493_, DifficultyInstance p_481210_, EntitySpawnReason p_482098_, @org.jspecify.annotations.Nullable SpawnGroupData p_481475_
+    ) {
+        if (p_482098_ == EntitySpawnReason.NATURAL) {
+            //this.makeRider(p_479493_, p_481210_, p_482098_);
         }
+        this.makeRider(p_479493_, p_481210_, p_482098_);
 
-        super.tick();
+        return super.finalizeSpawn(p_479493_, p_481210_, p_482098_, p_481475_);
     }
 
-    public InteractionResult mobInteract(Player p_34394_, InteractionHand p_34395_) {
-        ItemStack itemstack = p_34394_.getItemInHand(p_34395_);
-        if (itemstack.is(Items.GOLDEN_CARROT)) {
-            if (this.hasEffect(MobEffects.WEAKNESS)) {
-                if (!p_34394_.getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                }
-
-                if (!this.level().isClientSide()) {
-                    this.startConverting(p_34394_.getUUID(), this.random.nextInt(2401) + 3600);
-                }
-
-                return InteractionResult.SUCCESS;
-            } else {
-                return InteractionResult.CONSUME;
-            }
-        } else {
-            return super.mobInteract(p_34394_, p_34395_);
+    public void makeRider(ServerLevelAccessor p_479493_, DifficultyInstance p_481210_, EntitySpawnReason p_482098_) {
+        Zombie zombie = EntityType.ZOMBIE.create(this.level(), EntitySpawnReason.JOCKEY);
+        if (zombie != null) {
+            zombie.setBaby(true);
+            zombie.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
+            zombie.finalizeSpawn(p_479493_, p_481210_, p_482098_, null);
+            zombie.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SPEAR));
+            zombie.startRiding(this, false, false);
         }
-    }
-
-    public boolean isConverting() {
-        return this.getEntityData().get(DATA_CONVERTING_ID);
-    }
-
-    private void startConverting(@javax.annotation.Nullable UUID p_34384_, int p_34385_) {
-        this.conversionStarter = p_34384_;
-        this.conversionTime = p_34385_;
-        this.getEntityData().set(DATA_CONVERTING_ID, true);
-        this.removeEffect(MobEffects.WEAKNESS);
-        this.addEffect(new MobEffectInstance(MobEffects.STRENGTH, p_34385_, Math.min(this.level().getDifficulty().getId() - 1, 0)));
-        this.level().broadcastEntityEvent(this, (byte) 16);
-    }
-
-    private void finishConversion(ServerLevel p_34399_) {
-        Rabbit rabbit = this.convertTo(EntityType.RABBIT, ConversionParams.single(this, false, false),
-                p_375894_ -> {
-                });
-        //rabbit.setVariant(this.getVariant());
-        rabbit.finalizeSpawn(p_34399_, p_34399_.getCurrentDifficultyAt(rabbit.blockPosition()), EntitySpawnReason.CONVERSION, (SpawnGroupData) null);
-        if (this.conversionStarter != null) {
-            Player player = p_34399_.getPlayerByUUID(this.conversionStarter);
-            if (player instanceof ServerPlayer) {
-                //CriteriaTriggers.CURED_ZOMBIE_VILLAGER.trigger((ServerPlayer)player, this, rabbit);
-            }
-        }
-
-        rabbit.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, 0));
-        if (!this.isSilent()) {
-            p_34399_.levelEvent((Player) null, 1027, this.blockPosition(), 0);
-        }
-        EventHooks.onLivingConvert(this, rabbit);
     }
 
     public static boolean isDarkEnoughToSpawn(ServerLevelAccessor p_219010_, BlockPos p_219011_, RandomSource p_219012_) {
@@ -186,6 +116,15 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     }
 
     @Override
+    public void setLandingDelay() {
+        if (this.isPassenger()) {
+            this.jumpDelayTicks = 3;
+        } else {
+            super.setLandingDelay();
+        }
+    }
+
+    @Override
     public boolean removeWhenFarAway(double p_27598_) {
         return true;
     }
@@ -201,37 +140,10 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     public Rabbit getBreedOffspring(ServerLevel p_149035_, AgeableMob p_149036_) {
         Rabbit rabbit = ModEntities.ZOMBIFIED_RABBIT.get().create(p_149035_, EntitySpawnReason.BREEDING);
         if (rabbit != null) {
-            Rabbit.Variant rabbit$variant = getRandomRabbitVariant(p_149035_, this.blockPosition());
-            if (this.random.nextInt(20) != 0) {
-                label22:
-                {
-                    if (p_149036_ instanceof Rabbit) {
-                        Rabbit rabbit1 = (Rabbit) p_149036_;
-                        if (this.random.nextBoolean()) {
-                            rabbit$variant = rabbit1.getVariant();
-                            break label22;
-                        }
-                    }
-
-                    rabbit$variant = this.getVariant();
-                }
-            }
 
             //rabbit.setVariant(rabbit$variant);
         }
 
         return rabbit;
-    }
-
-    private static Rabbit.Variant getRandomRabbitVariant(LevelAccessor p_262699_, BlockPos p_262700_) {
-        Holder<Biome> holder = p_262699_.getBiome(p_262700_);
-        int i = p_262699_.getRandom().nextInt(100);
-        if (holder.is(BiomeTags.SPAWNS_WHITE_RABBITS)) {
-            return i < 80 ? Rabbit.Variant.WHITE : Rabbit.Variant.WHITE_SPLOTCHED;
-        } else if (holder.is(BiomeTags.SPAWNS_GOLD_RABBITS)) {
-            return Rabbit.Variant.GOLD;
-        } else {
-            return i < 50 ? Rabbit.Variant.BROWN : (i < 90 ? Rabbit.Variant.SALT : Rabbit.Variant.BLACK);
-        }
     }
 }

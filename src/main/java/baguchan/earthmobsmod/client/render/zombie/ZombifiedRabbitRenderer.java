@@ -39,11 +39,10 @@ public class ZombifiedRabbitRenderer<T extends ZombifiedRabbit> extends AgeableM
         p_362192_.jumpCompletion = p_363386_.getJumpCompletion(p_365470_);
         p_362192_.isToast = "Toast".equals(ChatFormatting.stripFormatting(p_363386_.getName().getString()));
         p_362192_.variant = p_363386_.getVariant();
-        p_362192_.isConverting = p_363386_.isConverting();
     }
 
     @Override
     protected boolean isShaking(ZombifiedRabbitRenderState p_115304_) {
-        return super.isShaking(p_115304_) || p_115304_.isConverting;
+        return super.isShaking(p_115304_);
     }
 }

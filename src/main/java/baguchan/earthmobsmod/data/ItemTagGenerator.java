@@ -23,5 +23,6 @@ public class ItemTagGenerator extends ItemTagsProvider {
 		tag(Tags.Items.FEATHERS).add(ModItems.FANCY_FEATHER.get());
 		tag(Tags.Items.EGGS).add(ModItems.SMELLY_EGG.get(), ModItems.FANCY_EGG.get());
 		tag(ItemTags.MEAT).add(ModItems.HARDER_FLESH.get());
+        tag(ItemTags.CAMEL_HUSK_FOOD).add(ModItems.ZOMBIFIED_RABBIT_FOOT.get(), ModItems.HUSK_RABBIT_FOOT.get());
 	}
 }
