@@ -78,9 +78,11 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
             ServerLevelAccessor p_479493_, DifficultyInstance p_481210_, EntitySpawnReason p_482098_, @org.jspecify.annotations.Nullable SpawnGroupData p_481475_
     ) {
         if (p_482098_ == EntitySpawnReason.NATURAL) {
-            //this.makeRider(p_479493_, p_481210_, p_482098_);
+            if (p_479493_.getRandom().nextFloat() < 0.1F) {
+                this.makeRider(p_479493_, p_481210_, p_482098_);
+            }
         }
-        this.makeRider(p_479493_, p_481210_, p_482098_);
+        //this.makeRider(p_479493_, p_481210_, p_482098_);
 
         return super.finalizeSpawn(p_479493_, p_481210_, p_482098_, p_481475_);
     }
@@ -117,8 +119,8 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
 
     @Override
     public void setLandingDelay() {
-        if (this.isPassenger()) {
-            this.jumpDelayTicks = 1;
+        if (this.hasControllingPassenger()) {
+            this.jumpDelayTicks = 5;
         } else {
             super.setLandingDelay();
         }

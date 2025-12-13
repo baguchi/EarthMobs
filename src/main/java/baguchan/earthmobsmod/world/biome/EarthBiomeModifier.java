@@ -95,7 +95,16 @@ public class EarthBiomeModifier implements BiomeModifier {
 
 					if (EarthMobsConfig.COMMON.zombifiedRabbitSpawnRate.get() > 0) {
 						builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.zombifiedRabbitSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.ZOMBIFIED_RABBIT.get(), 3, 4));
-					}
+                        if (biome.is(Tags.Biomes.IS_DESERT)) {
+                            builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.zombifiedRabbitSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.HUSK_RABBIT.get(), 3, 4));
+                        }
+                    }
+
+                    if (biome.is(Tags.Biomes.IS_DESERT)) {
+                        if (EarthMobsConfig.COMMON.zombifiedRabbitSpawnRate.get() > 0) {
+                            builder.getMobSpawnSettings().addSpawn(MobCategory.MONSTER, EarthMobsConfig.COMMON.zombifiedRabbitSpawnRate.get(), new MobSpawnSettings.SpawnerData(ModEntities.HUSK_RABBIT.get(), 3, 4));
+                        }
+                    }
 
 					if (EarthMobsConfig.COMMON.boulderingZombieSpawnRate.get() > 0) {
 						if (biome.is(Biomes.DRIPSTONE_CAVES)) {
