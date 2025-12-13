@@ -18,6 +18,7 @@ import net.minecraft.world.entity.animal.equine.Llama;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
@@ -81,8 +82,8 @@ public class ModEntities {
     public static final Supplier<EntityType<SkeletonWolf>> SKELETON_WOLF = ENTITIES.register("skeleton_wolf", () -> EntityType.Builder.of(SkeletonWolf::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 0.85F).build(prefix("skeleton_wolf")));
     public static final Supplier<EntityType<WitherSkeletonWolf>> WITHER_SKELETON_WOLF = ENTITIES.register("wither_skeleton_wolf", () -> EntityType.Builder.of(WitherSkeletonWolf::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 0.85F).fireImmune().immuneTo(Blocks.WITHER_ROSE).build(prefix("wither_skeleton_wolf")));
 
-    public static final Supplier<EntityType<ZombifiedRabbit>> ZOMBIFIED_RABBIT = ENTITIES.register("zombified_rabbit", () -> EntityType.Builder.of(ZombifiedRabbit::new, MobCategory.MONSTER).notInPeaceful().sized(0.4F, 0.6F).clientTrackingRange(8).passengerAttachments(0.35F).build(prefix("zombified_rabbit")));
-    public static final Supplier<EntityType<HuskRabbit>> HUSK_RABBIT = ENTITIES.register("husk_rabbit", () -> EntityType.Builder.of(HuskRabbit::new, MobCategory.MONSTER).notInPeaceful().sized(0.4F, 0.6F).clientTrackingRange(8).passengerAttachments(0.35F).build(prefix("husk_rabbit")));
+    public static final Supplier<EntityType<ZombifiedRabbit>> ZOMBIFIED_RABBIT = ENTITIES.register("zombified_rabbit", () -> EntityType.Builder.of(ZombifiedRabbit::new, MobCategory.MONSTER).notInPeaceful().sized(0.4F, 0.6F).clientTrackingRange(8).passengerAttachments(new Vec3(0F, 0.35F, -0.2F)).build(prefix("zombified_rabbit")));
+    public static final Supplier<EntityType<HuskRabbit>> HUSK_RABBIT = ENTITIES.register("husk_rabbit", () -> EntityType.Builder.of(HuskRabbit::new, MobCategory.MONSTER).notInPeaceful().sized(0.4F, 0.6F).clientTrackingRange(8).passengerAttachments(new Vec3(0F, 0.35F, -0.2F)).build(prefix("husk_rabbit")));
 
     public static final Supplier<EntityType<SmellyEgg>> SMELLY_EGG = ENTITIES.register("smelly_egg", () -> EntityType.Builder.<SmellyEgg>of(SmellyEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("smelly_egg")));
     public static final Supplier<EntityType<FancyEgg>> FANCY_EGG = ENTITIES.register("fancy_egg", () -> EntityType.Builder.<FancyEgg>of(FancyEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("fancy_egg")));

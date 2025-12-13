@@ -118,7 +118,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     @Override
     public void setLandingDelay() {
         if (this.isPassenger()) {
-            this.jumpDelayTicks = 3;
+            this.jumpDelayTicks = 1;
         } else {
             super.setLandingDelay();
         }
