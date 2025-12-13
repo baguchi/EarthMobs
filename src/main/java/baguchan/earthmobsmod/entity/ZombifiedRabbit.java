@@ -93,7 +93,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
             zombie.setBaby(true);
             zombie.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
             zombie.finalizeSpawn(p_479493_, p_481210_, p_482098_, null);
-            zombie.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SPEAR));
+            zombie.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.WOODEN_SPEAR));
             zombie.startRiding(this, false, false);
         }
     }
