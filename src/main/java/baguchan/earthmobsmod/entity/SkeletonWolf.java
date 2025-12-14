@@ -211,11 +211,16 @@ public class SkeletonWolf extends Wolf {
 	}
 
 	@Override
-	public boolean isFood(ItemStack p_30440_) {
-		return false;
+    public boolean isFood(ItemStack itemStack) {
+        return itemStack.is(Items.BONE) || itemStack.is(Items.ROTTEN_FLESH);
 	}
 
-	@Override
+    @Override
+    public boolean canBreed() {
+        return false;
+    }
+
+    @Override
 	public boolean removeWhenFarAway(double p_27598_) {
 		return !isTame();
 	}
