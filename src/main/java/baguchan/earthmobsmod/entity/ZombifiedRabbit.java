@@ -2,7 +2,6 @@ package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -31,13 +30,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
-
 public class ZombifiedRabbit extends Rabbit implements Enemy {
-
-    private int conversionTime;
-    @javax.annotation.Nullable
-    private UUID conversionStarter;
     public ZombifiedRabbit(EntityType<? extends Rabbit> p_29656_, Level p_29657_) {
         super(p_29656_, p_29657_);
         this.xpReward = 3;
@@ -55,10 +48,6 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
     }
 
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
         return Rabbit.createAttributes().add(Attributes.MAX_HEALTH, 8.0D);
     }
@@ -71,6 +60,11 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
     @Override
     public void readAdditionalSaveData(ValueInput p_34387_) {
         super.readAdditionalSaveData(p_34387_);
+    }
+
+    @Override
+    public boolean canBreed() {
+        return false;
     }
 
     @Override
@@ -89,7 +83,7 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
 
     public void makeRider(ServerLevelAccessor p_479493_, DifficultyInstance p_481210_, EntitySpawnReason p_482098_) {
         Zombie zombie = EntityType.ZOMBIE.create(this.level(), EntitySpawnReason.JOCKEY);
-        if (zombie != null) {
+        if (zombie != null && !this.isBaby()) {
             zombie.setBaby(true);
             zombie.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
             zombie.finalizeSpawn(p_479493_, p_481210_, p_482098_, null);
