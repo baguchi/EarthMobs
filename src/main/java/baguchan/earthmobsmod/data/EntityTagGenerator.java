@@ -26,7 +26,8 @@ public class EntityTagGenerator extends EntityTypeTagsProvider {
 		this.tag(EntityTypeTags.RAIDERS).add(ModEntities.VILER_WITCH.get());
         this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(ModEntities.HYPER_RABBIT.get(), ModEntities.ZOMBIFIED_RABBIT.get());
 		this.tag(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(ModEntities.CLUCK_SHROOM.get(), ModEntities.FANCY_CHICKEN.get(), ModEntities.FURNACE_GOLEM.get(), ModEntities.MELON_GOLEM.get());
-        this.tag(EntityTypeTags.ZOMBIES).add(ModEntities.ZOMBIFIED_RABBIT.get(), ModEntities.ZOMBIFIED_PIG.get(), ModEntities.BOULDERING_ZOMBIE.get(), ModEntities.BOULDERING_DROWNED.get(), ModEntities.LOBBER_ZOMBIE.get(), ModEntities.LOBBER_DROWNED.get());
+        this.tag(EntityTypeTags.ZOMBIES).add(ModEntities.ZOMBIFIED_RABBIT.get(), ModEntities.ZOMBIFIED_PIG.get(), ModEntities.BOULDERING_ZOMBIE.get(), ModEntities.BOULDERING_DROWNED.get(), ModEntities.LOBBER_ZOMBIE.get(), ModEntities.LOBBER_DROWNED.get())
+                .add(ModEntities.HUSK_RABBIT.get());
         this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER).add(ModEntities.TROPICAL_SLIME.get());
 		this.tag(ModTags.Entities.CAN_MUDDY).add(EntityType.PIG).add(ModEntities.TEACUP_PIG.get()).add(ModEntities.ZOMBIFIED_PIG.get());
         this.tag(ModTags.Entities.CAN_MOSS).add(EntityType.SHEEP).add(ModEntities.HORNED_SHEEP.get());
@@ -34,6 +35,7 @@ public class EntityTagGenerator extends EntityTypeTagsProvider {
 				.add(ModEntities.BOULDERING_ZOMBIE.get(), ModEntities.LOBBER_ZOMBIE.get())
 				.add(ModEntities.BOULDERING_DROWNED.get(), ModEntities.LOBBER_DROWNED.get())
 				.add(ModEntities.ZOMBIFIED_RABBIT.get())
+                .add(ModEntities.HUSK_RABBIT.get())
 				.add(ModEntities.ZOMBIFIED_PIG.get())
 				.add(ModEntities.SKELETON_WOLF.get())
 				.add(ModEntities.WITHER_SKELETON_WOLF.get());
