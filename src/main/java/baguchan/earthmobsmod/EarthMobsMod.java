@@ -64,6 +64,7 @@ public class EarthMobsMod {
 		registrar.playToClient(MudMessage.TYPE, MudMessage.STREAM_CODEC, (handler, payload) -> handler.handle(handler, payload));
 	}
 
+
 	private void setup(final FMLCommonSetupEvent event) {
 		ModInteractionInformations.init();
 		ModItems.composterInit();

@@ -9,6 +9,6 @@ public interface IMoss {
     void setMoss(boolean moss);
 
     default boolean canMoss(LivingEntity livingEntity) {
-        return livingEntity.getType().is(ModTags.Entities.CAN_MOSS);
+        return livingEntity.is(ModTags.Entities.CAN_MOSS);
     }
 }

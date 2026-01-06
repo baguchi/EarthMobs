@@ -161,13 +161,16 @@ public class FurnaceGolem extends AbstractGolem {
         }
     }
 
-    public boolean canAttackType(EntityType<?> p_28851_) {
-        if (p_28851_ == EntityType.PLAYER) {
+
+    @Override
+    public boolean canAttack(Entity target) {
+        if (target.is(EntityType.PLAYER)) {
             return false;
         } else {
-            return p_28851_ == EntityType.CREEPER ? false : super.canAttackType(p_28851_);
+            return target.is(EntityType.CREEPER) ? false : super.canAttack(target);
         }
     }
+
     public void setFurnaceActive(boolean active) {
         this.entityData.set(FURNACE_ACTIVE, active);
     }

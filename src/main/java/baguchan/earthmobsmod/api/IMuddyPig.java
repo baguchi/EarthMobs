@@ -23,6 +23,6 @@ public interface IMuddyPig {
     void setColor(DyeColor color);
 
 	default boolean canMuddy(LivingEntity livingEntity) {
-		return livingEntity.getType().is(ModTags.Entities.CAN_MUDDY);
+		return livingEntity.is(ModTags.Entities.CAN_MUDDY);
 	}
 }

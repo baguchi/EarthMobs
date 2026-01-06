@@ -3,7 +3,9 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -36,6 +38,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.event.EventHooks;
+
+import java.util.Optional;
 
 public class SkeletonWolf extends Wolf {
 	public SkeletonWolf(EntityType<? extends SkeletonWolf> p_30369_, Level p_30370_) {
@@ -183,7 +187,9 @@ public class SkeletonWolf extends Wolf {
 
 	public boolean isEquippableInSlotEvenSkeleton(ItemStack p_371603_, EquipmentSlot p_371841_) {
 		Equippable equippable = (Equippable) p_371603_.get(DataComponents.EQUIPPABLE);
-		return equippable == null ? p_371841_ == EquipmentSlot.MAINHAND && this.canUseSlot(EquipmentSlot.MAINHAND) : p_371841_ == equippable.slot() && this.canUseSlot(equippable.slot()) && equippable.canBeEquippedBy(EntityType.WOLF);
+
+		Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.WOLF));
+		return equippable == null ? p_371841_ == EquipmentSlot.MAINHAND && this.canUseSlot(EquipmentSlot.MAINHAND) : p_371841_ == equippable.slot() && this.canUseSlot(equippable.slot()) && entityType.isPresent() && equippable.canBeEquippedBy(entityType.get());
 	}
 
 	private void tryToTame(Player p_406358_) {

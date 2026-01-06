@@ -15,7 +15,7 @@ public class ZombifiedEffect extends MobEffect {
     @Override
     public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity p_301282_, int p_300945_) {
         super.applyEffectTick(serverLevel, p_301282_, p_300945_);
-        if (p_301282_.getType().is(EntityTypeTags.UNDEAD)) {
+        if (p_301282_.is(EntityTypeTags.UNDEAD)) {
             p_301282_.hurt(p_301282_.damageSources().source(ModDamageSource.ZOMBIFIED), 2);
             return true;
         }

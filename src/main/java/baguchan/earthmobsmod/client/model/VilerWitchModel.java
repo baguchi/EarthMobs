@@ -7,12 +7,11 @@ import net.minecraft.client.model.VillagerLikeModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.WitchRenderState;
 import net.minecraft.util.Mth;
 
 
-public class VilerWitchModel<T extends WitchRenderState> extends EntityModel<T> implements VillagerLikeModel, HeadedModel {
+public class VilerWitchModel<T extends WitchRenderState> extends EntityModel<T> implements VillagerLikeModel<T>, HeadedModel {
 	private final ModelPart root;
 	private final ModelPart head;
 	private final ModelPart hat;
@@ -105,7 +104,7 @@ public class VilerWitchModel<T extends WitchRenderState> extends EntityModel<T> 
 	}
 
     @Override
-    public void translateToArms(EntityRenderState entityRenderState, PoseStack poseStack) {
+	public void translateToArms(T entityRenderState, PoseStack poseStack) {
         this.root.translateAndRotate(poseStack);
         this.arms.translateAndRotate(poseStack);
     }
