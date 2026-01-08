@@ -1,9 +1,9 @@
 package baguchan.earthmobsmod.client.render.layer;
 
-import baguchan.earthmobsmod.client.model.MoobloomModel;
 import baguchan.earthmobsmod.client.render.state.MoobloomRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
@@ -15,11 +15,11 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.level.block.state.BlockState;
 
 
-public abstract class CowPlantLayer extends RenderLayer<MoobloomRenderState, MoobloomModel<MoobloomRenderState>> {
+public abstract class CowPlantLayer extends RenderLayer<MoobloomRenderState, CowModel> {
     private final BlockRenderDispatcher blockRenderer;
     private final BlockState blockState;
 
-    public CowPlantLayer(RenderLayerParent<MoobloomRenderState, MoobloomModel<MoobloomRenderState>> p_117243_, BlockRenderDispatcher p_234851_, BlockState blockState) {
+    public CowPlantLayer(RenderLayerParent<MoobloomRenderState, CowModel> p_117243_, BlockRenderDispatcher p_234851_, BlockState blockState) {
 		super(p_117243_);
 
         this.blockRenderer = p_234851_;
@@ -51,7 +51,7 @@ public abstract class CowPlantLayer extends RenderLayer<MoobloomRenderState, Moo
                 this.submitMushroomBlock(p_117256_, p_432964_, p_117258_, flag, p_361786_.outlineColor, blockstate, i, blockstatemodel);
                 p_117256_.popPose();
                 p_117256_.pushPose();
-                (this.getParentModel()).head.translateAndRotate(p_117256_);
+                (this.getParentModel()).getHead().translateAndRotate(p_117256_);
                 p_117256_.translate(0.0F, -0.7F, -0.2F);
                 p_117256_.mulPose(Axis.YP.rotationDegrees(-78.0F));
                 p_117256_.scale(-1.0F, -1.0F, 1.0F);

@@ -9,20 +9,18 @@ import net.minecraft.resources.Identifier;
 
 public class HuskRabbitRenderer<T extends HuskRabbit> extends ZombifiedRabbitRenderer<T> {
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/husk_rabbit.png");
-    private static final Identifier EVIL_TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/husk_rabbit_evil.png");
+    private static final Identifier BABY_TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/husk_rabbit_baby.png");
 
     public HuskRabbitRenderer(EntityRendererProvider.Context p_173952_) {
         super(p_173952_);
     }
 
     @Override
-    public Identifier getTextureLocation(ZombifiedRabbitRenderState p_115803_) {
-        switch (p_115803_.variant) {
-            case EVIL:
-                return EVIL_TEXTURE;
-            default:
-                return TEXTURE;
+    public Identifier getTextureLocation(ZombifiedRabbitRenderState renderState) {
+        if (renderState.isBaby) {
+            return BABY_TEXTURE;
         }
+        return TEXTURE;
     }
 
 }

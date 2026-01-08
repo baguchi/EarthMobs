@@ -3,29 +3,14 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.12.4
 // Paste this class into your mod and generate all required imports
 
 
-import baguchan.earthmobsmod.client.render.state.MoobloomRenderState;
-import net.minecraft.client.model.QuadrupedModel;
+import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class MoobloomModel<T extends MoobloomRenderState> extends QuadrupedModel<T> {
-
-    public final ModelPart head;
-    private final ModelPart body;
-    private final ModelPart right_hind_leg;
-    private final ModelPart left_hind_leg;
-    private final ModelPart right_front_leg;
-    private final ModelPart left_front_leg;
-
+public class MoobloomModel extends CowModel {
     public MoobloomModel(ModelPart root) {
         super(root);
-        this.head = root.getChild("head");
-        this.body = root.getChild("body");
-        this.right_hind_leg = root.getChild("right_hind_leg");
-        this.left_hind_leg = root.getChild("left_hind_leg");
-        this.right_front_leg = root.getChild("right_front_leg");
-        this.left_front_leg = root.getChild("left_front_leg");
     }
 
     public static LayerDefinition createBodyLayer() {

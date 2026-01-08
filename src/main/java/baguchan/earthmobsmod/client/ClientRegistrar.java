@@ -18,6 +18,8 @@ import baguchan.earthmobsmod.registry.ModFluidTypes;
 import baguchi.bagus_lib.client.event.RegisterBagusKeyframeEvents;
 import com.google.common.reflect.TypeToken;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import net.minecraft.client.model.animal.chicken.BabyChickenModel;
+import net.minecraft.client.model.animal.cow.BabyCowModel;
 import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.model.animal.pig.PigModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -109,8 +111,8 @@ public class ClientRegistrar {
     public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.CLUCK_SHROOM, CluckShroomModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.FANCY_CHICKEN, FancyChickenModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.CLUCK_SHROOM_BABY, () -> CluckShroomModel.createBodyLayer().apply(CluckShroomModel.BABY_TRANSFORMER));
-        event.registerLayerDefinition(ModModelLayers.FANCY_CHICKEN_BABY, () -> FancyChickenModel.createBodyLayer().apply(FancyChickenModel.BABY_TRANSFORMER));
+        event.registerLayerDefinition(ModModelLayers.CLUCK_SHROOM_BABY, BabyChickenModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.FANCY_CHICKEN_BABY, BabyChickenModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP, HornedSheepModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_BABY, () -> HornedSheepModel.createBodyLayer().apply(HornedSheepModel.BABY_TRANSFORMER));
         event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_UNDERCOAT, HornedSheepModel::createUnderLayer);
@@ -132,7 +134,7 @@ public class ClientRegistrar {
         event.registerLayerDefinition(ModModelLayers.FURNACE_GOLEM, FurnaceGolemModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.JOLLY_LLAMA, JollyLlamaModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.MOOBLOOM, MoobloomModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.MOOBLOOM_BABY, () -> MoobloomModel.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
+        event.registerLayerDefinition(ModModelLayers.MOOBLOOM_BABY, BabyCowModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.SKELETON_WOLF, SkeletonWolfRenderer::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.SKELETON_WOLF_BABY, () -> SkeletonWolfRenderer.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
         event.registerLayerDefinition(ModModelLayers.TROPICAL_SLIME, TropicalSlimeRenderer::createInnerBodyLayer);

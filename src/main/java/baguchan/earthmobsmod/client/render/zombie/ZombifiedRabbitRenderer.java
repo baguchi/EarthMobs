@@ -3,30 +3,49 @@ package baguchan.earthmobsmod.client.render.zombie;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.render.state.ZombifiedRabbitRenderState;
 import baguchan.earthmobsmod.entity.ZombifiedRabbit;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.model.AdultAndBabyModelPair;
+import net.minecraft.client.model.animal.rabbit.AdultRabbitModel;
+import net.minecraft.client.model.animal.rabbit.BabyRabbitModel;
 import net.minecraft.client.model.animal.rabbit.RabbitModel;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.AgeableMobRenderer;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.resources.Identifier;
 
 
-public class ZombifiedRabbitRenderer<T extends ZombifiedRabbit> extends AgeableMobRenderer<T, ZombifiedRabbitRenderState, RabbitModel> {
+public class ZombifiedRabbitRenderer<T extends ZombifiedRabbit> extends MobRenderer<T, ZombifiedRabbitRenderState, RabbitModel> {
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit.png");
-    private static final Identifier EVIL_TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit_evil.png");
+    private static final Identifier BABY_TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/zombified_rabbit/zombified_rabbit_baby.png");
+    private final AdultAndBabyModelPair<RabbitModel> models;
 
-    public ZombifiedRabbitRenderer(EntityRendererProvider.Context p_173952_) {
-        super(p_173952_, new RabbitModel(p_173952_.bakeLayer(ModelLayers.RABBIT)), new RabbitModel(p_173952_.bakeLayer(ModelLayers.RABBIT_BABY)), 0.3F);
+    public ZombifiedRabbitRenderer(EntityRendererProvider.Context context) {
+        super(context, new AdultRabbitModel(context.bakeLayer(ModelLayers.RABBIT)), 0.3F);
+        this.models = bakeModels(context);
+    }
+
+    private static AdultAndBabyModelPair<RabbitModel> bakeModels(EntityRendererProvider.Context context) {
+        return new AdultAndBabyModelPair<>(
+                new AdultRabbitModel(context.bakeLayer(ModelLayers.RABBIT)), new BabyRabbitModel(context.bakeLayer(ModelLayers.RABBIT_BABY))
+        );
+    }
+
+
+    @Override
+    public void submit(ZombifiedRabbitRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        this.model = this.models.getModel(state.isBaby);
+        super.submit(state, poseStack, submitNodeCollector, camera);
     }
 
     @Override
-    public Identifier getTextureLocation(ZombifiedRabbitRenderState p_115803_) {
-        switch (p_115803_.variant) {
-            case EVIL:
-                return EVIL_TEXTURE;
-            default:
-                return TEXTURE;
+    public Identifier getTextureLocation(ZombifiedRabbitRenderState renderState) {
+        if (renderState.isBaby) {
+            return BABY_TEXTURE;
         }
+        return TEXTURE;
     }
 
     @Override

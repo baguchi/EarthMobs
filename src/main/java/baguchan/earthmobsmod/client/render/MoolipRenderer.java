@@ -6,19 +6,40 @@ import baguchan.earthmobsmod.client.model.MoobloomModel;
 import baguchan.earthmobsmod.client.render.layer.MoolipLayer;
 import baguchan.earthmobsmod.client.render.state.MoobloomRenderState;
 import baguchan.earthmobsmod.entity.Moolip;
-import net.minecraft.client.renderer.entity.AgeableMobRenderer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.AdultAndBabyModelPair;
+import net.minecraft.client.model.animal.cow.BabyCowModel;
+import net.minecraft.client.model.animal.cow.CowModel;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.resources.Identifier;
 
-public class MoolipRenderer extends AgeableMobRenderer<Moolip, MoobloomRenderState, MoobloomModel<MoobloomRenderState>> {
+public class MoolipRenderer extends MobRenderer<Moolip, MoobloomRenderState, CowModel> {
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/moobloom/moolip.png");
+    private static final Identifier TEXTURE_BABY = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/moobloom/moolip_baby.png");
 
-	public MoolipRenderer(EntityRendererProvider.Context p_173952_) {
-        super(p_173952_, new MoobloomModel<>(p_173952_.bakeLayer(ModModelLayers.MOOBLOOM)), new MoobloomModel<>(p_173952_.bakeLayer(ModModelLayers.MOOBLOOM_BABY)), 0.5F);
-        this.addLayer(new MoolipLayer(this, p_173952_.getBlockRenderDispatcher()));
+    private final AdultAndBabyModelPair<CowModel> models;
 
+    public MoolipRenderer(EntityRendererProvider.Context context) {
+        super(context, new MoobloomModel(context.bakeLayer(ModModelLayers.MOOBLOOM)), 0.5F);
+        this.addLayer(new MoolipLayer(this, context.getBlockRenderDispatcher()));
+        this.models = bakeModels(context);
     }
 
+    private static AdultAndBabyModelPair<CowModel> bakeModels(EntityRendererProvider.Context context) {
+        return new AdultAndBabyModelPair<>(
+                new MoobloomModel(context.bakeLayer(ModModelLayers.MOOBLOOM)), new BabyCowModel(context.bakeLayer(ModModelLayers.MOOBLOOM_BABY))
+        );
+    }
+
+
+    @Override
+    public void submit(MoobloomRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        this.model = this.models.getModel(state.isBaby);
+        super.submit(state, poseStack, submitNodeCollector, camera);
+    }
 	@Override
     public MoobloomRenderState createRenderState() {
         return new MoobloomRenderState();
@@ -26,8 +47,10 @@ public class MoolipRenderer extends AgeableMobRenderer<Moolip, MoobloomRenderSta
 
 
     @Override
-    public Identifier getTextureLocation(MoobloomRenderState p_110775_1_) {
-		return TEXTURE;
-	}
-
+    public Identifier getTextureLocation(MoobloomRenderState renderState) {
+        if (renderState.isBaby) {
+            return TEXTURE_BABY;
+        }
+        return TEXTURE;
+    }
 }

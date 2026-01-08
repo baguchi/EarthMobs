@@ -2,27 +2,48 @@ package baguchan.earthmobsmod.client.render;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.ModModelLayers;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.AdultAndBabyModelPair;
+import net.minecraft.client.model.animal.wolf.AdultWolfModel;
 import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.entity.AgeableMobRenderer;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.WolfArmorLayer;
 import net.minecraft.client.renderer.entity.layers.WolfCollarLayer;
 import net.minecraft.client.renderer.entity.state.WolfRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 
-public class SkeletonWolfRenderer extends AgeableMobRenderer<Wolf, WolfRenderState, WolfModel> {
+public class SkeletonWolfRenderer extends MobRenderer<Wolf, WolfRenderState, WolfModel> {
     private static final Identifier WOLF_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf.png");
     private static final Identifier WOLF_ANGRY_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf_angry.png");
 
-	public SkeletonWolfRenderer(EntityRendererProvider.Context p_174452_) {
-		super(p_174452_, new WolfModel(p_174452_.bakeLayer(ModModelLayers.SKELETON_WOLF)), new WolfModel(p_174452_.bakeLayer(ModModelLayers.SKELETON_WOLF_BABY)), 0.5F);
-		this.addLayer(new WolfArmorLayer(this, p_174452_.getModelSet(), p_174452_.getEquipmentRenderer()));
+    private final AdultAndBabyModelPair<WolfModel> models;
+
+    public SkeletonWolfRenderer(EntityRendererProvider.Context context) {
+        super(context, new AdultWolfModel(context.bakeLayer(ModModelLayers.SKELETON_WOLF)), 0.5F);
+        this.addLayer(new WolfArmorLayer(this, context.getModelSet(), context.getEquipmentRenderer()));
 		this.addLayer(new WolfCollarLayer(this));
+        this.models = bakeModels(context);
+    }
+
+    private static AdultAndBabyModelPair<WolfModel> bakeModels(EntityRendererProvider.Context context) {
+        return new AdultAndBabyModelPair<>(
+                new AdultWolfModel(context.bakeLayer(ModModelLayers.SKELETON_WOLF)), new AdultWolfModel(context.bakeLayer(ModModelLayers.SKELETON_WOLF_BABY))
+        );
 	}
+
+    @Override
+    public void submit(WolfRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        this.model = this.models.getModel(state.isBaby);
+        super.submit(state, poseStack, submitNodeCollector, camera);
+    }
+
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
