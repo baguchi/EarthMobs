@@ -19,7 +19,8 @@ import net.minecraft.resources.Identifier;
 
 public class HornedSheepWoolLayer extends RenderLayer<HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> {
     private static final Identifier SHEEP_FUR_LOCATION = Identifier.withDefaultNamespace("textures/entity/sheep/sheep_wool.png");
-	private final EntityModel<HornedSheepRenderState> adultModel;
+    private static final Identifier SHEEP_FUR_BABY_LOCATION = Identifier.withDefaultNamespace("textures/entity/sheep/sheep_wool_baby.png");
+    private final EntityModel<HornedSheepRenderState> adultModel;
 	private final EntityModel<HornedSheepRenderState> babyModel;
 
 	public HornedSheepWoolLayer(RenderLayerParent<HornedSheepRenderState, HornedSheepModel<HornedSheepRenderState>> p_362577_, EntityModelSet p_362840_) {
@@ -34,10 +35,10 @@ public class HornedSheepWoolLayer extends RenderLayer<HornedSheepRenderState, Ho
             EntityModel<HornedSheepRenderState> entitymodel = hornedSheepRenderState.isBaby ? this.babyModel : this.adultModel;
             if (hornedSheepRenderState.isInvisible) {
                 if (hornedSheepRenderState.appearsGlowing()) {
-                    submitNodeCollector.submitModel(entitymodel, hornedSheepRenderState, poseStack, RenderTypes.outline(SHEEP_FUR_LOCATION), i, LivingEntityRenderer.getOverlayCoords(hornedSheepRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, hornedSheepRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+                    submitNodeCollector.submitModel(entitymodel, hornedSheepRenderState, poseStack, RenderTypes.outline(hornedSheepRenderState.isBaby ? SHEEP_FUR_BABY_LOCATION : SHEEP_FUR_LOCATION), i, LivingEntityRenderer.getOverlayCoords(hornedSheepRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, hornedSheepRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
                 }
             } else {
-                coloredCutoutModelCopyLayerRender(entitymodel, SHEEP_FUR_LOCATION, poseStack, submitNodeCollector, i, hornedSheepRenderState, hornedSheepRenderState.getWoolColor(), 0);
+                coloredCutoutModelCopyLayerRender(entitymodel, hornedSheepRenderState.isBaby ? SHEEP_FUR_BABY_LOCATION : SHEEP_FUR_LOCATION, poseStack, submitNodeCollector, i, hornedSheepRenderState, hornedSheepRenderState.getWoolColor(), 0);
             }
         }
     }

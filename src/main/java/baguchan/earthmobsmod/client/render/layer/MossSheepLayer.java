@@ -20,9 +20,10 @@ import net.minecraft.util.context.ContextKey;
 
 public class MossSheepLayer<T extends SheepRenderState> extends RenderLayer<T, EntityModel<T>> {
     private static final Identifier SHEEP_FUR_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/sheep_moss.png");
+    private static final Identifier SHEEP_FUR_BABY_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/sheep_moss_baby.png");
     private final EntityModel<SheepRenderState> adultModel;
     private final EntityModel<SheepRenderState> babyModel;
-    public static final ContextKey<Boolean> MOSS = new ContextKey<>(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "fmoss"));
+    public static final ContextKey<Boolean> MOSS = new ContextKey<>(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "moss"));
 
     public MossSheepLayer(RenderLayerParent<T, EntityModel<T>> p_174533_, EntityModelSet p_174534_) {
         super(p_174533_);
@@ -38,10 +39,10 @@ public class MossSheepLayer<T extends SheepRenderState> extends RenderLayer<T, E
             EntityModel<SheepRenderState> entitymodel = hornedSheepRenderState.isBaby ? this.babyModel : this.adultModel;
             if (hornedSheepRenderState.isInvisible) {
                 if (hornedSheepRenderState.appearsGlowing()) {
-                    submitNodeCollector.submitModel(entitymodel, hornedSheepRenderState, poseStack, RenderTypes.outline(SHEEP_FUR_LOCATION), i, LivingEntityRenderer.getOverlayCoords(hornedSheepRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, hornedSheepRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+                    submitNodeCollector.submitModel(entitymodel, hornedSheepRenderState, poseStack, RenderTypes.outline(hornedSheepRenderState.isBaby ? SHEEP_FUR_BABY_LOCATION : SHEEP_FUR_LOCATION), i, LivingEntityRenderer.getOverlayCoords(hornedSheepRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, hornedSheepRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
                 }
             } else {
-                coloredCutoutModelCopyLayerRender(entitymodel, SHEEP_FUR_LOCATION, poseStack, submitNodeCollector, i, hornedSheepRenderState, -1, 2);
+                coloredCutoutModelCopyLayerRender(entitymodel, hornedSheepRenderState.isBaby ? SHEEP_FUR_BABY_LOCATION : SHEEP_FUR_LOCATION, poseStack, submitNodeCollector, i, hornedSheepRenderState, -1, 2);
             }
         }
     }

@@ -1,23 +1,15 @@
 package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.1.5
 
 import net.minecraft.client.model.QuadrupedModel;
+import net.minecraft.client.model.animal.pig.PigModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-public class MuddyPigModel extends QuadrupedModel<LivingEntityRenderState> {
-	private final ModelPart body;
-	private final ModelPart head;
-	private final ModelPart mud;
-	private final ModelPart flower;
-
+public class MuddyPigModel extends PigModel {
 	public MuddyPigModel(ModelPart root) {
 		super(root);
-		this.body = root.getChild("body");
-		this.head = root.getChild("head");
-		this.mud = this.head.getChild("mud");
-		this.flower = mud.getChild("flower");
 	}
 
 	public static LayerDefinition createBodyLayer(CubeDeformation p_170801_) {

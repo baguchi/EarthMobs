@@ -29,7 +29,7 @@ public class HornedSheepWoolUndercoatLayer extends RenderLayer<HornedSheepRender
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, HornedSheepRenderState hornedSheepRenderState, float v, float v1) {
-        if (!hornedSheepRenderState.isSheared) {
+        if (!hornedSheepRenderState.isSheared && !hornedSheepRenderState.isBaby) {
             EntityModel<HornedSheepRenderState> entitymodel = hornedSheepRenderState.isBaby ? this.babyModel : this.adultModel;
             if (hornedSheepRenderState.isInvisible) {
                 if (hornedSheepRenderState.appearsGlowing()) {
