@@ -210,6 +210,7 @@ public class BoneSpider extends Spider implements RangedAttackMob {
         }
     }
 
+    @Override
 	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
 		BoneShard bone = new BoneShard(this.level(), this, ModItems.BONE_SHARD.toStack());
         double x = p_29912_.getX() - this.getX();
