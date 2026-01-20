@@ -39,7 +39,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Collection;
 import java.util.EnumSet;
 
 public class BoneSpider extends Spider implements RangedAttackMob {
@@ -211,20 +210,21 @@ public class BoneSpider extends Spider implements RangedAttackMob {
         }
     }
 
-	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
-		BoneShard bone = new BoneShard(this.level(), this, ModItems.BONE_SHARD.toStack());
+    @Override
+    public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
+        BoneShard bone = new BoneShard(this.level(), this, ModItems.BONE_SHARD.toStack());
         double x = p_29912_.getX() - this.getX();
         double y = p_29912_.getEyeY() - this.getEyeY();
         double z = p_29912_.getZ() - this.getZ();
         double length = Math.sqrt(x * x + z * z);
         bone.shoot(x, y + (length * 0.275F), z, 0.75F, 2.0F);
-		Collection<MobEffectInstance> collection = this.getActiveEffects();
-		if (!collection.isEmpty()) {
+        PotionContents collection = this.getPotionContents();
+        if (collection.hasEffects()) {
             for (MobEffectInstance mobEffectInstance : this.getPotionContents().getAllEffects()) {
                 bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration(), 0));
             }
         }
-		this.level().addFreshEntity(bone);
+        this.level().addFreshEntity(bone);
     }
 
 	@Override
