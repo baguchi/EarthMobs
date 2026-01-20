@@ -4,6 +4,9 @@ import baguchan.earthmobsmod.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -227,6 +230,11 @@ public class TropicalSlime extends Slime implements Bucketable {
         if (p_33607_.contains("FishData")) {
             this.setFishData(p_33607_.getCompound("FishData"));
         }
+    }
+
+    @Override
+    protected ParticleOptions getParticleType() {
+        return new ItemParticleOption(ParticleTypes.ITEM, ModItems.TROPICAL_BALL.get().getDefaultInstance());
     }
 
     @Nullable
