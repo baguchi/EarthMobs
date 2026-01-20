@@ -70,7 +70,6 @@ public class ModItems {
 
 
 	public static final Supplier<Item> BONE_SPIDER_SPAWNEGG = ITEMS.register("bone_spider_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BONE_SPIDER, 0x461C2E, 0x6130B7, (new Item.Properties())));
-	public static final Supplier<Item> STRAY_BONE_SPIDER_SPAWNEGG = ITEMS.register("stray_bone_spider_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.STRAY_BONE_SPIDER, 0x20112F, 0x30B6B2, (new Item.Properties())));
 	public static final Supplier<Item> VILER_WITCH_SPAWNEGG = ITEMS.register("viler_witch_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.VILER_WITCH, 0x111322, 0x37464D, (new Item.Properties())));
 
 	public static final Supplier<Item> BOULDERING_ZOMBIE_SPAWNEGG = ITEMS.register("bouldering_zombie_spawn_egg", () -> new DeferredSpawnEggItem(ModEntities.BOULDERING_ZOMBIE, 0x384242, 0x52261A, (new Item.Properties())));
@@ -136,7 +135,6 @@ public class ModItems {
 			event.accept(JOLLY_LAMMA_SPAWNEGG.get());
 
 			event.accept(BONE_SPIDER_SPAWNEGG.get());
-			event.accept(STRAY_BONE_SPIDER_SPAWNEGG.get());
 			event.accept(BABY_GHAST_SPAWNEGG.get());
 			event.accept(ZOMBIFIED_RABBIT_SPAWNEGG.get());
 			event.accept(BOULDERING_ZOMBIE_SPAWNEGG.get());

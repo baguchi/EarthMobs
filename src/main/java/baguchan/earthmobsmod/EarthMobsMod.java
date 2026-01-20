@@ -30,7 +30,7 @@ import java.util.Locale;
 public class EarthMobsMod {
 	public static final String MODID = "earthmobsmod";
 	// Directly reference a log4j logger.
-	private static final Logger LOGGER = LogManager.getLogger(MODID);
+	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
 	public EarthMobsMod(ModContainer container, IEventBus modBus) {
 		// Register the setup method for modloading
@@ -38,6 +38,7 @@ public class EarthMobsMod {
 		modBus.addListener(this::setupPackets);
 		IEventBus forgeBus = NeoForge.EVENT_BUS;
 		ModBlocks.BLOCKS.register(modBus);
+		ModEntityDatas.ENTITIE_DATAS.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
 		ModFluidTypes.FLUID_TYPES.register(modBus);
 		ModFluids.FLUIDS.register(modBus);

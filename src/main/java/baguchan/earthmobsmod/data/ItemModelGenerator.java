@@ -67,7 +67,6 @@ public class ItemModelGenerator extends ItemModelProvider {
         this.spawnEgg(ModItems.DUCK_SPAWNEGG.get());
         this.spawnEgg(ModItems.JOLLY_LAMMA_SPAWNEGG.get());
         this.spawnEgg(ModItems.BONE_SPIDER_SPAWNEGG.get());
-        this.spawnEgg(ModItems.STRAY_BONE_SPIDER_SPAWNEGG.get());
         this.spawnEgg(ModItems.BABY_GHAST_SPAWNEGG.get());
         this.spawnEgg(ModItems.ZOMBIFIED_RABBIT_SPAWNEGG.get());
 

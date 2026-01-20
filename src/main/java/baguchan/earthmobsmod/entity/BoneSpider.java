@@ -1,16 +1,29 @@
 package baguchan.earthmobsmod.entity;
 
+import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.entity.goal.RangedAndMeleeAttack;
 import baguchan.earthmobsmod.entity.projectile.BoneShard;
-import baguchan.earthmobsmod.registry.ModEntities;
+import baguchan.earthmobsmod.registry.ModEffects;
+import baguchan.earthmobsmod.registry.ModEntityDatas;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.FastColor;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -21,15 +34,17 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 
-import java.util.Collection;
+import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public class BoneSpider extends Spider implements RangedAttackMob {
 	private static final EntityDataAccessor<Boolean> DATA_STRAY_CONVERSION_ID = SynchedEntityData.defineId(BoneSpider.class, EntityDataSerializers.BOOLEAN);
-	private int inPowderSnowTime;
-	private int conversionTime;
+	private static final EntityDataAccessor<PotionContents> DATA_POTION = SynchedEntityData.defineId(BoneSpider.class, ModEntityDatas.POTIONS.get());
+	private static final ColorParticleOption DEFAULT_PARTICLE = ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, -1);
 
 	public BoneSpider(EntityType<? extends BoneSpider> p_33786_, Level p_33787_) {
 		super(p_33786_, p_33787_);
@@ -40,10 +55,19 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 		builder.define(DATA_STRAY_CONVERSION_ID, false);
+		builder.define(DATA_POTION, PotionContents.EMPTY);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.ATTACK_DAMAGE, 3.0F).add(Attributes.MOVEMENT_SPEED, (double) 0.3F).add(Attributes.ARMOR, 10.0F).add(Attributes.FOLLOW_RANGE, 18.0F);
+	}
+
+	public void setPotionContents(PotionContents p_330869_) {
+		this.entityData.set(DATA_POTION, p_330869_);
+	}
+
+	public PotionContents getPotionContents() {
+		return this.entityData.get(DATA_POTION);
 	}
 
 	@Override
@@ -71,49 +95,40 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 	}
 
 	public void tick() {
-		if (!this.level().isClientSide && this.isAlive() && !this.isNoAi()) {
-			if (this.isFreezeConverting()) {
-				--this.conversionTime;
-				if (this.conversionTime < 0) {
-					this.doFreezeConversion();
-				}
-			} else if (this.isInPowderSnow) {
-				++this.inPowderSnowTime;
-				if (this.inPowderSnowTime >= 140) {
-					this.startFreezeConversion(300);
-				}
-			} else {
-				this.inPowderSnowTime = -1;
+		if (this.level().isClientSide()) {
+			for (int j = 0; j < 2; j++) {
+				int i = FastColor.ARGB32.opaque(this.getPotionContents().getColor());
+				double d0 = this.getX();
+				double d1 = this.getY();
+				double d2 = this.getZ();
+
+				this.level().addParticle(ColorParticleOption.create(DEFAULT_PARTICLE.getType(), i), d0, d1, d2, (0.5 - this.random.nextDouble()) * 0.15, 0.01F, (0.5 - this.random.nextDouble()) * 0.15);
 			}
 		}
-
 		super.tick();
 	}
 
+	@Override
 	public void addAdditionalSaveData(CompoundTag p_149836_) {
 		super.addAdditionalSaveData(p_149836_);
-		p_149836_.putInt("StrayConversionTime", this.isFreezeConverting() ? this.conversionTime : -1);
+		RegistryOps<Tag> registryops = this.registryAccess().createSerializationContext(NbtOps.INSTANCE);
+
+		if (!this.getPotionContents().equals(PotionContents.EMPTY)) {
+			Tag tag = PotionContents.CODEC.encodeStart(registryops, this.getPotionContents()).getOrThrow();
+			p_149836_.put("potion_contents", tag);
+		}
 	}
 
+	@Override
 	public void readAdditionalSaveData(CompoundTag p_149833_) {
 		super.readAdditionalSaveData(p_149833_);
-		if (p_149833_.contains("StrayConversionTime", 99) && p_149833_.getInt("StrayConversionTime") > -1) {
-			this.startFreezeConversion(p_149833_.getInt("StrayConversionTime"));
+		RegistryOps<Tag> registryops = this.registryAccess().createSerializationContext(NbtOps.INSTANCE);
+		if (p_149833_.contains("potion_contents")) {
+			PotionContents.CODEC
+					.parse(registryops, p_149833_.get("potion_contents"))
+					.resultOrPartial(p_340707_ -> EarthMobsMod.LOGGER.warn("Failed to parse potions: '{}'", p_340707_))
+					.ifPresent(this::setPotionContents);
 		}
-
-	}
-
-	public void startFreezeConversion(int p_149831_) {
-		this.conversionTime = p_149831_;
-		this.entityData.set(DATA_STRAY_CONVERSION_ID, true);
-	}
-
-	protected void doFreezeConversion() {
-		this.convertTo(ModEntities.STRAY_BONE_SPIDER.get(), true);
-		if (!this.isSilent()) {
-			this.level().levelEvent((Player) null, 1048, this.blockPosition(), 0);
-		}
-
 	}
 
 	public boolean canFreeze() {
@@ -125,7 +140,36 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 		return true;
 	}
 
-    static class BoneSpiderAttackGoal extends RangedAndMeleeAttack {
+	public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor p_478692_, DifficultyInstance p_479487_, MobSpawnType p_481376_, @Nullable SpawnGroupData p_480575_) {
+		p_480575_ = super.finalizeSpawn(p_478692_, p_479487_, p_481376_, p_480575_);
+		RandomSource randomsource = p_478692_.getRandom();
+
+		if (randomsource.nextFloat() < 0.01F) {
+			int i = randomsource.nextInt(4);
+			MobEffectInstance mobEffect;
+
+			if (i == 0) {
+				mobEffect = new MobEffectInstance(ModEffects.UNDEAD_BODY, 400, 0);
+
+			} else if (i == 1) {
+				mobEffect = new MobEffectInstance(ModEffects.ZOMBIFIED, 200, 0);
+
+			} else if (i == 2) {
+				mobEffect = new MobEffectInstance(MobEffects.SLOW_FALLING, 200, 0);
+			} else if (i == 3) {
+				mobEffect = new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1, 0);
+			} else {
+				mobEffect = new MobEffectInstance(MobEffects.POISON, 60, 0);
+			}
+
+			this.setPotionContents(this.getPotionContents().withEffectAdded(mobEffect));
+		}
+
+		return p_480575_;
+	}
+
+
+	static class BoneSpiderAttackGoal extends RangedAndMeleeAttack {
         private final BoneSpider spider;
 
         public BoneSpiderAttackGoal(BoneSpider p_32247_) {
@@ -161,27 +205,20 @@ public class BoneSpider extends Spider implements RangedAttackMob {
         }
     }
 
+	@Override
 	public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
 		BoneShard bone = new BoneShard(this.level(), this);
         double x = p_29912_.getX() - this.getX();
         double y = p_29912_.getEyeY() - this.getEyeY();
         double z = p_29912_.getZ() - this.getZ();
         double length = Math.sqrt(x * x + z * z);
-        bone.shoot(x, y + (length * 0.275F), z, 0.75F, 2.0F);
-        Collection<MobEffectInstance> collection = this.getActiveEffects();
-        if (!collection.isEmpty()) {
-            for (MobEffectInstance mobEffectInstance : this.getActiveEffects()) {
-                if (!mobEffectInstance.getEffect().value().isBeneficial()) {
-                    if (mobEffectInstance.getEffect().value().isInstantenous()) {
-                        bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), 1, 0));
-                    } else if (mobEffectInstance.isInfiniteDuration()) {
-                        bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), 100, 0));
-                    } else {
-                        bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration() / 4, 0));
-                    }
-                }
-            }
-        }
+		bone.shoot(x, y + (length * 0.275F), z, 0.75F, 2.0F);
+		PotionContents collection = this.getPotionContents();
+		if (collection.hasEffects()) {
+			for (MobEffectInstance mobEffectInstance : this.getPotionContents().getAllEffects()) {
+				bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration(), 0));
+			}
+		}
 		this.level().addFreshEntity(bone);
     }
 
