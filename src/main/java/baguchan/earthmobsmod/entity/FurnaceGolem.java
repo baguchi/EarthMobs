@@ -163,7 +163,7 @@ public class FurnaceGolem extends AbstractGolem {
 
 
     @Override
-    public boolean canAttack(Entity target) {
+    public boolean canAttack(LivingEntity target) {
         if (target.is(EntityType.PLAYER)) {
             return false;
         } else {

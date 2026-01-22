@@ -33,6 +33,7 @@ import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -86,7 +87,7 @@ public class TropicalSlime extends Slime implements Bucketable {
 
     @Override
     protected ParticleOptions getParticleType() {
-        return new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(ModItems.TROPICAL_BALL.asItem()));
+        return new ItemParticleOption(ParticleTypes.ITEM, new ItemStackTemplate(ModItems.TROPICAL_BALL.asItem()));
     }
 
     public void setHasFish(boolean p_36363_) {

@@ -34,7 +34,7 @@ public class StrayBoneShard extends BoneShard {
     }
 
     private ParticleOptions getParticle() {
-        return new ItemParticleOption(ParticleTypes.ITEM, ModItems.BONE_SHARD.get().getDefaultInstance());
+        return new ItemParticleOption(ParticleTypes.ITEM, ModItems.BONE_SHARD.get());
     }
 
     public void handleEntityEvent(byte p_37402_) {

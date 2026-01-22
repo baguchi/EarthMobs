@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "bagus_lib:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -6398904
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -1723741
-      }
-    ]
+    "model": "earthmobsmod:item/jumbo_rabbit_spawn_egg"
   }
 }

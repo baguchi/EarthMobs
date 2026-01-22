@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "bagus_lib:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -13882317
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -284071
-      }
-    ]
+    "model": "earthmobsmod:item/magma_cow_spawn_egg"
   }
 }

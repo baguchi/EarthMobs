@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "bagus_lib:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -15658206
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -13154739
-      }
-    ]
+    "model": "earthmobsmod:item/viler_witch_spawn_egg"
   }
 }

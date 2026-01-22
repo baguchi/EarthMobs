@@ -33,7 +33,7 @@ public class MelonSeed extends ThrowableItemProjectile {
 	}
 
 	private ParticleOptions getParticle() {
-		return new ItemParticleOption(ParticleTypes.ITEM, Items.MELON_SEEDS.getDefaultInstance());
+		return new ItemParticleOption(ParticleTypes.ITEM, Items.MELON_SEEDS);
 	}
 
 	public void handleEntityEvent(byte p_37402_) {

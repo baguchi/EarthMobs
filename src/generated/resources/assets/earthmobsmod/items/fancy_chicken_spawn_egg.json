@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "bagus_lib:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -744941
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -14667998
-      }
-    ]
+    "model": "earthmobsmod:item/fancy_chicken_spawn_egg"
   }
 }

@@ -38,7 +38,7 @@ public class SmellyEgg extends ThrowableItemProjectile {
 	}
 
 	private ParticleOptions getParticle() {
-		return new ItemParticleOption(ParticleTypes.ITEM, ModItems.SMELLY_EGG.get().getDefaultInstance());
+		return new ItemParticleOption(ParticleTypes.ITEM, ModItems.SMELLY_EGG.get());
 	}
 
 	public void handleEntityEvent(byte p_37402_) {

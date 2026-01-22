@@ -35,7 +35,7 @@ public class FancyEgg extends ThrowableItemProjectile {
 	}
 
 	private ParticleOptions getParticle() {
-		return new ItemParticleOption(ParticleTypes.ITEM, ModItems.FANCY_EGG.get().getDefaultInstance());
+		return new ItemParticleOption(ParticleTypes.ITEM, ModItems.FANCY_EGG.get());
 	}
 
 	public void handleEntityEvent(byte p_37402_) {

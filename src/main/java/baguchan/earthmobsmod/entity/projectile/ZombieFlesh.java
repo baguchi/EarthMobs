@@ -75,7 +75,7 @@ public class ZombieFlesh extends ThrowableItemProjectile {
 	}
 
 	private ParticleOptions getParticle() {
-		return new ItemParticleOption(ParticleTypes.ITEM, Items.ROTTEN_FLESH.getDefaultInstance());
+		return new ItemParticleOption(ParticleTypes.ITEM, Items.ROTTEN_FLESH);
 	}
 
 	public int getColor() {

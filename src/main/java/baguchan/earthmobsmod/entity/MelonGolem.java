@@ -13,7 +13,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -91,7 +90,7 @@ public class MelonGolem extends AbstractGolem implements RangedAttackMob, IShear
 	}
 
 	@Override
-	public boolean canAttack(Entity target) {
+	public boolean canAttack(LivingEntity target) {
 		return !target.is(EntityType.CREEPER) && super.canAttack(target);
 	}
 

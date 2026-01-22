@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.recipe;
 import baguchan.earthmobsmod.registry.ModItems;
 import baguchan.earthmobsmod.registry.ModRecipes;
 import com.google.common.collect.Lists;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -70,7 +69,7 @@ public class TippedArrowWithBoneRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInput craftingInput, HolderLookup.Provider provider) {
+	public ItemStack assemble(CraftingInput craftingInput) {
 		for (int i = 0; i < craftingInput.size(); ++i) {
 			ItemStack itemstack = craftingInput.getItem(i);
 			if (itemstack.is(ModItems.BONE_SHARD.get())) {
@@ -86,10 +85,7 @@ public class TippedArrowWithBoneRecipe extends CustomRecipe {
 		return ItemStack.EMPTY;
 	}
 
-	public boolean canCraftInDimensions(int p_44505_, int p_44506_) {
-		return true;
-	}
-
+	@Override
 	public RecipeSerializer<? extends CustomRecipe> getSerializer() {
 		return ModRecipes.RECIPE_TIPPED_ARROW_WITH_BONE.get();
 	}

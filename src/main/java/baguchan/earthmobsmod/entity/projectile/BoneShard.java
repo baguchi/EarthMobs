@@ -54,7 +54,7 @@ public class BoneShard extends ThrowableItemProjectile {
 	}
 
 	private ParticleOptions getParticle() {
-		return new ItemParticleOption(ParticleTypes.ITEM, ModItems.BONE_SHARD.get().getDefaultInstance());
+		return new ItemParticleOption(ParticleTypes.ITEM, ModItems.BONE_SHARD.get());
 	}
 
 	private void updateColor() {
