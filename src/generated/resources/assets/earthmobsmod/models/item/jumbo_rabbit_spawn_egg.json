@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "earthmobsmod:item/jumbo_rabbit_spawn_egg"
+  }
+}

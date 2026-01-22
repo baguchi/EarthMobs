@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "earthmobsmod:item/wooly_cow_spawn_egg"
+  }
+}
