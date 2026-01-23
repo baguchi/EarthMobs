@@ -28,11 +28,13 @@ public class HyperRabbitRenderer extends MobRenderer<HyperRabbit, HyperRabbitRen
     }
 
     @Override
-    public void extractRenderState(HyperRabbit p_363386_, HyperRabbitRenderState p_362192_, float p_365470_) {
-        super.extractRenderState(p_363386_, p_362192_, p_365470_);
-        p_362192_.jumpCompletion = p_363386_.getJumpCompletion(p_365470_);
-        p_362192_.isToast = "Toast".equals(ChatFormatting.stripFormatting(p_363386_.getName().getString()));
-        p_362192_.variant = p_363386_.getVariant();
+    public void extractRenderState(HyperRabbit entity, HyperRabbitRenderState state, float p_365470_) {
+        super.extractRenderState(entity, state, p_365470_);
+        state.jumpCompletion = entity.getJumpCompletion(p_365470_);
+        state.isToast = "Toast".equals(ChatFormatting.stripFormatting(entity.getName().getString()));
+        state.variant = entity.getVariant();
+        state.hopAnimationState.copyFrom(entity.hopAnimationState);
+        state.idleHeadTiltAnimationState.copyFrom(entity.idleHeadTiltAnimationState);
 
     }
 
