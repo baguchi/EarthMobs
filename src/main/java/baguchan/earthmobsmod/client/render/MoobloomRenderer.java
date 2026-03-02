@@ -3,14 +3,16 @@ package baguchan.earthmobsmod.client.render;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import baguchan.earthmobsmod.client.model.MoobloomModel;
-import baguchan.earthmobsmod.client.render.layer.MoobloomLayer;
+import baguchan.earthmobsmod.client.render.layer.CowPlantFlowerLayer;
 import baguchan.earthmobsmod.client.render.state.MoobloomRenderState;
 import baguchan.earthmobsmod.entity.Moobloom;
+import baguchan.earthmobsmod.registry.ModBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AdultAndBabyModelPair;
 import net.minecraft.client.model.animal.cow.BabyCowModel;
 import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.BlockModelResolver;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
@@ -20,10 +22,12 @@ public class MoobloomRenderer extends MobRenderer<Moobloom, MoobloomRenderState,
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/moobloom/moobloom.png");
     private static final Identifier TEXTURE_BABY = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/moobloom/moobloom_baby.png");
     private final AdultAndBabyModelPair<CowModel> models;
+    private final BlockModelResolver blockModelResolver;
 
     public MoobloomRenderer(EntityRendererProvider.Context context) {
         super(context, new MoobloomModel(context.bakeLayer(ModModelLayers.MOOBLOOM)), 0.5F);
-        this.addLayer(new MoobloomLayer(this, context.getBlockRenderDispatcher()));
+        this.blockModelResolver = context.getBlockModelResolver();
+        this.addLayer(new CowPlantFlowerLayer(this));
         this.models = bakeModels(context);
     }
 
@@ -33,6 +37,13 @@ public class MoobloomRenderer extends MobRenderer<Moobloom, MoobloomRenderState,
         );
     }
 
+
+    @Override
+    public void extractRenderState(Moobloom entity, MoobloomRenderState state, float partialTicks) {
+        super.extractRenderState(entity, state, partialTicks);
+        this.blockModelResolver.update(state.plantBlock, ModBlocks.BUTTERCUP.get().defaultBlockState());
+
+    }
 
     @Override
     public void submit(MoobloomRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {

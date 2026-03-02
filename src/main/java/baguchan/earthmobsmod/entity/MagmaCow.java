@@ -47,8 +47,8 @@ public class MagmaCow extends Cow {
     public MagmaCow(EntityType<? extends MagmaCow> p_28285_, Level p_28286_) {
         super(p_28285_, p_28286_);
         this.setPathfindingMalus(PathType.LAVA, 8.0F);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
-        this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
+        this.setPathfindingMalus(PathType.FIRE_IN_NEIGHBOR, 0.0F);
+        this.setPathfindingMalus(PathType.FIRE, 0.0F);
         this.setPathfindingMalus(PathType.WATER, -1.0F);
     }
 
