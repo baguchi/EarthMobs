@@ -122,7 +122,8 @@ public class ClientRegistrar {
         event.registerLayerDefinition(ModModelLayers.WOOLY_COW, WoolyCowModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.WOOLY_COW_BABY, () -> WoolyCowModel.createBodyLayer().apply(WoolyCowModel.BABY_TRANSFORMER));
         event.registerLayerDefinition(ModModelLayers.HYPER_RABBIT, HyperRabbitModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.JUMBO_RABBIT, JumboRabbitModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.JUMBO_RABBIT, AdultJumboRabbitModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.JUMBO_RABBIT_BABY, BabyJumboRabbitModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.TEACUP_PIG, TeaCupPigModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.MUDDY_PIG, () -> MuddyPigModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(ModModelLayers.MUDDY_PIG_BABY, () -> BabyPigModel.createBodyLayer(CubeDeformation.NONE));

@@ -9,7 +9,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
 
-public class BoulderingDrownedModel<T extends BoulderingZombieRenderState> extends AbstractBoulderingZombieModel<T> implements baguchi.bagus_lib.client.layer.IArmor {
+public class BoulderingDrownedModel<T extends BoulderingZombieRenderState> extends AbstractBoulderingZombieModel<T> {
 
 	public float swimAmount;
 	public BoulderingDrownedModel(ModelPart root) {

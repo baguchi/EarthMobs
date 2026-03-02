@@ -1,6 +1,6 @@
 package baguchan.earthmobsmod.client.model;
 
-import baguchi.bagus_lib.client.layer.IArmor;
+import baguchi.bagus_lib.client.layer.CustomArmorRender;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AnimationUtils;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class AbstractLobberZombieModel<T extends ZombieRenderState> extends EntityModel<T> implements IArmor, ArmedModel<T> {
+public class AbstractLobberZombieModel<T extends ZombieRenderState> extends EntityModel<T> implements CustomArmorRender<T>, ArmedModel<T> {
     public final ModelPart head;
     public final ModelPart body;
     public final ModelPart left_arm;
@@ -80,19 +80,24 @@ public class AbstractLobberZombieModel<T extends ZombieRenderState> extends Enti
             this.left_leg.zRot = -0.07853982F;
         }
     }
-    public void translateToHead(ModelPart part, PoseStack poseStack) {
+
+    @Override
+    public void translateToHead(T entity, ModelPart part, PoseStack poseStack) {
         part.translateAndRotate(poseStack);
     }
 
-    public void translateToChest(ModelPart part, PoseStack poseStack) {
+    @Override
+    public void translateToChest(T entity, ModelPart part, PoseStack poseStack) {
         part.translateAndRotate(poseStack);
     }
 
-    public void translateToLeg(ModelPart part, PoseStack poseStack) {
+    @Override
+    public void translateToLeg(T entity, ModelPart part, PoseStack poseStack) {
         part.translateAndRotate(poseStack);
     }
 
-    public void translateToChestPat(ModelPart part, PoseStack poseStack) {
+    @Override
+    public void translateToChestPat(T entity, ModelPart part, PoseStack poseStack) {
         part.translateAndRotate(poseStack);
         poseStack.scale(1.05F, 1.05F, 1.05F);
     }

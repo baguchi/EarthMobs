@@ -1,7 +1,7 @@
 package baguchan.earthmobsmod.client.model;
 
 import baguchan.earthmobsmod.client.render.state.BoulderingZombieRenderState;
-import baguchi.bagus_lib.client.layer.IArmor;
+import baguchi.bagus_lib.client.layer.CustomArmorRender;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AnimationUtils;
@@ -14,7 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
 
-public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState> extends EntityModel<T> implements IArmor, ArmedModel<T> {
+public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState> extends EntityModel<T> implements CustomArmorRender<T>, ArmedModel<T> {
     public final ModelPart head;
     public final ModelPart body;
     public final ModelPart left_arm;
@@ -101,19 +101,23 @@ public class AbstractBoulderingZombieModel<T extends BoulderingZombieRenderState
         return maxAngle + angle * f;
     }
 
-    public void translateToHead(ModelPart part, PoseStack poseStack) {
+    @Override
+    public void translateToHead(T entity, ModelPart part, PoseStack poseStack) {
         part.translateAndRotate(poseStack);
     }
 
-    public void translateToChest(ModelPart part, PoseStack poseStack) {
+    @Override
+    public void translateToChest(T entity, ModelPart part, PoseStack poseStack) {
         part.translateAndRotate(poseStack);
     }
 
-    public void translateToLeg(ModelPart part, PoseStack poseStack) {
+    @Override
+    public void translateToLeg(T entity, ModelPart part, PoseStack poseStack) {
         part.translateAndRotate(poseStack);
     }
 
-    public void translateToChestPat(ModelPart part, PoseStack poseStack) {
+    @Override
+    public void translateToChestPat(T entity, ModelPart part, PoseStack poseStack) {
         part.translateAndRotate(poseStack);
         poseStack.scale(1.05F, 1.05F, 1.05F);
     }

@@ -63,12 +63,22 @@ public abstract class CowPlantLayer extends RenderLayer<MoobloomRenderState, Cow
 
     }
 
-    private void submitMushroomBlock(PoseStack p_434000_, SubmitNodeCollector p_432929_, int p_434041_, boolean p_435008_, int p_433442_, BlockState p_434785_, int p_440741_, BlockStateModel p_434408_) {
-        if (p_435008_) {
-            p_432929_.submitBlockModel(p_434000_, RenderTypes.outline(TextureAtlas.LOCATION_BLOCKS), p_434408_, 0.0F, 0.0F, 0.0F, p_434041_, p_440741_, p_433442_);
+    private void submitMushroomBlock(
+            PoseStack poseStack,
+            SubmitNodeCollector submitNodeCollector,
+            int lightCoords,
+            boolean appearsGlowingWithInvisibility,
+            int outlineColor,
+            BlockState mushroomBlockState,
+            int overlayCoords,
+            BlockStateModel model
+    ) {
+        if (appearsGlowingWithInvisibility) {
+            submitNodeCollector.submitBlockModel(
+                    poseStack, RenderTypes.outline(TextureAtlas.LOCATION_BLOCKS), model, -16777216, lightCoords, overlayCoords, outlineColor
+            );
         } else {
-            p_432929_.submitBlock(p_434000_, p_434785_, p_434041_, p_440741_, p_433442_);
+            submitNodeCollector.submitBlock(poseStack, mushroomBlockState, lightCoords, overlayCoords, outlineColor);
         }
-
     }
 }

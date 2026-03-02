@@ -1,11 +1,10 @@
 package baguchan.earthmobsmod.client.model;
 
 import baguchan.earthmobsmod.client.render.state.BoulderingZombieRenderState;
-import baguchi.bagus_lib.client.layer.IArmor;
 import net.minecraft.client.model.geom.ModelPart;
 
 
-public class BoulderingZombieModel<T extends BoulderingZombieRenderState> extends AbstractBoulderingZombieModel<T> implements IArmor {
+public class BoulderingZombieModel<T extends BoulderingZombieRenderState> extends AbstractBoulderingZombieModel<T> {
 
 	public BoulderingZombieModel(ModelPart root) {
 		super(root);

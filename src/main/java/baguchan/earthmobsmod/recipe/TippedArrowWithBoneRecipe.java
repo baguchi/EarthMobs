@@ -3,12 +3,14 @@ package baguchan.earthmobsmod.recipe;
 import baguchan.earthmobsmod.registry.ModItems;
 import baguchan.earthmobsmod.registry.ModRecipes;
 import com.google.common.collect.Lists;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -18,8 +20,15 @@ import net.neoforged.neoforge.common.Tags;
 import java.util.List;
 
 public class TippedArrowWithBoneRecipe extends CustomRecipe {
-    public TippedArrowWithBoneRecipe(CraftingBookCategory p_251985_) {
-        super(p_251985_);
+	public static final TippedArrowWithBoneRecipe INSTANCE = new TippedArrowWithBoneRecipe();
+	public static final MapCodec<TippedArrowWithBoneRecipe> MAP_CODEC = MapCodec.unit(INSTANCE);
+	public static final StreamCodec<RegistryFriendlyByteBuf, TippedArrowWithBoneRecipe> STREAM_CODEC = StreamCodec.unit(INSTANCE);
+
+	public static final RecipeSerializer<TippedArrowWithBoneRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
+
+	public TippedArrowWithBoneRecipe() {
+		super();
 	}
 
 	@Override

@@ -8,10 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -24,6 +21,9 @@ import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.phys.Vec3;
 
 public class JumboRabbit extends Rabbit implements ISmartJump {
+	private static final EntityDimensions BABY_DIMENSIONS = EntityDimensions.scalable(0.5F, 0.6F).withEyeHeight(0.44F);
+
+
 	public JumboRabbit(EntityType<? extends Rabbit> p_29656_, Level p_29657_) {
 		super(p_29656_, p_29657_);
 	}
@@ -39,6 +39,11 @@ public class JumboRabbit extends Rabbit implements ISmartJump {
 				return new PathFinder(this.nodeEvaluator, p_219479_);
 			}
 		};
+	}
+
+	@Override
+	protected EntityDimensions getDefaultDimensions(Pose pose) {
+		return this.isBaby() ? BABY_DIMENSIONS : super.getDefaultDimensions(pose);
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class EarthRenderType {
 
         return RenderType.create(
                 "earthmobsmod:entity_animation",
-                RenderSetup.builder(RenderPipelines.ENTITY_CUTOUT_NO_CULL)
+                RenderSetup.builder(RenderPipelines.ENTITY_CUTOUT)
                         .withTexture("Sampler0", location.withSuffix("_" + age % frameCount + ".png"))
                         .useLightmap()
                         .useOverlay()

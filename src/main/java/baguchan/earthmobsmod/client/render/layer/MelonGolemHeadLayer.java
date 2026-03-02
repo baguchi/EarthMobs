@@ -27,20 +27,21 @@ public class MelonGolemHeadLayer extends RenderLayer<MelonGolemRenderState, Snow
     }
 
     @Override
-    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, MelonGolemRenderState melonGolemRenderState, float v, float v1) {
-        if (melonGolemRenderState.hasPumpkin && (!melonGolemRenderState.isInvisible || melonGolemRenderState.appearsGlowing())) {
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, MelonGolemRenderState melonGolemRenderState, float v, float v1) {
+        if (melonGolemRenderState.hasPumpkin) {
             poseStack.pushPose();
-            ((SnowGolemModel) this.getParentModel()).getHead().translateAndRotate(poseStack);
+            this.getParentModel().getHead().translateAndRotate(poseStack);
             float f = 0.625F;
             poseStack.translate(0.0F, -0.34375F, 0.0F);
             poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
             poseStack.scale(0.625F, -0.625F, -0.625F);
             BlockState blockstate = melonGolemRenderState.aggressive ? ModBlocks.CARVED_MELON_SHOOT.get().defaultBlockState() : ModBlocks.CARVED_MELON.get().defaultBlockState();
-            BlockStateModel blockstatemodel = this.blockRenderer.getBlockModel(blockstate);
+            BlockStateModel model = this.blockRenderer.getBlockModel(blockstate);
             int i2 = LivingEntityRenderer.getOverlayCoords(melonGolemRenderState, 0.0F);
             poseStack.translate(-0.5F, -0.5F, -0.5F);
-            RenderType rendertype = melonGolemRenderState.appearsGlowing() && melonGolemRenderState.isInvisible ? RenderTypes.outline(TextureAtlas.LOCATION_BLOCKS) : ItemBlockRenderTypes.getRenderType(blockstate);
-            submitNodeCollector.submitBlockModel(poseStack, rendertype, blockstatemodel, 0.0F, 0.0F, 0.0F, i, i2, melonGolemRenderState.outlineColor);
+            int overlayCoords = LivingEntityRenderer.getOverlayCoords(melonGolemRenderState, 0.0F);
+            RenderType renderType = melonGolemRenderState.appearsGlowing() && melonGolemRenderState.isInvisible ? RenderTypes.outline(TextureAtlas.LOCATION_BLOCKS) : ItemBlockRenderTypes.getBlockModelRenderType(model);
+            submitNodeCollector.submitBlockModel(poseStack, renderType, model, -16777216, lightCoords, overlayCoords, melonGolemRenderState.outlineColor);
             poseStack.popPose();
         }
     }

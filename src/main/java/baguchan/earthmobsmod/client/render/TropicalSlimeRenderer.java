@@ -75,7 +75,7 @@ public class TropicalSlimeRenderer extends MobRenderer<TropicalSlime, TropicalSl
 
 		if (!p_115324_ && p_115323_) {
             if (!p_360858_.fish) {
-                return RenderTypes.entityCutoutNoCull(NO_FISH_LOCATION);
+                return RenderTypes.entityCutout(NO_FISH_LOCATION);
             }
 			return EarthRenderType.entityAnimationWithAllTexture(TropicalSlimeRenderer.SLIME_LOCATION, 100, 48, (int) (p_360858_.ageInTicks - p_360858_.partialTick));
 		}

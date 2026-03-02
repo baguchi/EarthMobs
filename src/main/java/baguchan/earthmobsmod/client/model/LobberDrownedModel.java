@@ -2,7 +2,6 @@ package baguchan.earthmobsmod.client.model;
 
 import baguchan.earthmobsmod.client.animation.LobberZombieAnimation;
 import baguchan.earthmobsmod.client.render.state.LobberZombieRenderState;
-import baguchi.bagus_lib.client.layer.IArmor;
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,7 +10,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class LobberDrownedModel<T extends LobberZombieRenderState> extends AbstractLobberZombieModel<T> implements IArmor {
+public class LobberDrownedModel<T extends LobberZombieRenderState> extends AbstractLobberZombieModel<T> {
 	public float swimAmount;
 	private final KeyframeAnimation shootAnimation;
 
