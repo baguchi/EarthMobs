@@ -6,7 +6,6 @@
   "refmap": "earthmobsmod.refmap.json",
   "mixins": [
     "BeeMixin",
-    "EntityMixin",
     "LivingEntityMixin",
     "PigMixin",
     "SheepAccessor",
