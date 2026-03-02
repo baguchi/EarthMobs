@@ -137,8 +137,8 @@ dependencies {
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     //implementation "net.neoforged:neoforge:${neo_version}"
 
-    //implementation "baguchi.bagus_lib:BagusLib:${bagus_lib_version}"
-    implementation "maven.modrinth:bagus-lib:${bagus_lib_version}"
+    implementation "baguchi.bagus_lib:BagusLib:${bagus_lib_version}"
+    //implementation "maven.modrinth:bagus-lib:${bagus_lib_version}"
 
 
     //implementation "baguchi.bagus_lib:BagusLib:${bagus_lib_version}"
