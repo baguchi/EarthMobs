@@ -48,6 +48,9 @@ public class HornedSheepRenderer extends AgeableMobRenderer<HornedSheep, HornedS
 	@Override
 	public Identifier getTextureLocation(HornedSheepRenderState state) {
 		if (state.isBaby) {
+			if (!state.horn) {
+				return TEXTURE_BABY_HORNLESS;
+			}
 			return TEXTURE_BABY;
 		}
 		if (!state.horn) {

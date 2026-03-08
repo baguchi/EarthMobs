@@ -13,8 +13,6 @@ public class ModModelLayers {
     public static ModelLayerLocation HORNED_SHEEP_BABY = register("horned_sheep_baby");
     public static ModelLayerLocation HORNED_SHEEP_UNDERCOAT = register("horned_sheep_undercoat");
     public static ModelLayerLocation HORNED_SHEEP_BABY_UNDERCOAT = register("horned_sheep_baby_undercoat");
-    public static ModelLayerLocation HORNED_SHEEP_FUR = register("horned_sheep_fur");
-    public static ModelLayerLocation HORNED_SHEEP_BABY_FUR = register("horned_sheep_baby_fur");
     public static ModelLayerLocation WOOLY_COW = register("wooly_cow");
     public static ModelLayerLocation WOOLY_COW_BABY = register("wooly_cow_baby");
     public static ModelLayerLocation HYPER_RABBIT = register("hyper_rabbit");
