@@ -115,10 +115,9 @@ public class ClientRegistrar {
         event.registerLayerDefinition(ModModelLayers.CLUCK_SHROOM_BABY, BabyChickenModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.FANCY_CHICKEN_BABY, BabyChickenModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP, HornedSheepModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_BABY, () -> HornedSheepModel.createBodyLayer().apply(HornedSheepModel.BABY_TRANSFORMER));
+        event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_BABY, BabyHornedSheepModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_UNDERCOAT, HornedSheepModel::createUnderLayer);
-        event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_BABY_UNDERCOAT, () -> HornedSheepModel.createUnderLayer().apply(HornedSheepModel.BABY_TRANSFORMER));
-        event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_FUR, HornedSheepModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.HORNED_SHEEP_BABY_UNDERCOAT, () -> HornedSheepModel.createUnderLayer().apply(BabyHornedSheepModel.BABY_TRANSFORMER));
         event.registerLayerDefinition(ModModelLayers.WOOLY_COW, WoolyCowModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.WOOLY_COW_BABY, () -> WoolyCowModel.createBodyLayer().apply(WoolyCowModel.BABY_TRANSFORMER));
         event.registerLayerDefinition(ModModelLayers.HYPER_RABBIT, HyperRabbitModel::createBodyLayer);
