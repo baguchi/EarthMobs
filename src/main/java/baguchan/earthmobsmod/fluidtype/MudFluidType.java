@@ -69,16 +69,6 @@ public class MudFluidType extends FluidType {
         private static final Identifier TEXTURE_OVERLAY = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/block/mud.png");
 
 		@Override
-        public Identifier getStillTexture() {
-			return TEXTURE_STILL;
-		}
-
-		@Override
-        public Identifier getFlowingTexture() {
-			return TEXTURE_FLOW;
-		}
-
-		@Override
         public Identifier getRenderOverlayTexture(Minecraft mc) {
 			return TEXTURE_OVERLAY;
 		}

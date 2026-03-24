@@ -13,14 +13,16 @@ import net.minecraft.client.model.animal.cow.BabyCowModel;
 import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
 
 public class MoolipRenderer extends MobRenderer<Moolip, MoobloomRenderState, CowModel> {
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/moobloom/moolip.png");
     private static final Identifier TEXTURE_BABY = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/moobloom/moolip_baby.png");
+    public static final BlockDisplayContext BLOCK_DISPLAY_CONTEXT = BlockDisplayContext.create();
 
     private final AdultAndBabyModelPair<CowModel> models;
     private final BlockModelResolver blockModelResolver;
@@ -41,7 +43,7 @@ public class MoolipRenderer extends MobRenderer<Moolip, MoobloomRenderState, Cow
     @Override
     public void extractRenderState(Moolip entity, MoobloomRenderState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
-        this.blockModelResolver.update(state.plantBlock, ModBlocks.PINK_DAISY.get().defaultBlockState());
+        this.blockModelResolver.update(state.plantBlock, ModBlocks.PINK_DAISY.get().defaultBlockState(), BLOCK_DISPLAY_CONTEXT);
 
     }
 

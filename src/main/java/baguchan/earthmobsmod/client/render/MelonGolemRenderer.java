@@ -6,6 +6,7 @@ import baguchan.earthmobsmod.entity.MelonGolem;
 import net.minecraft.client.model.animal.golem.SnowGolemModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 public class MelonGolemRenderer extends MobRenderer<MelonGolem, MelonGolemRenderState, SnowGolemModel> {
     private static final Identifier SNOW_GOLEM_LOCATION = Identifier.withDefaultNamespace("textures/entity/snow_golem.png");
     private final BlockModelResolver blockModelResolver;
+    public static final BlockDisplayContext BLOCK_DISPLAY_CONTEXT = BlockDisplayContext.create();
 
     public MelonGolemRenderer(EntityRendererProvider.Context context) {
         super(context, new SnowGolemModel(context.bakeLayer(ModelLayers.SNOW_GOLEM)), 0.5F);
@@ -31,7 +33,7 @@ public class MelonGolemRenderer extends MobRenderer<MelonGolem, MelonGolemRender
     public void extractRenderState(MelonGolem entity, MelonGolemRenderState state, float p_364064_) {
         super.extractRenderState(entity, state, p_364064_);
         if (entity.hasMelon()) {
-            this.blockModelResolver.update(state.headBlock, Blocks.CARVED_PUMPKIN.defaultBlockState());
+            this.blockModelResolver.update(state.headBlock, Blocks.CARVED_PUMPKIN.defaultBlockState(), BLOCK_DISPLAY_CONTEXT);
         } else {
             state.headBlock.clear();
         }

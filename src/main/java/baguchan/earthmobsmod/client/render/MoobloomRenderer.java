@@ -13,9 +13,10 @@ import net.minecraft.client.model.animal.cow.BabyCowModel;
 import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
 
 public class MoobloomRenderer extends MobRenderer<Moobloom, MoobloomRenderState, CowModel> {
@@ -23,6 +24,7 @@ public class MoobloomRenderer extends MobRenderer<Moobloom, MoobloomRenderState,
     private static final Identifier TEXTURE_BABY = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/moobloom/moobloom_baby.png");
     private final AdultAndBabyModelPair<CowModel> models;
     private final BlockModelResolver blockModelResolver;
+    public static final BlockDisplayContext BLOCK_DISPLAY_CONTEXT = BlockDisplayContext.create();
 
     public MoobloomRenderer(EntityRendererProvider.Context context) {
         super(context, new MoobloomModel(context.bakeLayer(ModModelLayers.MOOBLOOM)), 0.5F);
@@ -41,7 +43,7 @@ public class MoobloomRenderer extends MobRenderer<Moobloom, MoobloomRenderState,
     @Override
     public void extractRenderState(Moobloom entity, MoobloomRenderState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
-        this.blockModelResolver.update(state.plantBlock, ModBlocks.BUTTERCUP.get().defaultBlockState());
+        this.blockModelResolver.update(state.plantBlock, ModBlocks.BUTTERCUP.get().defaultBlockState(), BLOCK_DISPLAY_CONTEXT);
 
     }
 

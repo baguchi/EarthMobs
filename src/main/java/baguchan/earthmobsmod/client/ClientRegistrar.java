@@ -15,6 +15,7 @@ import baguchan.earthmobsmod.fluidtype.MudFluidType;
 import baguchan.earthmobsmod.registry.ModCapability;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.registry.ModFluidTypes;
+import baguchan.earthmobsmod.registry.ModFluids;
 import baguchi.bagus_lib.client.event.RegisterBagusKeyframeEvents;
 import com.google.common.reflect.TypeToken;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
@@ -26,9 +27,11 @@ import net.minecraft.client.model.animal.pig.PigModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.monster.zombie.ZombieModel;
+import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextKey;
 import net.neoforged.api.distmarker.Dist;
@@ -36,6 +39,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
 import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
@@ -57,6 +61,13 @@ public class ClientRegistrar {
                     .withSampler("Sampler1")
                     .withCull(false)
                     .build();
+
+    private static final FluidModel.Unbaked MUD_MODEL = new FluidModel.Unbaked(
+            new Material(EarthMobsMod.prefix("block/mud")),
+            new Material(EarthMobsMod.prefix("block/flowing_mud")),
+            null,
+            null
+    );
 
     public static void setup(FMLClientSetupEvent event) {
 
@@ -170,8 +181,13 @@ public class ClientRegistrar {
     }
 
     @SubscribeEvent
-    public static void registerEntityRenders(EntityRenderersEvent.AddLayers event) {
+    public static void screenEvent(RegisterFluidModelsEvent event) {
+        event.register(MUD_MODEL, ModFluids.MUD.get(), ModFluids.MUD_FLOW.get());
+    }
 
+
+    @SubscribeEvent
+    public static void registerEntityRenders(EntityRenderersEvent.AddLayers event) {
         event.getEntityTypes().forEach(entityType -> {
             if (event.getRenderer(entityType) instanceof PigRenderer r) {
                 ((PigRenderer) r).addLayer(new MuddyPigMudLayer((PigRenderer) r, event.getEntityModels()));
