@@ -40,7 +40,8 @@ public class MagmaCowModel<T extends MagmaCowRenderState> extends EntityModel<T>
                 .texOffs(0, 51).addBox(4.0F, -3.0F, -3.0F, 5.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 51).addBox(-9.0F, -3.0F, -3.0F, 5.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(41, 50).addBox(7.0F, -6.0F, -3.0F, 2.0F, 3.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(41, 50).mirror().addBox(-9.0F, -6.0F, -3.0F, 2.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 4.0F, -9.0F));
+                .texOffs(41, 50).mirror().addBox(-9.0F, -6.0F, -3.0F, 2.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
+                .texOffs(0, 60).addBox(-3.0F, 1.0F, -7.0F, 6.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 4.0F, -9.0F));
 
         PartDefinition leg1 = partdefinition.addOrReplaceChild("leg1", CubeListBuilder.create().texOffs(45, 38).addBox(-2.0F, 2.75F, -2.0F, 4.0F, 7.0F, 4.0F, new CubeDeformation(0.25F))
                 .texOffs(41, 12).addBox(-2.0F, 3.5F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.5F))
@@ -73,7 +74,8 @@ public class MagmaCowModel<T extends MagmaCowRenderState> extends EntityModel<T>
                 .texOffs(0, 51).addBox(4.0F, -3.0F, -3.0F, 5.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 51).addBox(-9.0F, -3.0F, -3.0F, 5.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(41, 50).addBox(7.0F, -6.0F, -3.0F, 2.0F, 3.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(41, 50).mirror().addBox(-9.0F, -6.0F, -3.0F, 2.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 4.0F, -9.0F));
+                .texOffs(41, 50).mirror().addBox(-9.0F, -6.0F, -3.0F, 2.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
+                .texOffs(0, 60).addBox(-3.0F, 1.0F, -7.0F, 6.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 4.0F, -9.0F));
 
         PartDefinition leg1 = partdefinition.addOrReplaceChild("leg1", CubeListBuilder.create().texOffs(45, 38).addBox(-2.0F, 2.75F, -2.0F, 4.0F, 7.0F, 4.0F, new CubeDeformation(0.25F))
                 .texOffs(41, 12).addBox(-2.0F, 3.5F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.5F))
