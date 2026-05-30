@@ -3,7 +3,7 @@ package baguchan.earthmobsmod.client.model;// Made with Blockbench 4.2.4
 // Paste this class into your mod and generate all required imports
 
 
-import net.minecraft.client.animation.definitions.RabbitAnimation;
+import net.minecraft.client.animation.definitions.BabyRabbitAnimation;
 import net.minecraft.client.model.animal.rabbit.RabbitModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -13,7 +13,7 @@ public class AdultJumboRabbitModel extends RabbitModel {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 
     public AdultJumboRabbitModel(ModelPart root) {
-        super(root, RabbitAnimation.HOP, RabbitAnimation.IDLE_HEAD_TILT);
+        super(root, BabyRabbitAnimation.HOP, BabyRabbitAnimation.IDLE_HEAD_TILT);
 	}
 
     public static LayerDefinition createBodyLayer() {

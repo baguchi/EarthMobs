@@ -48,6 +48,7 @@ public class WitherSkeletonWolf extends SkeletonWolf {
 		}
 	}
 
+	@Override
 	public float getWalkTargetValue(BlockPos p_27573_, LevelReader p_27574_) {
 		return p_27574_.getBlockState(p_27573_.below()).is(Blocks.SOUL_SAND) || p_27574_.getBlockState(p_27573_.below()).is(Blocks.SOUL_SOIL) ? 10.0F : super.getWalkTargetValue(p_27573_, p_27574_);
 	}
