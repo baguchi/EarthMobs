@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.entity.projectile.BoneShard;
 import baguchan.earthmobsmod.registry.ModEffects;
 import baguchan.earthmobsmod.registry.ModEntityDatas;
 import baguchan.earthmobsmod.registry.ModItems;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
@@ -12,12 +13,12 @@ import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,7 +33,9 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.spider.Spider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
@@ -75,13 +78,15 @@ public class BoneSpider extends Spider implements RangedAttackMob {
     public void tick() {
         super.tick();
         if (this.level().isClientSide()) {
-            for (int j = 0; j < 2; j++) {
-                int i = ARGB.opaque(this.getPotionContents().getColor());
-                double d0 = this.getX();
-                double d1 = this.getY();
-                double d2 = this.getZ();
+            if (this.getPotionContents().hasEffects()) {
+                for (int j = 0; j < 2; j++) {
+                    int i = ARGB.opaque(this.getPotionContents().getColor());
+                    double d0 = this.getX();
+                    double d1 = this.getY();
+                    double d2 = this.getZ();
 
-                this.level().addParticle(ColorParticleOption.create(DEFAULT_PARTICLE.getType(), i), d0, d1, d2, (0.5 - this.random.nextDouble()) * 0.15, 0.01F, (0.5 - this.random.nextDouble()) * 0.15);
+                    this.level().addParticle(ColorParticleOption.create(DEFAULT_PARTICLE.getType(), i), d0, d1, d2, (0.5 - this.random.nextDouble()) * 0.15, 0.01F, (0.5 - this.random.nextDouble()) * 0.15);
+                }
             }
         }
     }
@@ -126,23 +131,23 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 
         if (randomsource.nextFloat() < 0.01F) {
             int i = randomsource.nextInt(4);
-            MobEffectInstance mobEffect;
+            Holder<Potion> potion;
 
             if (i == 0) {
-                mobEffect = new MobEffectInstance(ModEffects.UNDEAD_BODY, 400, 0);
+                potion = ModEffects.UNDEAD_BODY_POTION;
 
             } else if (i == 1) {
-                mobEffect = new MobEffectInstance(ModEffects.ZOMBIFIED, 200, 0);
+                potion = ModEffects.ZOMBIFIED_POTION;
 
             } else if (i == 2) {
-                mobEffect = new MobEffectInstance(MobEffects.SLOWNESS, 200, 0);
+                potion = Potions.SLOWNESS;
             } else if (i == 3) {
-                mobEffect = new MobEffectInstance(MobEffects.INSTANT_DAMAGE, 1, 0);
+                potion = Potions.HARMING;
             } else {
-                mobEffect = new MobEffectInstance(MobEffects.POISON, 60, 0);
+                potion = Potions.POISON;
             }
 
-            this.setPotionContents(this.getPotionContents().withEffectAdded(mobEffect));
+            this.setPotionContents(new PotionContents(potion));
         }
 
         return p_480575_;
@@ -212,19 +217,23 @@ public class BoneSpider extends Spider implements RangedAttackMob {
 
     @Override
     public void performRangedAttack(LivingEntity p_29912_, float p_29913_) {
-        BoneShard bone = new BoneShard(this.level(), this, ModItems.BONE_SHARD.toStack());
-        double x = p_29912_.getX() - this.getX();
-        double y = p_29912_.getEyeY() - this.getEyeY();
-        double z = p_29912_.getZ() - this.getZ();
-        double length = Math.sqrt(x * x + z * z);
-        bone.shoot(x, y + (length * 0.275F), z, 0.75F, 2.0F);
-        PotionContents collection = this.getPotionContents();
-        if (collection.hasEffects()) {
-            for (MobEffectInstance mobEffectInstance : this.getPotionContents().getAllEffects()) {
-                bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration(), 0));
+        Level var15 = this.level();
+        if (var15 instanceof ServerLevel serverLevel) {
+
+            BoneShard bone = new BoneShard(serverLevel, this, ModItems.BONE_SHARD.toStack());
+            double x = p_29912_.getX() - this.getX();
+            double y = p_29912_.getEyeY() - this.getEyeY();
+            double z = p_29912_.getZ() - this.getZ();
+            double length = Math.sqrt(x * x + z * z);
+            bone.shoot(x, y + (length * 0.275F), z, 0.855F, (float) (14 - serverLevel.getDifficulty().getId() * 4));
+            PotionContents collection = this.getPotionContents();
+            if (collection.hasEffects()) {
+                for (MobEffectInstance mobEffectInstance : this.getPotionContents().getAllEffects()) {
+                    bone.addEffect(new MobEffectInstance(mobEffectInstance.getEffect(), mobEffectInstance.getDuration(), 0));
+                }
             }
+            serverLevel.addFreshEntity(bone);
         }
-        this.level().addFreshEntity(bone);
     }
 
 	@Override
