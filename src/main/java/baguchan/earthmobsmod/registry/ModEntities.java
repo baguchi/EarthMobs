@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.registry;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.entity.*;
 import baguchan.earthmobsmod.entity.projectile.*;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -23,80 +22,79 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = EarthMobsMod.MODID)
 public class ModEntities {
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, EarthMobsMod.MODID);
+    public static final DeferredRegister.Entities ENTITIES = DeferredRegister.createEntities(EarthMobsMod.MODID);
 
-    public static final Supplier<EntityType<CluckShroom>> CLUCK_SHROOM = ENTITIES.register("cluck_shroom", () -> EntityType.Builder.of(CluckShroom::new, MobCategory.CREATURE).sized(0.4F, 0.7F).eyeHeight(0.644F)
-            .passengerAttachments(new Vec3(0.0, 0.7, -0.1)).clientTrackingRange(10).build(prefix("cluck_shroom")));
-    public static final Supplier<EntityType<FancyChicken>> FANCY_CHICKEN = ENTITIES.register("fancy_chicken", () -> EntityType.Builder.of(FancyChicken::new, MobCategory.CREATURE).eyeHeight(0.799F)
-            .passengerAttachments(new Vec3(0.0, 0.85, -0.1)).sized(0.4F, 0.85F).clientTrackingRange(10).build(prefix("fancy_chicken")));
-    public static final Supplier<EntityType<WoolyCow>> WOOLY_COW = ENTITIES.register("wooly_cow", () -> EntityType.Builder.of(WoolyCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("wooly_cow")));
-    public static final Supplier<EntityType<UmbraCow>> UMBRA_COW = ENTITIES.register("umbra_cow", () -> EntityType.Builder.of(UmbraCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build(prefix("umbra_cow")));
-	public static final Supplier<EntityType<TeaCupPig>> TEACUP_PIG = ENTITIES.register("teacup_pig", () -> EntityType.Builder.of(TeaCupPig::new, MobCategory.CREATURE).sized(0.4F, 0.4F).clientTrackingRange(10).build(prefix("teacup_pig")));
-    public static final Supplier<EntityType<MagmaCow>> MAGMA_COW = ENTITIES.register("magma_cow", () -> EntityType.Builder.of(MagmaCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).fireImmune().build(prefix("magma_cow")));
+    public static final DeferredHolder<EntityType<?>, EntityType<CluckShroom>> CLUCK_SHROOM = ENTITIES.registerEntityType("cluck_shroom", CluckShroom::new, MobCategory.CREATURE, (builder) -> builder.sized(0.4F, 0.7F).eyeHeight(0.644F)
+            .passengerAttachments(new Vec3(0.0, 0.7, -0.1)).clientTrackingRange(10));
+    public static final DeferredHolder<EntityType<?>, EntityType<FancyChicken>> FANCY_CHICKEN = ENTITIES.registerEntityType("fancy_chicken", FancyChicken::new, MobCategory.CREATURE, (builder) -> builder.eyeHeight(0.799F)
+            .passengerAttachments(new Vec3(0.0, 0.85, -0.1)).sized(0.4F, 0.85F).clientTrackingRange(10));
+    public static final DeferredHolder<EntityType<?>, EntityType<WoolyCow>> WOOLY_COW = ENTITIES.registerEntityType("wooly_cow", WoolyCow::new, MobCategory.CREATURE, (builder) -> builder.sized(0.9F, 1.4F).clientTrackingRange(10));
+    public static final DeferredHolder<EntityType<?>, EntityType<UmbraCow>> UMBRA_COW = ENTITIES.registerEntityType("umbra_cow", UmbraCow::new, MobCategory.CREATURE, (builder) -> builder.sized(0.9F, 1.4F).clientTrackingRange(10));
+    public static final DeferredHolder<EntityType<?>, EntityType<TeaCupPig>> TEACUP_PIG = ENTITIES.registerEntityType("teacup_pig", TeaCupPig::new, MobCategory.CREATURE, (builder) -> builder.sized(0.4F, 0.4F).clientTrackingRange(10));
+    public static final DeferredHolder<EntityType<?>, EntityType<MagmaCow>> MAGMA_COW = ENTITIES.registerEntityType("magma_cow", MagmaCow::new, MobCategory.CREATURE, (builder) -> builder.sized(0.9F, 1.4F).clientTrackingRange(10).fireImmune());
 
 
-    public static final Supplier<EntityType<HornedSheep>> HORNED_SHEEP = ENTITIES.register("horned_sheep", () -> EntityType.Builder.of(HornedSheep::new, MobCategory.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build(prefix("horned_sheep")));
-    public static final Supplier<EntityType<HyperRabbit>> HYPER_RABBIT = ENTITIES.register("hyper_rabbit", () -> EntityType.Builder.of(HyperRabbit::new, MobCategory.CREATURE).sized(0.4F, 0.6F).clientTrackingRange(8).build(prefix("hyper_rabbit")));
-    public static final Supplier<EntityType<Moobloom>> MOOBLOOM = ENTITIES.register("moobloom", () -> EntityType.Builder.of(Moobloom::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(8).build(prefix("moobloom")));
-    public static final Supplier<EntityType<Moolip>> MOOLIP = ENTITIES.register("moolip", () -> EntityType.Builder.of(Moolip::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(8).build(prefix("moolip")));
-    public static final Supplier<EntityType<JumboRabbit>> JUMBO_RABBIT = ENTITIES.register("jumbo_rabbit", () -> EntityType.Builder.of(JumboRabbit::new, MobCategory.CREATURE).sized(0.7F, 0.9F).eyeHeight(0.89F).clientTrackingRange(8).build(prefix("jumbo_rabbit")));
-    public static final Supplier<EntityType<ZombifiedPig>> ZOMBIFIED_PIG = ENTITIES.register("zombified_pig", () -> EntityType.Builder.of(ZombifiedPig::new, MobCategory.CREATURE).sized(0.6F, 0.85F).fireImmune().build(prefix("zombified_pig")));
-    public static final Supplier<EntityType<JollyLlama>> JOLLY_LLAMA = ENTITIES.register("jolly_llama", () -> EntityType.Builder.of(JollyLlama::new, MobCategory.CREATURE).sized(0.9F, 1.87F).eyeHeight(1.7765F)
+    public static final DeferredHolder<EntityType<?>, EntityType<HornedSheep>> HORNED_SHEEP = ENTITIES.registerEntityType("horned_sheep", HornedSheep::new, MobCategory.CREATURE, (builder) -> builder.sized(0.9F, 1.3F).clientTrackingRange(10));
+    public static final DeferredHolder<EntityType<?>, EntityType<HyperRabbit>> HYPER_RABBIT = ENTITIES.registerEntityType("hyper_rabbit", HyperRabbit::new, MobCategory.CREATURE, (builder) -> builder.sized(0.4F, 0.6F).clientTrackingRange(8));
+    public static final DeferredHolder<EntityType<?>, EntityType<Moobloom>> MOOBLOOM = ENTITIES.registerEntityType("moobloom", Moobloom::new, MobCategory.CREATURE, (builder) -> builder.sized(0.9F, 1.4F).clientTrackingRange(8));
+    public static final DeferredHolder<EntityType<?>, EntityType<Moolip>> MOOLIP = ENTITIES.registerEntityType("moolip", Moolip::new, MobCategory.CREATURE, (builder) -> builder.sized(0.9F, 1.4F).clientTrackingRange(8));
+    public static final DeferredHolder<EntityType<?>, EntityType<JumboRabbit>> JUMBO_RABBIT = ENTITIES.registerEntityType("jumbo_rabbit", JumboRabbit::new, MobCategory.CREATURE, (builder) -> builder.sized(0.7F, 0.9F).eyeHeight(0.89F).clientTrackingRange(8));
+    public static final DeferredHolder<EntityType<?>, EntityType<ZombifiedPig>> ZOMBIFIED_PIG = ENTITIES.registerEntityType("zombified_pig", ZombifiedPig::new, MobCategory.CREATURE, (builder) -> builder.sized(0.6F, 0.85F).fireImmune());
+    public static final DeferredHolder<EntityType<?>, EntityType<JollyLlama>> JOLLY_LLAMA = ENTITIES.registerEntityType("jolly_llama", JollyLlama::new, MobCategory.CREATURE, (builder) -> builder.sized(0.9F, 1.87F).eyeHeight(1.7765F)
             .passengerAttachments(new Vec3(0.0, 1.37, -0.3))
-            .clientTrackingRange(10).build(prefix("jolly_llama")));
+            .clientTrackingRange(10));
 
 
-    public static final Supplier<EntityType<MelonGolem>> MELON_GOLEM = ENTITIES.register("melon_golem", () -> EntityType.Builder.of(MelonGolem::new, MobCategory.MISC).sized(0.7F, 1.9F).immuneTo(Blocks.POWDER_SNOW).clientTrackingRange(8).build(prefix("melon_golem")));
-    public static final Supplier<EntityType<FurnaceGolem>> FURNACE_GOLEM = ENTITIES.register("furnace_golem", () -> EntityType.Builder.of(FurnaceGolem::new, MobCategory.MISC).sized(1.4F, 2.7F).clientTrackingRange(10).build(prefix("furnace_golem")));
+    public static final DeferredHolder<EntityType<?>, EntityType<MelonGolem>> MELON_GOLEM = ENTITIES.registerEntityType("melon_golem", MelonGolem::new, MobCategory.MISC, (builder) -> builder.sized(0.7F, 1.9F).immuneTo(Blocks.POWDER_SNOW).clientTrackingRange(8));
+    public static final DeferredHolder<EntityType<?>, EntityType<FurnaceGolem>> FURNACE_GOLEM = ENTITIES.registerEntityType("furnace_golem", FurnaceGolem::new, MobCategory.MISC, (builder) -> builder.sized(1.4F, 2.7F).clientTrackingRange(10));
 
 
-    public static final Supplier<EntityType<BoneSpider>> BONE_SPIDER = ENTITIES.register("bone_spider", () -> EntityType.Builder.of(BoneSpider::new, MobCategory.MONSTER).notInPeaceful().sized(1.4F, 0.9F).build(prefix("bone_spider")));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoneSpider>> BONE_SPIDER = ENTITIES.registerEntityType("bone_spider", BoneSpider::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(1.4F, 0.9F));
 
-    public static final Supplier<EntityType<VilerWitch>> VILER_WITCH = ENTITIES.register("viler_witch", () -> EntityType.Builder.of(VilerWitch::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
+    public static final DeferredHolder<EntityType<?>, EntityType<VilerWitch>> VILER_WITCH = ENTITIES.registerEntityType("viler_witch", VilerWitch::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
             .passengerAttachments(2.0125F)
             .ridingOffset(-0.7F)
-            .clientTrackingRange(8).build(prefix("viler_witch")));
+            .clientTrackingRange(8));
 
-    public static final Supplier<EntityType<BoulderingZombie>> BOULDERING_ZOMBIE = ENTITIES.register("bouldering_zombie", () -> EntityType.Builder.of(BoulderingZombie::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
+    public static final DeferredHolder<EntityType<?>, EntityType<BoulderingZombie>> BOULDERING_ZOMBIE = ENTITIES.registerEntityType("bouldering_zombie", BoulderingZombie::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
             .passengerAttachments(2.0125F)
             .ridingOffset(-0.7F)
-            .clientTrackingRange(8).build(prefix("bouldering_zombie")));
-    public static final Supplier<EntityType<LobberZombie>> LOBBER_ZOMBIE = ENTITIES.register("lobber_zombie", () -> EntityType.Builder.of(LobberZombie::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
+            .clientTrackingRange(8));
+    public static final DeferredHolder<EntityType<?>, EntityType<LobberZombie>> LOBBER_ZOMBIE = ENTITIES.registerEntityType("lobber_zombie", LobberZombie::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
             .passengerAttachments(2.0125F)
             .ridingOffset(-0.7F)
-            .clientTrackingRange(8).build(prefix("lobber_zombie")));
+            .clientTrackingRange(8));
 
-    public static final Supplier<EntityType<BoulderingDrowned>> BOULDERING_DROWNED = ENTITIES.register("bouldering_drowned", () -> EntityType.Builder.of(BoulderingDrowned::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
+    public static final DeferredHolder<EntityType<?>, EntityType<BoulderingDrowned>> BOULDERING_DROWNED = ENTITIES.registerEntityType("bouldering_drowned", BoulderingDrowned::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
             .passengerAttachments(2.0125F)
             .ridingOffset(-0.7F)
-            .clientTrackingRange(8).build(prefix("bouldering_drowned")));
-    public static final Supplier<EntityType<LobberDrowned>> LOBBER_DROWNED = ENTITIES.register("lobber_drowned", () -> EntityType.Builder.of(LobberDrowned::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
+            .clientTrackingRange(8));
+    public static final DeferredHolder<EntityType<?>, EntityType<LobberDrowned>> LOBBER_DROWNED = ENTITIES.registerEntityType("lobber_drowned", LobberDrowned::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 1.95F).eyeHeight(1.74F)
             .passengerAttachments(2.0125F)
             .ridingOffset(-0.7F)
-            .clientTrackingRange(8).build(prefix("lobber_drowned")));
+            .clientTrackingRange(8));
 
-    public static final Supplier<EntityType<TropicalSlime>> TROPICAL_SLIME = ENTITIES.register("tropical_slime", () -> EntityType.Builder.of(TropicalSlime::new, MobCategory.MONSTER).notInPeaceful().sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10).build(prefix("tropical_slime")));
+    public static final DeferredHolder<EntityType<?>, EntityType<TropicalSlime>> TROPICAL_SLIME = ENTITIES.registerEntityType("tropical_slime", TropicalSlime::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10));
 
-    public static final Supplier<EntityType<SkeletonWolf>> SKELETON_WOLF = ENTITIES.register("skeleton_wolf", () -> EntityType.Builder.of(SkeletonWolf::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 0.85F).build(prefix("skeleton_wolf")));
-    public static final Supplier<EntityType<WitherSkeletonWolf>> WITHER_SKELETON_WOLF = ENTITIES.register("wither_skeleton_wolf", () -> EntityType.Builder.of(WitherSkeletonWolf::new, MobCategory.MONSTER).notInPeaceful().sized(0.6F, 0.85F).fireImmune().immuneTo(Blocks.WITHER_ROSE).build(prefix("wither_skeleton_wolf")));
+    public static final DeferredHolder<EntityType<?>, EntityType<SkeletonWolf>> SKELETON_WOLF = ENTITIES.registerEntityType("skeleton_wolf", SkeletonWolf::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 0.85F));
+    public static final DeferredHolder<EntityType<?>, EntityType<WitherSkeletonWolf>> WITHER_SKELETON_WOLF = ENTITIES.registerEntityType("wither_skeleton_wolf", WitherSkeletonWolf::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 0.85F).fireImmune().immuneTo(Blocks.WITHER_ROSE));
 
-    public static final Supplier<EntityType<ZombifiedRabbit>> ZOMBIFIED_RABBIT = ENTITIES.register("zombified_rabbit", () -> EntityType.Builder.of(ZombifiedRabbit::new, MobCategory.MONSTER).notInPeaceful().sized(0.4F, 0.6F).eyeHeight(0.59F).clientTrackingRange(8).build(prefix("zombified_rabbit")));
-    public static final Supplier<EntityType<HuskRabbit>> HUSK_RABBIT = ENTITIES.register("husk_rabbit", () -> EntityType.Builder.of(HuskRabbit::new, MobCategory.MONSTER).notInPeaceful().sized(0.4F, 0.6F).eyeHeight(0.59F).clientTrackingRange(8).build(prefix("husk_rabbit")));
+    public static final DeferredHolder<EntityType<?>, EntityType<ZombifiedRabbit>> ZOMBIFIED_RABBIT = ENTITIES.registerEntityType("zombified_rabbit", ZombifiedRabbit::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.4F, 0.6F).eyeHeight(0.59F).clientTrackingRange(8));
+    public static final DeferredHolder<EntityType<?>, EntityType<HuskRabbit>> HUSK_RABBIT = ENTITIES.registerEntityType("husk_rabbit", HuskRabbit::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.4F, 0.6F).eyeHeight(0.59F).clientTrackingRange(8));
 
-    public static final Supplier<EntityType<SmellyEgg>> SMELLY_EGG = ENTITIES.register("smelly_egg", () -> EntityType.Builder.<SmellyEgg>of(SmellyEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("smelly_egg")));
-    public static final Supplier<EntityType<FancyEgg>> FANCY_EGG = ENTITIES.register("fancy_egg", () -> EntityType.Builder.<FancyEgg>of(FancyEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("fancy_egg")));
+    public static final DeferredHolder<EntityType<?>, EntityType<SmellyEgg>> SMELLY_EGG = ENTITIES.register("smelly_egg", () -> EntityType.Builder.<SmellyEgg>of(SmellyEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("smelly_egg")));
+    public static final DeferredHolder<EntityType<?>, EntityType<FancyEgg>> FANCY_EGG = ENTITIES.register("fancy_egg", () -> EntityType.Builder.<FancyEgg>of(FancyEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("fancy_egg")));
 
-    public static final Supplier<EntityType<BoneShard>> BONE_SHARD = ENTITIES.register("bone_shard", () -> EntityType.Builder.<BoneShard>of(BoneShard::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("bone_shard")));
-    public static final Supplier<EntityType<StrayBoneShard>> STRAY_BONE_SHARD = ENTITIES.register("stray_bone_shard", () -> EntityType.Builder.<StrayBoneShard>of(StrayBoneShard::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("stray_bone_shard")));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoneShard>> BONE_SHARD = ENTITIES.register("bone_shard", () -> EntityType.Builder.<BoneShard>of(BoneShard::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("bone_shard")));
+    public static final DeferredHolder<EntityType<?>, EntityType<StrayBoneShard>> STRAY_BONE_SHARD = ENTITIES.register("stray_bone_shard", () -> EntityType.Builder.<StrayBoneShard>of(StrayBoneShard::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("stray_bone_shard")));
 
-    public static final Supplier<EntityType<MelonSeed>> MELON_SEED = ENTITIES.register("melon_seeds", () -> EntityType.Builder.<MelonSeed>of(MelonSeed::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("melon_seeds")));
-    public static final Supplier<EntityType<ZombieFlesh>> ZOMBIE_FLESH = ENTITIES.register("zombie_flesh", () -> EntityType.Builder.<ZombieFlesh>of(ZombieFlesh::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("zombie_flesh")));
+    public static final DeferredHolder<EntityType<?>, EntityType<MelonSeed>> MELON_SEED = ENTITIES.register("melon_seeds", () -> EntityType.Builder.<MelonSeed>of(MelonSeed::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("melon_seeds")));
+    public static final DeferredHolder<EntityType<?>, EntityType<ZombieFlesh>> ZOMBIE_FLESH = ENTITIES.register("zombie_flesh", () -> EntityType.Builder.<ZombieFlesh>of(ZombieFlesh::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("zombie_flesh")));
 
 
     private static ResourceKey<EntityType<?>> prefix(String path) {
