@@ -1,5 +1,6 @@
 package baguchan.earthmobsmod.client.render;
 
+import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.render.layer.MelonGolemHeadLayer;
 import baguchan.earthmobsmod.client.render.state.MelonGolemRenderState;
 import baguchan.earthmobsmod.entity.MelonGolem;
@@ -14,7 +15,8 @@ import net.minecraft.world.level.block.Blocks;
 
 
 public class MelonGolemRenderer extends MobRenderer<MelonGolem, MelonGolemRenderState, SnowGolemModel> {
-    private static final Identifier SNOW_GOLEM_LOCATION = Identifier.withDefaultNamespace("textures/entity/snow_golem.png");
+    private static final Identifier MELON_GOLEM_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/melon_golem/melon_golem.png");
+    private static final Identifier ANGRY_GOLEM_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/melon_golem/melon_golem_angry.png");
     private final BlockModelResolver blockModelResolver;
     public static final BlockDisplayContext BLOCK_DISPLAY_CONTEXT = BlockDisplayContext.create();
 
@@ -41,7 +43,10 @@ public class MelonGolemRenderer extends MobRenderer<MelonGolem, MelonGolemRender
 	}
 
     @Override
-    public Identifier getTextureLocation(MelonGolemRenderState p_368654_) {
-		return SNOW_GOLEM_LOCATION;
+    public Identifier getTextureLocation(MelonGolemRenderState renderState) {
+        if (renderState.aggressive) {
+            return ANGRY_GOLEM_LOCATION;
+        }
+        return MELON_GOLEM_LOCATION;
 	}
 }
