@@ -1,14 +1,10 @@
 package baguchan.earthmobsmod.entity;
 
-import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,18 +23,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.common.IShearable;
 
 import java.util.List;
-import java.util.Optional;
 
 public class WoolyCow extends AbstractCow implements IShearable {
 	private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(WoolyCow.class, EntityDataSerializers.BOOLEAN);
 	private int eatAnimationTick;
 	private EatBlockGoal eatBlockGoal;
-
-    public static final ResourceKey<LootTable> WOOLY_COW_SHEARD_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "entities/wooly_cow_sheared"));
 
 	public WoolyCow(EntityType<? extends WoolyCow> p_28285_, Level p_28286_) {
 		super(p_28285_, p_28286_);
@@ -60,14 +52,6 @@ public class WoolyCow extends AbstractCow implements IShearable {
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 		builder.define(SHEARED, false);
-	}
-
-	public Optional<ResourceKey<LootTable>> getDefaultLootTable() {
-		if (this.isSheared()) {
-			return Optional.of(WOOLY_COW_SHEARD_LOOT_TABLE);
-		} else {
-			return this.getType().getDefaultLootTable();
-		}
 	}
 
 	public WoolyCow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {

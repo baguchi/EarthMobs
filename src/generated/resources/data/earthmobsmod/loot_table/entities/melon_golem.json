@@ -2,44 +2,28 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 1.0
-              },
-              "add": false
-            },
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
+                "max": 15.0,
                 "min": 0.0
               },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:rotten_flesh"
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "earthmobsmod:husk_rabbit_foot"
+          "name": "minecraft:snowball"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
       "conditions": [
         {
           "condition": "minecraft:killed_by_player"
@@ -52,9 +36,17 @@
             "per_level_above_first": 0.01
           },
           "enchantment": "minecraft:looting",
-          "unenchanted_chance": 0.1
+          "unenchanted_chance": 0.025
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "earthmobsmod:carved_melon"
+        }
+      ],
+      "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "earthmobsmod:entities/melon_golem"
 }
