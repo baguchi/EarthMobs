@@ -7,13 +7,11 @@ import baguchan.earthmobsmod.api.IOnMud;
 import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.util.DyeUtil;
 import baguchi.bagus_lib.api.IBaguPacket;
-import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.util.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
@@ -22,7 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
@@ -37,30 +34,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
-import java.util.Map;
 
 @Mixin(Pig.class)
 public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, IHasFlower, IBaguPacket {
 	private boolean muddy;
     private byte dyeColor = 0;
-	private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_29841_) -> {
-		p_29841_.put(DyeColor.WHITE, Items.WHITE_DYE);
-		p_29841_.put(DyeColor.ORANGE, Items.ORANGE_DYE);
-		p_29841_.put(DyeColor.MAGENTA, Items.MAGENTA_DYE);
-		p_29841_.put(DyeColor.LIGHT_BLUE, Items.LIGHT_BLUE_DYE);
-		p_29841_.put(DyeColor.YELLOW, Items.YELLOW_DYE);
-		p_29841_.put(DyeColor.LIME, Items.LIME_DYE);
-		p_29841_.put(DyeColor.PINK, Items.PINK_DYE);
-		p_29841_.put(DyeColor.GRAY, Items.GRAY_DYE);
-		p_29841_.put(DyeColor.LIGHT_GRAY, Items.LIGHT_GRAY_DYE);
-		p_29841_.put(DyeColor.CYAN, Items.CYAN_DYE);
-		p_29841_.put(DyeColor.PURPLE, Items.PURPLE_DYE);
-		p_29841_.put(DyeColor.BLUE, Items.BLUE_DYE);
-		p_29841_.put(DyeColor.BROWN, Items.BROWN_DYE);
-		p_29841_.put(DyeColor.GREEN, Items.GREEN_DYE);
-		p_29841_.put(DyeColor.RED, Items.RED_DYE);
-		p_29841_.put(DyeColor.BLACK, Items.BLACK_DYE);
-	});
 
 	private boolean inMud;
 	private boolean isShaking;
@@ -234,7 +212,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 
 			java.util.List<ItemStack> items = new java.util.ArrayList<>();
 			for (int j = 0; j < i; ++j) {
-				items.add(new ItemStack(ITEM_BY_DYE.get(this.getColor())));
+				items.add(new ItemStack(Items.DYE.pick(this.getColor())));
 			}
 			return items;
 		}

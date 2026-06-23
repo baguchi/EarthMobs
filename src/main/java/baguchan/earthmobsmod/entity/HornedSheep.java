@@ -266,7 +266,7 @@ public class HornedSheep extends Sheep {
                             this.rushCooldowmTick = 200 + this.hornedSheep.random.nextInt(200);
                             this.rushing = false;
                         }
-                        if (this.hornedSheep.position().closerThan(this.targetPos.getCenter(), 0.25F)) {
+                        if (this.hornedSheep.position().closerThan(Vec3.atCenterOf(this.targetPos), 0.25F)) {
                             this.rushCooldowmTick = 200 + this.hornedSheep.random.nextInt(200);
                             this.rushing = false;
                         }
@@ -310,7 +310,7 @@ public class HornedSheep extends Sheep {
                     float f = 0.25F * (float) (i - j);
                     float f1 = Mth.clamp(this.hornedSheep.getSpeed() * 1.65F, 0.2F, 3.0F) + f;
                     float f2 = CombatUtils.isBlockingWithOutCheck(getServerLevel(this.hornedSheep.level()), livingEntity, this.hornedSheep.damageSources().mobAttack(this.hornedSheep), f);
-                    livingEntity.knockback((double) (f2 * f1) * (this.hornedSheep.isBaby() ? 0.2F : 1.5F), this.hornedSheep.getX() - livingEntity.getX(), this.hornedSheep.getZ() - livingEntity.getZ());
+                    livingEntity.knockback((double) (f2 * f1) * (this.hornedSheep.isBaby() ? 0.2F : 1.5F), this.hornedSheep.getX() - livingEntity.getX(), this.hornedSheep.getZ() - livingEntity.getZ(), this.hornedSheep.damageSources().mobAttack(this.hornedSheep), (float) this.hornedSheep.getAttributeValue(Attributes.ATTACK_DAMAGE) + 2.0F);
                     livingEntity.hurtServer(getServerLevel(this.hornedSheep), this.hornedSheep.damageSources().mobAttack(this.hornedSheep), (float) this.hornedSheep.getAttributeValue(Attributes.ATTACK_DAMAGE) + 2.0F);
                 }
                 this.ticksUntilNextAttack = 30;

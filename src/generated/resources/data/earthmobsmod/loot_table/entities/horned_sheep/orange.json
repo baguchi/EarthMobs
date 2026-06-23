@@ -2,15 +2,14 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:red_wool"
+          "name": "minecraft:orange_wool"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "minecraft:entities/sheep/red"
+  "random_sequence": "earthmobsmod:entities/horned_sheep/orange"
 }

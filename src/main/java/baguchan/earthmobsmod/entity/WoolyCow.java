@@ -146,7 +146,7 @@ public class WoolyCow extends AbstractCow implements IShearable {
 
 			java.util.List<ItemStack> items = new java.util.ArrayList<>();
 			for (int j = 0; j < i; ++j) {
-				items.add(new ItemStack(Blocks.BROWN_WOOL));
+				items.add(new ItemStack(Blocks.WOOL.brown()));
 			}
 			return items;
 		}

@@ -27,10 +27,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.fish.TropicalFish;
 import net.minecraft.world.entity.animal.golem.IronGolem;
-import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.monster.cubemob.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -106,7 +105,7 @@ public class TropicalSlime extends Slime implements Bucketable {
             double f1 = 0;
             double f2 = 0;
             double f3 = 0;
-            TropicalFish fish = EntityType.TROPICAL_FISH.create(this.level(), EntitySpawnReason.TRIGGERED);
+            TropicalFish fish = EntityTypes.TROPICAL_FISH.create(this.level(), EntitySpawnReason.TRIGGERED);
             if (this.isPersistenceRequired()) {
                 fish.setPersistenceRequired();
             }
@@ -156,7 +155,7 @@ public class TropicalSlime extends Slime implements Bucketable {
     }
 
 
-    float getSoundPitch() {
+    public float getSoundPitch() {
         float f = this.isTiny() ? 1.4F : 0.8F;
         return ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * f;
     }

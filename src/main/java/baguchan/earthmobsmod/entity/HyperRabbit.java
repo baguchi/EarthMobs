@@ -103,7 +103,7 @@ public class HyperRabbit extends Rabbit {
 			if (livingentity.hurtOrSimulate(this.damageSources().indirectMagic(this, this), 2.0F * i)) {
 				this.playSound(SoundEvents.PLAYER_ATTACK_KNOCKBACK, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 				//this.doEnchantDamageEffects(this, livingentity);
-				livingentity.knockback(blocked * f1, d1, d2);
+				livingentity.knockback(blocked * f1, d1, d2, this.damageSources().indirectMagic(this, this), 2.0F * i);
 			}
 		}
 	}

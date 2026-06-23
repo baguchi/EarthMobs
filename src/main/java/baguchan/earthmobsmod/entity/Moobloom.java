@@ -16,6 +16,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -75,7 +76,7 @@ public class Moobloom extends Cow implements IShearable, IFlowerCow, IHasFlower 
 		if (!this.level().isClientSide()) {
 			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();
-			Cow cow = EntityType.COW.create(this.level(), EntitySpawnReason.CONVERSION);
+			Cow cow = EntityTypes.COW.create(this.level(), EntitySpawnReason.CONVERSION);
 			cow.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
 			cow.setHealth(this.getHealth());
 			cow.yBodyRot = this.yBodyRot;

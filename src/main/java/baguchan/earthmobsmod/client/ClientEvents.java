@@ -1,7 +1,7 @@
 package baguchan.earthmobsmod.client;
 
 import baguchan.earthmobsmod.EarthMobsMod;
-import baguchan.earthmobsmod.capability.ShadowCapability;
+import baguchan.earthmobsmod.attachment.ShadowAttachment;
 import baguchi.bagus_lib.animation.client.BaguKeyFrameController;
 import baguchi.bagus_lib.client.event.BagusModelEvent;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -48,7 +48,7 @@ public class ClientEvents {
         float partialtick = event.getPartialTick();
 
 
-        ShadowCapability shadow = entity.getRenderData(ClientRegistrar.SHADOW);
+        ShadowAttachment shadow = entity.getRenderData(ClientRegistrar.SHADOW);
 
         if (shadow != null && shadow.getPercentBoost() >= 0.65F) {
 

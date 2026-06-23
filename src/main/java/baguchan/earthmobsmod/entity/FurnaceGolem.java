@@ -164,10 +164,10 @@ public class FurnaceGolem extends AbstractGolem {
 
     @Override
     public boolean canAttack(LivingEntity target) {
-        if (target.is(EntityType.PLAYER)) {
+        if (target.is(EntityTypes.PLAYER)) {
             return false;
         } else {
-            return target.is(EntityType.CREEPER) ? false : super.canAttack(target);
+            return target.is(EntityTypes.CREEPER) ? false : super.canAttack(target);
         }
     }
 
@@ -279,12 +279,12 @@ public class FurnaceGolem extends AbstractGolem {
             for (int i = 1; i < 3; ++i) {
                 BlockPos blockpos2 = blockpos.above(i);
                 BlockState blockstate1 = p_28853_.getBlockState(blockpos2);
-                if (!NaturalSpawner.isValidEmptySpawnBlock(p_28853_, blockpos2, blockstate1, blockstate1.getFluidState(), EntityType.IRON_GOLEM)) {
+                if (!NaturalSpawner.isValidEmptySpawnBlock(p_28853_, blockpos2, blockstate1, blockstate1.getFluidState(), EntityTypes.IRON_GOLEM)) {
                     return false;
                 }
             }
 
-            return NaturalSpawner.isValidEmptySpawnBlock(p_28853_, blockpos, p_28853_.getBlockState(blockpos), Fluids.EMPTY.defaultFluidState(), EntityType.IRON_GOLEM) && p_28853_.isUnobstructed(this);
+            return NaturalSpawner.isValidEmptySpawnBlock(p_28853_, blockpos, p_28853_.getBlockState(blockpos), Fluids.EMPTY.defaultFluidState(), EntityTypes.IRON_GOLEM) && p_28853_.isUnobstructed(this);
         }
     }
 

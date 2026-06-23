@@ -2,16 +2,11 @@ package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.registry.ModEntities;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.rabbit.Rabbit;
-import net.minecraft.world.entity.monster.zombie.Husk;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
 public class HuskRabbit extends ZombifiedRabbit {
@@ -28,17 +23,6 @@ public class HuskRabbit extends ZombifiedRabbit {
         }
 
         return flag;
-    }
-
-    public void makeRider(ServerLevelAccessor p_479493_, DifficultyInstance p_481210_, EntitySpawnReason p_482098_) {
-        Husk zombie = EntityType.HUSK.create(this.level(), EntitySpawnReason.JOCKEY);
-        if (zombie != null && !this.isBaby()) {
-            zombie.setBaby(true);
-            zombie.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
-            zombie.finalizeSpawn(p_479493_, p_481210_, p_482098_, null);
-            zombie.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.WOODEN_SPEAR));
-            zombie.startRiding(this, false, false);
-        }
     }
 
     @Nullable

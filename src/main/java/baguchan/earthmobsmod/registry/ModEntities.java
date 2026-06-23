@@ -6,6 +6,7 @@ import baguchan.earthmobsmod.entity.projectile.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
@@ -15,7 +16,6 @@ import net.minecraft.world.entity.animal.chicken.Chicken;
 import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.animal.equine.Llama;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -50,7 +50,7 @@ public class ModEntities {
             .clientTrackingRange(10));
 
 
-    public static final DeferredHolder<EntityType<?>, EntityType<MelonGolem>> MELON_GOLEM = ENTITIES.registerEntityType("melon_golem", MelonGolem::new, MobCategory.MISC, (builder) -> builder.sized(0.7F, 1.9F).immuneTo(Blocks.POWDER_SNOW).clientTrackingRange(8));
+    public static final DeferredHolder<EntityType<?>, EntityType<MelonGolem>> MELON_GOLEM = ENTITIES.registerEntityType("melon_golem", MelonGolem::new, MobCategory.MISC, (builder) -> builder.sized(0.7F, 1.9F).immuneTo(BlockTags.SNOW_GOLEM_IMMUNE_TO).clientTrackingRange(8));
     public static final DeferredHolder<EntityType<?>, EntityType<FurnaceGolem>> FURNACE_GOLEM = ENTITIES.registerEntityType("furnace_golem", FurnaceGolem::new, MobCategory.MISC, (builder) -> builder.sized(1.4F, 2.7F).clientTrackingRange(10));
 
 
@@ -82,7 +82,7 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<TropicalSlime>> TROPICAL_SLIME = ENTITIES.registerEntityType("tropical_slime", TropicalSlime::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10));
 
     public static final DeferredHolder<EntityType<?>, EntityType<SkeletonWolf>> SKELETON_WOLF = ENTITIES.registerEntityType("skeleton_wolf", SkeletonWolf::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 0.85F));
-    public static final DeferredHolder<EntityType<?>, EntityType<WitherSkeletonWolf>> WITHER_SKELETON_WOLF = ENTITIES.registerEntityType("wither_skeleton_wolf", WitherSkeletonWolf::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 0.85F).fireImmune().immuneTo(Blocks.WITHER_ROSE));
+    public static final DeferredHolder<EntityType<?>, EntityType<WitherSkeletonWolf>> WITHER_SKELETON_WOLF = ENTITIES.registerEntityType("wither_skeleton_wolf", WitherSkeletonWolf::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.6F, 0.85F).fireImmune().immuneTo(BlockTags.WITHER_SKELETON_IMMUNE_TO));
 
     public static final DeferredHolder<EntityType<?>, EntityType<ZombifiedRabbit>> ZOMBIFIED_RABBIT = ENTITIES.registerEntityType("zombified_rabbit", ZombifiedRabbit::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.4F, 0.6F).eyeHeight(0.59F).clientTrackingRange(8));
     public static final DeferredHolder<EntityType<?>, EntityType<HuskRabbit>> HUSK_RABBIT = ENTITIES.registerEntityType("husk_rabbit", HuskRabbit::new, MobCategory.MONSTER, (builder) -> builder.notInPeaceful().sized(0.4F, 0.6F).eyeHeight(0.59F).clientTrackingRange(8));

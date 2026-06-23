@@ -63,7 +63,7 @@ public class BoulderingDrowned extends Drowned {
 		}
 	}
 
-	boolean wantsToSwim() {
+	public boolean wantsToSwim() {
 		if (this.searchingForLand) {
 			return true;
 		} else {

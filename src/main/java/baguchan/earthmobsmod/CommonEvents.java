@@ -2,8 +2,8 @@ package baguchan.earthmobsmod;
 
 import baguchan.earthmobsmod.api.IMoss;
 import baguchan.earthmobsmod.api.IMuddyPig;
+import baguchan.earthmobsmod.attachment.ShadowAttachment;
 import baguchan.earthmobsmod.block.CarvedMelonBlock;
-import baguchan.earthmobsmod.capability.ShadowCapability;
 import baguchan.earthmobsmod.entity.FurnaceGolem;
 import baguchan.earthmobsmod.entity.TeaCupPig;
 import baguchan.earthmobsmod.entity.ZombifiedPig;
@@ -13,7 +13,7 @@ import baguchan.earthmobsmod.registry.ModCapability;
 import baguchan.earthmobsmod.registry.ModDamageSource;
 import baguchan.earthmobsmod.registry.ModEntities;
 import baguchan.earthmobsmod.util.DyeUtil;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -196,9 +196,9 @@ public class CommonEvents {
 
 	@SubscribeEvent
 	public static void onUpdate(EntityTickEvent.Pre event) {
-		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
-		if (shadowCapability != null && event.getEntity() instanceof LivingEntity livingEntity) {
-			shadowCapability.tick(livingEntity);
+        ShadowAttachment shadowAttachment = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
+        if (shadowAttachment != null && event.getEntity() instanceof LivingEntity livingEntity) {
+            shadowAttachment.tick(livingEntity);
 		}
 	}
 
@@ -264,7 +264,7 @@ public class CommonEvents {
 			}
 
 			if (living instanceof Villager villager && !(living instanceof Enemy) && level instanceof ServerLevel serverLevel) {
-				ZombieVillager zombieVillager = villager.convertTo(EntityType.ZOMBIE_VILLAGER,
+                ZombieVillager zombieVillager = villager.convertTo(EntityTypes.ZOMBIE_VILLAGER,
 						ConversionParams.single(villager, true, true),
 						p_370686_ -> {
 							p_370686_.finalizeSpawn(
@@ -289,10 +289,10 @@ public class CommonEvents {
 
 	@SubscribeEvent
 	public static void onHurtCheck(EntityInvulnerabilityCheckEvent event) {
-		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
-		if (shadowCapability != null) {
+        ShadowAttachment shadowAttachment = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
+        if (shadowAttachment != null) {
 			if (!event.getSource().is(DamageTypeTags.BYPASSES_ARMOR) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE)) {
-				if (shadowCapability.getPercentBoost() > 0.9F) {
+                if (shadowAttachment.getPercentBoost() > 0.9F) {
 					event.setInvulnerable(true);
 				}
 			}
@@ -301,11 +301,11 @@ public class CommonEvents {
 
     @SubscribeEvent
 	public static void onHurt(LivingIncomingDamageEvent event) {
-		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
-		if (shadowCapability != null) {
-			if (shadowCapability.getPercentBoost() >= 0.5F && !event.getSource().is(DamageTypeTags.BYPASSES_ARMOR) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE)) {
-				event.setAmount(event.getAmount() * (1.0F - shadowCapability.getPercentBoost()));
-				if (shadowCapability.getPercentBoost() > 0.9F) {
+        ShadowAttachment shadowAttachment = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
+        if (shadowAttachment != null) {
+            if (shadowAttachment.getPercentBoost() >= 0.5F && !event.getSource().is(DamageTypeTags.BYPASSES_ARMOR) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE)) {
+                event.setAmount(event.getAmount() * (1.0F - shadowAttachment.getPercentBoost()));
+                if (shadowAttachment.getPercentBoost() > 0.9F) {
 					event.setCanceled(true);
 				}
 			}
@@ -315,10 +315,10 @@ public class CommonEvents {
 
 	@SubscribeEvent
 	public static void onLivingKnockback(LivingKnockBackEvent event) {
-		ShadowCapability shadowCapability = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
-		if (shadowCapability != null) {
+        ShadowAttachment shadowAttachment = event.getEntity().getData(ModCapability.SHADOW_ATTACH);
+        if (shadowAttachment != null) {
 
-			if (shadowCapability.getPercentBoost() >= 0.5F) {
+            if (shadowAttachment.getPercentBoost() >= 0.5F) {
 				event.setCanceled(true);
 			}
 		}

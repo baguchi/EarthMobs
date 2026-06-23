@@ -12,10 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.chicken.Chicken;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -110,7 +107,7 @@ public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 		if (!this.level().isClientSide()) {
 			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			this.discard();
-			Chicken chickin = EntityType.CHICKEN.create(this.level(), EntitySpawnReason.CONVERSION);
+			Chicken chickin = EntityTypes.CHICKEN.create(this.level(), EntitySpawnReason.CONVERSION);
 			chickin.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
 			chickin.setHealth(this.getHealth());
 			chickin.yBodyRot = this.yBodyRot;

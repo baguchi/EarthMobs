@@ -1,9 +1,10 @@
-package baguchan.earthmobsmod.capability;
+package baguchan.earthmobsmod.attachment;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.entity.HyperRabbit;
 import baguchan.earthmobsmod.registry.ModEffects;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +22,7 @@ import net.neoforged.neoforge.attachment.IAttachmentSerializer;
 
 import java.util.List;
 
-public class ShadowCapability implements IAttachmentSerializer<ShadowCapability> {
+public class ShadowAttachment implements IAttachmentSerializer<ShadowAttachment> {
     private static final Identifier SPEED_MODIFIER_BOOST_UUID = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow_speed");
 	public Vec3 prevShadow = Vec3.ZERO;
 
@@ -110,14 +111,14 @@ public class ShadowCapability implements IAttachmentSerializer<ShadowCapability>
 	}
 
 	protected void pushEntities(LivingEntity entity) {
-		if (!entity.level().isClientSide()) {
+		if (!entity.level().isClientSide() && entity.level() instanceof ServerLevel serverLevel) {
 			List<LivingEntity> list = entity.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), entity.getBoundingBox().expandTowards(0.05F, 0.0F, 0.05F), EntitySelector.pushableBy(entity));
 			if (!list.isEmpty()) {
 				for (int l = 0; l < list.size(); ++l) {
 					LivingEntity entity2 = list.get(l);
 					if (entity != entity2 && !entity.isAlliedTo(entity2)) {
-						entity2.knockback(5.0D * percentBoost, entity.getDeltaMovement().x, entity.getDeltaMovement().z);
-						entity2.hurt(entity.damageSources().mobAttack(entity), Mth.floor(8.0F * percentBoost));
+						entity2.knockback(5.0D * percentBoost, entity.getDeltaMovement().x, entity.getDeltaMovement().z, entity.damageSources().mobAttack(entity), Mth.floor(8.0F * percentBoost));
+						entity2.hurtServer(serverLevel, entity.damageSources().mobAttack(entity), Mth.floor(8.0F * percentBoost));
 					}
 				}
 			}
@@ -166,12 +167,12 @@ public class ShadowCapability implements IAttachmentSerializer<ShadowCapability>
 	}
 
 	@Override
-	public ShadowCapability read(IAttachmentHolder iAttachmentHolder, ValueInput valueInput) {
+	public ShadowAttachment read(IAttachmentHolder iAttachmentHolder, ValueInput valueInput) {
 		return null;
 	}
 
 	@Override
-	public boolean write(ShadowCapability shadowCapability, ValueOutput valueOutput) {
+	public boolean write(ShadowAttachment shadowAttachment, ValueOutput valueOutput) {
 		return false;
 	}
 }

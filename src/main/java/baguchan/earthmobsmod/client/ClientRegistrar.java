@@ -3,7 +3,7 @@ package baguchan.earthmobsmod.client;
 import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.api.IMoss;
 import baguchan.earthmobsmod.api.IMuddyPig;
-import baguchan.earthmobsmod.capability.ShadowCapability;
+import baguchan.earthmobsmod.attachment.ShadowAttachment;
 import baguchan.earthmobsmod.client.animation.ShakeAnimations;
 import baguchan.earthmobsmod.client.model.*;
 import baguchan.earthmobsmod.client.render.*;
@@ -27,6 +27,7 @@ import net.minecraft.client.model.animal.pig.PigModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.monster.zombie.ZombieModel;
+import net.minecraft.client.renderer.BindGroupLayouts;
 import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
@@ -49,7 +50,7 @@ import static net.minecraft.client.renderer.RenderPipelines.ENTITY_SNIPPET;
 
 @EventBusSubscriber(modid = EarthMobsMod.MODID, value = Dist.CLIENT)
 public class ClientRegistrar {
-    public static final ContextKey<ShadowCapability> SHADOW = new ContextKey<>(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow"));
+    public static final ContextKey<ShadowAttachment> SHADOW = new ContextKey<>(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "shadow"));
     public static final ContextKey<Float> SHAKE = new ContextKey<>(Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "shake"));
 
     public static final Identifier SHAKE_ANIMATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "shake");
@@ -58,7 +59,7 @@ public class ClientRegistrar {
                     .withLocation(EarthMobsMod.prefix("pipeline/animation_entity"))
                     .withShaderDefine("APPLY_TEXTURE_MATRIX")
                     .withShaderDefine("ALPHA_CUTOUT", 0.1F)
-                    .withSampler("Sampler1")
+                    .withBindGroupLayout(BindGroupLayouts.SAMPLER1)
                     .withCull(false)
                     .build();
 

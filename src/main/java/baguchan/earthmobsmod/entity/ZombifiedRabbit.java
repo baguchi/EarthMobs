@@ -7,7 +7,10 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -17,11 +20,8 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -72,25 +72,12 @@ public class ZombifiedRabbit extends Rabbit implements Enemy {
             ServerLevelAccessor p_479493_, DifficultyInstance p_481210_, EntitySpawnReason p_482098_, @org.jspecify.annotations.Nullable SpawnGroupData p_481475_
     ) {
         if (p_482098_ == EntitySpawnReason.NATURAL) {
-            if (p_479493_.getRandom().nextFloat() < 0.1F) {
-                this.makeRider(p_479493_, p_481210_, p_482098_);
-            }
         }
         //this.makeRider(p_479493_, p_481210_, p_482098_);
 
         return super.finalizeSpawn(p_479493_, p_481210_, p_482098_, p_481475_);
     }
 
-    public void makeRider(ServerLevelAccessor p_479493_, DifficultyInstance p_481210_, EntitySpawnReason p_482098_) {
-        Zombie zombie = EntityType.ZOMBIE.create(this.level(), EntitySpawnReason.JOCKEY);
-        if (zombie != null && !this.isBaby()) {
-            zombie.setBaby(true);
-            zombie.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
-            zombie.finalizeSpawn(p_479493_, p_481210_, p_482098_, null);
-            zombie.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.WOODEN_SPEAR));
-            zombie.startRiding(this, false, false);
-        }
-    }
 
     public static boolean isDarkEnoughToSpawn(ServerLevelAccessor p_219010_, BlockPos p_219011_, RandomSource p_219012_) {
         if (p_219010_.getBrightness(LightLayer.SKY, p_219011_) > p_219012_.nextInt(32)) {

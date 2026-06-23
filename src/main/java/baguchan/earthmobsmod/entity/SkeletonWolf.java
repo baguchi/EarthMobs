@@ -125,7 +125,7 @@ public class SkeletonWolf extends Wolf {
 
 			if (!(item instanceof DyeItem dyeitem && this.isOwnedBy(p_406380_))) {
 				if (this.isEquippableInSlotEvenSkeleton(itemstack, EquipmentSlot.BODY) && !this.isWearingBodyArmor() && this.isOwnedBy(p_406380_) && !this.isBaby()) {
-					this.setBodyArmorItem(itemstack.copyWithCount(1));
+					this.setItemSlot(EquipmentSlot.BODY, itemstack.copyWithCount(1));
 					itemstack.consume(1, p_406380_);
 					return InteractionResult.SUCCESS;
 				}
@@ -162,7 +162,7 @@ public class SkeletonWolf extends Wolf {
                 itemstack.hurtAndBreak(1, p_406380_, p_406261_);
 				this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 				ItemStack itemstack1 = this.getBodyArmorItem();
-				this.setBodyArmorItem(ItemStack.EMPTY);
+				this.setItemSlot(EquipmentSlot.BODY, ItemStack.EMPTY);
 				if (this.level() instanceof ServerLevel serverlevel) {
 					this.spawnAtLocation(serverlevel, itemstack1);
 				}
@@ -188,7 +188,7 @@ public class SkeletonWolf extends Wolf {
 	public boolean isEquippableInSlotEvenSkeleton(ItemStack p_371603_, EquipmentSlot p_371841_) {
 		Equippable equippable = (Equippable) p_371603_.get(DataComponents.EQUIPPABLE);
 
-		Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.WOLF));
+		Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityTypes.WOLF));
 		return equippable == null ? p_371841_ == EquipmentSlot.MAINHAND && this.canUseSlot(EquipmentSlot.MAINHAND) : p_371841_ == equippable.slot() && this.canUseSlot(equippable.slot()) && entityType.isPresent() && equippable.canBeEquippedBy(entityType.get());
 	}
 

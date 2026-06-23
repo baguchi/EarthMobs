@@ -34,7 +34,7 @@ public class UmbraCow extends WoolyCow {
 
 			java.util.List<ItemStack> items = new java.util.ArrayList<>();
 			for (int j = 0; j < i; ++j) {
-				items.add(new ItemStack(Blocks.BLACK_WOOL));
+				items.add(new ItemStack(Blocks.WOOL.black()));
 			}
 			return items;
 		}
