@@ -5,6 +5,7 @@ import baguchan.earthmobsmod.api.IHasFlower;
 import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.api.IOnMud;
 import baguchan.earthmobsmod.message.MudMessage;
+import baguchan.earthmobsmod.registry.ModTags;
 import baguchan.earthmobsmod.util.DyeUtil;
 import baguchi.bagus_lib.api.IBaguPacket;
 import net.minecraft.core.BlockPos;
@@ -36,7 +37,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(Pig.class)
-public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, IHasFlower, IBaguPacket {
+public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, IHasFlower, IBaguPacket, IOnMud {
 	private boolean muddy;
     private byte dyeColor = 0;
 
@@ -48,6 +49,11 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 
 	protected PigMixin(EntityType<? extends Animal> p_27557_, Level p_27558_) {
 		super(p_27557_, p_27558_);
+	}
+
+	@Override
+	public boolean isOnMud() {
+		return this.fluidInteraction.isInFluid(ModTags.Fluids.MUD);
 	}
 
 	@Override
