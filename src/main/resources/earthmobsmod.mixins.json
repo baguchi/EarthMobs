@@ -6,14 +6,10 @@
   "refmap": "earthmobsmod.refmap.json",
   "mixins": [
     "BeeMixin",
-    "EntityFluidInteractionMixin",
-    "EntityMixin",
-    "FloatGoalMixin",
     "LivingEntityMixin",
     "PigMixin",
     "SheepAccessor",
-    "SheepMixin",
-    "SwimMixin"
+    "SheepMixin"
   ],
   "client": [
   ],

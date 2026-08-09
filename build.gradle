@@ -138,7 +138,7 @@ dependencies {
     //implementation "net.neoforged:neoforge:${neo_version}"
 
     //implementation "baguchi.bagus_lib:BagusLib:${bagus_lib_version}"
-    implementation "maven.modrinth:bagus-lib:${bagus_lib_version}"
+    implementation "maven.modrinth:95nSN4Rd:${bagus_lib_version}"
 
 
     //implementation "baguchi.bagus_lib:BagusLib:${bagus_lib_version}"
