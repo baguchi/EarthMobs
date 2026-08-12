@@ -5,10 +5,12 @@ import baguchan.earthmobsmod.api.IHasFlower;
 import baguchan.earthmobsmod.api.IMuddyPig;
 import baguchan.earthmobsmod.api.IOnMud;
 import baguchan.earthmobsmod.message.MudMessage;
+import baguchan.earthmobsmod.registry.ModFluidTypes;
 import baguchan.earthmobsmod.util.DyeUtil;
 import baguchi.bagus_lib.api.IBaguPacket;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -40,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mixin(Pig.class)
-public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, IHasFlower, IBaguPacket {
+public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, IHasFlower, IBaguPacket, IOnMud {
 	private boolean muddy;
     private byte dyeColor = 0;
 	private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_29841_) -> {
@@ -82,6 +85,11 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 		this.muddy = playing;
 
 		this.resync(this);
+	}
+
+	@Override
+	public boolean isOnMud() {
+		return this.isInFluidType(ModFluidTypes.MUD.get());
 	}
 
 	@Override
@@ -196,7 +204,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 					for (int j = 0; j < i; ++j) {
 						float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
 						float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
-						this.level().addParticle(ParticleTypes.SPLASH, this.getX() + (double) f1, (double) (f + 0.8F), this.getZ() + (double) f2, vec3.x, vec3.y, vec3.z);
+						this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.MUD.defaultBlockState()), this.getX() + (double) f1, (double) (f + 0.8F), this.getZ() + (double) f2, vec3.x, vec3.y, vec3.z);
 					}
 				}
 			}
@@ -240,6 +248,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 		}
 		return java.util.Collections.emptyList();
 	}
+
 
 	@Override
 	public boolean hasFlower() {

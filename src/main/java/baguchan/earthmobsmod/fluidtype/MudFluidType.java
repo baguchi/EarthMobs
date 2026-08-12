@@ -55,7 +55,7 @@ public class MudFluidType extends FluidType {
 			entity.setDeltaMovement(vec34.x, (double) 0.3F, vec34.z);
 		}
 
-		return true;
+		return false;
 	}
 
 	protected static double getEffectiveGravity(LivingEntity entity) {
