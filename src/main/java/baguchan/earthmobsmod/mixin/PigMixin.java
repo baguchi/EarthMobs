@@ -95,7 +95,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	@Override
 	public void resync(Entity entity) {
         if (!this.level().isClientSide()) {
-			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new MudMessage(this.getId(), this.muddy, this.dyeColor));
+			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new MudMessage(this.getId(), this.muddy, this.isSheared(), this.getColor()));
 		}
 	}
 
@@ -193,7 +193,9 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 					this.shakeAnim = 0.0F;
 					this.setMuddy(true);
 					this.setSheared(false);
-                    this.setColor(DyeUtil.getRandomColor(this.random));
+					if (!this.level().isClientSide()) {
+						this.setColor(DyeUtil.getRandomColor(this.random));
+					}
 				}
 
 				if (this.shakeAnim > 0.4F) {
