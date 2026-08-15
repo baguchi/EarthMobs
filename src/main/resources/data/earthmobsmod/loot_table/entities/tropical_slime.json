@@ -2,32 +2,20 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1,
-      "bonus_rolls": 0,
+      "conditions": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/cube_mob": {
+              "size": 1
+            }
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "earthmobsmod:tropical_ball",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 0,
-                "max": 2
-              },
-              "add": false
-            },
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
-              },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
-            }
-          ],
           "conditions": [
             {
               "condition": "minecraft:inverted",
@@ -35,47 +23,55 @@
                 "condition": "minecraft:damage_source_properties",
                 "predicate": {
                   "source_entity": {
-                    "type": "minecraft:frog"
+                    "minecraft:entity_type": "minecraft:frog"
                   }
                 }
               }
             }
-          ]
+          ],
+          "functions": [
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2,
+                "min": 0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1,
+                "min": 0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            }
+          ],
+          "name": "earthmobsmod:tropical_ball"
         },
         {
           "type": "minecraft:item",
-          "name": "earthmobsmod:tropical_ball",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1,
-              "add": false
-            }
-          ],
           "conditions": [
             {
               "condition": "minecraft:damage_source_properties",
               "predicate": {
                 "source_entity": {
-                  "type": "minecraft:frog"
+                  "minecraft:entity_type": "minecraft:frog"
                 }
               }
             }
-          ]
+          ],
+          "functions": [
+            {
+              "count": 1,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "earthmobsmod:tropical_ball"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "type_specific": {
-              "type": "slime",
-              "size": 1
-            }
-          }
-        }
-      ]
+      "rolls": 1
     }
   ],
   "random_sequence": "earthmobsmod:entities/tropical_slime"
