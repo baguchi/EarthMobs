@@ -11,10 +11,9 @@ public class ModBuiltInLootTables {
     public static final ResourceKey<LootTable> FANCY_CHICKEN_LAY = register("gameplay/fancy_chicken_lay");
     public static final ResourceKey<LootTable> CLUCK_SHROOM_LAY = register("gameplay/cluck_shroom_lay");
     public static final ResourceKey<LootTable> CHARGED_CREEPER_MELON_GOLEM = register("charged_creeper/melon_golem");
+    public static final ResourceKey<LootTable> SHEAR_MUDDY_PIG = register("shearing/muddy_pig");
 
-    public static final ResourceKey<LootTable> WOOLY_COW_SHEARD_LOOT_TABLE = register("entities/wooly_cow_sheared");
-
-    public static final ResourceKey<LootTable> UMBRA_COW_SHEARD_LOOT_TABLE = register("entities/umbra_cow_sheared");
+    public static final ColorCollection<ResourceKey<LootTable>> SHEAR_DYED_MUDDY_PIG = ColorCollection.NAMES.map(color -> register("shearing/muddy_pig/" + color));
     public static final ColorCollection<ResourceKey<LootTable>> HORNED_SHEEP = ColorCollection.NAMES.map(color -> register("entities/horned_sheep/" + color));
 
     private static ResourceKey<LootTable> register(String name) {

@@ -13,8 +13,6 @@ public interface IMuddyPig {
 
     void setSheared(boolean sheared);
 
-    void setColorData(byte data);
-
     boolean isSheared();
 
 

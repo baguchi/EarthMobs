@@ -1,6 +1,7 @@
 package baguchan.earthmobsmod.data;
 
 import baguchan.earthmobsmod.EarthMobsMod;
+import baguchan.earthmobsmod.data.loot.ModLootTableProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;

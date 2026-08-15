@@ -1,4 +1,4 @@
-package baguchan.earthmobsmod.data;
+package baguchan.earthmobsmod.data.loot;
 
 import baguchan.earthmobsmod.advancements.criterion.WoolyCowPredicate;
 import baguchan.earthmobsmod.registry.ModBlocks;

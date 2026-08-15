@@ -73,7 +73,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	@Override
 	public void resync(Entity entity) {
         if (!this.level().isClientSide()) {
-			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new MudMessage(this.getId(), this.muddy, this.dyeColor));
+			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new MudMessage(this.getId(), this.muddy, this.muddy, this.getColor()));
 		}
 	}
 
@@ -108,12 +108,6 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
         this.dyeColor = (byte) (b0 & 240 | color.getId() & 15);
 		this.resync(this);
 	}
-
-    @Override
-    public void setColorData(byte dyeColor) {
-        this.dyeColor = dyeColor;
-        this.resync(this);
-    }
 
     @Override
     public boolean isSheared() {
@@ -171,7 +165,9 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 					this.shakeAnim = 0.0F;
 					this.setMuddy(true);
 					this.setSheared(false);
-                    this.setColor(DyeUtil.getRandomColor(this.random));
+					if (!this.level().isClientSide()) {
+						this.setColor(DyeUtil.getRandomColor(this.random));
+					}
 				}
 
 				if (this.shakeAnim > 0.4F) {
@@ -214,7 +210,7 @@ public abstract class PigMixin extends Animal implements IMuddyPig, IShearable, 
 	public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		level.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
 		this.gameEvent(GameEvent.SHEAR, player);
-        if (!level.isClientSide()) {
+		if (!level.isClientSide()) {
 			this.setSheared(true);
 			int i = 1 + this.random.nextInt(3);
 

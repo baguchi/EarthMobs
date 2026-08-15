@@ -1,4 +1,4 @@
-package baguchan.earthmobsmod.data;
+package baguchan.earthmobsmod.data.loot;
 
 import baguchan.earthmobsmod.registry.ModBlocks;
 import baguchan.earthmobsmod.registry.ModBuiltInLootTables;

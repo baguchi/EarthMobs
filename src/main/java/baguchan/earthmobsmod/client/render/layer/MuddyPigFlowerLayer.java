@@ -33,7 +33,7 @@ public class MuddyPigFlowerLayer<T extends LivingEntityRenderState, S extends En
     }
 
     @Override
-    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, T entityRenderState, float v, float v1) {
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, T entityRenderState, float v, float v1) {
         DyeColor dyeColor = entityRenderState.getRenderDataOrDefault(FLOWER_DYE, DyeColor.PINK);
         boolean mud = entityRenderState.getRenderDataOrDefault(MuddyPigMudLayer.IS_MUD, false);
         boolean sheared = entityRenderState.getRenderDataOrDefault(MuddyPigMudLayer.IS_SHEARED, true);
@@ -46,11 +46,11 @@ public class MuddyPigFlowerLayer<T extends LivingEntityRenderState, S extends En
                 boolean flag = entityRenderState.appearsGlowing();
                 if (flag) {
                     pigModel.setupAnim(entityRenderState);
-                    submitNodeCollector.submitModel(pigModel, entityRenderState, poseStack, RenderTypes.outline(LOCATION), i, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, entityRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+                    submitNodeCollector.submitModel(pigModel, entityRenderState, poseStack, RenderTypes.outline(LOCATION), lightCoords, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, entityRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
                 }
 
             } else {
-                coloredCutoutModelCopyLayerRender(pigModel, LOCATION, poseStack, submitNodeCollector, i, entityRenderState, getWoolColor(dyeColor), 0);
+                coloredCutoutModelCopyLayerRender(pigModel, LOCATION, poseStack, submitNodeCollector, lightCoords, entityRenderState, getWoolColor(dyeColor), 0);
             }
         }
     }
