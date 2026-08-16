@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.render.layer.MelonGolemHeadLayer;
 import baguchan.earthmobsmod.client.render.state.MelonGolemRenderState;
 import baguchan.earthmobsmod.entity.MelonGolem;
+import baguchan.earthmobsmod.registry.ModBlocks;
 import net.minecraft.client.model.animal.golem.SnowGolemModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.block.BlockModelResolver;
@@ -11,7 +12,6 @@ import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.block.Blocks;
 
 
 public class MelonGolemRenderer extends MobRenderer<MelonGolem, MelonGolemRenderState, SnowGolemModel> {
@@ -35,7 +35,11 @@ public class MelonGolemRenderer extends MobRenderer<MelonGolem, MelonGolemRender
     public void extractRenderState(MelonGolem entity, MelonGolemRenderState state, float p_364064_) {
         super.extractRenderState(entity, state, p_364064_);
         if (entity.hasMelon()) {
-            this.blockModelResolver.update(state.headBlock, Blocks.CARVED_PUMPKIN.defaultBlockState(), BLOCK_DISPLAY_CONTEXT);
+            if (entity.isAggressive()) {
+                this.blockModelResolver.update(state.headBlock, ModBlocks.CARVED_MELON_SHOOT.get().defaultBlockState(), BLOCK_DISPLAY_CONTEXT);
+            } else {
+                this.blockModelResolver.update(state.headBlock, ModBlocks.CARVED_MELON.get().defaultBlockState(), BLOCK_DISPLAY_CONTEXT);
+            }
         } else {
             state.headBlock.clear();
         }
