@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.EarthMobsMod;
 import baguchan.earthmobsmod.client.ModModelLayers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AdultAndBabyModelPair;
+import net.minecraft.client.model.BabyModelTransform;
 import net.minecraft.client.model.animal.wolf.AdultWolfModel;
 import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.PartPose;
@@ -19,8 +20,13 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 
+import java.util.Set;
+
 public class SkeletonWolfRenderer extends MobRenderer<Wolf, WolfRenderState, WolfModel> {
-    private static final Identifier WOLF_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf.png");
+	public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(false, 5.0F, 2.0F, Set.of("head"));
+
+
+	private static final Identifier WOLF_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf.png");
     private static final Identifier WOLF_ANGRY_LOCATION = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "textures/entity/skeleton_wolf/skeleton_wolf_angry.png");
 
     private final AdultAndBabyModelPair<WolfModel> models;
