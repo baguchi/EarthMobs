@@ -31,7 +31,7 @@ public class ModInstruments {
             BootstrapContext<Instrument> p_365273_, ResourceKey<Instrument> p_360712_, Holder<SoundEvent> p_362988_, float p_362590_, float p_363159_
     ) {
         MutableComponent mutablecomponent = Component.translatable(Util.makeDescriptionId("instrument", p_360712_.identifier()));
-        p_365273_.register(p_360712_, new Instrument(p_362988_, p_362590_, p_363159_, mutablecomponent));
+        p_365273_.register(p_360712_, new Instrument(p_362988_, p_362590_, p_363159_, 0, mutablecomponent));
     }
 
 }

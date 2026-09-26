@@ -99,6 +99,7 @@ public class MagmaCow extends Cow {
         this.setWeaking(true);
     }
 
+    @Override
     public InteractionResult mobInteract(Player p_28941_, InteractionHand p_28942_) {
         ItemStack itemstack = p_28941_.getItemInHand(p_28942_);
         if (itemstack.is(Items.BUCKET) && !this.isBaby()) {
@@ -117,27 +118,31 @@ public class MagmaCow extends Cow {
         return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.2F).add(Attributes.ARMOR, 10F).add(Attributes.ATTACK_DAMAGE, 4F).add(Attributes.KNOCKBACK_RESISTANCE, 0.6F);
     }
 
+    @Override
     public Cow getBreedOffspring(ServerLevel p_148884_, AgeableMob p_148885_) {
         return ModEntities.MAGMA_COW.get().create(p_148884_, EntitySpawnReason.BREEDING);
     }
 
+    @Override
     public void addAdditionalSaveData(ValueOutput p_29864_) {
         super.addAdditionalSaveData(p_29864_);
         p_29864_.putBoolean("Weaking", this.isWeaking());
     }
 
+    @Override
     public void readAdditionalSaveData(ValueInput p_29845_) {
         super.readAdditionalSaveData(p_29845_);
         this.setWeaking(p_29845_.getBooleanOr("Weaking", false));
     }
 
+    @Override
     protected void customServerAiStep(ServerLevel serverLevel) {
         this.eatAnimationTick = this.eatBlockGoal.getEatAnimationTick();
         super.customServerAiStep(serverLevel);
     }
 
+    @Override
     public void aiStep() {
-        this.updateSwingTime();
         if (this.level().isClientSide()) {
             this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
         }
@@ -184,6 +189,7 @@ public class MagmaCow extends Cow {
         return true;
     }
 
+    @Override
     public float getWalkTargetValue(BlockPos p_27573_, LevelReader p_27574_) {
         if (p_27574_.getBlockState(p_27573_.below()).is(Blocks.BASALT) || p_27574_.getBlockState(p_27573_.below()).is(Blocks.BLACKSTONE)) {
             return 1.0F;

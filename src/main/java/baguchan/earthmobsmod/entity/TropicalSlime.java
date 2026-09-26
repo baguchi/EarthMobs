@@ -110,7 +110,6 @@ public class TropicalSlime extends Slime implements Bucketable {
                 fish.setPersistenceRequired();
             }
             fish.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(this.blockPosition()), EntitySpawnReason.EVENT, null);
-            fish.setInvulnerable(this.isInvulnerable());
             fish.snapTo(this.getX() + (double) f1, this.getY() + f3, this.getZ() + (double) f2, this.random.nextFloat() * 360.0F, 0.0F);
             this.level().addFreshEntity(fish);
         }
@@ -247,7 +246,7 @@ public class TropicalSlime extends Slime implements Bucketable {
             }
 
 
-            ((TropicalSlime.SlimeMoveControl) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), this.slime.isDealsDamage());
+            ((TropicalSlime.SlimeMoveControl) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), !this.slime.isTiny());
         }
     }
 

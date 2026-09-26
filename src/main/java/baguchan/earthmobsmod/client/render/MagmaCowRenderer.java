@@ -11,11 +11,9 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.Identifier;
 
 public class MagmaCowRenderer<T extends MagmaCow> extends AgeableMobRenderer<T, MagmaCowRenderState, MagmaCowModel<MagmaCowRenderState>> {
@@ -29,7 +27,7 @@ public class MagmaCowRenderer<T extends MagmaCow> extends AgeableMobRenderer<T, 
             @Override
             public void submit(PoseStack p_433452_, SubmitNodeCollector p_433171_, int p_434650_, MagmaCowRenderState p_435883_, float p_433542_, float p_435619_) {
                 if (p_435883_.magma) {
-                    p_433171_.order(1).submitModel(this.getParentModel(), p_435883_, p_433452_, EarthRenderType.animationEye(TEXTURE_GLOW, 18, 3, (int) (p_435883_.ageInTicks - p_435883_.partialTick)), p_434650_, OverlayTexture.NO_OVERLAY, -1, (TextureAtlasSprite) null, p_435883_.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+                    p_433171_.order(1).submitModel(this.getParentModel(), p_435883_, p_433452_, EarthRenderType.animationEye(TEXTURE_GLOW, 18, 3, (int) (p_435883_.ageInTicks - p_435883_.partialTick)), p_434650_, OverlayTexture.NO_OVERLAY, -1, null, p_435883_.outlineColor);
                 }
             }
 

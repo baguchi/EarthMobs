@@ -37,6 +37,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -137,7 +138,7 @@ public class CommonEvents {
 				if (!event.getEntity().isCreative()) {
 					itemStack.shrink(1);
 				}
-				event.getEntity().swing(hand);
+                event.getEntity().swing(hand, SwingAnimation.DEFAULT, false);
 				event.setCanceled(true);
 			}
 

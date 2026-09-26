@@ -2,9 +2,9 @@ package baguchan.earthmobsmod.entity;
 
 import baguchan.earthmobsmod.entity.goal.RangedAndMeleeAttack;
 import baguchan.earthmobsmod.entity.projectile.BoneShard;
-import baguchan.earthmobsmod.registry.ModEffects;
 import baguchan.earthmobsmod.registry.ModEntityDatas;
 import baguchan.earthmobsmod.registry.ModItems;
+import baguchan.earthmobsmod.registry.ModPotions;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentType;
@@ -134,10 +134,10 @@ public class BoneSpider extends Spider implements RangedAttackMob {
             Holder<Potion> potion;
 
             if (i == 0) {
-                potion = ModEffects.UNDEAD_BODY_POTION;
+                potion = ModPotions.UNDEAD_BODY;
 
             } else if (i == 1) {
-                potion = ModEffects.ZOMBIFIED_POTION;
+                potion = ModPotions.ZOMBIFIED;
 
             } else if (i == 2) {
                 potion = Potions.SLOWNESS;

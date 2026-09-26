@@ -104,25 +104,15 @@ public class CluckShroom extends Chicken implements IShearable, IPlantMob {
 	@Override
 	public List<ItemStack> onSheared(@org.jetbrains.annotations.Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		this.level().playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
-		if (!this.level().isClientSide()) {
-			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
-			this.discard();
-			Chicken chickin = EntityTypes.CHICKEN.create(this.level(), EntitySpawnReason.CONVERSION);
-			chickin.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
-			chickin.setHealth(this.getHealth());
-			chickin.yBodyRot = this.yBodyRot;
-			if (this.hasCustomName()) {
-				chickin.setCustomName(this.getCustomName());
-				chickin.setCustomNameVisible(this.isCustomNameVisible());
+        if (!this.level().isClientSide() && level instanceof ServerLevel serverLevel) {
+            if (!net.neoforged.neoforge.event.EventHooks.canLivingConvert(this, EntityTypes.COW, (timer) -> {
+            })) {
+                return java.util.Collections.emptyList();
 			}
-
-			if (this.isPersistenceRequired()) {
-				chickin.setPersistenceRequired();
-			}
-
-			chickin.setInvulnerable(this.isInvulnerable());
-			this.level().addFreshEntity(chickin);
-
+            this.convertTo(EntityTypes.CHICKEN, ConversionParams.single(this, false, false), cow -> {
+                net.neoforged.neoforge.event.EventHooks.onLivingConvert(this, cow);
+                serverLevel.sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5), this.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
+            });
 			java.util.List<ItemStack> items = new java.util.ArrayList<>();
 			for (int i = 0; i < 5; ++i) {
 				items.add(new ItemStack(this.getCluckShroomType().blockState.getBlock()));

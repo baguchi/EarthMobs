@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -23,7 +24,7 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(EarthMobsMod.MODID);
 
-    public static final DeferredBlock<LiquidBlock> MUD = registerWithoutItem("mud", (prop) -> new LiquidBlock(ModFluids.MUD.value(), prop), () -> BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollision().strength(100.0F).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY));
+    public static final DeferredBlock<LiquidBlock> MUD = registerWithoutItem("mud", (prop) -> new LiquidBlock(ModFluids.MUD.value(), prop), () -> BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollision().strength(100.0F).pushReaction(PushReaction.POPPED).noLootTable().liquid().sound(SoundType.EMPTY));
 
     public static final DeferredBlock<Block> RUBY = register("ruby_block", (prop) -> new Block(prop.requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)), BlockBehaviour.Properties::of);
 
@@ -31,11 +32,11 @@ public class ModBlocks {
     public static final DeferredBlock<Block> CARVED_MELON_SHOOT = register("carved_melon_shoot", (prop) -> new CarvedMelonBlock(prop.strength(1.0F).sound(SoundType.WOOD)), BlockBehaviour.Properties::of);
     public static final DeferredBlock<Block> TROPICAL_SLIME_BLOCK = register("tropical_slime_block", (prop) -> new TropicalSlimeBlock(prop.mapColor(MapColor.COLOR_BLUE).friction(0.8F).noOcclusion().sound(SoundType.SLIME_BLOCK)), BlockBehaviour.Properties::of);
 
-    public static final DeferredBlock<FlowerBlock> BUTTERCUP = register("buttercup", (prop) -> new FlowerBlock(MobEffects.ABSORPTION, 30, prop.noCollision().pushReaction(PushReaction.DESTROY).offsetType(BlockBehaviour.OffsetType.XZ).instabreak().sound(SoundType.GRASS)), () -> BlockBehaviour.Properties.of());
-    public static final DeferredBlock<FlowerBlock> PINK_DAISY = register("pink_daisy", (prop) -> new FlowerBlock(MobEffects.REGENERATION, 10, prop.noCollision().pushReaction(PushReaction.DESTROY).offsetType(BlockBehaviour.OffsetType.XZ).instabreak().sound(SoundType.GRASS)), () -> BlockBehaviour.Properties.of());
+    public static final DeferredBlock<FlowerBlock> BUTTERCUP = register("buttercup", (prop) -> new FlowerBlock(MobEffects.ABSORPTION, 30, prop.noCollision().pushReaction(PushReaction.POPPED).offsetType(BlockBehaviour.OffsetType.XZ).instabreak().sound(SoundType.GRASS)), () -> BlockBehaviour.Properties.of());
+    public static final DeferredBlock<FlowerBlock> PINK_DAISY = register("pink_daisy", (prop) -> new FlowerBlock(MobEffects.REGENERATION, 10, prop.noCollision().pushReaction(PushReaction.POPPED).offsetType(BlockBehaviour.OffsetType.XZ).instabreak().sound(SoundType.GRASS)), () -> BlockBehaviour.Properties.of());
 
-    public static final DeferredBlock<Block> POTTED_BUTTERCUP = registerWithoutItem("potted_buttercup", (prop) -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, BUTTERCUP, prop), () -> BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY));
-    public static final DeferredBlock<Block> POTTED_PINK_DAISY = registerWithoutItem("potted_pink_daisy", (prop) -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, PINK_DAISY, prop), () -> BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY));
+    public static final DeferredBlock<Block> POTTED_BUTTERCUP = registerWithoutItem("potted_buttercup", (prop) -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, BUTTERCUP, prop), () -> BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.POPPED));
+    public static final DeferredBlock<Block> POTTED_PINK_DAISY = registerWithoutItem("potted_pink_daisy", (prop) -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, PINK_DAISY, prop), () -> BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.POPPED));
 
 
     private static <T extends Block> DeferredBlock<Block> registerWithoutItem(String name, Supplier<Block.Properties> properties) {
@@ -76,7 +77,12 @@ public class ModBlocks {
         return () -> {
             DeferredBlock<T> block = Objects.requireNonNull(deferredBlock);
             Item.Properties properties = new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, name))).useBlockDescriptionPrefix();
-            return new BlockItem(block.get(), properties);
+
+            if (block.get() == ModBlocks.CARVED_MELON.get() || block.get() == ModBlocks.CARVED_MELON_SHOOT.get() || block.get() == ModBlocks.BUTTERCUP.get() || block.get() == ModBlocks.PINK_DAISY.get()) {
+                return new BlockItem(block.get(), properties.compostable(ContextIntProviders.COMPOSTABLE_MEDIUM));
+            } else {
+                return new BlockItem(block.get(), properties);
+            }
         };
     }
 

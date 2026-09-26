@@ -18,7 +18,8 @@ import baguchan.earthmobsmod.registry.ModFluidTypes;
 import baguchan.earthmobsmod.registry.ModFluids;
 import baguchi.bagus_lib.client.event.RegisterBagusKeyframeEvents;
 import com.google.common.reflect.TypeToken;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.ColorTargetState;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import net.minecraft.client.model.animal.chicken.BabyChickenModel;
 import net.minecraft.client.model.animal.cow.BabyCowModel;
 import net.minecraft.client.model.animal.cow.CowModel;
@@ -60,6 +61,7 @@ public class ClientRegistrar {
                     .withShaderDefine("APPLY_TEXTURE_MATRIX")
                     .withShaderDefine("ALPHA_CUTOUT", 0.1F)
                     .withBindGroupLayout(BindGroupLayouts.SAMPLER1)
+                    .withColorTargetState(ColorTargetState.DEFAULT)
                     .withCull(false)
                     .build();
 

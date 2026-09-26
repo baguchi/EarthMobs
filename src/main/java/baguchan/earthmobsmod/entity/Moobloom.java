@@ -13,10 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -73,24 +70,15 @@ public class Moobloom extends Cow implements IShearable, IFlowerCow, IHasFlower 
 	@Override
 	public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		this.level().playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
-		if (!this.level().isClientSide()) {
-			((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
-			this.discard();
-			Cow cow = EntityTypes.COW.create(this.level(), EntitySpawnReason.CONVERSION);
-			cow.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
-			cow.setHealth(this.getHealth());
-			cow.yBodyRot = this.yBodyRot;
-			if (this.hasCustomName()) {
-				cow.setCustomName(this.getCustomName());
-				cow.setCustomNameVisible(this.isCustomNameVisible());
+        if (!this.level().isClientSide() && level instanceof ServerLevel serverLevel) {
+            if (!net.neoforged.neoforge.event.EventHooks.canLivingConvert(this, EntityTypes.COW, (timer) -> {
+            })) {
+                return java.util.Collections.emptyList();
 			}
-
-			if (this.isPersistenceRequired()) {
-				cow.setPersistenceRequired();
-			}
-
-			cow.setInvulnerable(this.isInvulnerable());
-			this.level().addFreshEntity(cow);
+            this.convertTo(EntityTypes.COW, ConversionParams.single(this, false, false), cow -> {
+                net.neoforged.neoforge.event.EventHooks.onLivingConvert(this, cow);
+                serverLevel.sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5), this.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
+            });
 
 			java.util.List<ItemStack> items = new java.util.ArrayList<>();
 			for (int i = 0; i < 4; ++i) {

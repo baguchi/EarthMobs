@@ -117,7 +117,7 @@ public class FurnaceGolem extends AbstractGolem {
 
         if (this.isAlive() && this.isFurnaceActive()) {
             ++this.activeTime;
-            this.checkFurnaceAttack(this.getBoundingBox(), this.getBoundingBox().inflate(2.0F));
+            this.checkFurnaceAttack(this.getBoundingBox(), this.getBoundingBox().inflate(1.0F));
 
             if (this.activeTime >= 200 && this.onGround()) {
                 this.playSound(SoundEvents.FIRE_EXTINGUISH, 2.0f, 1.0f);

@@ -101,14 +101,14 @@ public class ClientEvents {
             int i = getOverlayCoords(entity, 0.0F);
             int j = 654311423;
             int k = ARGB.multiply(j, -1);
-            buffer.submitModel(entityModel, entity, posestack, rendertype, light, i, k, null, entity.outlineColor, null);
+            buffer.submitModel(entityModel, entity, posestack, rendertype, light, i, k, null, entity.outlineColor);
         }
     }
 
     private static void setupRotations(LivingEntityRenderer<LivingEntity, LivingEntityRenderState, EntityModel<LivingEntityRenderState>> renderer, LivingEntityRenderState entity, PoseStack poseStack, float bodyRot, float scale) {
 
         if (!entity.hasPose(Pose.SLEEPING)) {
-            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - bodyRot));
+            poseStack.rotateDegrees(Axis.YP, 180.0F - bodyRot);
         }
 
         /*if (entity.deathTime > 0.0F) {
@@ -121,8 +121,8 @@ public class ClientEvents {
             poseStack.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees()));
         } else*/
         if (entity.isAutoSpinAttack) {
-            poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F - entity.xRot));
-            poseStack.mulPose(Axis.YP.rotationDegrees(entity.ageInTicks * -75.0F));
+            poseStack.rotateDegrees(Axis.XP, -90.0F - entity.xRot);
+            poseStack.rotateDegrees(Axis.YP, entity.ageInTicks * -75.0F);
         } else /*if (entity.hasPose(Pose.SLEEPING)) {
             Direction direction = entity.bedOrientation;
             float f1 = direction != null ? sleepDirectionToRotation(direction) : bodyRot;
@@ -131,7 +131,7 @@ public class ClientEvents {
             poseStack.mulPose(Axis.YP.rotationDegrees(270.0F));
         } else*/ if (entity.isUpsideDown) {
             poseStack.translate(0.0F, (entity.boundingBoxHeight + 0.1F) / scale, 0.0F);
-            poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+            poseStack.rotateDegrees(Axis.ZP, 180.0F);
         }
     }
 

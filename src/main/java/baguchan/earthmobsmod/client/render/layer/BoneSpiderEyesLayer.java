@@ -27,7 +27,7 @@ public class BoneSpiderEyesLayer<T extends BoneSpiderRenderState> extends EyesLa
         } else {
             p_433171_.order(1)
                     .submitModel(
-                            this.getParentModel(), p_435883_, p_433452_, COLOR_EYES, p_434650_, OverlayTexture.NO_OVERLAY, p_435883_.potionColor, null, p_435883_.outlineColor, null
+                            this.getParentModel(), p_435883_, p_433452_, COLOR_EYES, p_434650_, OverlayTexture.NO_OVERLAY, p_435883_.potionColor, null, p_435883_.outlineColor
                     );
         }
     }

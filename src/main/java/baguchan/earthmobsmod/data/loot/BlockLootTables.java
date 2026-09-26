@@ -1,8 +1,8 @@
 package baguchan.earthmobsmod.data.loot;
 
 import baguchan.earthmobsmod.registry.ModBlocks;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -20,8 +20,8 @@ public class BlockLootTables extends BlockLootSubProvider {
     private static final Set<Item> EXPLOSION_RESISTANT = Set.of();
 
 
-    protected BlockLootTables(HolderLookup.Provider provider) {
-        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), provider);
+    protected BlockLootTables(LootTableSubProvider.Context output) {
+        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), output);
     }
 
     @Override

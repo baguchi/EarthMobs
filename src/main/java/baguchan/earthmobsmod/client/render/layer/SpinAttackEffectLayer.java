@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 
@@ -38,7 +37,7 @@ public class SpinAttackEffectLayer<T extends LivingEntityRenderState, M extends 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, T entityRenderState, float v, float v1) {
         if (entityRenderState.isAutoSpinAttack) {
-            submitNodeCollector.submitModel(this.model, entityRenderState, poseStack, this.model.renderType(TEXTURE), i, OverlayTexture.NO_OVERLAY, entityRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+            submitNodeCollector.submitModel(this.model, entityRenderState, poseStack, this.model.renderType(TEXTURE), i, OverlayTexture.NO_OVERLAY, entityRenderState.outlineColor);
         }
 
     }

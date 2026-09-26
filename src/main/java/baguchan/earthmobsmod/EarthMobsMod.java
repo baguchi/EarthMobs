@@ -5,10 +5,7 @@ import baguchan.earthmobsmod.message.MossMessage;
 import baguchan.earthmobsmod.message.MudMessage;
 import baguchan.earthmobsmod.registry.*;
 import baguchi.bagus_lib.util.JigsawHelper;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -45,7 +42,7 @@ public class EarthMobsMod {
 		ModFluids.FLUIDS.register(modBus);
 		ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modBus);
 		ModEffects.MOB_EFFECTS.register(modBus);
-		ModEffects.POTION.register(modBus);
+        ModPotions.POTION.register(modBus);
 		ModItems.ITEMS.register(modBus);
 		ModSounds.SOUND_EVENTS.register(modBus);
 		ModCapability.ATTACHMENT_TYPES.register(modBus);
@@ -68,10 +65,7 @@ public class EarthMobsMod {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		ModInteractionInformations.init();
-		ModItems.composterInit();
 		ModBlocks.initFire();
-		((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BuiltInRegistries.BLOCK.getKey(ModBlocks.BUTTERCUP.get()), ModBlocks.POTTED_BUTTERCUP);
-		((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BuiltInRegistries.BLOCK.getKey(ModBlocks.PINK_DAISY.get()), ModBlocks.POTTED_PINK_DAISY);
 	}
 
 	private void serverStart(final ServerAboutToStartEvent event) {

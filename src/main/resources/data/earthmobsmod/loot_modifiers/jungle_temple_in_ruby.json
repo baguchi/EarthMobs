@@ -1,14 +1,17 @@
 {
   "type": "neoforge:add_table",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/jungle_temple"
-    },
-    {
-      "condition": "minecraft:random_chance",
-      "chance": 0.35
-    }
-  ],
+  "condition": {
+    "type": "minecraft:all_of",
+    "terms": [
+      {
+        "type": "neoforge:loot_table_id",
+        "loot_table_id": "minecraft:chests/jungle_temple"
+      },
+      {
+        "type": "minecraft:random_chance",
+        "chance": 0.35
+      }
+    ]
+  },
   "table": "earthmobsmod:injects/chest_in_ruby"
 }

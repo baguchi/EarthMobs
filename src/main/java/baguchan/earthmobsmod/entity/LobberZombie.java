@@ -3,7 +3,6 @@ package baguchan.earthmobsmod.entity;
 import baguchan.earthmobsmod.entity.goal.RangedAndMeleeAttack;
 import baguchan.earthmobsmod.entity.projectile.ZombieFlesh;
 import baguchan.earthmobsmod.registry.ModEntities;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
@@ -63,11 +62,8 @@ public class LobberZombie extends Zombie implements RangedAttackMob {
 	}
 
 	@Override
-    protected void doUnderWaterConversion(ServerLevel serverLevel) {
-        this.convertToZombieType(serverLevel, ModEntities.LOBBER_DROWNED.get());
-		if (!this.isSilent()) {
-			this.level().levelEvent((Player) null, 1040, this.blockPosition(), 0);
-		}
+    protected EntityType<? extends Zombie> convertsToWhenDrowning() {
+        return ModEntities.LOBBER_DROWNED.get();
 	}
 
 	@Override

@@ -1,0 +1,8 @@
+{
+  "description": {
+    "translate": "instrument.earthmobsmod.battle_horn"
+  },
+  "range": 256.0,
+  "sound_event": "earthmobsmod:item.horn_flute.battle_horn",
+  "use_duration": 7.0
+}

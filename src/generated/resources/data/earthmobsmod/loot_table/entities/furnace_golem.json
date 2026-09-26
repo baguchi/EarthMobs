@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 4,
+              "min": 2
+            }
+          },
+          "name": "minecraft:iron_ingot"
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "earthmobsmod:entities/furnace_golem"
+}

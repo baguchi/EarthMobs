@@ -5,65 +5,63 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+                "max": 2,
+                "min": 1
+              }
             },
             {
-              "conditions": [
-                {
-                  "condition": "minecraft:any_of",
-                  "terms": [
-                    {
-                      "condition": "minecraft:entity_properties",
-                      "entity": "this",
-                      "predicate": {
-                        "minecraft:flags": {
-                          "is_on_fire": true
-                        }
+              "type": "minecraft:furnace_smelt",
+              "condition": {
+                "type": "minecraft:any_of",
+                "terms": [
+                  {
+                    "type": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                      "minecraft:flags": {
+                        "is_on_fire": true
                       }
-                    },
-                    {
-                      "condition": "minecraft:entity_properties",
-                      "entity": "direct_attacker",
-                      "predicate": {
-                        "minecraft:equipment": {
-                          "mainhand": {
-                            "predicates": {
-                              "minecraft:enchantments": [
-                                {
-                                  "enchantments": "#minecraft:smelts_loot"
-                                }
-                              ]
-                            }
+                    }
+                  },
+                  {
+                    "type": "minecraft:entity_properties",
+                    "entity": "direct_attacker",
+                    "predicate": {
+                      "minecraft:equipment": {
+                        "mainhand": {
+                          "predicates": {
+                            "minecraft:enchantments": [
+                              {
+                                "enchantments": "#minecraft:smelts_loot"
+                              }
+                            ]
                           }
                         }
                       }
                     }
-                  ]
-                }
-              ],
-              "function": "minecraft:furnace_smelt"
+                  }
+                ]
+              }
             },
             {
+              "type": "minecraft:enchanted_count_increase",
               "count": {
                 "type": "minecraft:uniform",
                 "max": 1.0,
                 "min": 0.0
               },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "enchantment": "minecraft:looting"
             }
           ],
           "name": "minecraft:mutton"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     },
     {
       "entries": [
@@ -72,296 +70,264 @@
           "children": [
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "white"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "white"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/white"
+              },
+              "value": "minecraft:shearing/sheep/white"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "orange"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "orange"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/orange"
+              },
+              "value": "minecraft:shearing/sheep/orange"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "magenta"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "magenta"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/magenta"
+              },
+              "value": "minecraft:shearing/sheep/magenta"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "light_blue"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "light_blue"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/light_blue"
+              },
+              "value": "minecraft:shearing/sheep/light_blue"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "yellow"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "yellow"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/yellow"
+              },
+              "value": "minecraft:shearing/sheep/yellow"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "lime"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "lime"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/lime"
+              },
+              "value": "minecraft:shearing/sheep/lime"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "pink"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "pink"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/pink"
+              },
+              "value": "minecraft:shearing/sheep/pink"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "gray"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "gray"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/gray"
+              },
+              "value": "minecraft:shearing/sheep/gray"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "light_gray"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "light_gray"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/light_gray"
+              },
+              "value": "minecraft:shearing/sheep/light_gray"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "cyan"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "cyan"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/cyan"
+              },
+              "value": "minecraft:shearing/sheep/cyan"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "purple"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "purple"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/purple"
+              },
+              "value": "minecraft:shearing/sheep/purple"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "blue"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "blue"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/blue"
+              },
+              "value": "minecraft:shearing/sheep/blue"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "brown"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "brown"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/brown"
+              },
+              "value": "minecraft:shearing/sheep/brown"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "green"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "green"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/green"
+              },
+              "value": "minecraft:shearing/sheep/green"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "red"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "red"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/red"
+              },
+              "value": "minecraft:shearing/sheep/red"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:sheep/color": "black"
-                    },
-                    "minecraft:type_specific/sheep": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:sheep/color": "black"
+                  },
+                  "minecraft:type_specific/sheep": {
+                    "sheared": false
                   }
                 }
-              ],
-              "value": "earthmobsmod:entities/horned_sheep/black"
+              },
+              "value": "minecraft:shearing/sheep/black"
             }
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "earthmobsmod:entities/horned_sheep"

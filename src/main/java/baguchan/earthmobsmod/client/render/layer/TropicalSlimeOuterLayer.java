@@ -36,8 +36,7 @@ public class TropicalSlimeOuterLayer extends RenderLayer<TropicalSlimeRenderStat
                                 i2,
                                 -1,
                                 null,
-                                tropicalSlimeRenderState.outlineColor,
-                                null
+                                tropicalSlimeRenderState.outlineColor
                         );
             } else {
                 submitNodeCollector.order(1)
@@ -50,8 +49,7 @@ public class TropicalSlimeOuterLayer extends RenderLayer<TropicalSlimeRenderStat
                                 i2,
                                 -1,
                                 null,
-                                tropicalSlimeRenderState.outlineColor,
-                                null
+                                tropicalSlimeRenderState.outlineColor
                         );
             }
         }

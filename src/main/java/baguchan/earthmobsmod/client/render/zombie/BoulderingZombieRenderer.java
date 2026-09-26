@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -66,10 +65,7 @@ public class BoulderingZombieRenderer<T extends BoulderingZombie> extends Ageabl
 		if (p_362998_.speedValue < 1.0F) {
 			p_362998_.speedValue = 1.0F;
 		}
-
-		p_362998_.attackTime = p_365104_.getAttackAnim(p_363706_);
 		p_362998_.swimAmount = p_365104_.getSwimAmount(p_363706_);
-		p_362998_.attackArm = getAttackArm(p_365104_);
 		p_362998_.useItemHand = p_365104_.getUsedItemHand();
 		p_362998_.maxCrossbowChargeDuration = (float) CrossbowItem.getChargeDuration(p_365104_.getUseItem(), p_365104_);
 		p_362998_.ticksUsingItem = p_365104_.getTicksUsingItem();
@@ -86,11 +82,6 @@ public class BoulderingZombieRenderer<T extends BoulderingZombie> extends Ageabl
 	private static ItemStack getEquipmentIfRenderable(LivingEntity p_386637_, EquipmentSlot p_386956_) {
 		ItemStack itemstack = p_386637_.getItemBySlot(p_386956_);
 		return HumanoidArmorLayer.shouldRender(itemstack, p_386956_) ? itemstack.copy() : ItemStack.EMPTY;
-	}
-
-	private static HumanoidArm getAttackArm(LivingEntity p_362737_) {
-		HumanoidArm humanoidarm = p_362737_.getMainArm();
-		return p_362737_.swingingArm == InteractionHand.MAIN_HAND ? humanoidarm : humanoidarm.getOpposite();
 	}
 
     public Identifier getTextureLocation(BoulderingZombieRenderState p_114115_) {

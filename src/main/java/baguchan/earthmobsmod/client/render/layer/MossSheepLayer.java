@@ -11,9 +11,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.SheepRenderState;
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextKey;
 
@@ -39,7 +37,7 @@ public class MossSheepLayer<T extends SheepRenderState> extends RenderLayer<T, E
             EntityModel<SheepRenderState> entitymodel = hornedSheepRenderState.isBaby ? this.babyModel : this.adultModel;
             if (hornedSheepRenderState.isInvisible) {
                 if (hornedSheepRenderState.appearsGlowing()) {
-                    submitNodeCollector.submitModel(entitymodel, hornedSheepRenderState, poseStack, RenderTypes.outline(hornedSheepRenderState.isBaby ? SHEEP_FUR_BABY_LOCATION : SHEEP_FUR_LOCATION), i, LivingEntityRenderer.getOverlayCoords(hornedSheepRenderState, 0.0F), -16777216, (TextureAtlasSprite) null, hornedSheepRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+                    submitNodeCollector.submitModel(entitymodel, hornedSheepRenderState, poseStack, RenderTypes.outline(hornedSheepRenderState.isBaby ? SHEEP_FUR_BABY_LOCATION : SHEEP_FUR_LOCATION), i, LivingEntityRenderer.getOverlayCoords(hornedSheepRenderState, 0.0F), -16777216, null, hornedSheepRenderState.outlineColor);
                 }
             } else {
                 coloredCutoutModelCopyLayerRender(entitymodel, hornedSheepRenderState.isBaby ? SHEEP_FUR_BABY_LOCATION : SHEEP_FUR_LOCATION, poseStack, submitNodeCollector, i, hornedSheepRenderState, -1, 2);

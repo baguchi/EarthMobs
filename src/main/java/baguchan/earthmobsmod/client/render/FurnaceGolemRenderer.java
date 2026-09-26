@@ -20,14 +20,17 @@ public class FurnaceGolemRenderer extends MobRenderer<FurnaceGolem, FurnaceGolem
         this.addLayer(new FurnaceGolemCrackinessLayer(this));
     }
 
-    public Identifier getTextureLocation(FurnaceGolemRenderState p_362083_) {
+    @Override
+    public Identifier getTextureLocation(FurnaceGolemRenderState renderState) {
         return GOLEM_LOCATION;
     }
 
+    @Override
     public FurnaceGolemRenderState createRenderState() {
         return new FurnaceGolemRenderState();
     }
 
+    @Override
     public void extractRenderState(FurnaceGolem p_364735_, FurnaceGolemRenderState p_365108_, float p_365449_) {
         super.extractRenderState(p_364735_, p_365108_, p_365449_);
         p_365108_.attackTicksRemaining = (float) p_364735_.getAttackAnimationTick() > 0.0F ? (float) p_364735_.getAttackAnimationTick() - p_365449_ : 0.0F;
@@ -41,7 +44,7 @@ public class FurnaceGolemRenderer extends MobRenderer<FurnaceGolem, FurnaceGolem
             float f = 13.0F;
             float f1 = p_360361_.walkAnimationPos + 6.0F;
             float f2 = (Math.abs(f1 % 13.0F - 6.5F) - 3.25F) / 3.25F;
-            p_115015_.mulPose(Axis.ZP.rotationDegrees(6.5F * f2));
+            p_115015_.rotateDegrees(Axis.ZP, 6.5F * f2);
         }
     }
 }

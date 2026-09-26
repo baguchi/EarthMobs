@@ -21,16 +21,16 @@ public class CowPlantFlowerLayer extends RenderLayer<MoobloomRenderState, CowMod
         if (!state.isBaby) {
             p_117256_.pushPose();
             p_117256_.translate(0.2F, -0.35F, 0.5F);
-            p_117256_.mulPose(Axis.YP.rotationDegrees(-48.0F));
+            p_117256_.rotateDegrees(Axis.YP, -48.0F);
             p_117256_.scale(-1.0F, -1.0F, 1.0F);
             p_117256_.translate(-0.5F, -0.5F, -0.5F);
             this.submitMushroomBlock(p_117256_, p_432964_, p_117258_, state);
             p_117256_.popPose();
             p_117256_.pushPose();
             p_117256_.translate(0.2F, -0.35F, 0.5F);
-            p_117256_.mulPose(Axis.YP.rotationDegrees(42.0F));
+            p_117256_.rotateDegrees(Axis.YP, 42.0F);
             p_117256_.translate(0.1F, 0.0F, -0.6F);
-            p_117256_.mulPose(Axis.YP.rotationDegrees(-48.0F));
+            p_117256_.rotateDegrees(Axis.YP, -48.0F);
             p_117256_.scale(-1.0F, -1.0F, 1.0F);
             p_117256_.translate(-0.5F, -0.5F, -0.5F);
             this.submitMushroomBlock(p_117256_, p_432964_, p_117258_, state);
@@ -38,7 +38,7 @@ public class CowPlantFlowerLayer extends RenderLayer<MoobloomRenderState, CowMod
             p_117256_.pushPose();
             (this.getParentModel()).getHead().translateAndRotate(p_117256_);
             p_117256_.translate(0.0F, -0.7F, -0.2F);
-            p_117256_.mulPose(Axis.YP.rotationDegrees(-78.0F));
+            p_117256_.rotateDegrees(Axis.YP, -78.0F);
             p_117256_.scale(-1.0F, -1.0F, 1.0F);
             p_117256_.translate(-0.5F, -0.5F, -0.5F);
             this.submitMushroomBlock(p_117256_, p_432964_, p_117258_, state);

@@ -30,6 +30,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
@@ -150,8 +151,8 @@ public class HornedSheep extends Sheep {
         this.entityData.set(DATA_HAS_HORN, p_149373_.getBooleanOr("HasHorn", true));
     }
 
+    @Override
     public void aiStep() {
-        this.updateSwingTime();
         super.aiStep();
 
         if (this.level().isClientSide()) {
@@ -300,7 +301,7 @@ public class HornedSheep extends Sheep {
         protected void checkAndPerformAttack(LivingEntity livingEntity) {
             double d0 = this.getAttackReachSqr(livingEntity);
             if (this.hornedSheep.isWithinMeleeAttackRange(livingEntity) && (!this.attack || !this.rushing)) {
-                this.hornedSheep.swing(InteractionHand.MAIN_HAND);
+                this.hornedSheep.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT);
                 if (!this.rushing) {
                     this.hornedSheep.doHurtTarget(getServerLevel(this.hornedSheep), livingEntity);
                     this.attack = true;

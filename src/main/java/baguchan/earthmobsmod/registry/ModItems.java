@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -169,12 +168,5 @@ public class ModItems {
 		if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
 			event.accept(ModBlocks.RUBY.get());
 		}
-	}
-
-	public static void composterInit() {
-		ComposterBlock.COMPOSTABLES.put(ModBlocks.BUTTERCUP.get(), 0.1F);
-		ComposterBlock.COMPOSTABLES.put(ModBlocks.PINK_DAISY.get(), 0.1F);
-		ComposterBlock.COMPOSTABLES.put(ModBlocks.CARVED_MELON.get(), 0.65F);
-		ComposterBlock.COMPOSTABLES.put(ModBlocks.CARVED_MELON_SHOOT.get(), 0.65F);
 	}
 }
