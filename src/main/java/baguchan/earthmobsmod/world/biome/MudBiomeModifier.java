@@ -4,6 +4,7 @@ import baguchan.earthmobsmod.EarthMobsConfig;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
@@ -21,8 +22,9 @@ public class MudBiomeModifier implements BiomeModifier {
 		this.features = features;
 	}
 
+
 	@Override
-	public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+	public void modify(RegistryAccess registries, Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
 		if (phase == Phase.ADD && EarthMobsConfig.COMMON.mudSpawnInOverworld.get() && (biome.is(Biomes.MANGROVE_SWAMP) || biome.is(Tags.Biomes.IS_SWAMP) && biome.is(BiomeTags.IS_OVERWORLD))) {
 			builder.getGenerationSettings().addFeature(GenerationStep.Decoration.LAKES, this.features);
 		}
