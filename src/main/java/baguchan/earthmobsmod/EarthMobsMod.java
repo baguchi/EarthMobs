@@ -48,7 +48,7 @@ public class EarthMobsMod {
 		ModCapability.ATTACHMENT_TYPES.register(modBus);
 		ModRecipes.RECIPE_SERIALIZERS.register(modBus);
 
-		container.registerConfig(ModConfig.Type.COMMON, EarthMobsConfig.COMMON_SPEC);
+		container.registerConfig(ModConfig.Type.LOCAL, EarthMobsConfig.COMMON_SPEC);
 
         if (FMLEnvironment.getDist() == Dist.CLIENT) {
 			modBus.addListener(ClientRegistrar::setup);
@@ -78,8 +78,6 @@ public class EarthMobsMod {
 		JigsawHelper.registerJigsaw(event.getServer(),
                 Identifier.withDefaultNamespace("trial_chambers/spawner/all"),
                 Identifier.fromNamespaceAndPath(MODID, "trial_chambers/connector/melee"), 1);
-
-
 	}
 
 
