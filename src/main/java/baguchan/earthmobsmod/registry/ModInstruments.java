@@ -19,8 +19,8 @@ public class ModInstruments {
 
     public static void bootstrap(BootstrapContext<Instrument> p_362126_) {
 
-        register(p_362126_, WOODEN_HORN, p_362126_.lookup(Registries.SOUND_EVENT).get(ModSounds.HORN_WOODEN.getKey()).orElseThrow(), 7.0F, 256.0F);
-        register(p_362126_, BATTLE_HORN, p_362126_.lookup(Registries.SOUND_EVENT).get(ModSounds.HORN_BATTLE.getKey()).orElseThrow(), 7.0F, 256.0F);
+        register(p_362126_, WOODEN_HORN, p_362126_.lookup(Registries.SOUND_EVENT).get(ModSounds.HORN_WOODEN.key()).orElseThrow(), 7.0F, 256.0F);
+        register(p_362126_, BATTLE_HORN, p_362126_.lookup(Registries.SOUND_EVENT).get(ModSounds.HORN_BATTLE.key()).orElseThrow(), 7.0F, 256.0F);
     }
 
     private static ResourceKey<Instrument> create(String p_220151_) {
