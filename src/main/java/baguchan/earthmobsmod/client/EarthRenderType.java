@@ -18,6 +18,7 @@ public class EarthRenderType {
         return RenderType.create(
                 "earthmobsmod:animation_eyes",
                 RenderSetup.builder(RenderPipelines.EYES)
+                        .setOitPipelines(RenderPipelines.OIT_EYES)
                         .withTexture("Sampler0", location.withSuffix("_" + age % frameCount + ".png"))
                         .createRenderSetup()
         );
@@ -43,6 +44,7 @@ public class EarthRenderType {
         return RenderType.create(
                 "earthmobsmod:entity_animation_all_texture",
                 RenderSetup.builder(ClientRegistrar.ANIMATION_ENTITY)
+                        .setOitPipelines(ClientRegistrar.OIT_ANIMATION_ENTITY)
                         .withTexture("Sampler0", location)
                         .setTextureTransform(new OffsetScaleTexturingStateShard(0, (float) (age % frameCount) / frameCount, 0, (float) frameCount))
                         .useLightmap()

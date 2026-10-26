@@ -29,10 +29,12 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.monster.zombie.ZombieModel;
 import net.minecraft.client.renderer.BindGroupLayouts;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.oit.OitPipelineSet;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextKey;
@@ -64,6 +66,27 @@ public class ClientRegistrar {
                     .withColorTargetState(ColorTargetState.DEFAULT)
                     .withCull(false)
                     .build();
+    public static final OitPipelineSet OIT_ANIMATION_ENTITY = OitPipelineSet.builder(
+                    // A suffix for naming the pipeline.
+                    EarthMobsMod.prefix("oit_animation_entity"),
+                    // The basic builder for the three phases.
+                    // Note that we pass in a snippet containing all of the
+                    // non-phase isolated shader code.
+                    RenderPipeline.builder(RenderPipelines.OIT_ENTITY_SNIPPET)
+                            .withLocation(EarthMobsMod.prefix("pipeline/oit_animation_entity"))
+                            .withBindGroupLayout(BindGroupLayouts.SAMPLER1)
+                            .withColorTargetState(ColorTargetState.DEFAULT)
+                            .withCull(false)
+            )
+            // If we need to modify the pipeline, we can call:
+            // - withDepthBoundsModifier
+            // - withTransmittanceModifier
+            // - withAccumulateModifier
+            // In our case, our shader makes use of Sampler2 for the final color,
+            // so it should be provided during the final phase (i.e., accumulate).
+            .withAccumulateModifier(accumulate -> accumulate.withBindGroupLayout(BindGroupLayouts.SAMPLER2))
+            .build();
+
 
     private static final FluidModel.Unbaked MUD_MODEL = new FluidModel.Unbaked(
             new Material(EarthMobsMod.prefix("block/mud")),
