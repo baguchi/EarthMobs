@@ -2,14 +2,21 @@ package baguchan.earthmobsmod.fluidtype;
 
 import baguchan.earthmobsmod.EarthMobsMod;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.pig.Pig;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidType;
+import org.jspecify.annotations.Nullable;
 
 public class MudFluidType extends FluidType {
 	public MudFluidType(FluidType.Properties properties) {
@@ -56,6 +63,22 @@ public class MudFluidType extends FluidType {
 
 	}
 
+	@Override
+	public @Nullable PathType getAdjacentBlockPathType(FluidState state, BlockGetter level, BlockPos pos, @Nullable Mob mob, PathType originalType) {
+		if (mob instanceof Pig) {
+			return PathType.WATER_BORDER;
+		}
+
+		return super.getAdjacentBlockPathType(state, level, pos, mob, originalType);
+	}
+
+	@Override
+	public @Nullable PathType getBlockPathType(FluidState state, BlockGetter level, BlockPos pos, @Nullable Mob mob, boolean canFluidLog) {
+		if (mob instanceof Pig) {
+			return PathType.WATER;
+		}
+		return super.getBlockPathType(state, level, pos, mob, canFluidLog);
+	}
 
 	public static class MudRender implements IClientFluidTypeExtensions {
         private static final Identifier TEXTURE_STILL = Identifier.fromNamespaceAndPath(EarthMobsMod.MODID, "block/mud");
